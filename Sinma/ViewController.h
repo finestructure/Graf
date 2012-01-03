@@ -14,6 +14,7 @@
 
 - (IBAction)takePicture:(id)sender;
 
+- (UIImage *)cropImage:(UIImage *)image toFrame:(CGRect)rect;
 - (UIImage *)resizeImage:(UIImage *)img toWidth:(CGFloat)width;
 
 @end

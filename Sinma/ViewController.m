@@ -47,24 +47,34 @@
   image = [self resizeImage:image toWidth:newWidth];
   
   // resize to overlay frame
-//  CGRect frame = picker.cameraOverlayView.frame;
-//  CGFloat scale = image.size.width/(frame.size.width +2*frame.origin.x);
-//  CGRect cropRect = CGRectMake(frame.origin.x*scale, frame.origin.y*scale, frame.size.width*scale, frame.size.height*scale);
-//  UIImage *croppedImage = [self cropImage:image toFrame:cropRect];
-//  NSLog(@"final image size: (%f, %f)", croppedImage.size.width, croppedImage.size.height);
-//  
-//  self.imageView.image = croppedImage;
+  CGRect frame = picker.cameraOverlayView.frame;
+  CGFloat scale = image.size.width/(frame.size.width +2*frame.origin.x);
+  CGRect cropRect = CGRectMake(frame.origin.x*scale, frame.origin.y*scale, frame.size.width*scale, frame.size.height*scale);
+  UIImage *croppedImage = [self cropImage:image toFrame:cropRect];
+  NSLog(@"final image size: (%f, %f)", croppedImage.size.width, croppedImage.size.height);
+  
+  self.imageView.image = croppedImage;
 //  
 //  self.progressHud = [[MBProgressHUD alloc] initWithView:self.view];
 //  self.progressHud.labelText = @"Processing OCR";
 //  
 //  [self.view addSubview:self.progressHud];
 //  [self.progressHud showWhileExecuting:@selector(processOcrAt:) onTarget:self withObject:croppedImage animated:YES];
-  self.imageView.image = image;
 }
 
 
 #pragma mark - Helpers
+
+
+- (UIImage *)cropImage:(UIImage *)image toFrame:(CGRect)rect {
+  UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.);
+  [image drawAtPoint:CGPointMake(-rect.origin.x, -rect.origin.y)
+           blendMode:kCGBlendModeCopy
+               alpha:1.];
+  UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return croppedImage;
+}
 
 
 - (UIImage *)resizeImage:(UIImage *)img toWidth:(CGFloat)width {
