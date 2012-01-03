@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+#import "OverlayView.h"
+
 @implementation ViewController
 @synthesize imageView;
 
@@ -18,12 +20,12 @@
   UIImagePickerController *vc = [[UIImagePickerController alloc] init];
   if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     [vc setSourceType:UIImagePickerControllerSourceTypeCamera];
-//    CGFloat inset = 5;
-//    CGFloat yOffset = 100;
-//    CGFloat width = vc.view.frame.size.width - 2*inset;
-//    CGFloat height = 80;
-//    OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(inset, yOffset, width, height)];
-//    vc.cameraOverlayView = overlay;
+    CGFloat inset = 5;
+    CGFloat yOffset = 100;
+    CGFloat width = vc.view.frame.size.width - 2*inset;
+    CGFloat height = 80;
+    OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(inset, yOffset, width, height)];
+    vc.cameraOverlayView = overlay;
   } else {
     [vc setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
   }
