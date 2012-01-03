@@ -8,12 +8,15 @@
 
 #import "ViewController.h"
 
+#import "MBProgressHUD.h"
 #import "OverlayView.h"
 #import "UIImage+Resize.h"
 
 
 @implementation ViewController
-@synthesize imageView;
+
+@synthesize imageView = _imageView;
+@synthesize progressHud = _progressHud;
 
 
 #pragma mark - Actions
@@ -54,12 +57,12 @@
   NSLog(@"final image size: (%f, %f)", croppedImage.size.width, croppedImage.size.height);
   
   self.imageView.image = croppedImage;
-//  
-//  self.progressHud = [[MBProgressHUD alloc] initWithView:self.view];
-//  self.progressHud.labelText = @"Processing OCR";
-//  
-//  [self.view addSubview:self.progressHud];
-//  [self.progressHud showWhileExecuting:@selector(processOcrAt:) onTarget:self withObject:croppedImage animated:YES];
+  
+  self.progressHud = [[MBProgressHUD alloc] initWithView:self.view];
+  self.progressHud.labelText = @"Processing OCR";
+  
+  [self.view addSubview:self.progressHud];
+  //[self.progressHud showWhileExecuting:@selector(processOcrAt:) onTarget:self withObject:croppedImage animated:YES];
 }
 
 

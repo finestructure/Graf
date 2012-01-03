@@ -19,6 +19,7 @@
 		5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263E914B313620078EBEF /* UIImage+Alpha.m */; };
 		5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263EB14B313620078EBEF /* UIImage+Resize.m */; };
 		5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */; };
+		5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263F214B3153E0078EBEF /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,8 @@
 		5A2263EB14B313620078EBEF /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		5A2263EC14B313620078EBEF /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		5A2263F114B3153E0078EBEF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5A2263F214B3153E0078EBEF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				5A2263F114B3153E0078EBEF /* MBProgressHUD.h */,
+				5A2263F214B3153E0078EBEF /* MBProgressHUD.m */,
 				5A2263E814B313620078EBEF /* UIImage+Alpha.h */,
 				5A2263E914B313620078EBEF /* UIImage+Alpha.m */,
 				5A2263EA14B313620078EBEF /* UIImage+Resize.h */,
@@ -196,6 +201,7 @@
 				5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */,
 				5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */,
 				5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */,
+				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

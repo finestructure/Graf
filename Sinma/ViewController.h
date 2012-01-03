@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class MBProgressHUD;
+
 @interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic, retain) MBProgressHUD *progressHud;
 
 - (IBAction)takePicture:(id)sender;
 
