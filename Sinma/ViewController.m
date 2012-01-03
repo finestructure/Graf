@@ -9,6 +9,8 @@
 #import "ViewController.h"
 
 #import "OverlayView.h"
+#import "UIImage+Resize.h"
+
 
 @implementation ViewController
 @synthesize imageView;
@@ -41,8 +43,8 @@
   [self dismissModalViewControllerAnimated:YES];
   
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-//  CGFloat newWidth = image.size.width/3;
-//  image = [self resizeImage:image toWidth:newWidth];
+  CGFloat newWidth = image.size.width/3;
+  image = [self resizeImage:image toWidth:newWidth];
   
   // resize to overlay frame
 //  CGRect frame = picker.cameraOverlayView.frame;
@@ -62,7 +64,18 @@
 }
 
 
+#pragma mark - Helpers
+
+
+- (UIImage *)resizeImage:(UIImage *)img toWidth:(CGFloat)width {
+  CGFloat aspectRatio = img.size.height/img.size.width;
+  UIImage *resizedImage = [img resizedImage:CGSizeMake(width, width*aspectRatio) interpolationQuality:kCGInterpolationDefault];
+  return resizedImage;
+}
+
+
 #pragma mark - View lifecycle
+
 
 - (void)viewDidLoad
 {
