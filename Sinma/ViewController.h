@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
 - (IBAction)takePicture:(id)sender;
 
 @end

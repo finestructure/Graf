@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @implementation ViewController
+@synthesize imageView;
 
 
 #pragma mark - Actions
@@ -31,6 +32,34 @@
 }
 
 
+#pragma mark - UIImagePickerControllerDelegate
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {  
+  [self dismissModalViewControllerAnimated:YES];
+  
+  UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+//  CGFloat newWidth = image.size.width/3;
+//  image = [self resizeImage:image toWidth:newWidth];
+  
+  // resize to overlay frame
+//  CGRect frame = picker.cameraOverlayView.frame;
+//  CGFloat scale = image.size.width/(frame.size.width +2*frame.origin.x);
+//  CGRect cropRect = CGRectMake(frame.origin.x*scale, frame.origin.y*scale, frame.size.width*scale, frame.size.height*scale);
+//  UIImage *croppedImage = [self cropImage:image toFrame:cropRect];
+//  NSLog(@"final image size: (%f, %f)", croppedImage.size.width, croppedImage.size.height);
+//  
+//  self.imageView.image = croppedImage;
+//  
+//  self.progressHud = [[MBProgressHUD alloc] initWithView:self.view];
+//  self.progressHud.labelText = @"Processing OCR";
+//  
+//  [self.view addSubview:self.progressHud];
+//  [self.progressHud showWhileExecuting:@selector(processOcrAt:) onTarget:self withObject:croppedImage animated:YES];
+  self.imageView.image = image;
+}
+
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -41,6 +70,7 @@
 
 - (void)viewDidUnload
 {
+  [self setImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
