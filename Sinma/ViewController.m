@@ -10,11 +10,26 @@
 
 @implementation ViewController
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
+
+#pragma mark - Actions
+
+- (IBAction)takePicture:(id)sender {
+  UIImagePickerController *vc = [[UIImagePickerController alloc] init];
+  if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    [vc setSourceType:UIImagePickerControllerSourceTypeCamera];
+//    CGFloat inset = 5;
+//    CGFloat yOffset = 100;
+//    CGFloat width = vc.view.frame.size.width - 2*inset;
+//    CGFloat height = 80;
+//    OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(inset, yOffset, width, height)];
+//    vc.cameraOverlayView = overlay;
+  } else {
+    [vc setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+  }
+  vc.delegate = self;
+  [self presentModalViewController:vc animated:YES];
 }
+
 
 #pragma mark - View lifecycle
 
@@ -55,6 +70,15 @@
 {
     // Return YES for supported orientations
   return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+
+#pragma mark - Other
+
+- (void)didReceiveMemoryWarning
+{
+  [super didReceiveMemoryWarning];
+  // Release any cached data, images, etc that aren't in use.
 }
 
 @end
