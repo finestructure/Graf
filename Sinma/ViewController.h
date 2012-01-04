@@ -30,6 +30,7 @@ namespace tesseract {
 @property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *imageScaleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numbersOnlyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 
 - (IBAction)takePicture:(id)sender;
 - (IBAction)showSettings:(id)sender;

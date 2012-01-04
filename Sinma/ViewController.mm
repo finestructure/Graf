@@ -29,6 +29,7 @@
 @synthesize imageSizeLabel = _imageSizeLabel;
 @synthesize imageScaleLabel = _imageScaleLabel;
 @synthesize numbersOnlyLabel = _numbersOnlyLabel;
+@synthesize processingTimeLabel = _processingTimeLabel;
 
 
 #pragma mark - Actions
@@ -142,7 +143,7 @@
   pixels = NULL;
   tesseract->End();
   NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
-  NSLog(@"Processing time: %.3f", duration);
+  self.processingTimeLabel.text = [NSString stringWithFormat:@"processing time: %.2fs", duration];
 }
 
 
@@ -224,6 +225,7 @@
   self.imageSizeLabel.text = @"";
   self.imageScaleLabel.text = @"";
   self.numbersOnlyLabel.text = @"";
+  self.processingTimeLabel.text = @"";
 }
 
 
@@ -240,6 +242,7 @@
   [self setImageSizeLabel:nil];
   [self setImageScaleLabel:nil];
   [self setNumbersOnlyLabel:nil];
+  [self setProcessingTimeLabel:nil];
   [super viewDidUnload];
 }
 
