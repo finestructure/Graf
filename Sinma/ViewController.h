@@ -10,7 +10,14 @@
 
 @class MBProgressHUD;
 
-@interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+namespace tesseract {
+  class TessBaseAPI;
+};
+
+
+@interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+  tesseract::TessBaseAPI *tesseract;
+}
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) MBProgressHUD *progressHud;

@@ -12,7 +12,7 @@
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
 		5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2263D014B1FB190078EBEF /* InfoPlist.strings */; };
 		5A2263D414B1FB190078EBEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D314B1FB190078EBEF /* main.m */; };
-		5A2263D814B1FB190078EBEF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D714B1FB190078EBEF /* AppDelegate.m */; };
+		5A2263D814B1FB190078EBEF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D714B1FB190078EBEF /* AppDelegate.mm */; };
 		5A2263DB14B1FB190078EBEF /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263DA14B1FB190078EBEF /* ViewController.mm */; };
 		5A2263DE14B1FB190078EBEF /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2263DC14B1FB190078EBEF /* ViewController.xib */; };
 		5A2263E714B312680078EBEF /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263E614B312680078EBEF /* OverlayView.m */; };
@@ -34,7 +34,7 @@
 		5A2263D314B1FB190078EBEF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5A2263D514B1FB190078EBEF /* Sinma-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sinma-Prefix.pch"; sourceTree = "<group>"; };
 		5A2263D614B1FB190078EBEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		5A2263D714B1FB190078EBEF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5A2263D714B1FB190078EBEF /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		5A2263D914B1FB190078EBEF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5A2263DA14B1FB190078EBEF /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		5A2263DD14B1FB190078EBEF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				5A2263D614B1FB190078EBEF /* AppDelegate.h */,
-				5A2263D714B1FB190078EBEF /* AppDelegate.m */,
+				5A2263D714B1FB190078EBEF /* AppDelegate.mm */,
 				5A2263D914B1FB190078EBEF /* ViewController.h */,
 				5A2263DA14B1FB190078EBEF /* ViewController.mm */,
 				5A2263DC14B1FB190078EBEF /* ViewController.xib */,
@@ -325,7 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A2263D414B1FB190078EBEF /* main.m in Sources */,
-				5A2263D814B1FB190078EBEF /* AppDelegate.m in Sources */,
+				5A2263D814B1FB190078EBEF /* AppDelegate.mm in Sources */,
 				5A2263DB14B1FB190078EBEF /* ViewController.mm in Sources */,
 				5A2263E714B312680078EBEF /* OverlayView.m in Sources */,
 				5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */,
