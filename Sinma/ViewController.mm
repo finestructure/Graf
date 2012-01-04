@@ -10,6 +10,7 @@
 
 #import "MBProgressHUD.h"
 #import "OverlayView.h"
+#import "SettingsViewController.h"
 #import "UIImage+Resize.h"
 
 #include "baseapi.h"
@@ -42,6 +43,12 @@
   }
   vc.delegate = self;
   [self presentModalViewController:vc animated:YES];
+}
+
+
+- (IBAction)showSettings:(id)sender {
+  SettingsViewController *vc = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+  [self presentViewController:vc animated:YES completion:NULL];
 }
 
 

@@ -26,6 +26,7 @@ namespace tesseract {
 @property (nonatomic, retain) MBProgressHUD *progressHud;
 
 - (IBAction)takePicture:(id)sender;
+- (IBAction)showSettings:(id)sender;
 
 - (UIImage *)cropImage:(UIImage *)image toFrame:(CGRect)rect;
 - (UIImage *)resizeImage:(UIImage *)img toWidth:(CGFloat)width;

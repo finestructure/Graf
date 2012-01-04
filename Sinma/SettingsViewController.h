@@ -10,4 +10,6 @@
 
 @interface SettingsViewController : UIViewController
 
+- (IBAction)done:(id)sender;
+
 @end
