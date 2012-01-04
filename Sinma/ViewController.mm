@@ -182,6 +182,19 @@
 }
 
 
+- (void)defaultsChanged:(NSDictionary *)userInfo {
+  [self updateLabels];
+}
+
+
+- (void)updateLabels {
+  NSNumber *imageScale = [[NSUserDefaults standardUserDefaults] valueForKey:kImageScaleDefault];
+  self.imageScaleLabel.text = [NSString stringWithFormat:@"image scale: %d", [imageScale intValue]];
+  NSNumber *numbersOnly = [[NSUserDefaults standardUserDefaults] valueForKey:kNumbersOnlyDefault];
+  self.numbersOnlyLabel.text = [NSString stringWithFormat:@"numbers only: %@", ([numbersOnly boolValue] ? @"on" : @"off")];
+}
+
+
 #pragma mark - View lifecycle
 
 
@@ -215,6 +228,10 @@
                               [NSNumber numberWithBool:NO], kNumbersOnlyDefault,
                               nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(defaultsChanged:)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:nil];
   }
   return self;
 }
@@ -224,10 +241,7 @@
   [super viewDidLoad];
   self.imageSizeLabel.text = @"image size: –";
   self.processingTimeLabel.text = @"processing time: –";
-  NSNumber *imageScale = [[NSUserDefaults standardUserDefaults] valueForKey:kImageScaleDefault];
-  self.imageScaleLabel.text = [NSString stringWithFormat:@"image scale: %d", [imageScale intValue]];
-  NSNumber *numbersOnly = [[NSUserDefaults standardUserDefaults] valueForKey:kNumbersOnlyDefault];
-  self.numbersOnlyLabel.text = [NSString stringWithFormat:@"numbers only: %@", ([numbersOnly boolValue] ? @"on" : @"off")];
+  [self updateLabels];
 }
 
 

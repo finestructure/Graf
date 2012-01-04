@@ -38,5 +38,7 @@ namespace tesseract {
 - (UIImage *)cropImage:(UIImage *)image toFrame:(CGRect)rect;
 - (UIImage *)resizeImage:(UIImage *)img toWidth:(CGFloat)width;
 - (void)setTesseractImage:(UIImage *)image;
+- (void)defaultsChanged:(NSDictionary *)userInfo;
+- (void)updateLabels;
 
 @end
