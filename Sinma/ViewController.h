@@ -23,9 +23,11 @@ namespace tesseract {
 
 @property (nonatomic, retain) NSString *dataPath;
 @property (nonatomic, retain) NSDate *start;
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, retain) MBProgressHUD *progressHud;
+@property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
 
 - (IBAction)takePicture:(id)sender;
 - (IBAction)showSettings:(id)sender;

@@ -26,6 +26,7 @@
 @synthesize imageView = _imageView;
 @synthesize textView = _textView;
 @synthesize progressHud = _progressHud;
+@synthesize imageSizeLabel = _imageSizeLabel;
 
 
 #pragma mark - Actions
@@ -75,7 +76,7 @@
   CGFloat scale = image.size.width/(frame.size.width +2*frame.origin.x);
   CGRect cropRect = CGRectMake(frame.origin.x*scale, frame.origin.y*scale, frame.size.width*scale, frame.size.height*scale);
   UIImage *croppedImage = [self cropImage:image toFrame:cropRect];
-  NSLog(@"final image size: (%f, %f)", croppedImage.size.width, croppedImage.size.height);
+  self.imageSizeLabel.text = [NSString stringWithFormat:@"image size: %.0f x %.0f", croppedImage.size.width, croppedImage.size.height];
   
   self.imageView.image = croppedImage;
   
@@ -211,6 +212,12 @@
 }
 
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  self.imageSizeLabel.text = @"";
+}
+
+
 - (void)viewDidUnload
 {
   [self setImageView:nil];
@@ -221,6 +228,7 @@
   self.progressHud = nil;
 
   [self setTextView:nil];
+  [self setImageSizeLabel:nil];
   [super viewDidUnload];
 }
 
