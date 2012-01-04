@@ -80,7 +80,7 @@
   self.imageView.image = croppedImage;
   
   self.progressHud = [[MBProgressHUD alloc] initWithView:self.view];
-  self.progressHud.labelText = @"Processing OCR";
+  self.progressHud.labelText = @"Processing Image";
   
   [self.view addSubview:self.progressHud];
   [self.progressHud showWhileExecuting:@selector(processImage:) onTarget:self withObject:croppedImage animated:YES];
