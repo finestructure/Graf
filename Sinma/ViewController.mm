@@ -21,6 +21,7 @@
 @implementation ViewController
 
 @synthesize imageView = _imageView;
+@synthesize textView = _textView;
 @synthesize progressHud = _progressHud;
 
 
@@ -51,7 +52,7 @@
   [self dismissModalViewControllerAnimated:YES];
   
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  CGFloat newWidth = image.size.width/3;
+  CGFloat newWidth = image.size.width/4;
   image = [self resizeImage:image toWidth:newWidth];
   
   // resize to overlay frame
@@ -67,7 +68,7 @@
   self.progressHud.labelText = @"Processing OCR";
   
   [self.view addSubview:self.progressHud];
-  //[self.progressHud showWhileExecuting:@selector(processOcrAt:) onTarget:self withObject:croppedImage animated:YES];
+  [self.progressHud showWhileExecuting:@selector(processImage:) onTarget:self withObject:croppedImage animated:YES];
 }
 
 
@@ -89,6 +90,64 @@
   CGFloat aspectRatio = img.size.height/img.size.width;
   UIImage *resizedImage = [img resizedImage:CGSizeMake(width, width*aspectRatio) interpolationQuality:kCGInterpolationDefault];
   return resizedImage;
+}
+
+
+- (void)processImage:(UIImage *)image
+{
+  [self setTesseractImage:image];
+  
+  tesseract->Recognize(NULL);
+  char* utf8Text = tesseract->GetUTF8Text();
+  
+  [self performSelectorOnMainThread:@selector(ocrProcessingFinished:)
+                         withObject:[NSString stringWithUTF8String:utf8Text]
+                      waitUntilDone:NO];
+  delete [] utf8Text;
+}
+
+
+- (void)ocrProcessingFinished:(NSString *)result
+{
+  NSLog(@"result:\n%@", result);
+  self.textView.text = result;
+  free(pixels);
+  pixels = NULL;
+}
+
+
+
+- (void)setTesseractImage:(UIImage *)image
+{
+  free(pixels);
+  pixels = NULL;
+  
+  CGSize size = [image size];
+  int width = size.width;
+  int height = size.height;
+	
+	if (width <= 0 || height <= 0)
+		return;
+	
+  // the pixels will be painted to this array
+  pixels = (uint32_t *) malloc(width * height * sizeof(uint32_t));
+  // clear the pixels so any transparency is preserved
+  memset(pixels, 0, width * height * sizeof(uint32_t));
+	
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	
+  // create a context with RGBA pixels
+  CGContextRef context = CGBitmapContextCreate(pixels, width, height, 8, width * sizeof(uint32_t), colorSpace, 
+                                               kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedLast);
+	
+  // paint the bitmap to our context which will fill in the pixels array
+  CGContextDrawImage(context, CGRectMake(0, 0, width, height), [image CGImage]);
+	
+	// we're done with the context and color space
+  CGContextRelease(context);
+  CGColorSpaceRelease(colorSpace);
+  
+  tesseract->SetImage((const unsigned char *) pixels, width, height, sizeof(uint32_t), width * sizeof(uint32_t));
 }
 
 
@@ -136,6 +195,7 @@
   }
   self.progressHud = nil;
 
+  [self setTextView:nil];
   [super viewDidUnload];
 }
 

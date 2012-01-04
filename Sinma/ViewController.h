@@ -15,16 +15,20 @@ namespace tesseract {
 };
 
 
-@interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+{
   tesseract::TessBaseAPI *tesseract;
+  uint32_t *pixels;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, retain) MBProgressHUD *progressHud;
 
 - (IBAction)takePicture:(id)sender;
 
 - (UIImage *)cropImage:(UIImage *)image toFrame:(CGRect)rect;
 - (UIImage *)resizeImage:(UIImage *)img toWidth:(CGFloat)width;
+- (void)setTesseractImage:(UIImage *)image;
 
 @end
