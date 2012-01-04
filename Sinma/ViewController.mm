@@ -222,10 +222,12 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.imageSizeLabel.text = @"";
-  self.imageScaleLabel.text = @"";
-  self.numbersOnlyLabel.text = @"";
-  self.processingTimeLabel.text = @"";
+  self.imageSizeLabel.text = @"image size: –";
+  self.processingTimeLabel.text = @"processing time: –";
+  NSNumber *imageScale = [[NSUserDefaults standardUserDefaults] valueForKey:kImageScaleDefault];
+  self.imageScaleLabel.text = [NSString stringWithFormat:@"image scale: %d", [imageScale intValue]];
+  NSNumber *numbersOnly = [[NSUserDefaults standardUserDefaults] valueForKey:kNumbersOnlyDefault];
+  self.numbersOnlyLabel.text = [NSString stringWithFormat:@"numbers only: %@", ([numbersOnly boolValue] ? @"on" : @"off")];
 }
 
 
