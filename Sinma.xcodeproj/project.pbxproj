@@ -22,6 +22,7 @@
 		5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263F214B3153E0078EBEF /* MBProgressHUD.m */; };
 		5A22645914B32DE60078EBEF /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645714B32DE60078EBEF /* liblept.a */; };
 		5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645814B32DE60078EBEF /* libtesseract_all.a */; };
+		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		5A22645614B32DCB0078EBEF /* unichar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unichar.h; path = Tesseract/include/tesseract/unichar.h; sourceTree = SOURCE_ROOT; };
 		5A22645714B32DE60078EBEF /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblept.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/liblept.a; sourceTree = "<group>"; };
 		5A22645814B32DE60078EBEF /* libtesseract_all.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtesseract_all.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/libtesseract_all.a; sourceTree = "<group>"; };
+		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				5A7B0EA814B45666000314C0 /* tessdata */,
 				5A2263F414B3174E0078EBEF /* Tesseract */,
 				5A2263F114B3153E0078EBEF /* MBProgressHUD.h */,
 				5A2263F214B3153E0078EBEF /* MBProgressHUD.m */,
@@ -314,6 +317,7 @@
 			files = (
 				5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */,
 				5A2263DE14B1FB190078EBEF /* ViewController.xib in Resources */,
+				5A7B0EA914B45666000314C0 /* tessdata in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
