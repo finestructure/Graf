@@ -16,6 +16,7 @@ extern NSString * const kNumbersOnlyDefault;
 @property (weak, nonatomic) IBOutlet UILabel *imageScaleLabel;
 @property (weak, nonatomic) IBOutlet UISlider *imageScaleSlider;
 @property (weak, nonatomic) IBOutlet UISwitch *numbersOnlySwitch;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
 - (IBAction)done:(id)sender;
 - (void)valueChanged:(id)sender;

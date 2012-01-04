@@ -17,6 +17,7 @@ NSString * const kNumbersOnlyDefault = @"NumbersOnly";
 @synthesize imageScaleLabel = _imageScaleLabel;
 @synthesize imageScaleSlider = _imageScaleSlider;
 @synthesize numbersOnlySwitch = _numbersOnlySwitch;
+@synthesize versionLabel = _versionLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,6 +63,10 @@ NSString * const kNumbersOnlyDefault = @"NumbersOnly";
 {
   [super viewDidLoad];
 
+  NSString *version = [[[NSBundle mainBundle] infoDictionary]
+                       objectForKey:@"CFBundleVersion"];
+  self.versionLabel.text = version;
+  
   NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
   
   NSNumber *imageScale = [def valueForKey:kImageScaleDefault];
@@ -80,6 +85,7 @@ NSString * const kNumbersOnlyDefault = @"NumbersOnly";
   [self setImageScaleLabel:nil];
   [self setImageScaleSlider:nil];
   [self setNumbersOnlySwitch:nil];
+    [self setVersionLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
