@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString * const kImageScaleDefault;
+extern NSString * const kNumbersOnlyDefault;
+
 @interface SettingsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *imageScaleLabel;
+@property (weak, nonatomic) IBOutlet UISlider *imageScaleSlider;
+@property (weak, nonatomic) IBOutlet UISwitch *numbersOnlySwitch;
+
 - (IBAction)done:(id)sender;
+- (void)valueChanged:(id)sender;
 
 @end
