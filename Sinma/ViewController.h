@@ -28,6 +28,8 @@ namespace tesseract {
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, retain) MBProgressHUD *progressHud;
 @property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *imageScaleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numbersOnlyLabel;
 
 - (IBAction)takePicture:(id)sender;
 - (IBAction)showSettings:(id)sender;

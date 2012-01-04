@@ -27,6 +27,8 @@
 @synthesize textView = _textView;
 @synthesize progressHud = _progressHud;
 @synthesize imageSizeLabel = _imageSizeLabel;
+@synthesize imageScaleLabel = _imageScaleLabel;
+@synthesize numbersOnlyLabel = _numbersOnlyLabel;
 
 
 #pragma mark - Actions
@@ -63,9 +65,7 @@
   
   // get image scale from defaults
   NSNumber *imageScale = [[NSUserDefaults standardUserDefaults] valueForKey:kImageScaleDefault];
-  if (imageScale == nil) {
-    imageScale = [NSNumber numberWithInt:4];
-  }
+  self.imageScaleLabel.text = [NSString stringWithFormat:@"image scale: %d", [imageScale intValue]];
   
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
   CGFloat newWidth = image.size.width/[imageScale floatValue];
@@ -117,9 +117,10 @@
 
   // configure "numbers only", if selected
   NSNumber *numbersOnly = [[NSUserDefaults standardUserDefaults] valueForKey:kNumbersOnlyDefault];
-  if (numbersOnly != nil && [numbersOnly boolValue] == YES) {
+  if ([numbersOnly boolValue] == YES) {
     tesseract->SetVariable("tessedit_char_whitelist", "0123456789");
   }
+  self.numbersOnlyLabel.text = [NSString stringWithFormat:@"numbers only: %@", ([numbersOnly boolValue] ? @"on" : @"off")];
   
   [self setTesseractImage:image];
   
@@ -207,6 +208,12 @@
     setenv("TESSDATA_PREFIX", [[documentPath stringByAppendingString:@"/"] UTF8String], 1);
 
     tesseract = new tesseract::TessBaseAPI();
+    
+    NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:4], kImageScaleDefault,
+                              [NSNumber numberWithBool:NO], kNumbersOnlyDefault,
+                              nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
   }
   return self;
 }
@@ -215,6 +222,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.imageSizeLabel.text = @"";
+  self.imageScaleLabel.text = @"";
+  self.numbersOnlyLabel.text = @"";
 }
 
 
@@ -229,6 +238,8 @@
 
   [self setTextView:nil];
   [self setImageSizeLabel:nil];
+  [self setImageScaleLabel:nil];
+  [self setNumbersOnlyLabel:nil];
   [super viewDidUnload];
 }
 

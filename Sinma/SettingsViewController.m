@@ -65,16 +65,10 @@ NSString * const kNumbersOnlyDefault = @"NumbersOnly";
   NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
   
   NSNumber *imageScale = [def valueForKey:kImageScaleDefault];
-  if (imageScale == nil) {
-    imageScale = [NSNumber numberWithInt:4];
-  }
   self.imageScaleLabel.text = [NSString stringWithFormat:@"%d", [imageScale intValue]];
   self.imageScaleSlider.value = [imageScale floatValue];
   
   NSNumber *numbersOnly = [def valueForKey:kNumbersOnlyDefault];
-  if (numbersOnly == nil) {
-    numbersOnly = [NSNumber numberWithBool:NO];
-  }
   self.numbersOnlySwitch.on = [numbersOnly boolValue];
   
   [self.imageScaleSlider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
