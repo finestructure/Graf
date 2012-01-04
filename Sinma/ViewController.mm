@@ -22,6 +22,7 @@
 @implementation ViewController
 
 @synthesize dataPath = _dataPath;
+@synthesize start = _start;
 @synthesize imageView = _imageView;
 @synthesize textView = _textView;
 @synthesize progressHud = _progressHud;
@@ -110,6 +111,7 @@
 - (void)processImage:(UIImage *)image
 {
   // init the tesseract engine.
+  self.start = [NSDate date];
   tesseract->Init([self.dataPath cStringUsingEncoding:NSUTF8StringEncoding], "eng");
 
   // configure "numbers only", if selected
@@ -137,6 +139,8 @@
   free(pixels);
   pixels = NULL;
   tesseract->End();
+  NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
+  NSLog(@"Processing time: %.3f", duration);
 }
 
 
