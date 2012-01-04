@@ -180,7 +180,7 @@
     // init the tesseract engine.
     tesseract = new tesseract::TessBaseAPI();
     tesseract->Init([dataPath cStringUsingEncoding:NSUTF8StringEncoding], "eng");
-    tesseract->SetVariable("tessedit_char_whitelist", "0123456789");
+    //tesseract->SetVariable("tessedit_char_whitelist", "0123456789");
   }
   return self;
 }
