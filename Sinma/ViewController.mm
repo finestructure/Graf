@@ -21,6 +21,7 @@
 
 @implementation ViewController
 
+@synthesize dataPath = _dataPath;
 @synthesize imageView = _imageView;
 @synthesize textView = _textView;
 @synthesize progressHud = _progressHud;
@@ -58,8 +59,14 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {  
   [self dismissModalViewControllerAnimated:YES];
   
+  // get image scale from defaults
+  NSNumber *imageScale = [[NSUserDefaults standardUserDefaults] valueForKey:kImageScaleDefault];
+  if (imageScale == nil) {
+    imageScale = [NSNumber numberWithInt:4];
+  }
+  
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  CGFloat newWidth = image.size.width/4;
+  CGFloat newWidth = image.size.width/[imageScale floatValue];
   image = [self resizeImage:image toWidth:newWidth];
   
   // resize to overlay frame
@@ -102,6 +109,15 @@
 
 - (void)processImage:(UIImage *)image
 {
+  // init the tesseract engine.
+  tesseract->Init([self.dataPath cStringUsingEncoding:NSUTF8StringEncoding], "eng");
+
+  // configure "numbers only", if selected
+  NSNumber *numbersOnly = [[NSUserDefaults standardUserDefaults] valueForKey:kNumbersOnlyDefault];
+  if (numbersOnly != nil && [numbersOnly boolValue] == YES) {
+    tesseract->SetVariable("tessedit_char_whitelist", "0123456789");
+  }
+  
   [self setTesseractImage:image];
   
   tesseract->Recognize(NULL);
@@ -120,6 +136,7 @@
   self.textView.text = result;
   free(pixels);
   pixels = NULL;
+  tesseract->End();
 }
 
 
@@ -170,24 +187,21 @@
     NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = ([documentPaths count] > 0) ? [documentPaths objectAtIndex:0] : nil;
     
-    NSString *dataPath = [documentPath stringByAppendingPathComponent:@"tessdata"];
+    self.dataPath = [documentPath stringByAppendingPathComponent:@"tessdata"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     // If the expected store doesn't exist, copy the default store.
-    if (![fileManager fileExistsAtPath:dataPath]) {
+    if (![fileManager fileExistsAtPath:self.dataPath]) {
       // get the path to the app bundle (with the tessdata dir)
       NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
       NSString *tessdataPath = [bundlePath stringByAppendingPathComponent:@"tessdata"];
       if (tessdataPath) {
-        [fileManager copyItemAtPath:tessdataPath toPath:dataPath error:NULL];
+        [fileManager copyItemAtPath:tessdataPath toPath:self.dataPath error:NULL];
       }
     }
     
     setenv("TESSDATA_PREFIX", [[documentPath stringByAppendingString:@"/"] UTF8String], 1);
-    
-    // init the tesseract engine.
+
     tesseract = new tesseract::TessBaseAPI();
-    tesseract->Init([dataPath cStringUsingEncoding:NSUTF8StringEncoding], "eng");
-    //tesseract->SetVariable("tessedit_char_whitelist", "0123456789");
   }
   return self;
 }

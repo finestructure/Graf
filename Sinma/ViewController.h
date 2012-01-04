@@ -21,6 +21,7 @@ namespace tesseract {
   uint32_t *pixels;
 }
 
+@property (nonatomic, retain) NSString *dataPath;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, retain) MBProgressHUD *progressHud;
