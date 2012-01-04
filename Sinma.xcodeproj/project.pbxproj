@@ -23,6 +23,8 @@
 		5A22645914B32DE60078EBEF /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645714B32DE60078EBEF /* liblept.a */; };
 		5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645814B32DE60078EBEF /* libtesseract_all.a */; };
 		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
+		5A7B0EAD14B470BB000314C0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */; };
+		5A7B0EAE14B470BB000314C0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +95,9 @@
 		5A22645714B32DE60078EBEF /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblept.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/liblept.a; sourceTree = "<group>"; };
 		5A22645814B32DE60078EBEF /* libtesseract_all.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtesseract_all.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/libtesseract_all.a; sourceTree = "<group>"; };
 		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		5A7B0EAA14B470BB000314C0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +152,9 @@
 				5A2263D914B1FB190078EBEF /* ViewController.h */,
 				5A2263DA14B1FB190078EBEF /* ViewController.mm */,
 				5A2263DC14B1FB190078EBEF /* ViewController.xib */,
+				5A7B0EAA14B470BB000314C0 /* SettingsViewController.h */,
+				5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */,
+				5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */,
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
 			);
 			path = Sinma;
@@ -318,6 +326,7 @@
 				5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */,
 				5A2263DE14B1FB190078EBEF /* ViewController.xib in Resources */,
 				5A7B0EA914B45666000314C0 /* tessdata in Resources */,
+				5A7B0EAE14B470BB000314C0 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +345,7 @@
 				5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */,
 				5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */,
 				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
+				5A7B0EAD14B470BB000314C0 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
