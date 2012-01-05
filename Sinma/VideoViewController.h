@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface VideoViewController : UIViewController
+
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate>
+
+@property (weak, nonatomic) IBOutlet UIView *preview;
+@property (nonatomic, retain) AVCaptureSession *session;
+
 
 - (IBAction)done:(id)sender;
 
