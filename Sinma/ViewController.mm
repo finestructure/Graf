@@ -12,6 +12,7 @@
 #import "OverlayView.h"
 #import "SettingsViewController.h"
 #import "UIImage+Resize.h"
+#import "VideoViewController.h"
 
 #include "baseapi.h"
 
@@ -35,20 +36,8 @@
 #pragma mark - Actions
 
 - (IBAction)takePicture:(id)sender {
-  UIImagePickerController *vc = [[UIImagePickerController alloc] init];
-  if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-    [vc setSourceType:UIImagePickerControllerSourceTypeCamera];
-    CGFloat inset = 5;
-    CGFloat yOffset = 100;
-    CGFloat width = vc.view.frame.size.width - 2*inset;
-    CGFloat height = 80;
-    OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(inset, yOffset, width, height)];
-    vc.cameraOverlayView = overlay;
-  } else {
-    [vc setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-  }
-  vc.delegate = self;
-  [self presentModalViewController:vc animated:YES];
+  VideoViewController *vc = [[VideoViewController alloc] initWithNibName:@"VideoViewController" bundle:nil];
+  [self presentViewController:vc animated:YES completion:nil];
 }
 
 
@@ -61,7 +50,10 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {  
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+
+#warning to be removed
+  
   [self dismissModalViewControllerAnimated:YES];
   
   // get image scale from defaults

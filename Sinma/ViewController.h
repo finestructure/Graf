@@ -15,7 +15,7 @@ namespace tesseract {
 };
 
 
-@interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController : UIViewController
 {
   tesseract::TessBaseAPI *tesseract;
   uint32_t *pixels;

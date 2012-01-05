@@ -48,4 +48,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+#pragma mark - Actions
+
+
+- (IBAction)done:(id)sender {
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

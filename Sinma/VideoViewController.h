@@ -10,4 +10,6 @@
 
 @interface VideoViewController : UIViewController
 
+- (IBAction)done:(id)sender;
+
 @end
