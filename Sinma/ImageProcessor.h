@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreMedia/CoreMedia.h>
+
 
 @interface ImageProcessor : NSObject
+{
+}
+
+
+@property (nonatomic, retain) NSString *dataPath;
+
+- (void)setTesseractImage:(UIImage *)image;
+- (NSString *)processImage:(UIImage *)image;
+- (NSString *)processSampleBuffer:(CMSampleBufferRef)sampleBuffer;
+
 
 @end

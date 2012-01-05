@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+#import "ImageProcessor.h"
 
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (nonatomic, retain) AVCaptureSession *session;
+@property (nonatomic, retain) ImageProcessor *imageProcessor;
 
 
 - (IBAction)done:(id)sender;
