@@ -25,6 +25,7 @@
 		5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */; };
 		5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
+		5A4766EA14B5E61B00D8FA66 /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766E914B5E61B00D8FA66 /* ImageProcessor.m */; };
 		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
 		5A7B0EAD14B470BB000314C0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */; };
 		5A7B0EAE14B470BB000314C0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */; };
@@ -103,6 +104,8 @@
 		5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
+		5A4766E914B5E61B00D8FA66 /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
 		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		5A7B0EAA14B470BB000314C0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */,
 				5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */,
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
+				5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */,
+				5A4766E914B5E61B00D8FA66 /* ImageProcessor.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
 				5A7B0EAD14B470BB000314C0 /* SettingsViewController.m in Sources */,
 				5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */,
+				5A4766EA14B5E61B00D8FA66 /* ImageProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
