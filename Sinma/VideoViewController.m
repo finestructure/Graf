@@ -65,8 +65,9 @@
   // set up data output
   
   AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-  [self.session addOutput:output];
   output.alwaysDiscardsLateVideoFrames = YES;
+  output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+  [self.session addOutput:output];
 
   // set up handler queue
   
@@ -101,10 +102,7 @@
   // Get the pixel buffer width and height.
   size_t width = CVPixelBufferGetWidth(imageBuffer);
   size_t height = CVPixelBufferGetHeight(imageBuffer);
-  if (bytesPerRow < width * 4) {
-    bytesPerRow = width *4;
-  }
-  NSLog(@"sample buffer wxh = %d x %d", (int)width, (int)height);
+  NSLog(@"sample buffer: %d x %d (%d)", (int)width, (int)height, (int)bytesPerRow);
   
   // Create a device-dependent RGB color space.
   static CGColorSpaceRef colorSpace = NULL;
