@@ -185,6 +185,8 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
   UIImage *image = [self _imageFromSampleBuffer:sampleBuffer];
+  image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
+
   NSLog(@"%@ setting image %@", [NSDate date], image);
   self.snapShotView.image = image;
   
