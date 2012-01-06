@@ -188,7 +188,10 @@
   image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
 
   NSLog(@"%@ setting image %@", [NSDate date], image);
-  self.snapShotView.image = image;
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    self.snapShotView.image = image;
+  });
+
   
   NSString *result = [self.imageProcessor processSampleBuffer:sampleBuffer];
   NSLog(@"%@ ocr: %@", [NSDate date], result);
