@@ -212,7 +212,7 @@
   });
 
   
-  NSString *result = [self.imageProcessor processSampleBuffer:sampleBuffer];
+  NSString *result = [self.imageProcessor processImage:image];
   NSLog(@"%@ ocr: %@", [NSDate date], result);
 }
 
