@@ -18,6 +18,8 @@
 @property (nonatomic, retain) ImageProcessor *imageProcessor;
 
 @property (weak, nonatomic) IBOutlet UIImageView *snapShotView;
+@property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
+@property (weak, nonatomic) IBOutlet UITextView *textResultView;
 
 - (IBAction)done:(id)sender;
 

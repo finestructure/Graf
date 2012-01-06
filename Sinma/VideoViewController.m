@@ -15,6 +15,8 @@
 @synthesize session = _session;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize snapShotView = _snapShotView;
+@synthesize imageSizeLabel = _imageSizeLabel;
+@synthesize textResultView = _textResultView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,6 +42,9 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  self.imageSizeLabel.text = @"";
+  self.textResultView.text = @"";
   
   // create image processor
   self.imageProcessor = [[ImageProcessor alloc] init];
@@ -204,16 +209,16 @@
                                image.size.width,
                                previewSize.height*scale);
   image = [self cropImage:image toFrame:cropRect];
-
-
-  NSLog(@"%@ setting image %@", [NSDate date], image);
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    self.snapShotView.image = image;
-  });
-
   
   NSString *result = [self.imageProcessor processImage:image];
   NSLog(@"%@ ocr: %@", [NSDate date], result);
+
+  // update UI elements on main thread
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
+    self.textResultView.text = result;
+    self.snapShotView.image = image;
+  });
 }
 
 
@@ -222,6 +227,8 @@
   [self setPreview:nil];
   self.session = nil;
   [self setSnapShotView:nil];
+  [self setImageSizeLabel:nil];
+  [self setTextResultView:nil];
   [super viewDidUnload];
 }
 
