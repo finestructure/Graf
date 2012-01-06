@@ -14,6 +14,7 @@
 @synthesize preview = _preview;
 @synthesize session = _session;
 @synthesize imageProcessor = _imageProcessor;
+@synthesize snapShotView = _snapShotView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -183,9 +184,12 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
-//  UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-  NSString *result = [self.imageProcessor processSampleBuffer:sampleBuffer];
-  NSLog(@"%@ ocr: %@", [NSDate date], result);
+  UIImage *image = [self _imageFromSampleBuffer:sampleBuffer];
+  NSLog(@"%@ setting image %@", [NSDate date], image);
+  self.snapShotView.image = image;
+  
+  //  NSString *result = [self.imageProcessor processSampleBuffer:sampleBuffer];
+  //  NSLog(@"%@ ocr: %@", [NSDate date], result);
 }
 
 
@@ -193,6 +197,7 @@
 {
   [self setPreview:nil];
   self.session = nil;
+  [self setSnapShotView:nil];
   [super viewDidUnload];
 }
 

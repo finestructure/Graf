@@ -17,6 +17,7 @@
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) ImageProcessor *imageProcessor;
 
+@property (weak, nonatomic) IBOutlet UIImageView *snapShotView;
 
 - (IBAction)done:(id)sender;
 
