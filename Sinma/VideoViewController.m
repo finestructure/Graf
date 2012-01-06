@@ -190,8 +190,8 @@
   NSLog(@"%@ setting image %@", [NSDate date], image);
   self.snapShotView.image = image;
   
-  //  NSString *result = [self.imageProcessor processSampleBuffer:sampleBuffer];
-  //  NSLog(@"%@ ocr: %@", [NSDate date], result);
+  NSString *result = [self.imageProcessor processSampleBuffer:sampleBuffer];
+  NSLog(@"%@ ocr: %@", [NSDate date], result);
 }
 
 
