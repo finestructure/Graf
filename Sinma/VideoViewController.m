@@ -88,7 +88,6 @@
   // start session
   
   [self.session startRunning];
-
 }
 
 
@@ -217,6 +216,7 @@
 
 
 - (IBAction)done:(id)sender {
+  [self.session stopRunning];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
