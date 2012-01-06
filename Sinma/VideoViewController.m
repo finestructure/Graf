@@ -181,10 +181,30 @@
 }
 
 
+- (UIImage *)cropImage:(UIImage *)image toFrame:(CGRect)rect {
+  UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.);
+  [image drawAtPoint:CGPointMake(-rect.origin.x, -rect.origin.y)
+           blendMode:kCGBlendModeCopy
+               alpha:1.];
+  UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return croppedImage;
+}
+
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
   UIImage *image = [self _imageFromSampleBuffer:sampleBuffer];
   image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
+  CGSize previewSize = self.preview.frame.size;
+  
+  CGFloat scale = image.size.width/previewSize.width;
+  CGRect cropRect = CGRectMake(0,
+                               image.size.height/2 - previewSize.height/2*scale,
+                               image.size.width,
+                               previewSize.height*scale);
+  image = [self cropImage:image toFrame:cropRect];
+
 
   NSLog(@"%@ setting image %@", [NSDate date], image);
   dispatch_async(dispatch_get_main_queue(), ^(void) {
