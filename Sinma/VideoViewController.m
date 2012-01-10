@@ -23,6 +23,7 @@
 @synthesize numbersOnlySwitch = _numbersOnlySwitch;
 @synthesize pageModeSlider = _pageModeSlider;
 @synthesize pageModeLabel = _pageModeLabel;
+@synthesize runOcrSwitch = _runOcrSwitch;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -124,7 +125,9 @@
 
   // start session
   
+  NSLog(@"starting ocr");
   [self.session startRunning];
+  self.runOcrSwitch.on = YES;
 }
 
 
@@ -264,6 +267,7 @@
   [self setNumbersOnlySwitch:nil];
   [self setPageModeSlider:nil];
   [self setPageModeLabel:nil];
+  [self setRunOcrSwitch:nil];
   [super viewDidUnload];
 }
 
@@ -278,13 +282,23 @@
 
 
 - (IBAction)done:(id)sender {
+  NSLog(@"stopping ocr");
   [self.session stopRunning];
+  self.runOcrSwitch.on = NO;
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 - (void)valueChanged:(id)sender {
-  if (sender == self.pageModeSlider) {
+  if (sender == self.runOcrSwitch) {
+    if (self.runOcrSwitch.on) {
+      NSLog(@"starting ocr");
+      [self.session startRunning];
+    } else {
+      NSLog(@"stopping ocr");
+      [self.session stopRunning];
+    }
+  } else if (sender == self.pageModeSlider) {
     NSNumber *sliderValue = [NSNumber numberWithInt:(int)self.pageModeSlider.value];
     NSNumber *pageModeValue = [self.pageModeValues objectAtIndex:[sliderValue intValue]];
     [[NSUserDefaults standardUserDefaults] setValue:pageModeValue forKey:kPageModeDefault];

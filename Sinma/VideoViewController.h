@@ -27,7 +27,9 @@
 @property (weak, nonatomic) IBOutlet UISlider *pageModeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *pageModeLabel;
 
+@property (weak, nonatomic) IBOutlet UISwitch *runOcrSwitch;
+
 - (IBAction)done:(id)sender;
-- (void)valueChanged:(id)sender;
+- (IBAction)valueChanged:(id)sender;
 
 @end
