@@ -47,40 +47,6 @@
 }
 
 
-#pragma mark - UIImagePickerControllerDelegate
-
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-
-#warning to be removed
-  
-  [self dismissModalViewControllerAnimated:YES];
-  
-  // get image scale from defaults
-  NSNumber *imageScale = [[NSUserDefaults standardUserDefaults] valueForKey:kImageScaleDefault];
-  self.imageScaleLabel.text = [NSString stringWithFormat:@"image scale: %d", [imageScale intValue]];
-  
-  UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  CGFloat newWidth = image.size.width/[imageScale floatValue];
-  image = [self resizeImage:image toWidth:newWidth];
-  
-  // resize to overlay frame
-  CGRect frame = picker.cameraOverlayView.frame;
-  CGFloat scale = image.size.width/(frame.size.width +2*frame.origin.x);
-  CGRect cropRect = CGRectMake(frame.origin.x*scale, frame.origin.y*scale, frame.size.width*scale, frame.size.height*scale);
-  UIImage *croppedImage = [self cropImage:image toFrame:cropRect];
-  self.imageSizeLabel.text = [NSString stringWithFormat:@"image size: %.0f x %.0f", croppedImage.size.width, croppedImage.size.height];
-  
-  self.imageView.image = croppedImage;
-  
-  self.progressHud = [[MBProgressHUD alloc] initWithView:self.view];
-  self.progressHud.labelText = @"Processing Image";
-  
-  [self.view addSubview:self.progressHud];
-  [self.progressHud showWhileExecuting:@selector(processImage:) onTarget:self withObject:croppedImage animated:YES];
-}
-
-
 #pragma mark - Helpers
 
 
