@@ -70,7 +70,6 @@
                          [NSNumber numberWithInt:6],
                          [NSNumber numberWithInt:7],
                          nil];
-  self.pageModeSlider.continuous = NO;
   self.pageModeSlider.minimumValue = 0;
   self.pageModeSlider.maximumValue = [[self.pageModeValues lastObject] floatValue];
 
