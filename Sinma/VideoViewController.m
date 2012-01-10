@@ -51,15 +51,28 @@
   [super viewDidLoad];
   
   self.pageModeNames = [NSArray arrayWithObjects:
-                        @"auto", // 2
-                        @"line", // 5
-                        @"word", // 6
+                        @"osd only", // 0
+                        @"auto osd", // 1
+                        @"auto only", // 2
+                        @"auto", // 3
+                        @"single column", // 4
+                        @"single col vert text", // 5
+                        @"single line", // 6
+                        @"single word", // 7
                         nil];
   self.pageModeValues = [NSArray arrayWithObjects:
+                         [NSNumber numberWithInt:0],
+                         [NSNumber numberWithInt:1],
                          [NSNumber numberWithInt:2],
+                         [NSNumber numberWithInt:3],
+                         [NSNumber numberWithInt:4],
                          [NSNumber numberWithInt:5],
                          [NSNumber numberWithInt:6],
+                         [NSNumber numberWithInt:7],
                          nil];
+  self.pageModeSlider.continuous = NO;
+  self.pageModeSlider.minimumValue = 0;
+  self.pageModeSlider.maximumValue = [[self.pageModeValues lastObject] floatValue];
 
   // update labels and ui controls
   
