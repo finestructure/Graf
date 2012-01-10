@@ -8,15 +8,21 @@
 
 #import "VideoViewController.h"
 
+#import "SettingsViewController.h"
 
 @implementation VideoViewController
 
 @synthesize preview = _preview;
 @synthesize session = _session;
 @synthesize imageProcessor = _imageProcessor;
+@synthesize pageModeNames = _pageModeNames;
+@synthesize pageModeValues = _pageModeValues;
 @synthesize snapShotView = _snapShotView;
 @synthesize imageSizeLabel = _imageSizeLabel;
 @synthesize textResultView = _textResultView;
+@synthesize numbersOnlySwitch = _numbersOnlySwitch;
+@synthesize pageModeSlider = _pageModeSlider;
+@synthesize pageModeLabel = _pageModeLabel;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,8 +49,34 @@
 {
   [super viewDidLoad];
   
+  // update labels and ui controls
+  
   self.imageSizeLabel.text = @"";
   self.textResultView.text = @"";
+  
+  NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+  
+  NSNumber *numbersOnly = [def valueForKey:kNumbersOnlyDefault];
+  self.numbersOnlySwitch.on = [numbersOnly boolValue];
+  
+  NSNumber *pageMode = [def valueForKey:kPageModeDefault];
+  self.pageModeSlider.value = [pageMode floatValue];
+  
+  self.pageModeNames = [NSArray arrayWithObjects:
+                        @"auto", // 2
+                        @"line", // 5
+                        @"word", // 6
+                        nil];
+  self.pageModeValues = [NSArray arrayWithObjects:
+                         [NSNumber numberWithInt:2],
+                         [NSNumber numberWithInt:5],
+                         [NSNumber numberWithInt:6],
+                         nil];
+  self.pageModeLabel.text = [self.pageModeNames objectAtIndex:[pageMode intValue]];
+  
+  [self.numbersOnlySwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+  [self.pageModeSlider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+
   
   // create image processor
   self.imageProcessor = [[ImageProcessor alloc] init];
@@ -229,6 +261,9 @@
   [self setSnapShotView:nil];
   [self setImageSizeLabel:nil];
   [self setTextResultView:nil];
+  [self setNumbersOnlySwitch:nil];
+  [self setPageModeSlider:nil];
+  [self setPageModeLabel:nil];
   [super viewDidUnload];
 }
 
@@ -246,5 +281,20 @@
   [self.session stopRunning];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+- (void)valueChanged:(id)sender {
+  if (sender == self.pageModeSlider) {
+    NSNumber *sliderValue = [NSNumber numberWithInt:(int)self.pageModeSlider.value];
+    NSNumber *pageModeValue = [self.pageModeValues objectAtIndex:[sliderValue intValue]];
+    [[NSUserDefaults standardUserDefaults] setValue:pageModeValue forKey:kPageModeDefault];
+    self.pageModeLabel.text = [self.pageModeNames objectAtIndex:[sliderValue intValue]];
+  } else if (sender == self.numbersOnlySwitch) {
+    NSNumber *value = [NSNumber numberWithBool:self.numbersOnlySwitch.on];
+    [[NSUserDefaults standardUserDefaults] setValue:value forKey:kNumbersOnlyDefault];
+  }
+  self.imageProcessor = [[ImageProcessor alloc] init];
+}
+
 
 @end

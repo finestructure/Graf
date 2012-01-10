@@ -10,6 +10,7 @@
 
 extern NSString * const kImageScaleDefault;
 extern NSString * const kNumbersOnlyDefault;
+extern NSString * const kPageModeDefault;
 
 @interface SettingsViewController : UIViewController
 

@@ -56,8 +56,14 @@
     // configure "numbers only", if selected
     NSNumber *numbersOnly = [[NSUserDefaults standardUserDefaults] valueForKey:kNumbersOnlyDefault];
     if ([numbersOnly boolValue] == YES) {
+      NSLog(@"setting tessedit_char_whitelist to digits");
       tesseract->SetVariable("tessedit_char_whitelist", "0123456789");
     }
+    
+    // set page mode
+    NSNumber *pageMode = [[NSUserDefaults standardUserDefaults] valueForKey:kPageModeDefault];
+    NSLog(@"setting tessedit_pageseg_mode to %d", [pageMode intValue]);
+    tesseract->SetVariable("tessedit_pageseg_mode", [[pageMode stringValue] cStringUsingEncoding:NSASCIIStringEncoding]);
   }
   return self;
 }

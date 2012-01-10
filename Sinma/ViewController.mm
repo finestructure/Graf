@@ -184,6 +184,7 @@
     NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:4], kImageScaleDefault,
                               [NSNumber numberWithBool:NO], kNumbersOnlyDefault,
+                              [NSNumber numberWithInt:2], kPageModeDefault,
                               nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     [[NSNotificationCenter defaultCenter] addObserver:self

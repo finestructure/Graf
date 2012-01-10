@@ -10,6 +10,7 @@
 
 NSString * const kImageScaleDefault = @"ImageScale";
 NSString * const kNumbersOnlyDefault = @"NumbersOnly";
+NSString * const kPageModeDefault = @"PageMode";
 
 
 @implementation SettingsViewController
