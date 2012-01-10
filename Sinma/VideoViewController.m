@@ -263,7 +263,7 @@
   image = [self cropImage:image toFrame:cropRect];
   
   NSString *result = [self.imageProcessor processImage:image];
-  NSLog(@"%@ ocr: %@", [NSDate date], result);
+  //NSLog(@"%@ ocr: %@", [NSDate date], result);
 
   // update UI elements on main thread
   dispatch_async(dispatch_get_main_queue(), ^(void) {
