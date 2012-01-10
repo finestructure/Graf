@@ -50,6 +50,17 @@
 {
   [super viewDidLoad];
   
+  self.pageModeNames = [NSArray arrayWithObjects:
+                        @"auto", // 2
+                        @"line", // 5
+                        @"word", // 6
+                        nil];
+  self.pageModeValues = [NSArray arrayWithObjects:
+                         [NSNumber numberWithInt:2],
+                         [NSNumber numberWithInt:5],
+                         [NSNumber numberWithInt:6],
+                         nil];
+
   // update labels and ui controls
   
   self.imageSizeLabel.text = @"";
@@ -61,19 +72,13 @@
   self.numbersOnlySwitch.on = [numbersOnly boolValue];
   
   NSNumber *pageMode = [def valueForKey:kPageModeDefault];
-  self.pageModeSlider.value = [pageMode floatValue];
+  NSUInteger pageModeIndex = [self.pageModeValues indexOfObject:pageMode];
+  if (pageModeIndex == NSNotFound) {
+    pageModeIndex = 0;
+  }
+  self.pageModeSlider.value = pageModeIndex;
   
-  self.pageModeNames = [NSArray arrayWithObjects:
-                        @"auto", // 2
-                        @"line", // 5
-                        @"word", // 6
-                        nil];
-  self.pageModeValues = [NSArray arrayWithObjects:
-                         [NSNumber numberWithInt:2],
-                         [NSNumber numberWithInt:5],
-                         [NSNumber numberWithInt:6],
-                         nil];
-  self.pageModeLabel.text = [self.pageModeNames objectAtIndex:[pageMode intValue]];
+  self.pageModeLabel.text = [self.pageModeNames objectAtIndex:pageModeIndex];
   
   [self.numbersOnlySwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
   [self.pageModeSlider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
