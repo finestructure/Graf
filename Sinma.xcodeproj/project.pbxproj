@@ -26,6 +26,7 @@
 		5A4766EA14B5E61B00D8FA66 /* ImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
+		5A4766F714BC832B00D8FA66 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766F614BC832B00D8FA66 /* Constants.m */; };
 		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
@@ -103,6 +104,8 @@
 		5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessor.mm; sourceTree = "<group>"; };
 		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		5A4766F514BC832B00D8FA66 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		5A4766F614BC832B00D8FA66 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
@@ -170,6 +173,8 @@
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
 				5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */,
 				5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */,
+				5A4766F514BC832B00D8FA66 /* Constants.h */,
+				5A4766F614BC832B00D8FA66 /* Constants.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
 				5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */,
 				5A4766EA14B5E61B00D8FA66 /* ImageProcessor.mm in Sources */,
+				5A4766F714BC832B00D8FA66 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@
 
 #import "VideoViewController.h"
 
-#import "SettingsViewController.h"
+#import "Constants.h"
 
 @implementation VideoViewController
 

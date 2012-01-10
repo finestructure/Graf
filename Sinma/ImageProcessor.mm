@@ -7,7 +7,7 @@
 //
 
 #import "ImageProcessor.h"
-#import "SettingsViewController.h"
+#import "Constants.h"
 
 #include "baseapi.h"
 
