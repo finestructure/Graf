@@ -69,6 +69,14 @@
 }
 
 
+- (void)dealloc {
+  delete tesseract;
+  if (pixels != NULL) {
+    free(pixels);
+  }
+}
+
+
 - (NSString *)processImage:(UIImage *)image
 {
   [self setTesseractImage:image];
