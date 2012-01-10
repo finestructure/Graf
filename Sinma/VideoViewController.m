@@ -298,14 +298,6 @@
 #pragma mark - Actions
 
 
-- (IBAction)done:(id)sender {
-  NSLog(@"stopping ocr");
-  [self.session stopRunning];
-  self.runOcrSwitch.on = NO;
-  [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 - (void)valueChanged:(id)sender {
   if (sender == self.runOcrSwitch) {
     if (self.runOcrSwitch.on) {

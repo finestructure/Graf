@@ -29,7 +29,6 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *runOcrSwitch;
 
-- (IBAction)done:(id)sender;
 - (IBAction)valueChanged:(id)sender;
 
 @end
