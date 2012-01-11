@@ -214,26 +214,27 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
-  UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-  image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
-  CGSize previewSize = self.preview.frame.size;
-  
-  CGFloat scale = image.size.width/previewSize.width;
-  CGRect cropRect = CGRectMake(0,
-                               image.size.height/2 - previewSize.height/2*scale,
-                               image.size.width,
-                               previewSize.height*scale);
-  image = [self cropImage:image toFrame:cropRect];
-  
-  NSString *result = [self.imageProcessor processImage:image];
-  //NSLog(@"%@ ocr: %@", [NSDate date], result);
-
-  // update UI elements on main thread
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
-    self.textResultView.text = result;
-    self.snapShotView.image = image;
-  });
+  @autoreleasepool {
+    UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
+    image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
+    CGSize previewSize = self.preview.frame.size;
+    
+    CGFloat scale = image.size.width/previewSize.width;
+    CGRect cropRect = CGRectMake(0,
+                                 image.size.height/2 - previewSize.height/2*scale,
+                                 image.size.width,
+                                 previewSize.height*scale);
+    image = [self cropImage:image toFrame:cropRect];
+    
+    NSString *result = [self.imageProcessor processImage:image];
+    
+    // update UI elements on main thread
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
+      self.textResultView.text = result;
+      self.snapShotView.image = image;
+    });
+  }
 }
 
 
