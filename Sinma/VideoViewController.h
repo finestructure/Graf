@@ -31,4 +31,7 @@
 
 - (IBAction)valueChanged:(id)sender;
 
+- (void)startSession;
+- (void)stopSession;
+
 @end

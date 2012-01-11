@@ -150,9 +150,7 @@
 
   // start session
   
-  NSLog(@"starting ocr");
-  [self.session startRunning];
-  self.runOcrSwitch.on = YES;
+  [self startSession];
 }
 
 
@@ -266,11 +264,9 @@
 - (void)valueChanged:(id)sender {
   if (sender == self.runOcrSwitch) {
     if (self.runOcrSwitch.on) {
-      NSLog(@"starting ocr");
-      [self.session startRunning];
+      [self startSession];
     } else {
-      NSLog(@"stopping ocr");
-      [self.session stopRunning];
+      [self stopSession];
     }
   } else if (sender == self.pageModeSlider) {
     NSNumber *sliderValue = [NSNumber numberWithInt:(int)self.pageModeSlider.value];
@@ -282,6 +278,20 @@
     [[NSUserDefaults standardUserDefaults] setValue:value forKey:kNumbersOnlyDefault];
   }
   self.imageProcessor = [[ImageProcessor alloc] init];
+}
+
+
+- (void)startSession {
+  NSLog(@"starting ocr");
+  [self.session startRunning];
+  self.runOcrSwitch.on = YES;
+}
+
+
+- (void)stopSession {
+  NSLog(@"stopping ocr");
+  [self.session stopRunning];
+  self.runOcrSwitch.on = NO;
 }
 
 
