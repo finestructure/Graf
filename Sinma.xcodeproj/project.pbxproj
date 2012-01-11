@@ -13,8 +13,6 @@
 		5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2263D014B1FB190078EBEF /* InfoPlist.strings */; };
 		5A2263D414B1FB190078EBEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D314B1FB190078EBEF /* main.m */; };
 		5A2263D814B1FB190078EBEF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D714B1FB190078EBEF /* AppDelegate.mm */; };
-		5A2263DB14B1FB190078EBEF /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263DA14B1FB190078EBEF /* ViewController.mm */; };
-		5A2263DE14B1FB190078EBEF /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2263DC14B1FB190078EBEF /* ViewController.xib */; };
 		5A2263E714B312680078EBEF /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263E614B312680078EBEF /* OverlayView.m */; };
 		5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263E914B313620078EBEF /* UIImage+Alpha.m */; };
 		5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263EB14B313620078EBEF /* UIImage+Resize.m */; };
@@ -22,9 +20,14 @@
 		5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263F214B3153E0078EBEF /* MBProgressHUD.m */; };
 		5A22645914B32DE60078EBEF /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645714B32DE60078EBEF /* liblept.a */; };
 		5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645814B32DE60078EBEF /* libtesseract_all.a */; };
+		5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */; };
+		5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */; };
+		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
+		5A4766EA14B5E61B00D8FA66 /* ImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */; };
+		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
+		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
+		5A4766F714BC832B00D8FA66 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766F614BC832B00D8FA66 /* Constants.m */; };
 		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
-		5A7B0EAD14B470BB000314C0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */; };
-		5A7B0EAE14B470BB000314C0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
 /* End PBXBuildFile section */
@@ -40,9 +43,6 @@
 		5A2263D514B1FB190078EBEF /* Sinma-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sinma-Prefix.pch"; sourceTree = "<group>"; };
 		5A2263D614B1FB190078EBEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A2263D714B1FB190078EBEF /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		5A2263D914B1FB190078EBEF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5A2263DA14B1FB190078EBEF /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
-		5A2263DD14B1FB190078EBEF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		5A2263E514B312680078EBEF /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
 		5A2263E614B312680078EBEF /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
 		5A2263E814B313620078EBEF /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
@@ -96,10 +96,17 @@
 		5A22645614B32DCB0078EBEF /* unichar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unichar.h; path = Tesseract/include/tesseract/unichar.h; sourceTree = SOURCE_ROOT; };
 		5A22645714B32DE60078EBEF /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblept.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/liblept.a; sourceTree = "<group>"; };
 		5A22645814B32DE60078EBEF /* libtesseract_all.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtesseract_all.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/libtesseract_all.a; sourceTree = "<group>"; };
+		5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
+		5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
+		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
+		5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessor.mm; sourceTree = "<group>"; };
+		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		5A4766F514BC832B00D8FA66 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		5A4766F614BC832B00D8FA66 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
-		5A7B0EAA14B470BB000314C0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +116,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
+				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
+				5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */,
 				5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */,
 				5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */,
 				5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */,
@@ -142,6 +152,9 @@
 		5A2263C614B1FB190078EBEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */,
+				5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */,
+				5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */,
 				5A2263C714B1FB190078EBEF /* UIKit.framework */,
 				5A2263C914B1FB190078EBEF /* Foundation.framework */,
 				5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */,
@@ -154,13 +167,14 @@
 			children = (
 				5A2263D614B1FB190078EBEF /* AppDelegate.h */,
 				5A2263D714B1FB190078EBEF /* AppDelegate.mm */,
-				5A2263D914B1FB190078EBEF /* ViewController.h */,
-				5A2263DA14B1FB190078EBEF /* ViewController.mm */,
-				5A2263DC14B1FB190078EBEF /* ViewController.xib */,
-				5A7B0EAA14B470BB000314C0 /* SettingsViewController.h */,
-				5A7B0EAB14B470BB000314C0 /* SettingsViewController.m */,
-				5A7B0EAC14B470BB000314C0 /* SettingsViewController.xib */,
+				5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */,
+				5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */,
+				5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */,
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
+				5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */,
+				5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */,
+				5A4766F514BC832B00D8FA66 /* Constants.h */,
+				5A4766F614BC832B00D8FA66 /* Constants.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -339,11 +353,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */,
-				5A2263DE14B1FB190078EBEF /* ViewController.xib in Resources */,
 				5A7B0EA914B45666000314C0 /* tessdata in Resources */,
-				5A7B0EAE14B470BB000314C0 /* SettingsViewController.xib in Resources */,
 				5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */,
 				5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */,
+				5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,13 +385,14 @@
 			files = (
 				5A2263D414B1FB190078EBEF /* main.m in Sources */,
 				5A2263D814B1FB190078EBEF /* AppDelegate.mm in Sources */,
-				5A2263DB14B1FB190078EBEF /* ViewController.mm in Sources */,
 				5A2263E714B312680078EBEF /* OverlayView.m in Sources */,
 				5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */,
 				5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */,
 				5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */,
 				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
-				5A7B0EAD14B470BB000314C0 /* SettingsViewController.m in Sources */,
+				5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */,
+				5A4766EA14B5E61B00D8FA66 /* ImageProcessor.mm in Sources */,
+				5A4766F714BC832B00D8FA66 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,14 +405,6 @@
 				5A2263D114B1FB190078EBEF /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		5A2263DC14B1FB190078EBEF /* ViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5A2263DD14B1FB190078EBEF /* en */,
-			);
-			name = ViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
