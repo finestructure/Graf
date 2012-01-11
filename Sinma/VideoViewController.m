@@ -23,6 +23,7 @@
 @synthesize numbersOnlySwitch = _numbersOnlySwitch;
 @synthesize pageModeSlider = _pageModeSlider;
 @synthesize pageModeLabel = _pageModeLabel;
+@synthesize processingTimeLabel = _processingTimeLabel;
 @synthesize runOcrSwitch = _runOcrSwitch;
 
 
@@ -106,6 +107,7 @@
   
   self.imageSizeLabel.text = @"";
   self.textResultView.text = @"";
+  self.processingTimeLabel.text = @"";
   
   NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
   
@@ -229,6 +231,8 @@
     dispatch_queue_t queue = ((AVCaptureVideoDataOutput *)captureOutput).sampleBufferCallbackQueue;
     dispatch_group_t group = dispatch_group_create();
 
+    NSDate *start = [NSDate date];
+    
     dispatch_group_async(group, queue, ^{
       NSString *result = [self.imageProcessor processImage:image];
       
@@ -239,10 +243,21 @@
         self.snapShotView.image = image;
       });
     });
-    dispatch_group_wait(group, 500*1000*1000); // 0.5s
-    
+    long result = dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW,
+                                                           100*1000*1000)); // 0.1 s
+    if (result != 0) {
+      NSLog(@"timeout!");
+    } else {
+      NSLog(@"OK");
+    }
     dispatch_release(group);
     
+    // update processing time label
+    NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
+    NSLog(@"duration: %f", duration);
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f ms", duration*1000];
+    });
   }
 }
 
@@ -258,6 +273,7 @@
   [self setPageModeSlider:nil];
   [self setPageModeLabel:nil];
   [self setRunOcrSwitch:nil];
+  [self setProcessingTimeLabel:nil];
   [super viewDidUnload];
 }
 

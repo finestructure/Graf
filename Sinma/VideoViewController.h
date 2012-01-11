@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *numbersOnlySwitch;
 @property (weak, nonatomic) IBOutlet UISlider *pageModeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *pageModeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *runOcrSwitch;
 
