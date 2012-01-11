@@ -46,6 +46,35 @@
 #pragma mark - View lifecycle
 
 
+- (AVCaptureSession *)createSession {
+  AVCaptureSession *session = [[AVCaptureSession alloc] init];
+  session.sessionPreset = AVCaptureSessionPresetMedium;
+  
+  // set up device
+  
+  AVCaptureDevice *device =
+  [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+  
+  NSError *error = nil;
+  AVCaptureDeviceInput *input =
+  [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+  if (!input) {
+    NSLog(@"error setting up video device");
+    return nil;
+  }
+  [session addInput:input];
+  
+  // set up data output
+  
+  AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
+  output.alwaysDiscardsLateVideoFrames = YES;
+  output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+  [session addOutput:output];
+  
+  return session;
+}
+
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -101,33 +130,12 @@
   
   // session init
   
-  self.session = [[AVCaptureSession alloc] init];
-  self.session.sessionPreset = AVCaptureSessionPresetMedium;
+  self.session = [self createSession];
   
-  // set up device
-  
-  AVCaptureDevice *device =
-  [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-  
-  NSError *error = nil;
-  AVCaptureDeviceInput *input =
-  [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
-  if (!input) {
-    NSLog(@"error setting up video device");
-    return;
-  }
-  [self.session addInput:input];
-
-  // set up data output
-  
-  AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-  output.alwaysDiscardsLateVideoFrames = YES;
-  output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
-  [self.session addOutput:output];
-
   // set up handler queue
   
   dispatch_queue_t queue = dispatch_queue_create("MyQueue", NULL);
+  AVCaptureVideoDataOutput *output = [[self.session outputs] objectAtIndex:0];
   [output setSampleBufferDelegate:self queue:queue];
   dispatch_release(queue);
   
