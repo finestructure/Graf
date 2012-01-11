@@ -226,14 +226,23 @@
                                  previewSize.height*scale);
     image = [self cropImage:image toFrame:cropRect];
     
-    NSString *result = [self.imageProcessor processImage:image];
-    
-    // update UI elements on main thread
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
-      self.textResultView.text = result;
-      self.snapShotView.image = image;
+    dispatch_queue_t queue = ((AVCaptureVideoDataOutput *)captureOutput).sampleBufferCallbackQueue;
+    dispatch_group_t group = dispatch_group_create();
+
+    dispatch_group_async(group, queue, ^{
+      NSString *result = [self.imageProcessor processImage:image];
+      
+      // update UI elements on main thread
+      dispatch_async(dispatch_get_main_queue(), ^(void) {
+        self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
+        self.textResultView.text = result;
+        self.snapShotView.image = image;
+      });
     });
+    dispatch_group_wait(group, 500*1000*1000); // 0.5s
+    
+    dispatch_release(group);
+    
   }
 }
 
