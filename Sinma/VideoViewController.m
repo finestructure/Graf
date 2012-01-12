@@ -20,6 +20,7 @@
 @synthesize processingTimeLabel = _processingTimeLabel;
 @synthesize snapshotPreview = _snapshotPreview;
 @synthesize imageOutput = _imageOutput;
+@synthesize imageProcessor = _imageProcessor;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -67,6 +68,9 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  // set up image processor
+  self.imageProcessor = [[ImageProcessor alloc] init];
   
   // update labels and ui controls
   

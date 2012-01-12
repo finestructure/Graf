@@ -10,4 +10,7 @@
 
 @interface ImageProcessor : NSObject
 
+- (NSString *)processImage:(UIImage *)image;
+- (float)balance;
+
 @end
