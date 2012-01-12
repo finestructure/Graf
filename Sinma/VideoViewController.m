@@ -201,8 +201,7 @@
                                  previewSize.height*scale);
     image = [self cropImage:image toFrame:cropRect];
           
-#warning add service call
-    NSString *result = @"test";
+    NSString *result = [self.imageProcessor processImage:image];
     
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {

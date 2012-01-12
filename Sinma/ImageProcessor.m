@@ -39,18 +39,21 @@ const char *kPass = "i8Kn37rD8v";
 
 
 - (void)dealloc {
+  dbc_close(_client);
   free(_client);
 }
 
 
 - (NSString *)processImage:(UIImage *)image
 {
+  NSLog(@"balance: %f", [self balance]);
   return @"";
 }
 
 
 - (float)balance {
-  return 0;
+  dbc_get_balance(_client);
+  return _client->balance;
 }
 
 
