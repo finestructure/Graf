@@ -510,9 +510,12 @@ int dbc_init(dbc_client *client, const char *username, const char *password)
             if (NULL == (client->socket_lock = CreateMutex(&lock_sec, FALSE, NULL))) {
                 fprintf(stderr, "CreateMutex(): %d\n", (int)GetLastError());
 #else
-            client->semaphore = sem_open("dbc_semaphore", O_CREAT | O_EXCL, 0644, 1);
+            client->semaphore = sem_open("dbc_semaphore", O_CREAT, 0644, 1);
             if (client->semaphore == SEM_FAILED) {
                 fprintf(stderr, "sem_init(): %d\n", errno);
+              if (errno == EEXIST) {
+                fprintf(stderr, "sem already exists");
+              }
 #endif  /* _WIN32 */
             } else {
 #ifdef _WIN32
