@@ -17,15 +17,12 @@
 		5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263EB14B313620078EBEF /* UIImage+Resize.m */; };
 		5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */; };
 		5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263F214B3153E0078EBEF /* MBProgressHUD.m */; };
-		5A22645914B32DE60078EBEF /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645714B32DE60078EBEF /* liblept.a */; };
-		5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645814B32DE60078EBEF /* libtesseract_all.a */; };
 		5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */; };
 		5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
 		5A4766F714BC832B00D8FA66 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766F614BC832B00D8FA66 /* Constants.m */; };
-		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
 /* End PBXBuildFile section */
@@ -49,49 +46,6 @@
 		5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		5A2263F114B3153E0078EBEF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		5A2263F214B3153E0078EBEF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		5A22642E14B32DB10078EBEF /* allheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = allheaders.h; path = Tesseract/include/leptonica/allheaders.h; sourceTree = SOURCE_ROOT; };
-		5A22642F14B32DB10078EBEF /* alltypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alltypes.h; path = Tesseract/include/leptonica/alltypes.h; sourceTree = SOURCE_ROOT; };
-		5A22643014B32DB10078EBEF /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = array.h; path = Tesseract/include/leptonica/array.h; sourceTree = SOURCE_ROOT; };
-		5A22643114B32DB10078EBEF /* arrayaccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arrayaccess.h; path = Tesseract/include/leptonica/arrayaccess.h; sourceTree = SOURCE_ROOT; };
-		5A22643214B32DB10078EBEF /* bbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bbuffer.h; path = Tesseract/include/leptonica/bbuffer.h; sourceTree = SOURCE_ROOT; };
-		5A22643314B32DB10078EBEF /* bmf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bmf.h; path = Tesseract/include/leptonica/bmf.h; sourceTree = SOURCE_ROOT; };
-		5A22643414B32DB10078EBEF /* bmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bmp.h; path = Tesseract/include/leptonica/bmp.h; sourceTree = SOURCE_ROOT; };
-		5A22643514B32DB10078EBEF /* ccbord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccbord.h; path = Tesseract/include/leptonica/ccbord.h; sourceTree = SOURCE_ROOT; };
-		5A22643614B32DB10078EBEF /* dewarp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dewarp.h; path = Tesseract/include/leptonica/dewarp.h; sourceTree = SOURCE_ROOT; };
-		5A22643714B32DB10078EBEF /* endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = endianness.h; path = Tesseract/include/leptonica/endianness.h; sourceTree = SOURCE_ROOT; };
-		5A22643814B32DB10078EBEF /* environ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = environ.h; path = Tesseract/include/leptonica/environ.h; sourceTree = SOURCE_ROOT; };
-		5A22643914B32DB10078EBEF /* freetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freetype.h; path = Tesseract/include/leptonica/freetype.h; sourceTree = SOURCE_ROOT; };
-		5A22643A14B32DB10078EBEF /* gplot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gplot.h; path = Tesseract/include/leptonica/gplot.h; sourceTree = SOURCE_ROOT; };
-		5A22643B14B32DB10078EBEF /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = heap.h; path = Tesseract/include/leptonica/heap.h; sourceTree = SOURCE_ROOT; };
-		5A22643C14B32DB10078EBEF /* imageio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imageio.h; path = Tesseract/include/leptonica/imageio.h; sourceTree = SOURCE_ROOT; };
-		5A22643D14B32DB10078EBEF /* jbclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jbclass.h; path = Tesseract/include/leptonica/jbclass.h; sourceTree = SOURCE_ROOT; };
-		5A22643E14B32DB10078EBEF /* leptprotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = leptprotos.h; path = Tesseract/include/leptonica/leptprotos.h; sourceTree = SOURCE_ROOT; };
-		5A22643F14B32DB10078EBEF /* leptwin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = leptwin.h; path = Tesseract/include/leptonica/leptwin.h; sourceTree = SOURCE_ROOT; };
-		5A22644014B32DB10078EBEF /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = list.h; path = Tesseract/include/leptonica/list.h; sourceTree = SOURCE_ROOT; };
-		5A22644114B32DB10078EBEF /* morph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = morph.h; path = Tesseract/include/leptonica/morph.h; sourceTree = SOURCE_ROOT; };
-		5A22644214B32DB10078EBEF /* pix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pix.h; path = Tesseract/include/leptonica/pix.h; sourceTree = SOURCE_ROOT; };
-		5A22644314B32DB10078EBEF /* ptra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ptra.h; path = Tesseract/include/leptonica/ptra.h; sourceTree = SOURCE_ROOT; };
-		5A22644414B32DB10078EBEF /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = queue.h; path = Tesseract/include/leptonica/queue.h; sourceTree = SOURCE_ROOT; };
-		5A22644514B32DB10078EBEF /* readbarcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readbarcode.h; path = Tesseract/include/leptonica/readbarcode.h; sourceTree = SOURCE_ROOT; };
-		5A22644614B32DB10078EBEF /* regutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = regutils.h; path = Tesseract/include/leptonica/regutils.h; sourceTree = SOURCE_ROOT; };
-		5A22644714B32DB10078EBEF /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = Tesseract/include/leptonica/stack.h; sourceTree = SOURCE_ROOT; };
-		5A22644814B32DB10078EBEF /* sudoku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sudoku.h; path = Tesseract/include/leptonica/sudoku.h; sourceTree = SOURCE_ROOT; };
-		5A22644914B32DB10078EBEF /* watershed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = watershed.h; path = Tesseract/include/leptonica/watershed.h; sourceTree = SOURCE_ROOT; };
-		5A22644A14B32DCB0078EBEF /* apitypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apitypes.h; path = Tesseract/include/tesseract/apitypes.h; sourceTree = SOURCE_ROOT; };
-		5A22644B14B32DCB0078EBEF /* baseapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseapi.h; path = Tesseract/include/tesseract/baseapi.h; sourceTree = SOURCE_ROOT; };
-		5A22644C14B32DCB0078EBEF /* errcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = errcode.h; path = Tesseract/include/tesseract/errcode.h; sourceTree = SOURCE_ROOT; };
-		5A22644D14B32DCB0078EBEF /* genericvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = genericvector.h; path = Tesseract/include/tesseract/genericvector.h; sourceTree = SOURCE_ROOT; };
-		5A22644E14B32DCB0078EBEF /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpers.h; path = Tesseract/include/tesseract/helpers.h; sourceTree = SOURCE_ROOT; };
-		5A22644F14B32DCB0078EBEF /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = Tesseract/include/tesseract/host.h; sourceTree = SOURCE_ROOT; };
-		5A22645014B32DCB0078EBEF /* ndminx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ndminx.h; path = Tesseract/include/tesseract/ndminx.h; sourceTree = SOURCE_ROOT; };
-		5A22645114B32DCB0078EBEF /* ocrclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ocrclass.h; path = Tesseract/include/tesseract/ocrclass.h; sourceTree = SOURCE_ROOT; };
-		5A22645214B32DCB0078EBEF /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform.h; path = Tesseract/include/tesseract/platform.h; sourceTree = SOURCE_ROOT; };
-		5A22645314B32DCB0078EBEF /* publictypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = publictypes.h; path = Tesseract/include/tesseract/publictypes.h; sourceTree = SOURCE_ROOT; };
-		5A22645414B32DCB0078EBEF /* tesscallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesscallback.h; path = Tesseract/include/tesseract/tesscallback.h; sourceTree = SOURCE_ROOT; };
-		5A22645514B32DCB0078EBEF /* thresholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thresholder.h; path = Tesseract/include/tesseract/thresholder.h; sourceTree = SOURCE_ROOT; };
-		5A22645614B32DCB0078EBEF /* unichar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unichar.h; path = Tesseract/include/tesseract/unichar.h; sourceTree = SOURCE_ROOT; };
-		5A22645714B32DE60078EBEF /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblept.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/liblept.a; sourceTree = "<group>"; };
-		5A22645814B32DE60078EBEF /* libtesseract_all.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtesseract_all.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/libtesseract_all.a; sourceTree = "<group>"; };
 		5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -100,7 +54,6 @@
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		5A4766F514BC832B00D8FA66 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		5A4766F614BC832B00D8FA66 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,8 +69,6 @@
 				5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */,
 				5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */,
 				5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */,
-				5A22645914B32DE60078EBEF /* liblept.a in Frameworks */,
-				5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +136,6 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				5A7B0EA814B45666000314C0 /* tessdata */,
-				5A2263F414B3174E0078EBEF /* Tesseract */,
 				5A2263F114B3153E0078EBEF /* MBProgressHUD.h */,
 				5A2263F214B3153E0078EBEF /* MBProgressHUD.m */,
 				5A2263E814B313620078EBEF /* UIImage+Alpha.h */,
@@ -197,88 +146,6 @@
 				5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */,
 			);
 			name = Other;
-			sourceTree = "<group>";
-		};
-		5A2263F414B3174E0078EBEF /* Tesseract */ = {
-			isa = PBXGroup;
-			children = (
-				5A2263FD14B318540078EBEF /* include */,
-				5A22642914B318540078EBEF /* lib */,
-			);
-			name = Tesseract;
-			sourceTree = "<group>";
-		};
-		5A2263FD14B318540078EBEF /* include */ = {
-			isa = PBXGroup;
-			children = (
-				5A2263FE14B318540078EBEF /* leptonica */,
-				5A22641B14B318540078EBEF /* tesseract */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		5A2263FE14B318540078EBEF /* leptonica */ = {
-			isa = PBXGroup;
-			children = (
-				5A22642E14B32DB10078EBEF /* allheaders.h */,
-				5A22642F14B32DB10078EBEF /* alltypes.h */,
-				5A22643014B32DB10078EBEF /* array.h */,
-				5A22643114B32DB10078EBEF /* arrayaccess.h */,
-				5A22643214B32DB10078EBEF /* bbuffer.h */,
-				5A22643314B32DB10078EBEF /* bmf.h */,
-				5A22643414B32DB10078EBEF /* bmp.h */,
-				5A22643514B32DB10078EBEF /* ccbord.h */,
-				5A22643614B32DB10078EBEF /* dewarp.h */,
-				5A22643714B32DB10078EBEF /* endianness.h */,
-				5A22643814B32DB10078EBEF /* environ.h */,
-				5A22643914B32DB10078EBEF /* freetype.h */,
-				5A22643A14B32DB10078EBEF /* gplot.h */,
-				5A22643B14B32DB10078EBEF /* heap.h */,
-				5A22643C14B32DB10078EBEF /* imageio.h */,
-				5A22643D14B32DB10078EBEF /* jbclass.h */,
-				5A22643E14B32DB10078EBEF /* leptprotos.h */,
-				5A22643F14B32DB10078EBEF /* leptwin.h */,
-				5A22644014B32DB10078EBEF /* list.h */,
-				5A22644114B32DB10078EBEF /* morph.h */,
-				5A22644214B32DB10078EBEF /* pix.h */,
-				5A22644314B32DB10078EBEF /* ptra.h */,
-				5A22644414B32DB10078EBEF /* queue.h */,
-				5A22644514B32DB10078EBEF /* readbarcode.h */,
-				5A22644614B32DB10078EBEF /* regutils.h */,
-				5A22644714B32DB10078EBEF /* stack.h */,
-				5A22644814B32DB10078EBEF /* sudoku.h */,
-				5A22644914B32DB10078EBEF /* watershed.h */,
-			);
-			path = leptonica;
-			sourceTree = "<group>";
-		};
-		5A22641B14B318540078EBEF /* tesseract */ = {
-			isa = PBXGroup;
-			children = (
-				5A22644A14B32DCB0078EBEF /* apitypes.h */,
-				5A22644B14B32DCB0078EBEF /* baseapi.h */,
-				5A22644C14B32DCB0078EBEF /* errcode.h */,
-				5A22644D14B32DCB0078EBEF /* genericvector.h */,
-				5A22644E14B32DCB0078EBEF /* helpers.h */,
-				5A22644F14B32DCB0078EBEF /* host.h */,
-				5A22645014B32DCB0078EBEF /* ndminx.h */,
-				5A22645114B32DCB0078EBEF /* ocrclass.h */,
-				5A22645214B32DCB0078EBEF /* platform.h */,
-				5A22645314B32DCB0078EBEF /* publictypes.h */,
-				5A22645414B32DCB0078EBEF /* tesscallback.h */,
-				5A22645514B32DCB0078EBEF /* thresholder.h */,
-				5A22645614B32DCB0078EBEF /* unichar.h */,
-			);
-			path = tesseract;
-			sourceTree = "<group>";
-		};
-		5A22642914B318540078EBEF /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				5A22645714B32DE60078EBEF /* liblept.a */,
-				5A22645814B32DE60078EBEF /* libtesseract_all.a */,
-			);
-			path = lib;
 			sourceTree = "<group>";
 		};
 		5A7B0EAF14B47315000314C0 /* Resources */ = {
@@ -343,7 +210,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */,
-				5A7B0EA914B45666000314C0 /* tessdata in Resources */,
 				5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */,
 				5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */,
 				5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */,
