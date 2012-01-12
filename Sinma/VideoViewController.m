@@ -220,13 +220,11 @@
 
 
 - (void)startSession {
-  NSLog(@"starting ocr");
   [self.session startRunning];
 }
 
 
 - (void)stopSession {
-  NSLog(@"stopping ocr");
   [self.session stopRunning];
 }
 
