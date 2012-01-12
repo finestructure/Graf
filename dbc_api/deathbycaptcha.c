@@ -382,11 +382,6 @@ cJSON *dbc_call(dbc_client *client, const char *cmd, cJSON *args)
             dbc_call(client, "login", auth);
         }
 
-#ifdef _WIN32
-        if (WAIT_OBJECT_0 == WaitForSingleObject(client->socket_lock, INFINITE)) {
-#else
-        if (!sem_wait(client->semaphore)) {
-#endif  /* _WIN32 */
             response = dbc_send_and_recv(client, sbuf);
             if (NULL == response) {
                 /* Worth retrying */
@@ -418,12 +413,6 @@ cJSON *dbc_call(dbc_client *client, const char *cmd, cJSON *args)
                     tmp = NULL;
                 }
             }
-#ifdef _WIN32
-            ReleaseMutex(client->socket_lock);
-#else
-            sem_post(client->semaphore);
-#endif  /* _WIN32 */
-        }
     }
 
     free(sbuf);
@@ -459,12 +448,6 @@ void dbc_close(dbc_client *client)
             client->server_addr = NULL;
         }
         dbc_disconnect(client);
-#ifdef _WIN32
-        WSACleanup();
-        CloseHandle(client->socket_lock);
-#else
-        sem_close(client->semaphore);
-#endif  /* _WIN32 */
     }
 }
 
@@ -502,33 +485,13 @@ int dbc_init(dbc_client *client, const char *username, const char *password)
         }
         free(port);
         if (NULL != client->server_addr) {
-#ifdef _WIN32
-            SECURITY_ATTRIBUTES lock_sec;
-            lock_sec.nLength = sizeof(SECURITY_ATTRIBUTES);
-            lock_sec.lpSecurityDescriptor = NULL;
-            lock_sec.bInheritHandle = TRUE;
-            if (NULL == (client->socket_lock = CreateMutex(&lock_sec, FALSE, NULL))) {
-                fprintf(stderr, "CreateMutex(): %d\n", (int)GetLastError());
-#else
-            client->semaphore = sem_open("dbc_semaphore", O_CREAT, 0644, 1);
-            if (client->semaphore == SEM_FAILED) {
-                fprintf(stderr, "sem_init(): %d\n", errno);
-              if (errno == EEXIST) {
-                fprintf(stderr, "sem already exists");
-              }
-#endif  /* _WIN32 */
-            } else {
-#ifdef _WIN32
-                client->socket = INVALID_SOCKET;
-#else
+
                 client->socket = -1;
-#endif  /* _WIN32 */
                 client->username = (char *)calloc(strlen(username) + 1, sizeof(char));
                 strcpy(client->username, username);
                 client->password = (char *)calloc(strlen(password) + 1, sizeof(char));
                 strcpy(client->password, password);
                 return 0;
-            }
         }
     }
 

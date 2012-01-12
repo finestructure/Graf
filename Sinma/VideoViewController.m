@@ -19,6 +19,7 @@
 @synthesize textResultView = _textResultView;
 @synthesize processingTimeLabel = _processingTimeLabel;
 @synthesize snapshotPreview = _snapshotPreview;
+@synthesize balanceLabel = _balanceLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 
@@ -70,13 +71,14 @@
   [super viewDidLoad];
   
   // set up image processor
-  self.imageProcessor = [[ImageProcessor alloc] init];
+//  self.imageProcessor = [[ImageProcessor alloc] init];
   
   // update labels and ui controls
   
   self.imageSizeLabel.text = @"";
   self.textResultView.text = @"";
   self.processingTimeLabel.text = @"";
+  self.balanceLabel.text = @"";
   
   // session init
   
@@ -169,6 +171,7 @@
   [self setTextResultView:nil];
   [self setProcessingTimeLabel:nil];
   [self setSnapshotPreview:nil];
+  [self setBalanceLabel:nil];
   [super viewDidUnload];
 }
 
@@ -201,11 +204,16 @@
                                  previewSize.height*scale);
     image = [self cropImage:image toFrame:cropRect];
           
-    NSString *result = [self.imageProcessor processImage:image];
-    
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       self.snapshotPreview.image = image;
+      self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
+    });
+    
+    NSString *result = @"blah"; //[self.imageProcessor processImage:image];
+    
+    // update UI elements on main thread
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
       self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
       self.textResultView.text = result;
       // update processing time label
