@@ -24,6 +24,7 @@
 @synthesize pageModeSlider = _pageModeSlider;
 @synthesize pageModeLabel = _pageModeLabel;
 @synthesize processingTimeLabel = _processingTimeLabel;
+@synthesize snapshotPreview = _snapshotPreview;
 @synthesize imageOutput = _imageOutput;
 
 
@@ -216,6 +217,7 @@
   [self setPageModeSlider:nil];
   [self setPageModeLabel:nil];
   [self setProcessingTimeLabel:nil];
+  [self setSnapshotPreview:nil];
   [super viewDidUnload];
 }
 
@@ -266,6 +268,7 @@
     
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
+      self.snapshotPreview.image = image;
       self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
       self.textResultView.text = result;
       // update processing time label
