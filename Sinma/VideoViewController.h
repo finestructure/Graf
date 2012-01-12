@@ -18,8 +18,8 @@
 @property (nonatomic, retain) ImageProcessor *imageProcessor;
 @property (nonatomic, retain) NSArray *pageModeNames;
 @property (nonatomic, retain) NSArray *pageModeValues;
+@property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
 
-@property (weak, nonatomic) IBOutlet UIImageView *snapShotView;
 @property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
 @property (weak, nonatomic) IBOutlet UITextView *textResultView;
 
@@ -28,9 +28,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *pageModeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 
-@property (weak, nonatomic) IBOutlet UISwitch *runOcrSwitch;
 
 - (IBAction)valueChanged:(id)sender;
+- (IBAction)takePicture:(id)sender;
 
 - (void)startSession;
 - (void)stopSession;
