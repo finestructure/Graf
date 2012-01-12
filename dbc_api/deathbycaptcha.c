@@ -35,6 +35,27 @@
 #include "deathbycaptcha.h"
 
 
+// prototypes
+size_t dbc_load_file(FILE *f, char **buf);
+unsigned short dbc_get_random_port();
+unsigned short dbc_get_random_port();
+int dbc_disconnect(dbc_client *client);
+int dbc_connect(dbc_client *client);
+int dbc_connected(dbc_client *client);
+void dbc_update_client(dbc_client *client, cJSON *response);
+void dbc_update_captcha(dbc_captcha *captcha, cJSON *response);
+cJSON *dbc_send_and_recv(dbc_client *client, const char *sbuf);
+cJSON *dbc_call(dbc_client *client, const char *cmd, cJSON *args);
+int dbc_upload(dbc_client *client,
+               dbc_captcha *captcha,
+               const char *buf,
+               size_t buflen);
+int dbc_upload_file(dbc_client *client,
+                    dbc_captcha *captcha,
+                    FILE *f);
+unsigned short dbc_get_random_port();
+
+
 /**
  * Load a file into a buffer.  Returns the number of characters loaded.
  */
