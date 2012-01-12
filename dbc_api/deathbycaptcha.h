@@ -52,7 +52,7 @@ typedef struct {
 #ifdef _WIN32
     HANDLE socket_lock;
 #else
-    sem_t socket_lock;
+    sem_t *semaphore;
 #endif  /* _WIN32 */
     struct addrinfo *server_addr;
 } dbc_client;

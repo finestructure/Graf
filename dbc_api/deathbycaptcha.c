@@ -385,7 +385,7 @@ cJSON *dbc_call(dbc_client *client, const char *cmd, cJSON *args)
 #ifdef _WIN32
         if (WAIT_OBJECT_0 == WaitForSingleObject(client->socket_lock, INFINITE)) {
 #else
-        if (!sem_wait(&(client->socket_lock))) {
+        if (!sem_wait(client->semaphore)) {
 #endif  /* _WIN32 */
             response = dbc_send_and_recv(client, sbuf);
             if (NULL == response) {
@@ -421,7 +421,7 @@ cJSON *dbc_call(dbc_client *client, const char *cmd, cJSON *args)
 #ifdef _WIN32
             ReleaseMutex(client->socket_lock);
 #else
-            sem_post(&(client->socket_lock));
+            sem_post(client->semaphore);
 #endif  /* _WIN32 */
         }
     }
@@ -463,7 +463,7 @@ void dbc_close(dbc_client *client)
         WSACleanup();
         CloseHandle(client->socket_lock);
 #else
-        sem_destroy(&(client->socket_lock));
+        sem_close(client->semaphore);
 #endif  /* _WIN32 */
     }
 }
@@ -510,7 +510,8 @@ int dbc_init(dbc_client *client, const char *username, const char *password)
             if (NULL == (client->socket_lock = CreateMutex(&lock_sec, FALSE, NULL))) {
                 fprintf(stderr, "CreateMutex(): %d\n", (int)GetLastError());
 #else
-            if (sem_init(&(client->socket_lock), 0, 1)) {
+            client->semaphore = sem_open("dbc_semaphore", O_CREAT | O_EXCL, 0644, 1);
+            if (client->semaphore == SEM_FAILED) {
                 fprintf(stderr, "sem_init(): %d\n", errno);
 #endif  /* _WIN32 */
             } else {
