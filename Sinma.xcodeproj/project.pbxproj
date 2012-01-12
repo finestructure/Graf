@@ -28,6 +28,7 @@
 		5A833BDE14BF1AB5000984F2 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A833BD714BF1AB5000984F2 /* base64.c */; };
 		5A833BDF14BF1AB5000984F2 /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A833BD914BF1AB5000984F2 /* cJSON.c */; };
 		5A833BE114BF1AB5000984F2 /* deathbycaptcha.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A833BDC14BF1AB5000984F2 /* deathbycaptcha.c */; };
+		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,8 @@
 		5A833BDA14BF1AB5000984F2 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
 		5A833BDC14BF1AB5000984F2 /* deathbycaptcha.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = deathbycaptcha.c; sourceTree = "<group>"; };
 		5A833BDD14BF1AB5000984F2 /* deathbycaptcha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deathbycaptcha.h; sourceTree = "<group>"; };
+		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
+		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
 				5A4766F514BC832B00D8FA66 /* Constants.h */,
 				5A4766F614BC832B00D8FA66 /* Constants.m */,
+				5AD8924514BF22B7005595BA /* ImageProcessor.h */,
+				5AD8924614BF22B7005595BA /* ImageProcessor.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -273,6 +278,7 @@
 				5A833BDE14BF1AB5000984F2 /* base64.c in Sources */,
 				5A833BDF14BF1AB5000984F2 /* cJSON.c in Sources */,
 				5A833BE114BF1AB5000984F2 /* deathbycaptcha.c in Sources */,
+				5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
