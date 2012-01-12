@@ -9,6 +9,7 @@
 #import "VideoViewController.h"
 
 #import "Constants.h"
+#import "MBProgressHUD.h"
 
 @implementation VideoViewController
 
@@ -243,6 +244,10 @@
 
 
 - (IBAction)takePicture:(id)sender {
+  NSDate *start = [NSDate date];
+  MBProgressHUD *progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  progressHud.labelText = @"Processing OCR";
+
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     
@@ -256,9 +261,7 @@
                                  image.size.width,
                                  previewSize.height*scale);
     image = [self cropImage:image toFrame:cropRect];
-    
-    NSDate *start = [NSDate date];
-      
+          
     NSString *result = [self.imageProcessor processImage:image];
     
     // update UI elements on main thread
@@ -269,6 +272,7 @@
       NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
       NSLog(@"duration: %f", duration);      
       self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f ms", duration*1000];
+      [progressHud hide:YES];
     });
   }];
 }
