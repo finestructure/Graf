@@ -9,6 +9,7 @@
 #import "VideoViewController.h"
 
 #import "Constants.h"
+#import "MBProgressHUD.h"
 
 @implementation VideoViewController
 
@@ -17,14 +18,14 @@
 @synthesize imageProcessor = _imageProcessor;
 @synthesize pageModeNames = _pageModeNames;
 @synthesize pageModeValues = _pageModeValues;
-@synthesize snapShotView = _snapShotView;
 @synthesize imageSizeLabel = _imageSizeLabel;
 @synthesize textResultView = _textResultView;
 @synthesize numbersOnlySwitch = _numbersOnlySwitch;
 @synthesize pageModeSlider = _pageModeSlider;
 @synthesize pageModeLabel = _pageModeLabel;
 @synthesize processingTimeLabel = _processingTimeLabel;
-@synthesize runOcrSwitch = _runOcrSwitch;
+@synthesize snapshotPreview = _snapshotPreview;
+@synthesize imageOutput = _imageOutput;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,13 +65,6 @@
     return nil;
   }
   [session addInput:input];
-  
-  // set up data output
-  
-  AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-  output.alwaysDiscardsLateVideoFrames = YES;
-  output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
-  [session addOutput:output];
   
   return session;
 }
@@ -134,12 +128,11 @@
   
   self.session = [self createSession];
   
-  // set up handler queue
+  // set up output
   
-  dispatch_queue_t queue = dispatch_queue_create("MyQueue", NULL);
-  AVCaptureVideoDataOutput *output = [[self.session outputs] objectAtIndex:0];
-  [output setSampleBufferDelegate:self queue:queue];
-  dispatch_release(queue);
+  self.imageOutput = [[AVCaptureStillImageOutput alloc] init];
+  self.imageOutput.outputSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+  [self.session addOutput:self.imageOutput];
   
   // set up preview
   
@@ -214,66 +207,17 @@
 }
 
 
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
-{
-  @autoreleasepool {
-    UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-    image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
-    CGSize previewSize = self.preview.frame.size;
-    
-    CGFloat scale = image.size.width/previewSize.width;
-    CGRect cropRect = CGRectMake(0,
-                                 image.size.height/2 - previewSize.height/2*scale,
-                                 image.size.width,
-                                 previewSize.height*scale);
-    image = [self cropImage:image toFrame:cropRect];
-    
-    dispatch_queue_t queue = ((AVCaptureVideoDataOutput *)captureOutput).sampleBufferCallbackQueue;
-    dispatch_group_t group = dispatch_group_create();
-
-    NSDate *start = [NSDate date];
-    
-    dispatch_group_async(group, queue, ^{
-      NSString *result = [self.imageProcessor processImage:image];
-      
-      // update UI elements on main thread
-      dispatch_async(dispatch_get_main_queue(), ^(void) {
-        self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
-        self.textResultView.text = result;
-        self.snapShotView.image = image;
-      });
-    });
-    long result = dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW,
-                                                           100*1000*1000)); // 0.1 s
-    if (result != 0) {
-      NSLog(@"timeout!");
-    } else {
-      NSLog(@"OK");
-    }
-    dispatch_release(group);
-    
-    // update processing time label
-    NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
-    NSLog(@"duration: %f", duration);
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f ms", duration*1000];
-    });
-  }
-}
-
-
 - (void)viewDidUnload
 {
   [self setPreview:nil];
   self.session = nil;
-  [self setSnapShotView:nil];
   [self setImageSizeLabel:nil];
   [self setTextResultView:nil];
   [self setNumbersOnlySwitch:nil];
   [self setPageModeSlider:nil];
   [self setPageModeLabel:nil];
-  [self setRunOcrSwitch:nil];
   [self setProcessingTimeLabel:nil];
+  [self setSnapshotPreview:nil];
   [super viewDidUnload];
 }
 
@@ -288,13 +232,7 @@
 
 
 - (void)valueChanged:(id)sender {
-  if (sender == self.runOcrSwitch) {
-    if (self.runOcrSwitch.on) {
-      [self startSession];
-    } else {
-      [self stopSession];
-    }
-  } else if (sender == self.pageModeSlider) {
+  if (sender == self.pageModeSlider) {
     NSNumber *sliderValue = [NSNumber numberWithInt:(int)self.pageModeSlider.value];
     NSNumber *pageModeValue = [self.pageModeValues objectAtIndex:[sliderValue intValue]];
     [[NSUserDefaults standardUserDefaults] setValue:pageModeValue forKey:kPageModeDefault];
@@ -307,17 +245,51 @@
 }
 
 
+- (IBAction)takePicture:(id)sender {
+  NSDate *start = [NSDate date];
+  MBProgressHUD *progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  progressHud.labelText = @"Processing OCR";
+
+  AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
+  [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
+    
+    UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
+    image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
+    CGSize previewSize = self.preview.frame.size;
+    
+    CGFloat scale = image.size.width/previewSize.width;
+    CGRect cropRect = CGRectMake(0,
+                                 image.size.height/2 - previewSize.height/2*scale,
+                                 image.size.width,
+                                 previewSize.height*scale);
+    image = [self cropImage:image toFrame:cropRect];
+          
+    NSString *result = [self.imageProcessor processImage:image];
+    
+    // update UI elements on main thread
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      self.snapshotPreview.image = image;
+      self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
+      self.textResultView.text = result;
+      // update processing time label
+      NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
+      NSLog(@"duration: %f", duration);      
+      self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f ms", duration*1000];
+      [progressHud hide:YES];
+    });
+  }];
+}
+
+
 - (void)startSession {
   NSLog(@"starting ocr");
   [self.session startRunning];
-  self.runOcrSwitch.on = YES;
 }
 
 
 - (void)stopSession {
   NSLog(@"stopping ocr");
   [self.session stopRunning];
-  self.runOcrSwitch.on = NO;
 }
 
 
