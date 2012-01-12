@@ -15,14 +15,8 @@
 
 @synthesize preview = _preview;
 @synthesize session = _session;
-@synthesize imageProcessor = _imageProcessor;
-@synthesize pageModeNames = _pageModeNames;
-@synthesize pageModeValues = _pageModeValues;
 @synthesize imageSizeLabel = _imageSizeLabel;
 @synthesize textResultView = _textResultView;
-@synthesize numbersOnlySwitch = _numbersOnlySwitch;
-@synthesize pageModeSlider = _pageModeSlider;
-@synthesize pageModeLabel = _pageModeLabel;
 @synthesize processingTimeLabel = _processingTimeLabel;
 @synthesize snapshotPreview = _snapshotPreview;
 @synthesize imageOutput = _imageOutput;
@@ -74,55 +68,11 @@
 {
   [super viewDidLoad];
   
-  self.pageModeNames = [NSArray arrayWithObjects:
-                        @"osd only", // 0
-                        @"auto osd", // 1
-                        @"auto only", // 2
-                        @"auto", // 3
-                        @"single column", // 4
-                        @"single col vert text", // 5
-                        @"single line", // 6
-                        @"single word", // 7
-                        nil];
-  self.pageModeValues = [NSArray arrayWithObjects:
-                         [NSNumber numberWithInt:0],
-                         [NSNumber numberWithInt:1],
-                         [NSNumber numberWithInt:2],
-                         [NSNumber numberWithInt:3],
-                         [NSNumber numberWithInt:4],
-                         [NSNumber numberWithInt:5],
-                         [NSNumber numberWithInt:6],
-                         [NSNumber numberWithInt:7],
-                         nil];
-  self.pageModeSlider.minimumValue = 0;
-  self.pageModeSlider.maximumValue = [[self.pageModeValues lastObject] floatValue];
-
   // update labels and ui controls
   
   self.imageSizeLabel.text = @"";
   self.textResultView.text = @"";
   self.processingTimeLabel.text = @"";
-  
-  NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-  
-  NSNumber *numbersOnly = [def valueForKey:kNumbersOnlyDefault];
-  self.numbersOnlySwitch.on = [numbersOnly boolValue];
-  
-  NSNumber *pageMode = [def valueForKey:kPageModeDefault];
-  NSUInteger pageModeIndex = [self.pageModeValues indexOfObject:pageMode];
-  if (pageModeIndex == NSNotFound) {
-    pageModeIndex = 0;
-  }
-  self.pageModeSlider.value = pageModeIndex;
-  
-  self.pageModeLabel.text = [self.pageModeNames objectAtIndex:pageModeIndex];
-  
-  [self.numbersOnlySwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-  [self.pageModeSlider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-
-  
-  // create image processor
-  self.imageProcessor = [[ImageProcessor alloc] init];
   
   // session init
   
@@ -213,9 +163,6 @@
   self.session = nil;
   [self setImageSizeLabel:nil];
   [self setTextResultView:nil];
-  [self setNumbersOnlySwitch:nil];
-  [self setPageModeSlider:nil];
-  [self setPageModeLabel:nil];
   [self setProcessingTimeLabel:nil];
   [self setSnapshotPreview:nil];
   [super viewDidUnload];
@@ -229,20 +176,6 @@
 
 
 #pragma mark - Actions
-
-
-- (void)valueChanged:(id)sender {
-  if (sender == self.pageModeSlider) {
-    NSNumber *sliderValue = [NSNumber numberWithInt:(int)self.pageModeSlider.value];
-    NSNumber *pageModeValue = [self.pageModeValues objectAtIndex:[sliderValue intValue]];
-    [[NSUserDefaults standardUserDefaults] setValue:pageModeValue forKey:kPageModeDefault];
-    self.pageModeLabel.text = [self.pageModeNames objectAtIndex:[sliderValue intValue]];
-  } else if (sender == self.numbersOnlySwitch) {
-    NSNumber *value = [NSNumber numberWithBool:self.numbersOnlySwitch.on];
-    [[NSUserDefaults standardUserDefaults] setValue:value forKey:kNumbersOnlyDefault];
-  }
-  self.imageProcessor = [[ImageProcessor alloc] init];
-}
 
 
 - (IBAction)takePicture:(id)sender {
@@ -264,7 +197,8 @@
                                  previewSize.height*scale);
     image = [self cropImage:image toFrame:cropRect];
           
-    NSString *result = [self.imageProcessor processImage:image];
+#warning add service call
+    NSString *result = @"test";
     
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
@@ -274,7 +208,7 @@
       // update processing time label
       NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
       NSLog(@"duration: %f", duration);      
-      self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f ms", duration*1000];
+      self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
       [progressHud hide:YES];
     });
   }];
