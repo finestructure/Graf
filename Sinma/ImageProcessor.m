@@ -31,7 +31,7 @@ const char *kPass = "i8Kn37rD8v";
     if (dbc_init(_client, kUser, kPass)) {
       NSLog(@"Failed to initialize DBC client");
     } else {
-      _client->is_verbose = 1;
+      _client->is_verbose = 0;
     }
   }
   return self;

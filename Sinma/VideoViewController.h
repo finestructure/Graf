@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textResultView;
 @property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
+@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 
 
 - (IBAction)takePicture:(id)sender;

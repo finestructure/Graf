@@ -71,7 +71,7 @@
   [super viewDidLoad];
   
   // set up image processor
-//  self.imageProcessor = [[ImageProcessor alloc] init];
+  self.imageProcessor = [[ImageProcessor alloc] init];
   
   // update labels and ui controls
   
@@ -210,7 +210,7 @@
       self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
     });
     
-    NSString *result = @"blah"; //[self.imageProcessor processImage:image];
+    NSString *result = [self.imageProcessor processImage:image];
     
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
