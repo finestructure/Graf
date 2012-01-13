@@ -8,6 +8,10 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
+@class DbcConnector;
+
 @interface TestDbcConnector : SenTestCase
+
+@property (nonatomic, retain) DbcConnector *dbc;
 
 @end

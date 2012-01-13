@@ -11,10 +11,13 @@
 
 @implementation TestDbcConnector
 
+@synthesize dbc = _dbc;
+
+
 - (void)setUp {
   [super setUp];
     
-  // Set-up code here.
+  self.dbc = [[DbcConnector alloc] init];
 }
 
 - (void)tearDown {
@@ -23,9 +26,11 @@
   [super tearDown];
 }
 
-- (void)test_init {
-  DbcConnector *dbc = [[DbcConnector alloc] init];
-  STAssertNotNil(dbc, @"dbc not nil");
+
+- (void)test_connect {
+  STAssertTrue([self.dbc connect], @"connect");
+}
+
 }
 
 @end

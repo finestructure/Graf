@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DbcConnector : NSObject
+@interface DbcConnector : NSObject <NSStreamDelegate>
+
+@property (nonatomic, retain) NSInputStream *inputStream;
+@property (nonatomic, retain) NSOutputStream *outputStream;
+
+- (BOOL)connect;
 
 @end
