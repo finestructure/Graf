@@ -7,26 +7,25 @@
 //
 
 #import "TestDbcConnector.h"
+#import "DbcConnector.h"
 
 @implementation TestDbcConnector
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp {
+  [super setUp];
     
-    // Set-up code here.
+  // Set-up code here.
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    
-    [super tearDown];
+- (void)tearDown {
+  // Tear-down code here.
+  
+  [super tearDown];
 }
 
-- (void)testExample
-{
-    STFail(@"Unit tests are not implemented yet in TestDbcConnector");
+- (void)test_init {
+  DbcConnector *dbc = [[DbcConnector alloc] init];
+  STAssertNotNil(dbc, @"dbc not nil");
 }
 
 @end

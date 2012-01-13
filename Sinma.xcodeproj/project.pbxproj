@@ -32,6 +32,7 @@
 		5AD8927314C02772005595BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5AD8927914C02772005595BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AD8927714C02772005595BA /* InfoPlist.strings */; };
 		5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8927B14C02772005595BA /* TestDbcConnector.m */; };
+		5AD8928114C02898005595BA /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8926514C026BE005595BA /* DbcConnector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,8 +142,6 @@
 		5A2263CD14B1FB190078EBEF /* Sinma */ = {
 			isa = PBXGroup;
 			children = (
-				5AD8926414C026BE005595BA /* DbcConnector.h */,
-				5AD8926514C026BE005595BA /* DbcConnector.m */,
 				5A2263D614B1FB190078EBEF /* AppDelegate.h */,
 				5A2263D714B1FB190078EBEF /* AppDelegate.m */,
 				5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */,
@@ -153,6 +152,8 @@
 				5A4766F614BC832B00D8FA66 /* Constants.m */,
 				5AD8924514BF22B7005595BA /* ImageProcessor.h */,
 				5AD8924614BF22B7005595BA /* ImageProcessor.m */,
+				5AD8926414C026BE005595BA /* DbcConnector.h */,
+				5AD8926514C026BE005595BA /* DbcConnector.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -352,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */,
+				5AD8928114C02898005595BA /* DbcConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,10 +431,7 @@
 				GCC_PREFIX_HEADER = "Sinma/Sinma-Prefix.pch";
 				INFOPLIST_FILE = "Sinma/Sinma-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Tesseract/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
