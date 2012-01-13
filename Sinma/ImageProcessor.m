@@ -8,10 +8,6 @@
 
 #import "ImageProcessor.h"
 
-#warning TEMPORARY
-const char *kUser = "abstracture";
-const char *kPass = "i8Kn37rD8v";
-
 
 @implementation ImageProcessor
 

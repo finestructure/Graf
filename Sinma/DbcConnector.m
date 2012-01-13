@@ -8,6 +8,25 @@
 
 #import "DbcConnector.h"
 
+
+#warning TEMPORARY
+const NSString *kUser = @"abstracture";
+const NSString *kPass = @"i8Kn37rD8v";
+
+
 @implementation DbcConnector
+
+- (id)init {
+  self = [super init];
+  if (self) {
+  }
+  return self;
+}
+
+
+- (void)dealloc {
+  
+}
+
 
 @end
