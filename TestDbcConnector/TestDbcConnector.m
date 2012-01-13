@@ -33,15 +33,18 @@
 }
 
 
-- (void)test_call {
-  [self.dbc call:@"user"];
-  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+- (void)test_login {
+  [self.dbc connect];
+  [self.dbc login];
+  STAssertTrue(self.dbc.loggedIn, @"logged in");
 }
 
 
-- (void)test_login {
+- (void)test_call {
+  [self.dbc connect];
   [self.dbc login];
-  STAssertTrue(self.dbc.loggedIn, @"logged in");
+  [self.dbc call:@"user"];
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
 }
 
 

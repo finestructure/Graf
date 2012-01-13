@@ -84,7 +84,6 @@ const int kPort = 8123; // to 8131
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
 {
-  NSLog(@"stream event %i", streamEvent);
 	switch (streamEvent) {
       
 		case NSStreamEventOpenCompleted:
@@ -111,6 +110,10 @@ const int kPort = 8123; // to 8131
       }
       break;
       
+    case NSStreamEventHasSpaceAvailable:
+      NSLog(@"Has space available");
+      break;
+      
 		case NSStreamEventErrorOccurred:
 			NSLog(@"Can not connect to the host!");
 			break;
@@ -119,7 +122,7 @@ const int kPort = 8123; // to 8131
 			NSLog(@"Stream end event");
 			break;
       
-		default:
+    default:
 			NSLog(@"Unknown event");
 	}
 }
