@@ -26,6 +26,12 @@
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
 		5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924E14C02275005595BA /* UIImage+Resize.m */; };
 		5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */; };
+		5AD8926614C026BE005595BA /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8926514C026BE005595BA /* DbcConnector.m */; };
+		5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD8927014C02772005595BA /* SenTestingKit.framework */; };
+		5AD8927214C02772005595BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
+		5AD8927314C02772005595BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
+		5AD8927914C02772005595BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AD8927714C02772005595BA /* InfoPlist.strings */; };
+		5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8927B14C02772005595BA /* TestDbcConnector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +65,15 @@
 		5AD8924E14C02275005595BA /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "other/UIImage+Resize.m"; sourceTree = "<group>"; };
 		5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "other/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "other/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		5AD8926414C026BE005595BA /* DbcConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DbcConnector.h; sourceTree = "<group>"; };
+		5AD8926514C026BE005595BA /* DbcConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnector.m; sourceTree = "<group>"; };
+		5AD8926F14C02772005595BA /* TestDbcConnector.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDbcConnector.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD8927014C02772005595BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		5AD8927614C02772005595BA /* TestDbcConnector-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestDbcConnector-Info.plist"; sourceTree = "<group>"; };
+		5AD8927814C02772005595BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5AD8927A14C02772005595BA /* TestDbcConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDbcConnector.h; sourceTree = "<group>"; };
+		5AD8927B14C02772005595BA /* TestDbcConnector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestDbcConnector.m; sourceTree = "<group>"; };
+		5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestDbcConnector-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +90,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5AD8926B14C02772005595BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */,
+				5AD8927214C02772005595BA /* UIKit.framework in Frameworks */,
+				5AD8927314C02772005595BA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -82,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				5A2263CD14B1FB190078EBEF /* Sinma */,
+				5AD8927414C02772005595BA /* TestDbcConnector */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
 				5A2263C614B1FB190078EBEF /* Frameworks */,
@@ -93,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				5A2263C314B1FB190078EBEF /* Sinma.app */,
+				5AD8926F14C02772005595BA /* TestDbcConnector.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,6 +133,7 @@
 				5A2263C714B1FB190078EBEF /* UIKit.framework */,
 				5A2263C914B1FB190078EBEF /* Foundation.framework */,
 				5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */,
+				5AD8927014C02772005595BA /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,6 +141,8 @@
 		5A2263CD14B1FB190078EBEF /* Sinma */ = {
 			isa = PBXGroup;
 			children = (
+				5AD8926414C026BE005595BA /* DbcConnector.h */,
+				5AD8926514C026BE005595BA /* DbcConnector.m */,
 				5A2263D614B1FB190078EBEF /* AppDelegate.h */,
 				5A2263D714B1FB190078EBEF /* AppDelegate.m */,
 				5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */,
@@ -162,6 +192,26 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		5AD8927414C02772005595BA /* TestDbcConnector */ = {
+			isa = PBXGroup;
+			children = (
+				5AD8927A14C02772005595BA /* TestDbcConnector.h */,
+				5AD8927B14C02772005595BA /* TestDbcConnector.m */,
+				5AD8927514C02772005595BA /* Supporting Files */,
+			);
+			path = TestDbcConnector;
+			sourceTree = "<group>";
+		};
+		5AD8927514C02772005595BA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AD8927614C02772005595BA /* TestDbcConnector-Info.plist */,
+				5AD8927714C02772005595BA /* InfoPlist.strings */,
+				5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -182,6 +232,24 @@
 			productName = Sinma;
 			productReference = 5A2263C314B1FB190078EBEF /* Sinma.app */;
 			productType = "com.apple.product-type.application";
+		};
+		5AD8926E14C02772005595BA /* TestDbcConnector */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AD8927E14C02772005595BA /* Build configuration list for PBXNativeTarget "TestDbcConnector" */;
+			buildPhases = (
+				5AD8926A14C02772005595BA /* Sources */,
+				5AD8926B14C02772005595BA /* Frameworks */,
+				5AD8926C14C02772005595BA /* Resources */,
+				5AD8926D14C02772005595BA /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestDbcConnector;
+			productName = TestDbcConnector;
+			productReference = 5AD8926F14C02772005595BA /* TestDbcConnector.octest */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -205,6 +273,7 @@
 			projectRoot = "";
 			targets = (
 				5A2263C214B1FB190078EBEF /* Sinma */,
+				5AD8926E14C02772005595BA /* TestDbcConnector */,
 			);
 		};
 /* End PBXProject section */
@@ -218,6 +287,14 @@
 				5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */,
 				5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */,
 				5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD8926C14C02772005595BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD8927914C02772005595BA /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +314,19 @@
 			shellPath = /bin/sh;
 			shellScript = "git status\nversion=$(git describe --tags --dirty)\n\n# version can be empty when there are no tags, use rev-parse in that case\n# to log the last commit id\nif [[ -z \"$version\" ]]; then\ndiff=$(git diff)\nversion=$(git rev-parse --short HEAD)\n\nif [[ -n \"$diff\" ]]; then\nversion=${version}-dirty\nfi\nfi\n\necho version: $version\n\ninfo_plist=$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Info.plist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $version\" $info_plist";
 		};
+		5AD8926D14C02772005595BA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -253,6 +343,15 @@
 				5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */,
 				5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */,
 				5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */,
+				5AD8926614C026BE005595BA /* DbcConnector.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD8926A14C02772005595BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +362,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				5A2263D114B1FB190078EBEF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5AD8927714C02772005595BA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AD8927814C02772005595BA /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -349,6 +456,36 @@
 			};
 			name = Release;
 		};
+		5AD8927F14C02772005595BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestDbcConnector/TestDbcConnector-Prefix.pch";
+				INFOPLIST_FILE = "TestDbcConnector/TestDbcConnector-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		5AD8928014C02772005595BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestDbcConnector/TestDbcConnector-Prefix.pch";
+				INFOPLIST_FILE = "TestDbcConnector/TestDbcConnector-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -369,6 +506,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		5AD8927E14C02772005595BA /* Build configuration list for PBXNativeTarget "TestDbcConnector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AD8927F14C02772005595BA /* Debug */,
+				5AD8928014C02772005595BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
