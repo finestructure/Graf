@@ -13,10 +13,6 @@
 		5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2263D014B1FB190078EBEF /* InfoPlist.strings */; };
 		5A2263D414B1FB190078EBEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D314B1FB190078EBEF /* main.m */; };
 		5A2263D814B1FB190078EBEF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D714B1FB190078EBEF /* AppDelegate.m */; };
-		5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263E914B313620078EBEF /* UIImage+Alpha.m */; };
-		5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263EB14B313620078EBEF /* UIImage+Resize.m */; };
-		5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */; };
-		5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263F214B3153E0078EBEF /* MBProgressHUD.m */; };
 		5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */; };
 		5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
@@ -29,6 +25,10 @@
 		5A833BDF14BF1AB5000984F2 /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A833BD914BF1AB5000984F2 /* cJSON.c */; };
 		5A833BE114BF1AB5000984F2 /* deathbycaptcha.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A833BDC14BF1AB5000984F2 /* deathbycaptcha.c */; };
 		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
+		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
+		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
+		5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924E14C02275005595BA /* UIImage+Resize.m */; };
+		5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,14 +42,6 @@
 		5A2263D514B1FB190078EBEF /* Sinma-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sinma-Prefix.pch"; sourceTree = "<group>"; };
 		5A2263D614B1FB190078EBEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A2263D714B1FB190078EBEF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5A2263E814B313620078EBEF /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		5A2263E914B313620078EBEF /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		5A2263EA14B313620078EBEF /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		5A2263EB14B313620078EBEF /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		5A2263EC14B313620078EBEF /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
-		5A2263F114B3153E0078EBEF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		5A2263F214B3153E0078EBEF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
@@ -68,6 +60,14 @@
 		5A833BDD14BF1AB5000984F2 /* deathbycaptcha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deathbycaptcha.h; sourceTree = "<group>"; };
 		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
 		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
+		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
+		5AD8924A14C02275005595BA /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = other/MBProgressHUD.m; sourceTree = "<group>"; };
+		5AD8924B14C02275005595BA /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "other/UIImage+Alpha.h"; sourceTree = "<group>"; };
+		5AD8924C14C02275005595BA /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "other/UIImage+Alpha.m"; sourceTree = "<group>"; };
+		5AD8924D14C02275005595BA /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "other/UIImage+Resize.h"; sourceTree = "<group>"; };
+		5AD8924E14C02275005595BA /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "other/UIImage+Resize.m"; sourceTree = "<group>"; };
+		5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "other/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "other/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,15 +150,15 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				5AD8924914C02275005595BA /* MBProgressHUD.h */,
+				5AD8924A14C02275005595BA /* MBProgressHUD.m */,
+				5AD8924B14C02275005595BA /* UIImage+Alpha.h */,
+				5AD8924C14C02275005595BA /* UIImage+Alpha.m */,
+				5AD8924D14C02275005595BA /* UIImage+Resize.h */,
+				5AD8924E14C02275005595BA /* UIImage+Resize.m */,
+				5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */,
+				5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */,
 				5A833BD614BF1AB5000984F2 /* dbc_api */,
-				5A2263F114B3153E0078EBEF /* MBProgressHUD.h */,
-				5A2263F214B3153E0078EBEF /* MBProgressHUD.m */,
-				5A2263E814B313620078EBEF /* UIImage+Alpha.h */,
-				5A2263E914B313620078EBEF /* UIImage+Alpha.m */,
-				5A2263EA14B313620078EBEF /* UIImage+Resize.h */,
-				5A2263EB14B313620078EBEF /* UIImage+Resize.m */,
-				5A2263EC14B313620078EBEF /* UIImage+RoundedCorner.h */,
-				5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -269,16 +269,16 @@
 			files = (
 				5A2263D414B1FB190078EBEF /* main.m in Sources */,
 				5A2263D814B1FB190078EBEF /* AppDelegate.m in Sources */,
-				5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */,
-				5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */,
-				5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */,
-				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
 				5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */,
 				5A4766F714BC832B00D8FA66 /* Constants.m in Sources */,
 				5A833BDE14BF1AB5000984F2 /* base64.c in Sources */,
 				5A833BDF14BF1AB5000984F2 /* cJSON.c in Sources */,
 				5A833BE114BF1AB5000984F2 /* deathbycaptcha.c in Sources */,
 				5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */,
+				5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */,
+				5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */,
+				5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */,
+				5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
