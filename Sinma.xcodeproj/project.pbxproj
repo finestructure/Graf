@@ -446,10 +446,7 @@
 				GCC_PREFIX_HEADER = "Sinma/Sinma-Prefix.pch";
 				INFOPLIST_FILE = "Sinma/Sinma-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Tesseract/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
