@@ -29,8 +29,20 @@
 
 - (void)test_connect {
   STAssertTrue([self.dbc connect], @"connect");
+  STAssertTrue(self.dbc.connected, @"connected");
 }
 
+
+- (void)test_call {
+  [self.dbc call:@"user"];
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
 }
+
+
+- (void)test_login {
+  [self.dbc login];
+  STAssertTrue(self.dbc.loggedIn, @"logged in");
+}
+
 
 @end

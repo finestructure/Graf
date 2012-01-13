@@ -18,19 +18,18 @@ const int kPort = 8123; // to 8131
 
 @implementation DbcConnector
 
+@synthesize connected = _connected;
+@synthesize loggedIn = _loggedIn;
 @synthesize inputStream = _inputStream;
 @synthesize outputStream = _outputStream;
 
 - (id)init {
   self = [super init];
   if (self) {
+    self.connected = NO;
+    self.loggedIn = NO;
   }
   return self;
-}
-
-
-- (void)dealloc {
-  
 }
 
 
@@ -50,7 +49,33 @@ const int kPort = 8123; // to 8131
   [self.inputStream open];
   [self.outputStream open];
 
+  self.connected = YES;
   return YES;
+}
+
+
+- (void)login {
+  NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                        @"abstracture", @"username",
+                        @"i8Kn37rD8v", @"password",
+                        nil];
+  [self call:@"login" withData:dict];
+  self.loggedIn = YES;
+}
+
+
+- (void)call:(NSString *)command {
+  [self call:command withData:nil];
+}
+
+
+- (void)call:(NSString *)command withData:(NSDictionary *)data {
+  NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
+  [dict setObject:command forKey:@"cmd"];
+  NSError *error = nil;
+  NSData *request = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+  NSAssert((error == nil), @"error must be nil, it is: %@", error);
+  [self.outputStream write:[request bytes] maxLength:[request length]];
 }
 
 
@@ -67,13 +92,31 @@ const int kPort = 8123; // to 8131
 			break;
       
 		case NSStreamEventHasBytesAvailable:
-			break;			
+      if (theStream == self.inputStream) {
+        
+        uint8_t buffer[1024];
+        int len;
+        
+        while ([self.inputStream hasBytesAvailable]) {
+          len = [self.inputStream read:buffer maxLength:sizeof(buffer)];
+          if (len > 0) {
+            
+            NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
+            
+            if (output != nil) {
+              NSLog(@"server said: %@", output);
+            }
+          }
+        }
+      }
+      break;
       
 		case NSStreamEventErrorOccurred:
 			NSLog(@"Can not connect to the host!");
 			break;
       
 		case NSStreamEventEndEncountered:
+			NSLog(@"Stream end event");
 			break;
       
 		default:
