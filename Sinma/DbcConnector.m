@@ -92,6 +92,7 @@ const int kPort = 8123; // to 8131
   NSAssert((error == nil), @"error must be nil, it is: %@", error);
   
   self.done = NO;
+  self.response = nil;
   [self.outputStream write:[request bytes] maxLength:[request length]];
   
   [self waitWithTimeout:5];
