@@ -103,6 +103,11 @@ const int kPort = 8123; // to 8131
     res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSAssert((error == nil), @"error must be nil, it is: %@", error);
   }
+  
+  if (res == nil || [res objectForKey:@"error"] != nil) {
+    NSLog(@"error in response: %@", [res objectForKey:@"error"]);
+  }
+  
   return res;
 }
 
