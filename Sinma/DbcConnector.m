@@ -7,6 +7,7 @@
 //
 
 #import "DbcConnector.h"
+#import "NSData+Base64.h"
 
 
 #warning TEMPORARY
@@ -95,7 +96,7 @@ const int kPort = 8123; // to 8131
   self.response = nil;
   [self.outputStream write:[request bytes] maxLength:[request length]];
   
-  [self waitWithTimeout:5];
+  [self waitWithTimeout:30];
   
   id res = nil;
   {
@@ -115,6 +116,30 @@ const int kPort = 8123; // to 8131
 
 - (float)balance {
   return [[[self call:@"user"] objectForKey:@"balance"] floatValue];
+}
+
+
+- (NSUInteger)upload:(UIImage *)image {
+  /*
+   response = self._call('upload', {
+   'captcha': base64.b64encode(_load_image(captcha))
+   })
+   if response.get('captcha'):
+   uploaded_captcha = dict(
+   (k, response.get(k))
+   for k in ('captcha', 'text', 'is_correct')
+   )
+   if not uploaded_captcha['text']:
+   uploaded_captcha['text'] = None
+   return uploaded_captcha
+*/
+  NSData *imageData = UIImagePNGRepresentation(image);
+  NSString *base64Data = [imageData base64EncodedString];
+  NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
+  id response = [self call:@"upload" withData:data];
+  NSLog(@"upload response: %@", response);
+  id captchaId = [response objectForKey:@"captcha"];
+  return [captchaId unsignedIntegerValue];
 }
 
 

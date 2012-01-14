@@ -24,6 +24,7 @@
 - (id)call:(NSString *)command withData:(NSDictionary *)data;
 
 - (float)balance;
+- (NSUInteger)upload:(UIImage *)image;
 
 @end
 

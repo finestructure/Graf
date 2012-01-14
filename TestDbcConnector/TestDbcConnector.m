@@ -26,20 +26,20 @@
 }
 
 
-- (void)test_connect {
+- (void)_test_connect {
   STAssertTrue([self.dbc connect], @"connect");
   STAssertTrue(self.dbc.connected, @"connected");
 }
 
 
-- (void)test_login {
+- (void)_test_login {
   [self.dbc connect];
   [self.dbc login];
   STAssertTrue(self.dbc.loggedIn, @"logged in");
 }
 
 
-- (void)test_call {
+- (void)_test_call {
   [self.dbc connect];
   [self.dbc login];
   NSDictionary *res = [self.dbc call:@"user"];
@@ -51,7 +51,7 @@
 }
 
 
-- (void)test_balance {
+- (void)_test_balance {
   [self.dbc connect];
   [self.dbc login];
   NSDictionary *res = [self.dbc call:@"user"];
@@ -59,6 +59,19 @@
   float balance = [[res objectForKey:@"balance"] floatValue];
   STAssertTrue(balance > 0, @"balance should be > 0", nil);
   STAssertEqualsWithAccuracy(balance, [self.dbc balance], 0.01, @"balance value check", nil);
+}
+
+
+- (void)test_upload {
+  [self.dbc connect];
+  [self.dbc login];
+//  UIImage *image = [UIImage imageNamed:@"test222.png"];
+  UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];
+
+  STAssertNotNil(image, @"image must not be nil", nil);
+  NSUInteger captchaId = [self.dbc upload:image];
+  NSLog(@"captcha id: %d", captchaId);
+  STAssertTrue(captchaId > 0, @"captcha id must be > 0", nil);
 }
 
 
