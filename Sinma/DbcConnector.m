@@ -14,7 +14,6 @@ const NSString *kUser = @"abstracture";
 const NSString *kPass = @"i8Kn37rD8v";
 const NSString *kHostname = @"api.deathbycaptcha.com";
 const int kPort = 8123; // to 8131
-const NSString *kTerminator = @"\r\n";
 
 
 @implementation DbcConnector
@@ -95,23 +94,30 @@ const NSString *kTerminator = @"\r\n";
 		case NSStreamEventHasBytesAvailable:
       if (theStream == self.inputStream) {
         
+        NSMutableString *result = nil;
         uint8_t buffer[1024];
         int len;
         
         while ([self.inputStream hasBytesAvailable]) {
           len = [self.inputStream read:buffer maxLength:sizeof(buffer)];
           if (len > 0) {
-            
             NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
-            
-            if (output != nil) {
-              NSLog(@"server said: %@", output);
-              if ([self.delegate respondsToSelector:@selector(responseReceived:)]) {
-                [self.delegate responseReceived:output];
-              }
+            if (result != nil) {
+              [result appendString:output];
+            } else {
+              result = [NSMutableString stringWithString:output];
             }
           }
+
         }
+        
+        if (result != nil) {
+          NSLog(@"server said: %@", result);
+          if ([self.delegate respondsToSelector:@selector(responseReceived:)]) {
+            [self.delegate responseReceived:result];
+          }
+        }
+
       }
       break;
       
