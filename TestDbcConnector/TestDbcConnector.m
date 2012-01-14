@@ -32,6 +32,13 @@
 }
 
 
+- (void)waitWithTimeout:(NSUInteger)seconds {
+  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5];
+  while ( (! self.done) && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]);
+  STAssertTrue(self.done, @"timeout reached but not done");
+}
+
+
 - (void)test_connect {
   STAssertTrue([self.dbc connect], @"connect");
   STAssertTrue(self.dbc.connected, @"connected");
@@ -50,10 +57,18 @@
   [self.dbc login];
   [self.dbc call:@"user"];
   
-  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5];
-  while ( (! self.done) && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]);
+  [self waitWithTimeout:5];
   
-  STAssertEqualObjects(self.result, @"{\"is_banned\": false, \"status\": 0, \"rate\": 0.139, \"balance\": 689.857, \"user\": 50402}", @"server response");
+  STAssertNotNil(self.result, @"result is nil");
+  
+  NSData *data = [self.result dataUsingEncoding:NSASCIIStringEncoding];
+  NSError *error = nil;
+  NSDictionary *res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+  STAssertNil(error, @"error must be nil but is: %@", error);
+  
+  STAssertEqualObjects([res objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
+  STAssertEqualObjects([res objectForKey:@"status"], [NSNumber numberWithInt:0], nil);
+  STAssertEqualObjects([res objectForKey:@"user"], [NSNumber numberWithInt:50402], nil);
 }
 
 
