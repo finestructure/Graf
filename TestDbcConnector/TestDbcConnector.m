@@ -42,15 +42,9 @@
 - (void)test_call {
   [self.dbc connect];
   [self.dbc login];
-  NSString *response = [self.dbc call:@"user"];
+  NSDictionary *res = [self.dbc call:@"user"];
   
-  STAssertNotNil(response, @"result is nil");
-  
-  NSData *data = [response dataUsingEncoding:NSASCIIStringEncoding];
-  NSError *error = nil;
-  NSDictionary *res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-  STAssertNil(error, @"error must be nil but is: %@", error);
-  
+  STAssertNotNil(res, @"result is nil");
   STAssertEqualObjects([res objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
   STAssertEqualObjects([res objectForKey:@"status"], [NSNumber numberWithInt:0], nil);
   STAssertEqualObjects([res objectForKey:@"user"], [NSNumber numberWithInt:50402], nil);

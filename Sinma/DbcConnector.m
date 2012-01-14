@@ -96,7 +96,14 @@ const int kPort = 8123; // to 8131
   
   [self waitWithTimeout:5];
   
-  return self.response;
+  id res = nil;
+  {
+    NSData *data = [self.response dataUsingEncoding:NSASCIIStringEncoding];
+    NSError *error = nil;
+    res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSAssert((error == nil), @"error must be nil, it is: %@", error);
+  }
+  return res;
 }
 
 

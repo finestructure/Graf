@@ -20,8 +20,8 @@
 
 - (BOOL)connect;
 - (void)login;
-- (NSString *)call:(NSString *)command;
-- (NSString *)call:(NSString *)command withData:(NSDictionary *)data;
+- (id)call:(NSString *)command;
+- (id)call:(NSString *)command withData:(NSDictionary *)data;
 
 @end
 
