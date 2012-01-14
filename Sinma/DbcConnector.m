@@ -112,6 +112,11 @@ const int kPort = 8123; // to 8131
 }
 
 
+- (float)balance {
+  return [[[self call:@"user"] objectForKey:@"balance"] floatValue];
+}
+
+
 #pragma mark - NSStreamDelegate
 
 

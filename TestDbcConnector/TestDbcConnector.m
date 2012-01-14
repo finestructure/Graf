@@ -51,4 +51,15 @@
 }
 
 
+- (void)test_balance {
+  [self.dbc connect];
+  [self.dbc login];
+  NSDictionary *res = [self.dbc call:@"user"];
+  STAssertNotNil([res objectForKey:@"balance"], @"balance key must exist", nil);
+  float balance = [[res objectForKey:@"balance"] floatValue];
+  STAssertTrue(balance > 0, @"balance should be > 0", nil);
+  STAssertEqualsWithAccuracy(balance, [self.dbc balance], 0.01, @"balance value check", nil);
+}
+
+
 @end

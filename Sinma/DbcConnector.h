@@ -23,5 +23,7 @@
 - (id)call:(NSString *)command;
 - (id)call:(NSString *)command withData:(NSDictionary *)data;
 
+- (float)balance;
+
 @end
 
