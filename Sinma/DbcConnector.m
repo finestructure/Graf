@@ -14,10 +14,12 @@ const NSString *kUser = @"abstracture";
 const NSString *kPass = @"i8Kn37rD8v";
 const NSString *kHostname = @"api.deathbycaptcha.com";
 const int kPort = 8123; // to 8131
+const NSString *kTerminator = @"\r\n";
 
 
 @implementation DbcConnector
 
+@synthesize delegate = _delegate;
 @synthesize connected = _connected;
 @synthesize loggedIn = _loggedIn;
 @synthesize inputStream = _inputStream;

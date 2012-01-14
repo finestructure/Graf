@@ -8,7 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+
+@protocol DbcConnectorDelegate<NSObject>
+
+@optional
+- (void)errorOccurred:(NSError *)error;
+- (void)responseReceived:(NSString *)response;
+
+@end
+
+
+
 @interface DbcConnector : NSObject <NSStreamDelegate>
+
+@property (nonatomic, assign) id<DbcConnectorDelegate> delegate;
 
 @property (assign) BOOL connected;
 @property (assign) BOOL loggedIn;
@@ -21,3 +34,4 @@
 - (void)call:(NSString *)command withData:(NSDictionary *)data;
 
 @end
+

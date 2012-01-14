@@ -7,7 +7,6 @@
 //
 
 #import "TestDbcConnector.h"
-#import "DbcConnector.h"
 
 @implementation TestDbcConnector
 
@@ -18,6 +17,7 @@
   [super setUp];
     
   self.dbc = [[DbcConnector alloc] init];
+  self.dbc.delegate = self;
 }
 
 - (void)tearDown {
