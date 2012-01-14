@@ -9,29 +9,19 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol DbcConnectorDelegate<NSObject>
-
-@optional
-- (void)errorOccurred:(NSError *)error;
-- (void)responseReceived:(NSString *)response;
-
-@end
-
-
-
 @interface DbcConnector : NSObject <NSStreamDelegate>
-
-@property (nonatomic, assign) id<DbcConnectorDelegate> delegate;
 
 @property (assign) BOOL connected;
 @property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSInputStream *inputStream;
 @property (nonatomic, retain) NSOutputStream *outputStream;
+@property (nonatomic, assign) BOOL done;
+@property (nonatomic, retain) NSString *response;
 
 - (BOOL)connect;
 - (void)login;
-- (void)call:(NSString *)command;
-- (void)call:(NSString *)command withData:(NSDictionary *)data;
+- (NSString *)call:(NSString *)command;
+- (NSString *)call:(NSString *)command withData:(NSDictionary *)data;
 
 @end
 

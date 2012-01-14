@@ -18,11 +18,13 @@ const int kPort = 8123; // to 8131
 
 @implementation DbcConnector
 
-@synthesize delegate = _delegate;
 @synthesize connected = _connected;
 @synthesize loggedIn = _loggedIn;
 @synthesize inputStream = _inputStream;
 @synthesize outputStream = _outputStream;
+@synthesize done = _done;
+@synthesize response = _response;
+
 
 - (id)init {
   self = [super init];
@@ -55,6 +57,18 @@ const int kPort = 8123; // to 8131
 }
 
 
+- (void)waitWithTimeout:(NSUInteger)seconds {
+  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
+  while (!self.done && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
+    // break when the timeout is reached 
+    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
+      break;
+    }
+  }
+}
+
+
+
 - (void)login {
   NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                         @"abstracture", @"username",
@@ -65,18 +79,24 @@ const int kPort = 8123; // to 8131
 }
 
 
-- (void)call:(NSString *)command {
-  [self call:command withData:nil];
+- (NSString *)call:(NSString *)command {
+  return [self call:command withData:nil];
 }
 
 
-- (void)call:(NSString *)command withData:(NSDictionary *)data {
+- (NSString *)call:(NSString *)command withData:(NSDictionary *)data {
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
   [dict setObject:command forKey:@"cmd"];
   NSError *error = nil;
   NSData *request = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
   NSAssert((error == nil), @"error must be nil, it is: %@", error);
+  
+  self.done = NO;
   [self.outputStream write:[request bytes] maxLength:[request length]];
+  
+  [self waitWithTimeout:5];
+  
+  return self.response;
 }
 
 
@@ -113,11 +133,9 @@ const int kPort = 8123; // to 8131
         
         if (result != nil) {
           NSLog(@"server said: %@", result);
-          if ([self.delegate respondsToSelector:@selector(responseReceived:)]) {
-            [self.delegate responseReceived:result];
-          }
+          self.response = result;
         }
-
+        self.done = YES;
       }
       break;
       

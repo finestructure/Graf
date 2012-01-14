@@ -10,11 +10,8 @@
 #import "DbcConnector.h"
 
 
-@interface TestDbcConnector : SenTestCase<DbcConnectorDelegate>
+@interface TestDbcConnector : SenTestCase
 
 @property (nonatomic, retain) DbcConnector *dbc;
-@property (nonatomic, assign) BOOL done;
-@property (nonatomic, retain) NSCondition *doneCondition;
-@property (nonatomic, retain) NSString *result;
 
 @end
