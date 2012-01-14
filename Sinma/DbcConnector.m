@@ -106,6 +106,9 @@ const NSString *kTerminator = @"\r\n";
             
             if (output != nil) {
               NSLog(@"server said: %@", output);
+              if ([self.delegate respondsToSelector:@selector(responseReceived:)]) {
+                [self.delegate responseReceived:output];
+              }
             }
           }
         }

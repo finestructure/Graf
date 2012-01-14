@@ -13,5 +13,8 @@
 @interface TestDbcConnector : SenTestCase<DbcConnectorDelegate>
 
 @property (nonatomic, retain) DbcConnector *dbc;
+@property (nonatomic, assign) BOOL done;
+@property (nonatomic, retain) NSCondition *doneCondition;
+@property (nonatomic, retain) NSString *result;
 
 @end

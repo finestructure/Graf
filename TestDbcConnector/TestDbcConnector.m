@@ -11,6 +11,9 @@
 @implementation TestDbcConnector
 
 @synthesize dbc = _dbc;
+@synthesize done = _done;
+@synthesize doneCondition = _doneCondition;
+@synthesize result = _result;
 
 
 - (void)setUp {
@@ -18,6 +21,8 @@
     
   self.dbc = [[DbcConnector alloc] init];
   self.dbc.delegate = self;
+  self.done = NO;
+  self.doneCondition = [[NSCondition alloc] init];
 }
 
 - (void)tearDown {
@@ -44,7 +49,20 @@
   [self.dbc connect];
   [self.dbc login];
   [self.dbc call:@"user"];
-  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+  
+  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:5];
+  while ( (! self.done) && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]);
+  
+  STAssertEqualObjects(self.result, @"{\"is_banned\": false, \"status\": 0, \"rate\": 0.139, \"balance\": 689.857, \"user\": 50402}", @"server response");
+}
+
+
+#pragma mark - DbcConnectorDelegate
+
+
+- (void)responseReceived:(NSString *)response {
+  self.done = YES;
+  self.result = response;
 }
 
 
