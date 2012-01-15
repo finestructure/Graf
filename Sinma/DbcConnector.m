@@ -96,7 +96,13 @@ const int kPort = 8123; // to 8131
   self.done = NO;
   self.response = nil;
   NSLog(@"request byte count: %d", [request length]);
-  [self.outputStream write:[request bytes] maxLength:[request length]];
+  
+  NSRange range = NSMakeRange(0, [request length]);
+  while (range.length > 0) {
+    NSInteger written = [self.outputStream write:[request bytes] maxLength:[request length]];
+    range = NSMakeRange(written, range.length - written);
+    request = [request subdataWithRange:range];
+  }
   
   [self waitWithTimeout:15];
   
@@ -124,19 +130,6 @@ const int kPort = 8123; // to 8131
 
 
 - (NSUInteger)upload:(UIImage *)image {
-  /*
-   response = self._call('upload', {
-   'captcha': base64.b64encode(_load_image(captcha))
-   })
-   if response.get('captcha'):
-   uploaded_captcha = dict(
-   (k, response.get(k))
-   for k in ('captcha', 'text', 'is_correct')
-   )
-   if not uploaded_captcha['text']:
-   uploaded_captcha['text'] = None
-   return uploaded_captcha
-*/
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
