@@ -86,6 +86,7 @@ const int kPort = 8123; // to 8131
 
 
 - (NSString *)call:(NSString *)command withData:(NSDictionary *)data {
+  NSLog(@"call: %@", command);
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
   [dict setObject:command forKey:@"cmd"];
   NSError *error = nil;
@@ -94,16 +95,19 @@ const int kPort = 8123; // to 8131
   
   self.done = NO;
   self.response = nil;
+  NSLog(@"request byte count: %d", [request length]);
   [self.outputStream write:[request bytes] maxLength:[request length]];
   
-  [self waitWithTimeout:30];
+  [self waitWithTimeout:15];
   
   id res = nil;
   {
     NSData *data = [self.response dataUsingEncoding:NSASCIIStringEncoding];
-    NSError *error = nil;
-    res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSAssert((error == nil), @"error must be nil, it is: %@", error);
+    if (data != nil) {
+      NSError *error = nil;
+      res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+      NSAssert((error == nil), @"error must be nil, it is: %@", error);
+    }
   }
   
   if (res == nil || [res objectForKey:@"error"] != nil) {
