@@ -74,4 +74,12 @@
 }
 
 
+- (void)test_decode {
+  [self.dbc connect];
+  [self.dbc login];
+  UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];
+  NSString *res = [self.dbc decode:image];
+  STAssertEqualObjects(@"037233", res, @"decoding result");
+}
+
 @end

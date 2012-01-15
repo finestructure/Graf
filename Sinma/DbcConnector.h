@@ -25,6 +25,7 @@
 
 - (float)balance;
 - (NSUInteger)upload:(UIImage *)image;
+- (NSString *)decode:(UIImage *)image;
 
 @end
 

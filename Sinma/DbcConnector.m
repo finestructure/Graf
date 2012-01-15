@@ -140,6 +140,28 @@ const int kPort = 8123; // to 8131
 }
 
 
+- (NSString *)decode:(UIImage *)image {
+  NSUInteger captchaId = [self upload:image];
+  if (captchaId > 0) {
+    id res = nil;
+    NSUInteger callCount = 0;
+    while (res == nil && callCount < 6) {
+      if (callCount > 0) {
+        NSLog(@"waiting for result");
+        [self waitWithTimeout:5];
+      }
+      NSLog(@"polling");
+      res = [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
+      callCount++;
+    }
+    if (res != nil) {
+      return [res objectForKey:@"text"];
+    }
+  }
+  return nil;
+}
+
+
 #pragma mark - NSStreamDelegate
 
 
