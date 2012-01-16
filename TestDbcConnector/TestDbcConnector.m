@@ -59,7 +59,7 @@
 }
 
 
-- (void)test_call {
+- (void)_test_call {
   [self.dbc connect];
   [self.dbc login];
   [self.dbc call:@"user" tag:2];
@@ -75,10 +75,8 @@
 }
 
 
-- (void)_test_balance {
-  [self.dbc connect];
-  [self.dbc login];
-  STAssertTrue([self.dbc balance] > 0, @"balance must be > 0", nil);
+- (void)test_balance {
+  STAssertTrue([[DbcConnector sharedInstance] balance] > 0, @"balance must be > 0", nil);
 }
 
 
