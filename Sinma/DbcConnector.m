@@ -162,20 +162,22 @@ const int kPort = 8123; // to 8131
 - (NSString *)decode:(UIImage *)image {
   NSUInteger captchaId = [self upload:image];
   if (captchaId > 0) {
-    id res = nil;
+    NSUInteger maxTries = 6;
     NSUInteger callCount = 0;
-    while (res == nil && callCount < 6) {
+    while (callCount < maxTries) {
       if (callCount > 0) {
         NSLog(@"waiting for result");
         [self waitWithTimeout:5];
       }
       NSLog(@"polling");
-      res = [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
+      id response = [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
       callCount++;
+      if (response != nil && [response objectForKey:@"text"] != nil) {
+        return [response objectForKey:@"text"];    
+      }
     }
-    if (res != nil) {
-      return [res objectForKey:@"text"];
-    }
+  } else {
+    NSLog(@"captcha id returned from upload was <= 0: %d", captchaId);
   }
   return nil;
 }
