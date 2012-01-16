@@ -26,6 +26,8 @@
 		5A86044B14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
+		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
+		5A86045014C43D90008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
 		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
@@ -66,6 +68,7 @@
 		5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = other/GCDAsyncSocket.m; sourceTree = "<group>"; };
 		5A86044814C438CD008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "other/NSData+Base64.h"; sourceTree = "<group>"; };
 		5A86044914C438CD008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "other/NSData+Base64.m"; sourceTree = "<group>"; };
+		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
 		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
 		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
 				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
 				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
 				5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */,
@@ -105,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A86045014C43D90008D2C6A /* CFNetwork.framework in Frameworks */,
 				5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */,
 				5AD8927214C02772005595BA /* UIKit.framework in Frameworks */,
 				5AD8927314C02772005595BA /* Foundation.framework in Frameworks */,
@@ -117,6 +122,7 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
+				5A86044E14C43D6D008D2C6A /* CFNetwork.framework */,
 				5A2263CD14B1FB190078EBEF /* Sinma */,
 				5AD8927414C02772005595BA /* TestDbcConnector */,
 				5A2263E414B312450078EBEF /* Other */,
