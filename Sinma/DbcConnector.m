@@ -114,11 +114,13 @@ const long kCaptchaTag = 4;
 
 - (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
   NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
-  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
+  NSDate *step = [NSDate dateWithTimeIntervalSinceNow:0.1];
+  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:step]) {
     // break when the timeout is reached 
     if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
       break;
     }
+    step = [NSDate dateWithTimeIntervalSinceNow:0.1];
   }
 }
 
