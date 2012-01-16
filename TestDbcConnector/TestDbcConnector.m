@@ -40,7 +40,10 @@
 }
 
 
-- (void)_test_connect {
+#pragma mark - tests
+
+
+- (void)test_connect {
   STAssertTrue([self.dbc connect], @"connect");
   [self withTimeout:2 monitorForSuccess:^BOOL{
     return self.dbc.connected;
@@ -49,7 +52,7 @@
 }
 
 
-- (void)_test_login {
+- (void)test_login {
   [self.dbc connect];
   [self.dbc login];
   [self withTimeout:2 monitorForSuccess:^BOOL{
@@ -59,7 +62,7 @@
 }
 
 
-- (void)_test_call {
+- (void)test_call {
   [self.dbc connect];
   [self.dbc login];
   [self.dbc call:@"user" tag:2];
