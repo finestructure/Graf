@@ -27,7 +27,7 @@
 }
 
 
-- (void)withTimeout:(NSUInteger)seconds monitor:(BOOL (^)())block {
+- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
   NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
   while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
     // break when the timeout is reached 
@@ -40,17 +40,17 @@
 
 - (void)_test_connect {
   STAssertTrue([self.dbc connect], @"connect");
-  [self withTimeout:2 monitor:^BOOL{
+  [self withTimeout:2 monitorForSuccess:^BOOL{
     return self.dbc.connected;
   }];
   STAssertTrue(self.dbc.connected, @"connected");
 }
 
 
-- (void)test_login {
+- (void)_test_login {
   [self.dbc connect];
   [self.dbc login];
-  [self withTimeout:2 monitor:^BOOL{
+  [self withTimeout:2 monitorForSuccess:^BOOL{
     return self.dbc.loggedIn;
   }];
   STAssertTrue(self.dbc.loggedIn, @"logged in");
@@ -60,7 +60,6 @@
 - (void)_test_call {
   [self.dbc connect];
   [self.dbc login];
-  NSDictionary *res = nil; //[self.dbc call:@"user" tag:0];
   
   STAssertNotNil(res, @"result is nil");
   STAssertEqualObjects([res objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
