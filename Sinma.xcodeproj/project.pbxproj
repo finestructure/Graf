@@ -13,22 +13,29 @@
 		5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A2263D014B1FB190078EBEF /* InfoPlist.strings */; };
 		5A2263D414B1FB190078EBEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D314B1FB190078EBEF /* main.m */; };
 		5A2263D814B1FB190078EBEF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263D714B1FB190078EBEF /* AppDelegate.m */; };
-		5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263E914B313620078EBEF /* UIImage+Alpha.m */; };
-		5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263EB14B313620078EBEF /* UIImage+Resize.m */; };
-		5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */; };
-		5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2263F214B3153E0078EBEF /* MBProgressHUD.m */; };
-		5A22645914B32DE60078EBEF /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645714B32DE60078EBEF /* liblept.a */; };
-		5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A22645814B32DE60078EBEF /* libtesseract_all.a */; };
 		5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */; };
 		5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
-		5A4766EA14B5E61B00D8FA66 /* ImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
 		5A4766F714BC832B00D8FA66 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4766F614BC832B00D8FA66 /* Constants.m */; };
-		5A7B0EA914B45666000314C0 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EA814B45666000314C0 /* tessdata */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
+		5A86043514C2332F008D2C6A /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
+		5A86043B14C238AC008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86043A14C238AC008D2C6A /* NSData+Base64.m */; };
+		5A86043C14C238AC008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86043A14C238AC008D2C6A /* NSData+Base64.m */; };
+		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
+		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
+		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
+		5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924E14C02275005595BA /* UIImage+Resize.m */; };
+		5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */; };
+		5AD8926614C026BE005595BA /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8926514C026BE005595BA /* DbcConnector.m */; };
+		5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD8927014C02772005595BA /* SenTestingKit.framework */; };
+		5AD8927214C02772005595BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
+		5AD8927314C02772005595BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
+		5AD8927914C02772005595BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AD8927714C02772005595BA /* InfoPlist.strings */; };
+		5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8927B14C02772005595BA /* TestDbcConnector.m */; };
+		5AD8928114C02898005595BA /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8926514C026BE005595BA /* DbcConnector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,70 +49,38 @@
 		5A2263D514B1FB190078EBEF /* Sinma-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sinma-Prefix.pch"; sourceTree = "<group>"; };
 		5A2263D614B1FB190078EBEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A2263D714B1FB190078EBEF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5A2263E814B313620078EBEF /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		5A2263E914B313620078EBEF /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		5A2263EA14B313620078EBEF /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		5A2263EB14B313620078EBEF /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		5A2263EC14B313620078EBEF /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
-		5A2263F114B3153E0078EBEF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		5A2263F214B3153E0078EBEF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		5A22642E14B32DB10078EBEF /* allheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = allheaders.h; path = Tesseract/include/leptonica/allheaders.h; sourceTree = SOURCE_ROOT; };
-		5A22642F14B32DB10078EBEF /* alltypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alltypes.h; path = Tesseract/include/leptonica/alltypes.h; sourceTree = SOURCE_ROOT; };
-		5A22643014B32DB10078EBEF /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = array.h; path = Tesseract/include/leptonica/array.h; sourceTree = SOURCE_ROOT; };
-		5A22643114B32DB10078EBEF /* arrayaccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arrayaccess.h; path = Tesseract/include/leptonica/arrayaccess.h; sourceTree = SOURCE_ROOT; };
-		5A22643214B32DB10078EBEF /* bbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bbuffer.h; path = Tesseract/include/leptonica/bbuffer.h; sourceTree = SOURCE_ROOT; };
-		5A22643314B32DB10078EBEF /* bmf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bmf.h; path = Tesseract/include/leptonica/bmf.h; sourceTree = SOURCE_ROOT; };
-		5A22643414B32DB10078EBEF /* bmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bmp.h; path = Tesseract/include/leptonica/bmp.h; sourceTree = SOURCE_ROOT; };
-		5A22643514B32DB10078EBEF /* ccbord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccbord.h; path = Tesseract/include/leptonica/ccbord.h; sourceTree = SOURCE_ROOT; };
-		5A22643614B32DB10078EBEF /* dewarp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dewarp.h; path = Tesseract/include/leptonica/dewarp.h; sourceTree = SOURCE_ROOT; };
-		5A22643714B32DB10078EBEF /* endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = endianness.h; path = Tesseract/include/leptonica/endianness.h; sourceTree = SOURCE_ROOT; };
-		5A22643814B32DB10078EBEF /* environ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = environ.h; path = Tesseract/include/leptonica/environ.h; sourceTree = SOURCE_ROOT; };
-		5A22643914B32DB10078EBEF /* freetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freetype.h; path = Tesseract/include/leptonica/freetype.h; sourceTree = SOURCE_ROOT; };
-		5A22643A14B32DB10078EBEF /* gplot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gplot.h; path = Tesseract/include/leptonica/gplot.h; sourceTree = SOURCE_ROOT; };
-		5A22643B14B32DB10078EBEF /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = heap.h; path = Tesseract/include/leptonica/heap.h; sourceTree = SOURCE_ROOT; };
-		5A22643C14B32DB10078EBEF /* imageio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imageio.h; path = Tesseract/include/leptonica/imageio.h; sourceTree = SOURCE_ROOT; };
-		5A22643D14B32DB10078EBEF /* jbclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jbclass.h; path = Tesseract/include/leptonica/jbclass.h; sourceTree = SOURCE_ROOT; };
-		5A22643E14B32DB10078EBEF /* leptprotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = leptprotos.h; path = Tesseract/include/leptonica/leptprotos.h; sourceTree = SOURCE_ROOT; };
-		5A22643F14B32DB10078EBEF /* leptwin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = leptwin.h; path = Tesseract/include/leptonica/leptwin.h; sourceTree = SOURCE_ROOT; };
-		5A22644014B32DB10078EBEF /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = list.h; path = Tesseract/include/leptonica/list.h; sourceTree = SOURCE_ROOT; };
-		5A22644114B32DB10078EBEF /* morph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = morph.h; path = Tesseract/include/leptonica/morph.h; sourceTree = SOURCE_ROOT; };
-		5A22644214B32DB10078EBEF /* pix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pix.h; path = Tesseract/include/leptonica/pix.h; sourceTree = SOURCE_ROOT; };
-		5A22644314B32DB10078EBEF /* ptra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ptra.h; path = Tesseract/include/leptonica/ptra.h; sourceTree = SOURCE_ROOT; };
-		5A22644414B32DB10078EBEF /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = queue.h; path = Tesseract/include/leptonica/queue.h; sourceTree = SOURCE_ROOT; };
-		5A22644514B32DB10078EBEF /* readbarcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readbarcode.h; path = Tesseract/include/leptonica/readbarcode.h; sourceTree = SOURCE_ROOT; };
-		5A22644614B32DB10078EBEF /* regutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = regutils.h; path = Tesseract/include/leptonica/regutils.h; sourceTree = SOURCE_ROOT; };
-		5A22644714B32DB10078EBEF /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = Tesseract/include/leptonica/stack.h; sourceTree = SOURCE_ROOT; };
-		5A22644814B32DB10078EBEF /* sudoku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sudoku.h; path = Tesseract/include/leptonica/sudoku.h; sourceTree = SOURCE_ROOT; };
-		5A22644914B32DB10078EBEF /* watershed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = watershed.h; path = Tesseract/include/leptonica/watershed.h; sourceTree = SOURCE_ROOT; };
-		5A22644A14B32DCB0078EBEF /* apitypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apitypes.h; path = Tesseract/include/tesseract/apitypes.h; sourceTree = SOURCE_ROOT; };
-		5A22644B14B32DCB0078EBEF /* baseapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseapi.h; path = Tesseract/include/tesseract/baseapi.h; sourceTree = SOURCE_ROOT; };
-		5A22644C14B32DCB0078EBEF /* errcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = errcode.h; path = Tesseract/include/tesseract/errcode.h; sourceTree = SOURCE_ROOT; };
-		5A22644D14B32DCB0078EBEF /* genericvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = genericvector.h; path = Tesseract/include/tesseract/genericvector.h; sourceTree = SOURCE_ROOT; };
-		5A22644E14B32DCB0078EBEF /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpers.h; path = Tesseract/include/tesseract/helpers.h; sourceTree = SOURCE_ROOT; };
-		5A22644F14B32DCB0078EBEF /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = Tesseract/include/tesseract/host.h; sourceTree = SOURCE_ROOT; };
-		5A22645014B32DCB0078EBEF /* ndminx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ndminx.h; path = Tesseract/include/tesseract/ndminx.h; sourceTree = SOURCE_ROOT; };
-		5A22645114B32DCB0078EBEF /* ocrclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ocrclass.h; path = Tesseract/include/tesseract/ocrclass.h; sourceTree = SOURCE_ROOT; };
-		5A22645214B32DCB0078EBEF /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform.h; path = Tesseract/include/tesseract/platform.h; sourceTree = SOURCE_ROOT; };
-		5A22645314B32DCB0078EBEF /* publictypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = publictypes.h; path = Tesseract/include/tesseract/publictypes.h; sourceTree = SOURCE_ROOT; };
-		5A22645414B32DCB0078EBEF /* tesscallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesscallback.h; path = Tesseract/include/tesseract/tesscallback.h; sourceTree = SOURCE_ROOT; };
-		5A22645514B32DCB0078EBEF /* thresholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thresholder.h; path = Tesseract/include/tesseract/thresholder.h; sourceTree = SOURCE_ROOT; };
-		5A22645614B32DCB0078EBEF /* unichar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unichar.h; path = Tesseract/include/tesseract/unichar.h; sourceTree = SOURCE_ROOT; };
-		5A22645714B32DE60078EBEF /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblept.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/liblept.a; sourceTree = "<group>"; };
-		5A22645814B32DE60078EBEF /* libtesseract_all.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtesseract_all.a; path = ../../../Desktop/tesseract/TesseractSample/TesseractSample/build_dependencies/dependencies/lib/libtesseract_all.a; sourceTree = "<group>"; };
 		5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
-		5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessor.mm; sourceTree = "<group>"; };
 		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		5A4766F514BC832B00D8FA66 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		5A4766F614BC832B00D8FA66 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		5A7B0EA814B45666000314C0 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
+		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
+		5A86043914C238AC008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		5A86043A14C238AC008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
+		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
+		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
+		5AD8924A14C02275005595BA /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = other/MBProgressHUD.m; sourceTree = "<group>"; };
+		5AD8924B14C02275005595BA /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "other/UIImage+Alpha.h"; sourceTree = "<group>"; };
+		5AD8924C14C02275005595BA /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "other/UIImage+Alpha.m"; sourceTree = "<group>"; };
+		5AD8924D14C02275005595BA /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "other/UIImage+Resize.h"; sourceTree = "<group>"; };
+		5AD8924E14C02275005595BA /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "other/UIImage+Resize.m"; sourceTree = "<group>"; };
+		5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "other/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "other/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		5AD8926414C026BE005595BA /* DbcConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DbcConnector.h; sourceTree = "<group>"; };
+		5AD8926514C026BE005595BA /* DbcConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnector.m; sourceTree = "<group>"; };
+		5AD8926F14C02772005595BA /* TestDbcConnector.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDbcConnector.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD8927014C02772005595BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		5AD8927614C02772005595BA /* TestDbcConnector-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestDbcConnector-Info.plist"; sourceTree = "<group>"; };
+		5AD8927814C02772005595BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5AD8927A14C02772005595BA /* TestDbcConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDbcConnector.h; sourceTree = "<group>"; };
+		5AD8927B14C02772005595BA /* TestDbcConnector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestDbcConnector.m; sourceTree = "<group>"; };
+		5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestDbcConnector-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,8 +94,16 @@
 				5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */,
 				5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */,
 				5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */,
-				5A22645914B32DE60078EBEF /* liblept.a in Frameworks */,
-				5A22645A14B32DE60078EBEF /* libtesseract_all.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD8926B14C02772005595BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */,
+				5AD8927214C02772005595BA /* UIKit.framework in Frameworks */,
+				5AD8927314C02772005595BA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				5A2263CD14B1FB190078EBEF /* Sinma */,
+				5AD8927414C02772005595BA /* TestDbcConnector */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
 				5A2263C614B1FB190078EBEF /* Frameworks */,
@@ -142,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				5A2263C314B1FB190078EBEF /* Sinma.app */,
+				5AD8926F14C02772005595BA /* TestDbcConnector.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +140,7 @@
 				5A2263C714B1FB190078EBEF /* UIKit.framework */,
 				5A2263C914B1FB190078EBEF /* Foundation.framework */,
 				5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */,
+				5AD8927014C02772005595BA /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,10 +154,12 @@
 				5A4766DE14B5DCFD00D8FA66 /* VideoViewController.m */,
 				5A4766DF14B5DCFD00D8FA66 /* VideoViewController.xib */,
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
-				5A4766E814B5E61B00D8FA66 /* ImageProcessor.h */,
-				5A4766E914B5E61B00D8FA66 /* ImageProcessor.mm */,
 				5A4766F514BC832B00D8FA66 /* Constants.h */,
 				5A4766F614BC832B00D8FA66 /* Constants.m */,
+				5AD8924514BF22B7005595BA /* ImageProcessor.h */,
+				5AD8924614BF22B7005595BA /* ImageProcessor.m */,
+				5AD8926414C026BE005595BA /* DbcConnector.h */,
+				5AD8926514C026BE005595BA /* DbcConnector.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -190,109 +178,48 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				5A7B0EA814B45666000314C0 /* tessdata */,
-				5A2263F414B3174E0078EBEF /* Tesseract */,
-				5A2263F114B3153E0078EBEF /* MBProgressHUD.h */,
-				5A2263F214B3153E0078EBEF /* MBProgressHUD.m */,
-				5A2263E814B313620078EBEF /* UIImage+Alpha.h */,
-				5A2263E914B313620078EBEF /* UIImage+Alpha.m */,
-				5A2263EA14B313620078EBEF /* UIImage+Resize.h */,
-				5A2263EB14B313620078EBEF /* UIImage+Resize.m */,
-				5A2263EC14B313620078EBEF /* UIImage+RoundedCorner.h */,
-				5A2263ED14B313620078EBEF /* UIImage+RoundedCorner.m */,
+				5A86043914C238AC008D2C6A /* NSData+Base64.h */,
+				5A86043A14C238AC008D2C6A /* NSData+Base64.m */,
+				5AD8924914C02275005595BA /* MBProgressHUD.h */,
+				5AD8924A14C02275005595BA /* MBProgressHUD.m */,
+				5AD8924B14C02275005595BA /* UIImage+Alpha.h */,
+				5AD8924C14C02275005595BA /* UIImage+Alpha.m */,
+				5AD8924D14C02275005595BA /* UIImage+Resize.h */,
+				5AD8924E14C02275005595BA /* UIImage+Resize.m */,
+				5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */,
+				5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */,
 			);
 			name = Other;
-			sourceTree = "<group>";
-		};
-		5A2263F414B3174E0078EBEF /* Tesseract */ = {
-			isa = PBXGroup;
-			children = (
-				5A2263FD14B318540078EBEF /* include */,
-				5A22642914B318540078EBEF /* lib */,
-			);
-			name = Tesseract;
-			sourceTree = "<group>";
-		};
-		5A2263FD14B318540078EBEF /* include */ = {
-			isa = PBXGroup;
-			children = (
-				5A2263FE14B318540078EBEF /* leptonica */,
-				5A22641B14B318540078EBEF /* tesseract */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		5A2263FE14B318540078EBEF /* leptonica */ = {
-			isa = PBXGroup;
-			children = (
-				5A22642E14B32DB10078EBEF /* allheaders.h */,
-				5A22642F14B32DB10078EBEF /* alltypes.h */,
-				5A22643014B32DB10078EBEF /* array.h */,
-				5A22643114B32DB10078EBEF /* arrayaccess.h */,
-				5A22643214B32DB10078EBEF /* bbuffer.h */,
-				5A22643314B32DB10078EBEF /* bmf.h */,
-				5A22643414B32DB10078EBEF /* bmp.h */,
-				5A22643514B32DB10078EBEF /* ccbord.h */,
-				5A22643614B32DB10078EBEF /* dewarp.h */,
-				5A22643714B32DB10078EBEF /* endianness.h */,
-				5A22643814B32DB10078EBEF /* environ.h */,
-				5A22643914B32DB10078EBEF /* freetype.h */,
-				5A22643A14B32DB10078EBEF /* gplot.h */,
-				5A22643B14B32DB10078EBEF /* heap.h */,
-				5A22643C14B32DB10078EBEF /* imageio.h */,
-				5A22643D14B32DB10078EBEF /* jbclass.h */,
-				5A22643E14B32DB10078EBEF /* leptprotos.h */,
-				5A22643F14B32DB10078EBEF /* leptwin.h */,
-				5A22644014B32DB10078EBEF /* list.h */,
-				5A22644114B32DB10078EBEF /* morph.h */,
-				5A22644214B32DB10078EBEF /* pix.h */,
-				5A22644314B32DB10078EBEF /* ptra.h */,
-				5A22644414B32DB10078EBEF /* queue.h */,
-				5A22644514B32DB10078EBEF /* readbarcode.h */,
-				5A22644614B32DB10078EBEF /* regutils.h */,
-				5A22644714B32DB10078EBEF /* stack.h */,
-				5A22644814B32DB10078EBEF /* sudoku.h */,
-				5A22644914B32DB10078EBEF /* watershed.h */,
-			);
-			path = leptonica;
-			sourceTree = "<group>";
-		};
-		5A22641B14B318540078EBEF /* tesseract */ = {
-			isa = PBXGroup;
-			children = (
-				5A22644A14B32DCB0078EBEF /* apitypes.h */,
-				5A22644B14B32DCB0078EBEF /* baseapi.h */,
-				5A22644C14B32DCB0078EBEF /* errcode.h */,
-				5A22644D14B32DCB0078EBEF /* genericvector.h */,
-				5A22644E14B32DCB0078EBEF /* helpers.h */,
-				5A22644F14B32DCB0078EBEF /* host.h */,
-				5A22645014B32DCB0078EBEF /* ndminx.h */,
-				5A22645114B32DCB0078EBEF /* ocrclass.h */,
-				5A22645214B32DCB0078EBEF /* platform.h */,
-				5A22645314B32DCB0078EBEF /* publictypes.h */,
-				5A22645414B32DCB0078EBEF /* tesscallback.h */,
-				5A22645514B32DCB0078EBEF /* thresholder.h */,
-				5A22645614B32DCB0078EBEF /* unichar.h */,
-			);
-			path = tesseract;
-			sourceTree = "<group>";
-		};
-		5A22642914B318540078EBEF /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				5A22645714B32DE60078EBEF /* liblept.a */,
-				5A22645814B32DE60078EBEF /* libtesseract_all.a */,
-			);
-			path = lib;
 			sourceTree = "<group>";
 		};
 		5A7B0EAF14B47315000314C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5A86043414C2332F008D2C6A /* test222.tif */,
 				5A7B0EB014B47315000314C0 /* 14-gear.png */,
 				5A7B0EB114B47315000314C0 /* 14-gear@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5AD8927414C02772005595BA /* TestDbcConnector */ = {
+			isa = PBXGroup;
+			children = (
+				5AD8927A14C02772005595BA /* TestDbcConnector.h */,
+				5AD8927B14C02772005595BA /* TestDbcConnector.m */,
+				5AD8927514C02772005595BA /* Supporting Files */,
+			);
+			path = TestDbcConnector;
+			sourceTree = "<group>";
+		};
+		5AD8927514C02772005595BA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AD8927614C02772005595BA /* TestDbcConnector-Info.plist */,
+				5AD8927714C02772005595BA /* InfoPlist.strings */,
+				5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +243,24 @@
 			productReference = 5A2263C314B1FB190078EBEF /* Sinma.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5AD8926E14C02772005595BA /* TestDbcConnector */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AD8927E14C02772005595BA /* Build configuration list for PBXNativeTarget "TestDbcConnector" */;
+			buildPhases = (
+				5AD8926A14C02772005595BA /* Sources */,
+				5AD8926B14C02772005595BA /* Frameworks */,
+				5AD8926C14C02772005595BA /* Resources */,
+				5AD8926D14C02772005595BA /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestDbcConnector;
+			productName = TestDbcConnector;
+			productReference = 5AD8926F14C02772005595BA /* TestDbcConnector.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -338,6 +283,7 @@
 			projectRoot = "";
 			targets = (
 				5A2263C214B1FB190078EBEF /* Sinma */,
+				5AD8926E14C02772005595BA /* TestDbcConnector */,
 			);
 		};
 /* End PBXProject section */
@@ -348,10 +294,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A2263D214B1FB190078EBEF /* InfoPlist.strings in Resources */,
-				5A7B0EA914B45666000314C0 /* tessdata in Resources */,
 				5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */,
 				5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */,
 				5A4766E114B5DCFD00D8FA66 /* VideoViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD8926C14C02772005595BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD8927914C02772005595BA /* InfoPlist.strings in Resources */,
+				5A86043514C2332F008D2C6A /* test222.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +325,19 @@
 			shellPath = /bin/sh;
 			shellScript = "git status\nversion=$(git describe --tags --dirty)\n\n# version can be empty when there are no tags, use rev-parse in that case\n# to log the last commit id\nif [[ -z \"$version\" ]]; then\ndiff=$(git diff)\nversion=$(git rev-parse --short HEAD)\n\nif [[ -n \"$diff\" ]]; then\nversion=${version}-dirty\nfi\nfi\n\necho version: $version\n\ninfo_plist=$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Info.plist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $version\" $info_plist";
 		};
+		5AD8926D14C02772005595BA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -380,13 +347,25 @@
 			files = (
 				5A2263D414B1FB190078EBEF /* main.m in Sources */,
 				5A2263D814B1FB190078EBEF /* AppDelegate.m in Sources */,
-				5A2263EE14B313620078EBEF /* UIImage+Alpha.m in Sources */,
-				5A2263EF14B313620078EBEF /* UIImage+Resize.m in Sources */,
-				5A2263F014B313620078EBEF /* UIImage+RoundedCorner.m in Sources */,
-				5A2263F314B3153E0078EBEF /* MBProgressHUD.m in Sources */,
 				5A4766E014B5DCFD00D8FA66 /* VideoViewController.m in Sources */,
-				5A4766EA14B5E61B00D8FA66 /* ImageProcessor.mm in Sources */,
 				5A4766F714BC832B00D8FA66 /* Constants.m in Sources */,
+				5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */,
+				5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */,
+				5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */,
+				5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */,
+				5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */,
+				5AD8926614C026BE005595BA /* DbcConnector.m in Sources */,
+				5A86043B14C238AC008D2C6A /* NSData+Base64.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD8926A14C02772005595BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */,
+				5AD8928114C02898005595BA /* DbcConnector.m in Sources */,
+				5A86043C14C238AC008D2C6A /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +376,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				5A2263D114B1FB190078EBEF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5AD8927714C02772005595BA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AD8927814C02772005595BA /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -456,10 +443,7 @@
 				GCC_PREFIX_HEADER = "Sinma/Sinma-Prefix.pch";
 				INFOPLIST_FILE = "Sinma/Sinma-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Tesseract/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -473,13 +457,42 @@
 				GCC_PREFIX_HEADER = "Sinma/Sinma-Prefix.pch";
 				INFOPLIST_FILE = "Sinma/Sinma-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Tesseract/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5AD8927F14C02772005595BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestDbcConnector/TestDbcConnector-Prefix.pch";
+				INFOPLIST_FILE = "TestDbcConnector/TestDbcConnector-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		5AD8928014C02772005595BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestDbcConnector/TestDbcConnector-Prefix.pch";
+				INFOPLIST_FILE = "TestDbcConnector/TestDbcConnector-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -500,6 +513,15 @@
 			buildConfigurations = (
 				5A2263E214B1FB190078EBEF /* Debug */,
 				5A2263E314B1FB190078EBEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5AD8927E14C02772005595BA /* Build configuration list for PBXNativeTarget "TestDbcConnector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AD8927F14C02772005595BA /* Debug */,
+				5AD8928014C02772005595BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
