@@ -7,6 +7,7 @@
 //
 
 #import "ImageProcessor.h"
+#import "DbcConnector.h"
 
 
 @implementation ImageProcessor
@@ -26,12 +27,12 @@
 
 - (NSString *)processImage:(UIImage *)image
 {
-  return @"test";
+  return [[DbcConnector sharedInstance] decode:image];
 }
 
 
 - (float)balance {
-  return 0;
+  return [[DbcConnector sharedInstance] balance];
 }
 
 
