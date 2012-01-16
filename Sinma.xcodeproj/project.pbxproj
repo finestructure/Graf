@@ -28,6 +28,8 @@
 		5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86045014C43D90008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
+		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
+		5A86046414C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
 		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
@@ -69,6 +71,8 @@
 		5A86044814C438CD008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "other/NSData+Base64.h"; sourceTree = "<group>"; };
 		5A86044914C438CD008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "other/NSData+Base64.m"; sourceTree = "<group>"; };
 		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		5A86046114C482E5008D2C6A /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "other/NSData+MD5.h"; sourceTree = "<group>"; };
+		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
 		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
 		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
 		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
@@ -188,6 +192,8 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				5A86046114C482E5008D2C6A /* NSData+MD5.h */,
+				5A86046214C482E5008D2C6A /* NSData+MD5.m */,
 				5A86044614C438CD008D2C6A /* GCDAsyncSocket.h */,
 				5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */,
 				5A86044814C438CD008D2C6A /* NSData+Base64.h */,
@@ -369,6 +375,7 @@
 				5AD8926614C026BE005595BA /* DbcConnector.m in Sources */,
 				5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */,
+				5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +387,7 @@
 				5AD8928114C02898005595BA /* DbcConnector.m in Sources */,
 				5A86044B14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */,
+				5A86046414C482E5008D2C6A /* NSData+MD5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
