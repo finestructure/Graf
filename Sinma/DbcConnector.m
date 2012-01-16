@@ -144,43 +144,6 @@ const long kCaptchaTag = 4;
 }
 
 
-- (NSString *)_call:(NSString *)command withData:(NSDictionary *)data {
-  NSLog(@"call: %@", command);
-  NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
-  [dict setObject:command forKey:@"cmd"];
-  NSError *error = nil;
-  NSData *request = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
-  NSAssert((error == nil), @"error must be nil, it is: %@", error);
-  
-  self.done = NO;
-  self.response = nil;
-  NSLog(@"request byte count: %d", [request length]);
-  
-  NSRange range = NSMakeRange(0, [request length]);
-  while (range.length > 0) {
-    NSInteger written = [self.outputStream write:[request bytes] maxLength:[request length]];
-    range = NSMakeRange(written, range.length - written);
-    request = [request subdataWithRange:range];
-  }
-    
-  id res = nil;
-  {
-    NSData *data = [self.response dataUsingEncoding:NSASCIIStringEncoding];
-    if (data != nil) {
-      NSError *error = nil;
-      res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-      NSAssert((error == nil), @"error must be nil, it is: %@", error);
-    }
-  }
-  
-  if (res == nil || [res objectForKey:@"error"] != nil) {
-    NSLog(@"error in response: %@", [res objectForKey:@"error"]);
-  }
-  
-  return res;
-}
-
-
 - (NSUInteger)upload:(UIImage *)image {
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
