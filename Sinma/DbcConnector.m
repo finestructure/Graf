@@ -17,6 +17,10 @@ NSString *kHostname = @"api.deathbycaptcha.com";
 #warning Make port a range
 const int kPort = 8123; // to 8131
 
+const long kLoginTag = 1;
+const long kUploadTag = 2;
+const long kCaptchaTag = 3;
+
 
 @implementation DbcConnector
 
@@ -90,17 +94,30 @@ const int kPort = 8123; // to 8131
                         kUser, @"username",
                         kPass, @"password",
                         nil];
-  [self call:@"login" withData:dict];
-  self.loggedIn = YES;
+  [self call:@"login" withData:dict tag:kLoginTag];
 }
 
 
-- (NSString *)call:(NSString *)command {
-  return [self call:command withData:nil];
+- (void)call:(NSString *)command tag:(long)tag {
+  return [self call:command withData:nil tag:tag];
 }
 
 
-- (NSString *)call:(NSString *)command withData:(NSDictionary *)data {
+- (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag {
+  NSLog(@"call: %@", command);
+  NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
+  [dict setObject:command forKey:@"cmd"];
+  NSError *error = nil;
+  NSData *request = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+  NSAssert((error == nil), @"error must be nil, it is: %@", error);
+  NSLog(@"request byte count: %d", [request length]);
+  
+  [self.socket writeData:request withTimeout:30 tag:tag];
+  [self.socket readDataWithTimeout:30 tag:tag];
+}
+
+
+- (NSString *)_call:(NSString *)command withData:(NSDictionary *)data {
   NSLog(@"call: %@", command);
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
   [dict setObject:command forKey:@"cmd"];
@@ -138,7 +155,7 @@ const int kPort = 8123; // to 8131
 
 
 - (float)balance {
-  return [[[self call:@"user"] objectForKey:@"balance"] floatValue];
+  return 0; //[[[self call:@"user"] objectForKey:@"balance"] floatValue];
 }
 
 
@@ -146,7 +163,7 @@ const int kPort = 8123; // to 8131
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
-  id response = [self call:@"upload" withData:data];
+  id response = nil; //[self call:@"upload" withData:data];
   NSLog(@"upload response: %@", response);
   id captchaId = [response objectForKey:@"captcha"];
   return [captchaId unsignedIntegerValue];
@@ -164,7 +181,7 @@ const int kPort = 8123; // to 8131
 //        [self waitWithTimeout:5];
       }
       NSLog(@"polling");
-      id response = [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
+      id response = nil; //[self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
       callCount++;
       if (response != nil && [response objectForKey:@"text"] != nil) {
         return [response objectForKey:@"text"];    
@@ -185,6 +202,24 @@ const int kPort = 8123; // to 8131
   self.connected = YES;
 }
 
+
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
+  NSLog(@"wrote data with tag %ld", tag);
+}
+
+
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+  NSLog(@"tag: %ld", tag);
+  NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+  if (tag == kLoginTag) {
+    self.loggedIn = YES;
+  }
+}
+
+
+- (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag {
+  NSLog(@"didReadPartialDataOfLength: %d for tag: %ld", partialLength, tag);
+}
 
 
 @end

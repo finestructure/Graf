@@ -38,7 +38,7 @@
 }
 
 
-- (void)test_connect {
+- (void)_test_connect {
   STAssertTrue([self.dbc connect], @"connect");
   [self withTimeout:2 monitor:^BOOL{
     return self.dbc.connected;
@@ -47,9 +47,12 @@
 }
 
 
-- (void)_test_login {
+- (void)test_login {
   [self.dbc connect];
   [self.dbc login];
+  [self withTimeout:2 monitor:^BOOL{
+    return self.dbc.loggedIn;
+  }];
   STAssertTrue(self.dbc.loggedIn, @"logged in");
 }
 
@@ -57,7 +60,7 @@
 - (void)_test_call {
   [self.dbc connect];
   [self.dbc login];
-  NSDictionary *res = [self.dbc call:@"user"];
+  NSDictionary *res = nil; //[self.dbc call:@"user" tag:0];
   
   STAssertNotNil(res, @"result is nil");
   STAssertEqualObjects([res objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
@@ -69,7 +72,7 @@
 - (void)_test_balance {
   [self.dbc connect];
   [self.dbc login];
-  NSDictionary *res = [self.dbc call:@"user"];
+  NSDictionary *res = nil; //[self.dbc call:@"user"];
   STAssertNotNil([res objectForKey:@"balance"], @"balance key must exist", nil);
   float balance = [[res objectForKey:@"balance"] floatValue];
   STAssertTrue(balance > 0, @"balance should be > 0", nil);

@@ -26,8 +26,8 @@
 
 - (BOOL)connect;
 - (void)login;
-- (id)call:(NSString *)command;
-- (id)call:(NSString *)command withData:(NSDictionary *)data;
+- (void)call:(NSString *)command tag:(long)tag;
+- (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag;
 
 - (float)balance;
 - (NSUInteger)upload:(UIImage *)image;
