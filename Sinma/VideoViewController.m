@@ -194,7 +194,7 @@
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     
     UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-    image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
+    image = [UIImage imageWithCGImage:image.CGImage scale:2 orientation:UIImageOrientationRight];
     CGSize previewSize = self.preview.frame.size;
     
     CGFloat scale = image.size.width/previewSize.width;
