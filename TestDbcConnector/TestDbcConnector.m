@@ -8,6 +8,7 @@
 
 #import "TestDbcConnector.h"
 
+
 @implementation TestDbcConnector
 
 @synthesize dbc = _dbc;
@@ -26,8 +27,22 @@
 }
 
 
-- (void)_test_connect {
+- (void)withTimeout:(NSUInteger)seconds monitor:(BOOL (^)())block {
+  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
+  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
+    // break when the timeout is reached 
+    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
+      break;
+    }
+  }
+}
+
+
+- (void)test_connect {
   STAssertTrue([self.dbc connect], @"connect");
+  [self withTimeout:2 monitor:^BOOL{
+    return self.dbc.connected;
+  }];
   STAssertTrue(self.dbc.connected, @"connected");
 }
 
@@ -74,7 +89,7 @@
 }
 
 
-- (void)test_decode {
+- (void)_test_decode {
   [self.dbc connect];
   [self.dbc login];
   UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];

@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GCDAsyncSocket.h"
 
 
-@interface DbcConnector : NSObject <NSStreamDelegate>
+@interface DbcConnector : NSObject <NSStreamDelegate> {
+  dispatch_queue_t requestQueue;
+}
 
+@property (nonatomic, retain) GCDAsyncSocket *socket;
 @property (assign) BOOL connected;
 @property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSInputStream *inputStream;

@@ -11,20 +11,25 @@
 
 
 #warning TEMPORARY
-const NSString *kUser = @"abstracture";
-const NSString *kPass = @"i8Kn37rD8v";
-const NSString *kHostname = @"api.deathbycaptcha.com";
+NSString *kUser = @"abstracture";
+NSString *kPass = @"i8Kn37rD8v";
+NSString *kHostname = @"api.deathbycaptcha.com";
+#warning Make port a range
 const int kPort = 8123; // to 8131
 
 
 @implementation DbcConnector
 
+@synthesize socket = _socket;
 @synthesize connected = _connected;
 @synthesize loggedIn = _loggedIn;
 @synthesize inputStream = _inputStream;
 @synthesize outputStream = _outputStream;
 @synthesize done = _done;
 @synthesize response = _response;
+
+
+#pragma mark - initializers
 
 
 + (DbcConnector *)sharedInstance {
@@ -49,6 +54,9 @@ const int kPort = 8123; // to 8131
 - (id)init {
   self = [super init];
   if (self) {
+    NSLog(@"init");
+    requestQueue = dispatch_queue_create("dbc-connector-request-queue", NULL);
+    self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:requestQueue];
     self.connected = NO;
     self.loggedIn = NO;
   }
@@ -56,43 +64,31 @@ const int kPort = 8123; // to 8131
 }
 
 
+- (void)dealloc {
+  dispatch_release(requestQueue);
+}
+
+
+#pragma mark - API methods
+
+
 - (BOOL)connect {
-  CFReadStreamRef readStream;
-  CFWriteStreamRef writeStream;
-  CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)kHostname, kPort, &readStream, &writeStream);
-  self.inputStream = (__bridge_transfer NSInputStream *)readStream;
-  self.outputStream = (__bridge_transfer NSOutputStream *)writeStream;
-
-  [self.inputStream setDelegate:self];
-  [self.outputStream setDelegate:self];
-
-  [self.inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-  [self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-
-  [self.inputStream open];
-  [self.outputStream open];
-
-  self.connected = YES;
+  NSLog(@"connecting...");
+  NSError *err = nil;
+  if (![self.socket connectToHost:kHostname onPort:kPort error:&err]) {
+    // If there was an error, it's likely something like "already connected" or "no delegate set"
+    NSLog(@"Connection error: %@", err);
+    self.connected = NO;
+    return NO;
+  }
   return YES;
 }
 
 
-- (void)waitWithTimeout:(NSUInteger)seconds {
-  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
-  while (!self.done && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
-    // break when the timeout is reached 
-    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
-      break;
-    }
-  }
-}
-
-
-
 - (void)login {
   NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                        @"abstracture", @"username",
-                        @"i8Kn37rD8v", @"password",
+                        kUser, @"username",
+                        kPass, @"password",
                         nil];
   [self call:@"login" withData:dict];
   self.loggedIn = YES;
@@ -122,9 +118,7 @@ const int kPort = 8123; // to 8131
     range = NSMakeRange(written, range.length - written);
     request = [request subdataWithRange:range];
   }
-  
-  [self waitWithTimeout:15];
-  
+    
   id res = nil;
   {
     NSData *data = [self.response dataUsingEncoding:NSASCIIStringEncoding];
@@ -167,7 +161,7 @@ const int kPort = 8123; // to 8131
     while (callCount < maxTries) {
       if (callCount > 0) {
         NSLog(@"waiting for result");
-        [self waitWithTimeout:5];
+//        [self waitWithTimeout:5];
       }
       NSLog(@"polling");
       id response = [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
@@ -183,61 +177,14 @@ const int kPort = 8123; // to 8131
 }
 
 
-#pragma mark - NSStreamDelegate
+#pragma mark - GCDAsyncSocketDelegate
 
 
-- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
-{
-	switch (streamEvent) {
-      
-		case NSStreamEventOpenCompleted:
-			NSLog(@"Stream opened");
-			break;
-      
-		case NSStreamEventHasBytesAvailable:
-      if (theStream == self.inputStream) {
-        
-        NSMutableString *result = nil;
-        uint8_t buffer[1024];
-        int len;
-        
-        while ([self.inputStream hasBytesAvailable]) {
-          len = [self.inputStream read:buffer maxLength:sizeof(buffer)];
-          if (len > 0) {
-            NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
-            if (result != nil) {
-              [result appendString:output];
-            } else {
-              result = [NSMutableString stringWithString:output];
-            }
-          }
-
-        }
-        
-        if (result != nil) {
-          NSLog(@"server said: %@", result);
-          self.response = result;
-        }
-        self.done = YES;
-      }
-      break;
-      
-    case NSStreamEventHasSpaceAvailable:
-      NSLog(@"Has space available");
-      break;
-      
-		case NSStreamEventErrorOccurred:
-			NSLog(@"Can not connect to the host!");
-			break;
-      
-		case NSStreamEventEndEncountered:
-			NSLog(@"Stream end event");
-			break;
-      
-    default:
-			NSLog(@"Unknown event");
-	}
+- (void)socket:(GCDAsyncSocket *)sender didConnectToHost:(NSString *)host port:(UInt16)port {
+  NSLog(@"connected!");
+  self.connected = YES;
 }
+
 
 
 @end
