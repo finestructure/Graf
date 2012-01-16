@@ -60,22 +60,19 @@
 - (void)_test_call {
   [self.dbc connect];
   [self.dbc login];
+  [self.dbc call:@"user" tag:2];
   
-  STAssertNotNil(res, @"result is nil");
-  STAssertEqualObjects([res objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
-  STAssertEqualObjects([res objectForKey:@"status"], [NSNumber numberWithInt:0], nil);
-  STAssertEqualObjects([res objectForKey:@"user"], [NSNumber numberWithInt:50402], nil);
+//  STAssertNotNil(res, @"result is nil");
+//  STAssertEqualObjects([res objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
+//  STAssertEqualObjects([res objectForKey:@"status"], [NSNumber numberWithInt:0], nil);
+//  STAssertEqualObjects([res objectForKey:@"user"], [NSNumber numberWithInt:50402], nil);
 }
 
 
-- (void)_test_balance {
+- (void)test_balance {
   [self.dbc connect];
   [self.dbc login];
-  NSDictionary *res = nil; //[self.dbc call:@"user"];
-  STAssertNotNil([res objectForKey:@"balance"], @"balance key must exist", nil);
-  float balance = [[res objectForKey:@"balance"] floatValue];
-  STAssertTrue(balance > 0, @"balance should be > 0", nil);
-  STAssertEqualsWithAccuracy(balance, [self.dbc balance], 0.01, @"balance value check", nil);
+  STAssertTrue([self.dbc balance] > 0, @"balance must be > 0", nil);
 }
 
 

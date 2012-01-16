@@ -21,14 +21,20 @@
 @property (nonatomic, retain) NSOutputStream *outputStream;
 @property (nonatomic, assign) BOOL done;
 @property (nonatomic, retain) NSString *response;
+@property (nonatomic, retain) NSDictionary *user;
 
 + (DbcConnector *)sharedInstance;
+
+// internal
 
 - (BOOL)connect;
 - (void)login;
 - (void)call:(NSString *)command tag:(long)tag;
 - (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag;
+- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block;
 
+// API
+  
 - (float)balance;
 - (NSUInteger)upload:(UIImage *)image;
 - (NSString *)decode:(UIImage *)image;

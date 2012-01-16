@@ -18,8 +18,9 @@ NSString *kHostname = @"api.deathbycaptcha.com";
 const int kPort = 8123; // to 8131
 
 const long kLoginTag = 1;
-const long kUploadTag = 2;
-const long kCaptchaTag = 3;
+const long kUserTag = 2;
+const long kUploadTag = 3;
+const long kCaptchaTag = 4;
 
 
 @implementation DbcConnector
@@ -31,6 +32,7 @@ const long kCaptchaTag = 3;
 @synthesize outputStream = _outputStream;
 @synthesize done = _done;
 @synthesize response = _response;
+@synthesize user = _user;
 
 
 #pragma mark - initializers
@@ -98,6 +100,29 @@ const long kCaptchaTag = 3;
 }
 
 
+- (float)balance {
+  [self call:@"user" tag:kUserTag];
+  [self withTimeout:5 monitorForSuccess:^BOOL{
+    return self.user != nil;
+  }];
+  return [[self.user objectForKey:@"balance"] floatValue];
+}
+
+
+#pragma mark - internal methods
+
+
+- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
+  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
+  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
+    // break when the timeout is reached 
+    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
+      break;
+    }
+  }
+}
+
+
 - (void)call:(NSString *)command tag:(long)tag {
   return [self call:command withData:nil tag:tag];
 }
@@ -151,11 +176,6 @@ const long kCaptchaTag = 3;
   }
   
   return res;
-}
-
-
-- (float)balance {
-  return 0; //[[[self call:@"user"] objectForKey:@"balance"] floatValue];
 }
 
 
@@ -213,6 +233,11 @@ const long kCaptchaTag = 3;
   NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   if (tag == kLoginTag) {
     self.loggedIn = YES;
+  } else if (tag == kUserTag) {
+    NSError *error = nil;
+    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSAssert((error == nil), @"error must be nil but is: %@", error);
+    self.user = res;
   }
 }
 
