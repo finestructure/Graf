@@ -18,6 +18,8 @@
 @property (nonatomic, assign) BOOL done;
 @property (nonatomic, retain) NSString *response;
 
++ (DbcConnector *)sharedInstance;
+
 - (BOOL)connect;
 - (void)login;
 - (id)call:(NSString *)command;

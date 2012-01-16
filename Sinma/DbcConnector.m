@@ -27,6 +27,25 @@ const int kPort = 8123; // to 8131
 @synthesize response = _response;
 
 
++ (DbcConnector *)sharedInstance {
+  static DbcConnector *sharedInstance = nil;
+  
+  if (sharedInstance) {
+    return sharedInstance;
+  }
+  
+  @synchronized(self) {
+    if (!sharedInstance) {
+      sharedInstance = [[DbcConnector alloc] init];
+      [sharedInstance connect];
+      [sharedInstance login];
+    }
+    
+    return sharedInstance;
+  }
+}
+
+
 - (id)init {
   self = [super init];
   if (self) {
