@@ -46,7 +46,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 	uint32_t flags;
 	uint16_t config;
 	
-	id delegate;
+	__weak id delegate;
 	dispatch_queue_t delegateQueue;
 	
 	int socket4FD;
@@ -271,7 +271,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
 
 /**
  * Connects to the given address, specified as a sockaddr structure wrapped in a NSData object.
- * For example, a NSData object returned from NSNetService's addresses method.
+ * For example, a NSData object returned from NSNetservice's addresses method.
  * 
  * If you have an existing struct sockaddr you can convert it to a NSData object like so:
  * struct sockaddr sa  -> NSData *dsa = [NSData dataWithBytes:&remoteAddr length:remoteAddr.sa_len];
@@ -291,7 +291,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * Connects to the given address, using the specified interface and timeout.
  * 
  * The address is specified as a sockaddr structure wrapped in a NSData object.
- * For example, a NSData object returned from NSNetService's addresses method.
+ * For example, a NSData object returned from NSNetservice's addresses method.
  * 
  * If you have an existing struct sockaddr you can convert it to a NSData object like so:
  * struct sockaddr sa  -> NSData *dsa = [NSData dataWithBytes:&remoteAddr length:remoteAddr.sa_len];
@@ -449,10 +449,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * If the bufferOffset is greater than the length of the given buffer,
  * the method will do nothing, and the delegate will not be called.
  * 
- * If you pass a buffer, you must not alter it in any way while the socket is using it.
+ * If you pass a buffer, you must not alter it in any way while AsyncSocket is using it.
  * After completion, the data returned in socket:didReadData:withTag: will be a subset of the given buffer.
- * That is, it will reference the bytes that were appended to the given buffer via
- * the method [NSData dataWithBytesNoCopy:length:freeWhenDone:NO].
+ * That is, it will reference the bytes that were appended to the given buffer.
 **/
 - (void)readDataWithTimeout:(NSTimeInterval)timeout
 					 buffer:(NSMutableData *)buffer
@@ -472,10 +471,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * If the bufferOffset is greater than the length of the given buffer,
  * the method will do nothing, and the delegate will not be called.
  * 
- * If you pass a buffer, you must not alter it in any way while the socket is using it.
+ * If you pass a buffer, you must not alter it in any way while AsyncSocket is using it.
  * After completion, the data returned in socket:didReadData:withTag: will be a subset of the given buffer.
- * That is, it will reference the bytes that were appended to the given buffer  via
- * the method [NSData dataWithBytesNoCopy:length:freeWhenDone:NO].
+ * That is, it will reference the bytes that were appended to the given buffer.
 **/
 - (void)readDataWithTimeout:(NSTimeInterval)timeout
                      buffer:(NSMutableData *)buffer
@@ -506,8 +504,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * 
  * If you pass a buffer, you must not alter it in any way while AsyncSocket is using it.
  * After completion, the data returned in socket:didReadData:withTag: will be a subset of the given buffer.
- * That is, it will reference the bytes that were appended to the given buffer via
- * the method [NSData dataWithBytesNoCopy:length:freeWhenDone:NO].
+ * That is, it will reference the bytes that were appended to the given buffer.
 **/
 - (void)readDataToLength:(NSUInteger)length
              withTimeout:(NSTimeInterval)timeout
@@ -521,20 +518,11 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * If the timeout value is negative, the read operation will not use a timeout.
  * 
  * If you pass nil or zero-length data as the "data" parameter,
- * the method will do nothing (except maybe print a warning), and the delegate will not be called.
+ * the method will do nothing, and the delegate will not be called.
  * 
  * To read a line from the socket, use the line separator (e.g. CRLF for HTTP, see below) as the "data" parameter.
- * If you're developing your own custom protocol, be sure your separator can not occur naturally as
- * part of the data between separators.
- * For example, imagine you want to send several small documents over a socket.
- * Using CRLF as a separator is likely unwise, as a CRLF could easily exist within the documents.
- * In this particular example, it would be better to use a protocol similar to HTTP with
- * a header that includes the length of the document.
- * Also be careful that your separator cannot occur naturally as part of the encoding for a character.
- * 
- * The given data (separator) parameter should be immutable.
- * For performance reasons, the socket will retain it, not copy it.
- * So if it is immutable, don't modify it while the socket is using it.
+ * Note that this method is not character-set aware, so if a separator can occur naturally as part of the encoding for
+ * a character, the read will prematurely end.
 **/
 - (void)readDataToData:(NSData *)data withTimeout:(NSTimeInterval)timeout tag:(long)tag;
 
@@ -547,25 +535,15 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * If the buffer if nil, a buffer will automatically be created for you.
  * 
  * If the bufferOffset is greater than the length of the given buffer,
- * the method will do nothing (except maybe print a warning), and the delegate will not be called.
+ * the method will do nothing, and the delegate will not be called.
  * 
- * If you pass a buffer, you must not alter it in any way while the socket is using it.
+ * If you pass a buffer, you must not alter it in any way while AsyncSocket is using it.
  * After completion, the data returned in socket:didReadData:withTag: will be a subset of the given buffer.
- * That is, it will reference the bytes that were appended to the given buffer via
- * the method [NSData dataWithBytesNoCopy:length:freeWhenDone:NO].
+ * That is, it will reference the bytes that were appended to the given buffer.
  * 
  * To read a line from the socket, use the line separator (e.g. CRLF for HTTP, see below) as the "data" parameter.
- * If you're developing your own custom protocol, be sure your separator can not occur naturally as
- * part of the data between separators.
- * For example, imagine you want to send several small documents over a socket.
- * Using CRLF as a separator is likely unwise, as a CRLF could easily exist within the documents.
- * In this particular example, it would be better to use a protocol similar to HTTP with
- * a header that includes the length of the document.
- * Also be careful that your separator cannot occur naturally as part of the encoding for a character.
- * 
- * The given data (separator) parameter should be immutable.
- * For performance reasons, the socket will retain it, not copy it.
- * So if it is immutable, don't modify it while the socket is using it.
+ * Note that this method is not character-set aware, so if a separator can occur naturally as part of the encoding for
+ * a character, the read will prematurely end.
 **/
 - (void)readDataToData:(NSData *)data
            withTimeout:(NSTimeInterval)timeout
@@ -584,22 +562,13 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * The read will complete successfully if exactly maxLength bytes are read and the given data is found at the end.
  * 
  * If you pass nil or zero-length data as the "data" parameter,
- * the method will do nothing (except maybe print a warning), and the delegate will not be called.
+ * the method will do nothing, and the delegate will not be called.
  * If you pass a maxLength parameter that is less than the length of the data parameter,
- * the method will do nothing (except maybe print a warning), and the delegate will not be called.
+ * the method will do nothing, and the delegate will not be called.
  * 
  * To read a line from the socket, use the line separator (e.g. CRLF for HTTP, see below) as the "data" parameter.
- * If you're developing your own custom protocol, be sure your separator can not occur naturally as
- * part of the data between separators.
- * For example, imagine you want to send several small documents over a socket.
- * Using CRLF as a separator is likely unwise, as a CRLF could easily exist within the documents.
- * In this particular example, it would be better to use a protocol similar to HTTP with
- * a header that includes the length of the document.
- * Also be careful that your separator cannot occur naturally as part of the encoding for a character.
- * 
- * The given data (separator) parameter should be immutable.
- * For performance reasons, the socket will retain it, not copy it.
- * So if it is immutable, don't modify it while the socket is using it.
+ * Note that this method is not character-set aware, so if a separator can occur naturally as part of the encoding for
+ * a character, the read will prematurely end.
 **/
 - (void)readDataToData:(NSData *)data withTimeout:(NSTimeInterval)timeout maxLength:(NSUInteger)length tag:(long)tag;
 
@@ -616,28 +585,18 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * it is treated similarly to a timeout - the socket is closed with a GCDAsyncSocketReadMaxedOutError.
  * The read will complete successfully if exactly maxLength bytes are read and the given data is found at the end.
  * 
- * If you pass a maxLength parameter that is less than the length of the data (separator) parameter,
- * the method will do nothing (except maybe print a warning), and the delegate will not be called.
+ * If you pass a maxLength parameter that is less than the length of the data parameter,
+ * the method will do nothing, and the delegate will not be called.
  * If the bufferOffset is greater than the length of the given buffer,
- * the method will do nothing (except maybe print a warning), and the delegate will not be called.
+ * the method will do nothing, and the delegate will not be called.
  * 
- * If you pass a buffer, you must not alter it in any way while the socket is using it.
+ * If you pass a buffer, you must not alter it in any way while AsyncSocket is using it.
  * After completion, the data returned in socket:didReadData:withTag: will be a subset of the given buffer.
- * That is, it will reference the bytes that were appended to the given buffer via
- * the method [NSData dataWithBytesNoCopy:length:freeWhenDone:NO].
+ * That is, it will reference the bytes that were appended to the given buffer.
  * 
  * To read a line from the socket, use the line separator (e.g. CRLF for HTTP, see below) as the "data" parameter.
- * If you're developing your own custom protocol, be sure your separator can not occur naturally as
- * part of the data between separators.
- * For example, imagine you want to send several small documents over a socket.
- * Using CRLF as a separator is likely unwise, as a CRLF could easily exist within the documents.
- * In this particular example, it would be better to use a protocol similar to HTTP with
- * a header that includes the length of the document.
- * Also be careful that your separator cannot occur naturally as part of the encoding for a character.
- * 
- * The given data (separator) parameter should be immutable.
- * For performance reasons, the socket will retain it, not copy it.
- * So if it is immutable, don't modify it while the socket is using it.
+ * Note that this method is not character-set aware, so if a separator can occur naturally as part of the encoding for
+ * a character, the read will prematurely end.
 **/
 - (void)readDataToData:(NSData *)data
            withTimeout:(NSTimeInterval)timeout
@@ -653,17 +612,6 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * 
  * If you pass in nil or zero-length data, this method does nothing and the delegate will not be called.
  * If the timeout value is negative, the write operation will not use a timeout.
- * 
- * Thread-Safety Note:
- * If the given data parameter is mutable (NSMutableData) then you MUST NOT alter the data while
- * the socket is writing it. In other words, it's not safe to alter the data until after the delegate method
- * socket:didWriteDataWithTag: is invoked signifying that this particular write operation has completed.
- * This is due to the fact that GCDAsyncSocket does NOT copy the data. It simply retains it.
- * This is for performance reasons. Often times, if NSMutableData is passed, it is because
- * a request/response was built up in memory. Copying this data adds an unwanted/unneeded overhead.
- * If you need to write data from an immutable buffer, and you need to alter the buffer before the socket
- * completes writing the bytes (which is NOT immediately after this method returns, but rather at a later time
- * when the delegate method notifies you), then you should first copy the bytes, and pass the copy to this method.
 **/
 - (void)writeData:(NSData *)data withTimeout:(NSTimeInterval)timeout tag:(long)tag;
 
