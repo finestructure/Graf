@@ -172,26 +172,29 @@ const long kCaptchaTag = 4;
   NSString *imageId = [self upload:image];
   NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
 
-  NSUInteger maxTries = 6;
+  NSUInteger maxTries = 12;
   NSUInteger callCount = 0;
   while (callCount < maxTries) {
-    //if (callCount > 0) {
-      NSLog(@"waiting for result");
-      [self withTimeout:5 monitorForSuccess:^BOOL{
-        return [captchaObject objectForKey:@"text"] != nil;
-      }];
-    //}
-    // check if we have a result, if so, return
+    // check for result key - will be set asynchronously from socket:didReadData:withTag:
+    NSLog(@"waiting for result");
+    [self withTimeout:5 monitorForSuccess:^BOOL{
+      return [captchaObject objectForKey:@"text"] != nil;
+    }];
+
+    // check if we have a result value, if so, return
     NSString *textResult = [captchaObject objectForKey:@"text"];
     if (textResult != nil) {
       return textResult;
     } else { // otherwise poll
       NSLog(@"polling");
       id captchaId = [captchaObject objectForKey:@"captcha"];
-      // put image id in queue to be picked up by socket:didReadData:withTag:
-      [self.captchaQueue enqueue:imageId];
-      // and call 'captcha'
-      [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
+      NSLog(@"captchaId: %@", captchaId);
+      if (captchaId != nil) { // can be nil if we poll before the upload is done
+        // put image id in queue to be picked up by socket:didReadData:withTag:
+        [self.captchaQueue enqueue:imageId];
+        // and call 'captcha'
+        [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
+      }
     }
     callCount++;
   }
