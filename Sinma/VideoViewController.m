@@ -199,7 +199,7 @@
 
 - (IBAction)takePicture:(id)sender {
   NSDate *start = [NSDate date];
-  MBProgressHUD *progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  MBProgressHUD *progressHud = [MBProgressHUD showHUDAddedTo:self.textResultView animated:YES];
   
   // timer for ui update
   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);  
