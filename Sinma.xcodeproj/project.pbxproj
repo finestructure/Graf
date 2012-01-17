@@ -30,6 +30,8 @@
 		5A86045014C43D90008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5A86046414C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
+		5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
+		5A8604A014C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
 		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
 		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
@@ -73,6 +75,8 @@
 		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5A86046114C482E5008D2C6A /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "other/NSData+MD5.h"; sourceTree = "<group>"; };
 		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
+		5A86049D14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueueAdditions.h"; path = "other/NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueAdditions.m"; path = "other/NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
 		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
 		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 				5AD8924E14C02275005595BA /* UIImage+Resize.m */,
 				5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */,
 				5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */,
+				5A86049D14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.h */,
+				5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -376,6 +382,7 @@
 				5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */,
 				5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */,
+				5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +395,7 @@
 				5A86044B14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */,
 				5A86046414C482E5008D2C6A /* NSData+MD5.m in Sources */,
+				5A8604A014C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
