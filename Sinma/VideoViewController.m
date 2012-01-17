@@ -207,7 +207,7 @@
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       self.snapshotPreview.image = image;
-      self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
+//      self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
     });
     
     NSString *result = [self.imageProcessor processImage:image];
