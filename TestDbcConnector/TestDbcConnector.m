@@ -43,7 +43,7 @@
 #pragma mark - tests
 
 
-- (void)_test_connect {
+- (void)test_connect {
   STAssertTrue([self.dbc connect], @"connect");
   [self withTimeout:2 monitorForSuccess:^BOOL{
     return self.dbc.connected;
@@ -52,7 +52,7 @@
 }
 
 
-- (void)_test_login {
+- (void)test_login {
   [self.dbc connect];
   [self.dbc login];
   [self withTimeout:2 monitorForSuccess:^BOOL{
@@ -62,7 +62,7 @@
 }
 
 
-- (void)_test_call {
+- (void)test_call {
   [self.dbc connect];
   [self.dbc login];
   [self.dbc call:@"user" tag:2];
@@ -78,12 +78,12 @@
 }
 
 
-- (void)_test_balance {
+- (void)test_balance {
   STAssertTrue([[DbcConnector sharedInstance] balance] > 0, @"balance must be > 0", nil);
 }
 
 
-- (void)_test_upload {
+- (void)test_upload {
   [self.dbc connect];
   [self.dbc login];
   UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];
