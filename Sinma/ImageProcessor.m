@@ -12,10 +12,14 @@
 
 @implementation ImageProcessor
 
+@synthesize dbc = _dbc;
 
 - (id)init {
   self = [super init];
   if (self) {
+    self.dbc = [[DbcConnector alloc] init];
+    [self.dbc connect];
+    [self.dbc login];
   }
   return self;
 }
@@ -27,12 +31,12 @@
 
 - (NSString *)processImage:(UIImage *)image
 {
-  return [[DbcConnector sharedInstance] decode:image];
+  return [self.dbc decode:image];
 }
 
 
 - (float)balance {
-  return [[DbcConnector sharedInstance] balance];
+  return [self.dbc balance];
 }
 
 

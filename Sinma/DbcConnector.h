@@ -26,8 +26,6 @@
 @property (nonatomic, retain) NSMutableArray *uploadQueue;
 @property (nonatomic, retain) NSMutableArray *captchaQueue;
 
-+ (DbcConnector *)sharedInstance;
-
 // internal
 
 - (BOOL)connect;

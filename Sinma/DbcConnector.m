@@ -43,25 +43,6 @@ const long kCaptchaTag = 4;
 #pragma mark - initializers
 
 
-+ (DbcConnector *)sharedInstance {
-  static DbcConnector *sharedInstance = nil;
-  
-  if (sharedInstance) {
-    return sharedInstance;
-  }
-  
-  @synchronized(self) {
-    if (!sharedInstance) {
-      sharedInstance = [[DbcConnector alloc] init];
-      [sharedInstance connect];
-      [sharedInstance login];
-    }
-    
-    return sharedInstance;
-  }
-}
-
-
 - (id)init {
   self = [super init];
   if (self) {
@@ -87,6 +68,11 @@ const long kCaptchaTag = 4;
 
 
 - (BOOL)connect {
+  if (self.connected) {
+    NSLog(@"already connected");
+    return YES;
+  }
+  
   NSLog(@"connecting...");
   NSError *err = nil;
   if (![self.socket connectToHost:kHostname onPort:kPort error:&err]) {

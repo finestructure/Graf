@@ -79,7 +79,9 @@
 
 
 - (void)test_balance {
-  STAssertTrue([[DbcConnector sharedInstance] balance] > 0, @"balance must be > 0", nil);
+  [self.dbc connect];
+  [self.dbc login];
+  STAssertTrue([self.dbc balance] > 0, @"balance must be > 0", nil);
 }
 
 
