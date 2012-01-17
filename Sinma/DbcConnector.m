@@ -36,7 +36,7 @@ const long kCaptchaTag = 4;
 @synthesize response = _response;
 @synthesize user = _user;
 @synthesize decoded = _decoded;
-@synthesize imageQueue = _imageQueue;
+@synthesize uploadQueue = _uploadQueue;
 @synthesize captchaQueue = _captchaQueue;
 
 
@@ -71,7 +71,7 @@ const long kCaptchaTag = 4;
     self.connected = NO;
     self.loggedIn = NO;
     self.decoded = [NSMutableDictionary dictionary];
-    self.imageQueue = [NSMutableArray array];
+    self.uploadQueue = [NSMutableArray array];
     self.captchaQueue = [NSMutableArray array];
   }
   return self;
@@ -160,7 +160,7 @@ const long kCaptchaTag = 4;
   [self.decoded setObject:[NSMutableDictionary dictionary] forKey:imageId];
 
   // put image id in queue to be picked up by socket:didReadData:withTag:
-  [self.imageQueue enqueue:imageId];
+  [self.uploadQueue enqueue:imageId];
   // and call 'upload'
   [self call:@"upload" withData:data tag:kUploadTag];
   
@@ -228,7 +228,7 @@ const long kCaptchaTag = 4;
     id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSAssert((error == nil), @"error must be nil but is: %@", error);
     NSLog(@"upload response: %@", res);
-    id imageId = [self.imageQueue dequeue];
+    id imageId = [self.uploadQueue dequeue];
     NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
   } else if (tag == kCaptchaTag) {

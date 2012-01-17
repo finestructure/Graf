@@ -94,9 +94,9 @@
   
   [self withTimeout:30 monitorForSuccess:^BOOL{
     return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
-    && [self.dbc.imageQueue count] == 0;
+    && [self.dbc.uploadQueue count] == 0;
   }];
-  STAssertTrue([self.dbc.imageQueue count] == 0, @"image queue size must be 0", nil);
+  STAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
   NSDictionary *result = [self.dbc.decoded objectForKey:imageId];
   STAssertNotNil(result, @"result must not be nil", nil);
   id captcha = [result objectForKey:@"captcha"];
