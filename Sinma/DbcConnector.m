@@ -8,6 +8,8 @@
 
 #import "DbcConnector.h"
 #import "NSData+Base64.h"
+#import "NSData+MD5.h"
+#import "NSMutableArray+QueueAdditions.h"
 
 
 #warning TEMPORARY
@@ -33,6 +35,8 @@ const long kCaptchaTag = 4;
 @synthesize done = _done;
 @synthesize response = _response;
 @synthesize user = _user;
+@synthesize decoded = _decoded;
+@synthesize imageQueue = _imageQueue;
 
 
 #pragma mark - initializers
@@ -65,6 +69,8 @@ const long kCaptchaTag = 4;
     self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:requestQueue];
     self.connected = NO;
     self.loggedIn = NO;
+    self.decoded = [NSMutableDictionary dictionary];
+    self.imageQueue = [NSMutableArray array];
   }
   return self;
 }
@@ -144,19 +150,22 @@ const long kCaptchaTag = 4;
 }
 
 
-- (NSUInteger)upload:(UIImage *)image {
+- (NSString *)upload:(UIImage *)image {
   NSData *imageData = UIImagePNGRepresentation(image);
+  NSString *md5 = [imageData MD5];
   NSString *base64Data = [imageData base64EncodedString];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
-  id response = nil; //[self call:@"upload" withData:data];
-  NSLog(@"upload response: %@", response);
-  id captchaId = [response objectForKey:@"captcha"];
-  return [captchaId unsignedIntegerValue];
+  [self.decoded setObject:[NSMutableDictionary dictionary] forKey:md5];
+  [self.imageQueue enqueue:md5];
+
+  [self call:@"upload" withData:data tag:kUploadTag];
+  
+  return md5;
 }
 
 
 - (NSString *)decode:(UIImage *)image {
-  NSUInteger captchaId = [self upload:image];
+  NSUInteger captchaId = 0; //[self upload:image];
   if (captchaId > 0) {
     NSUInteger maxTries = 6;
     NSUInteger callCount = 0;
@@ -203,6 +212,14 @@ const long kCaptchaTag = 4;
     id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSAssert((error == nil), @"error must be nil but is: %@", error);
     self.user = res;
+  } else if (tag == kUploadTag) {
+    NSError *error = nil;
+    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSAssert((error == nil), @"error must be nil but is: %@", error);
+    NSLog(@"upload response: %@", res);
+    id md5 = [self.imageQueue dequeue];
+    NSMutableDictionary *dict = [self.decoded objectForKey:md5];
+    [dict addEntriesFromDictionary:res];
   }
 }
 

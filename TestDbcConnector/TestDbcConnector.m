@@ -43,7 +43,7 @@
 #pragma mark - tests
 
 
-- (void)test_connect {
+- (void)_test_connect {
   STAssertTrue([self.dbc connect], @"connect");
   [self withTimeout:2 monitorForSuccess:^BOOL{
     return self.dbc.connected;
@@ -52,7 +52,7 @@
 }
 
 
-- (void)test_login {
+- (void)_test_login {
   [self.dbc connect];
   [self.dbc login];
   [self withTimeout:2 monitorForSuccess:^BOOL{
@@ -62,7 +62,7 @@
 }
 
 
-- (void)test_call {
+- (void)_test_call {
   [self.dbc connect];
   [self.dbc login];
   [self.dbc call:@"user" tag:2];
@@ -78,20 +78,29 @@
 }
 
 
-- (void)test_balance {
+- (void)_test_balance {
   STAssertTrue([[DbcConnector sharedInstance] balance] > 0, @"balance must be > 0", nil);
 }
 
 
-- (void)_test_upload {
+- (void)test_upload {
   [self.dbc connect];
   [self.dbc login];
   UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];
-
   STAssertNotNil(image, @"image must not be nil", nil);
-  NSUInteger captchaId = [self.dbc upload:image];
-  NSLog(@"captcha id: %d", captchaId);
-  STAssertTrue(captchaId > 0, @"captcha id must be > 0", nil);
+  
+  NSString *imageId = [self.dbc upload:image];
+  STAssertNotNil(imageId, @"imageId must not be nil", nil);
+  
+  [self withTimeout:30 monitorForSuccess:^BOOL{
+    return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
+    && [self.dbc.imageQueue count] == 0;
+  }];
+  STAssertTrue([self.dbc.imageQueue count] == 0, @"image queue size must be 0", nil);
+  NSDictionary *result = [self.dbc.decoded objectForKey:imageId];
+  STAssertNotNil(result, @"result must not be nil", nil);
+  id captcha = [result objectForKey:@"captcha"];
+  STAssertNotNil(captcha, @"captcha must not be nil", nil);
 }
 
 

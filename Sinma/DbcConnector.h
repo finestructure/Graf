@@ -22,6 +22,8 @@
 @property (nonatomic, assign) BOOL done;
 @property (nonatomic, retain) NSString *response;
 @property (nonatomic, retain) NSDictionary *user;
+@property (nonatomic, retain) NSMutableDictionary *decoded;
+@property (nonatomic, retain) NSMutableArray *imageQueue;
 
 + (DbcConnector *)sharedInstance;
 
@@ -36,7 +38,7 @@
 // API
   
 - (float)balance;
-- (NSUInteger)upload:(UIImage *)image;
+- (NSString *)upload:(UIImage *)image;
 - (NSString *)decode:(UIImage *)image;
 
 @end
