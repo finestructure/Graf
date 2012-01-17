@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSDictionary *user;
 @property (nonatomic, retain) NSMutableDictionary *decoded;
 @property (nonatomic, retain) NSMutableArray *imageQueue;
+@property (nonatomic, retain) NSMutableArray *captchaQueue;
 
 + (DbcConnector *)sharedInstance;
 

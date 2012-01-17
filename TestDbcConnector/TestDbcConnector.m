@@ -83,7 +83,7 @@
 }
 
 
-- (void)test_upload {
+- (void)_test_upload {
   [self.dbc connect];
   [self.dbc login];
   UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];
@@ -104,7 +104,7 @@
 }
 
 
-- (void)_test_decode {
+- (void)test_decode {
   [self.dbc connect];
   [self.dbc login];
   UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];

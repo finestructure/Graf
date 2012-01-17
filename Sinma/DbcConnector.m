@@ -37,6 +37,7 @@ const long kCaptchaTag = 4;
 @synthesize user = _user;
 @synthesize decoded = _decoded;
 @synthesize imageQueue = _imageQueue;
+@synthesize captchaQueue = _captchaQueue;
 
 
 #pragma mark - initializers
@@ -71,6 +72,7 @@ const long kCaptchaTag = 4;
     self.loggedIn = NO;
     self.decoded = [NSMutableDictionary dictionary];
     self.imageQueue = [NSMutableArray array];
+    self.captchaQueue = [NSMutableArray array];
   }
   return self;
 }
@@ -167,24 +169,31 @@ const long kCaptchaTag = 4;
 
 
 - (NSString *)decode:(UIImage *)image {
-  NSUInteger captchaId = 0; //[self upload:image];
-  if (captchaId > 0) {
-    NSUInteger maxTries = 6;
-    NSUInteger callCount = 0;
-    while (callCount < maxTries) {
-      if (callCount > 0) {
-        NSLog(@"waiting for result");
-//        [self waitWithTimeout:5];
-      }
+  NSString *imageId = [self upload:image];
+  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
+
+  NSUInteger maxTries = 6;
+  NSUInteger callCount = 0;
+  while (callCount < maxTries) {
+    //if (callCount > 0) {
+      NSLog(@"waiting for result");
+      [self withTimeout:5 monitorForSuccess:^BOOL{
+        return [captchaObject objectForKey:@"text"] != nil;
+      }];
+    //}
+    // check if we have a result, if so, return
+    NSString *textResult = [captchaObject objectForKey:@"text"];
+    if (textResult != nil) {
+      return textResult;
+    } else { // otherwise poll
       NSLog(@"polling");
-      id response = nil; //[self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
-      callCount++;
-      if (response != nil && [response objectForKey:@"text"] != nil) {
-        return [response objectForKey:@"text"];    
-      }
+      id captchaId = [captchaObject objectForKey:@"captcha"];
+      // put image id in queue to be picked up by socket:didReadData:withTag:
+      [self.captchaQueue enqueue:imageId];
+      // and call 'captcha'
+      [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
     }
-  } else {
-    NSLog(@"captcha id returned from upload was <= 0: %d", captchaId);
+    callCount++;
   }
   return nil;
 }
@@ -222,6 +231,13 @@ const long kCaptchaTag = 4;
     id imageId = [self.imageQueue dequeue];
     NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
+  } else if (tag == kCaptchaTag) {
+    NSError *error = nil;
+    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSAssert((error == nil), @"error must be nil but is: %@", error);
+    NSLog(@"captcha response: %@", res);
+    id imageId = [self.captchaQueue dequeue];
+    NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
   }
 }
