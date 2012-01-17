@@ -185,11 +185,39 @@
 #pragma mark - Actions
 
 
+- (void)updateHud:(NSTimer *)timer {
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    NSLog(@"timer fired");
+    NSDate *start = [[timer userInfo] objectForKey:@"start"];
+    MBProgressHUD *progressHud = [[timer userInfo] objectForKey:@"progressHud"];
+    NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:start];
+    NSLog(@"updating label: %.0fs", elapsed);
+    progressHud.labelText = [NSString stringWithFormat:@"Blah OCR (%.0fs)", elapsed];
+  });
+}
+
+
 - (IBAction)takePicture:(id)sender {
   NSDate *start = [NSDate date];
   MBProgressHUD *progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  progressHud.labelText = @"Processing OCR";
+  
+  // timer for ui update
+  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);  
+  dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,
+                                  queue);
+  dispatch_source_set_timer(_timer,
+                            dispatch_time(DISPATCH_TIME_NOW, 0),
+                            1*NSEC_PER_SEC, 0);
+  dispatch_source_set_event_handler(_timer, ^{
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:start];
+      NSLog(@"updating label: %.0fs", elapsed);
+      progressHud.labelText = [NSString stringWithFormat:@"Blah OCR (%.0fs)", elapsed];
+    });
+  });
+  dispatch_resume(_timer);
 
+  
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     
@@ -221,6 +249,9 @@
       NSLog(@"duration: %f", duration);      
       self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
       [progressHud hide:YES];
+      // clean up timer
+      dispatch_source_cancel(_timer);
+      dispatch_release(_timer);
     });
   }];
 }
