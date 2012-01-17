@@ -152,15 +152,17 @@ const long kCaptchaTag = 4;
 
 - (NSString *)upload:(UIImage *)image {
   NSData *imageData = UIImagePNGRepresentation(image);
-  NSString *md5 = [imageData MD5];
+  NSString *imageId = [imageData MD5];
   NSString *base64Data = [imageData base64EncodedString];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
-  [self.decoded setObject:[NSMutableDictionary dictionary] forKey:md5];
-  [self.imageQueue enqueue:md5];
+  [self.decoded setObject:[NSMutableDictionary dictionary] forKey:imageId];
 
+  // put image id in queue to be picked up by socket:didReadData:withTag:
+  [self.imageQueue enqueue:imageId];
+  // and call 'upload'
   [self call:@"upload" withData:data tag:kUploadTag];
   
-  return md5;
+  return imageId;
 }
 
 
@@ -217,8 +219,9 @@ const long kCaptchaTag = 4;
     id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSAssert((error == nil), @"error must be nil but is: %@", error);
     NSLog(@"upload response: %@", res);
-    id md5 = [self.imageQueue dequeue];
-    NSMutableDictionary *dict = [self.decoded objectForKey:md5];
+    id imageId = [self.imageQueue dequeue];
+    NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
+    [dict addEntriesFromDictionary:res];
     [dict addEntriesFromDictionary:res];
   }
 }
