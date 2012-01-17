@@ -164,12 +164,14 @@ const long kCaptchaTag = 4;
     // check for result key - will be set asynchronously from socket:didReadData:withTag:
     NSLog(@"waiting for result");
     [self withTimeout:5 monitorForSuccess:^BOOL{
-      return [captchaObject objectForKey:@"text"] != nil;
+      NSString *textResult = [captchaObject objectForKey:@"text"];
+      return (textResult != nil && ! [textResult isEqualToString:@""]);
     }];
 
     // check if we have a result value, if so, return
     NSString *textResult = [captchaObject objectForKey:@"text"];
-    if (textResult != nil) {
+    if (textResult != nil && ! [textResult isEqualToString:@""]) {
+      NSLog(@"returning result: >%@<", textResult);
       return textResult;
     } else { // otherwise poll
       NSLog(@"polling");
