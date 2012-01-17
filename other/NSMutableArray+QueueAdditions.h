@@ -6,8 +6,7 @@
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@interface NSMutableArray_QueueAdditions : NSObject
-
+@interface NSMutableArray (QueueAdditions)
+- (id) dequeue;
+- (void) enqueue:(id)obj;
 @end
