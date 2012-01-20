@@ -7,26 +7,37 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GCDAsyncSocket.h"
 
 
-@interface DbcConnector : NSObject <NSStreamDelegate>
+@interface DbcConnector : NSObject <NSStreamDelegate> {
+  dispatch_queue_t requestQueue;
+}
 
+@property (nonatomic, retain) GCDAsyncSocket *socket;
 @property (assign) BOOL connected;
 @property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSInputStream *inputStream;
 @property (nonatomic, retain) NSOutputStream *outputStream;
 @property (nonatomic, assign) BOOL done;
 @property (nonatomic, retain) NSString *response;
+@property (nonatomic, retain) NSDictionary *user;
+@property (nonatomic, retain) NSMutableDictionary *decoded;
+@property (nonatomic, retain) NSMutableArray *uploadQueue;
+@property (nonatomic, retain) NSMutableArray *captchaQueue;
 
-+ (DbcConnector *)sharedInstance;
+// internal
 
 - (BOOL)connect;
 - (void)login;
-- (id)call:(NSString *)command;
-- (id)call:(NSString *)command withData:(NSDictionary *)data;
+- (void)call:(NSString *)command tag:(long)tag;
+- (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag;
+- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block;
 
+// API
+  
 - (float)balance;
-- (NSUInteger)upload:(UIImage *)image;
+- (NSString *)upload:(UIImage *)image;
 - (NSString *)decode:(UIImage *)image;
 
 @end

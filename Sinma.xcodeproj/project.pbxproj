@@ -22,8 +22,16 @@
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
 		5A86043514C2332F008D2C6A /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
-		5A86043B14C238AC008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86043A14C238AC008D2C6A /* NSData+Base64.m */; };
-		5A86043C14C238AC008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86043A14C238AC008D2C6A /* NSData+Base64.m */; };
+		5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */; };
+		5A86044B14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */; };
+		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
+		5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
+		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
+		5A86045014C43D90008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
+		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
+		5A86046414C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
+		5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
+		5A8604A014C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
 		5AD8924714BF22B7005595BA /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924614BF22B7005595BA /* ImageProcessor.m */; };
 		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
@@ -60,8 +68,15 @@
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
-		5A86043914C238AC008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		5A86043A14C238AC008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		5A86044614C438CD008D2C6A /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = other/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = other/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		5A86044814C438CD008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "other/NSData+Base64.h"; sourceTree = "<group>"; };
+		5A86044914C438CD008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "other/NSData+Base64.m"; sourceTree = "<group>"; };
+		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		5A86046114C482E5008D2C6A /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "other/NSData+MD5.h"; sourceTree = "<group>"; };
+		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
+		5A86049D14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueueAdditions.h"; path = "other/NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueAdditions.m"; path = "other/NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		5AD8924514BF22B7005595BA /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
 		5AD8924614BF22B7005595BA /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = "<group>"; };
 		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
@@ -88,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
 				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
 				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
 				5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */,
@@ -101,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A86045014C43D90008D2C6A /* CFNetwork.framework in Frameworks */,
 				5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */,
 				5AD8927214C02772005595BA /* UIKit.framework in Frameworks */,
 				5AD8927314C02772005595BA /* Foundation.framework in Frameworks */,
@@ -113,6 +130,7 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
+				5A86044E14C43D6D008D2C6A /* CFNetwork.framework */,
 				5A2263CD14B1FB190078EBEF /* Sinma */,
 				5AD8927414C02772005595BA /* TestDbcConnector */,
 				5A2263E414B312450078EBEF /* Other */,
@@ -178,8 +196,12 @@
 		5A2263E414B312450078EBEF /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				5A86043914C238AC008D2C6A /* NSData+Base64.h */,
-				5A86043A14C238AC008D2C6A /* NSData+Base64.m */,
+				5A86046114C482E5008D2C6A /* NSData+MD5.h */,
+				5A86046214C482E5008D2C6A /* NSData+MD5.m */,
+				5A86044614C438CD008D2C6A /* GCDAsyncSocket.h */,
+				5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */,
+				5A86044814C438CD008D2C6A /* NSData+Base64.h */,
+				5A86044914C438CD008D2C6A /* NSData+Base64.m */,
 				5AD8924914C02275005595BA /* MBProgressHUD.h */,
 				5AD8924A14C02275005595BA /* MBProgressHUD.m */,
 				5AD8924B14C02275005595BA /* UIImage+Alpha.h */,
@@ -188,6 +210,8 @@
 				5AD8924E14C02275005595BA /* UIImage+Resize.m */,
 				5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */,
 				5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */,
+				5A86049D14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.h */,
+				5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -355,7 +379,10 @@
 				5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */,
 				5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */,
 				5AD8926614C026BE005595BA /* DbcConnector.m in Sources */,
-				5A86043B14C238AC008D2C6A /* NSData+Base64.m in Sources */,
+				5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
+				5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */,
+				5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */,
+				5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,7 +392,10 @@
 			files = (
 				5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */,
 				5AD8928114C02898005595BA /* DbcConnector.m in Sources */,
-				5A86043C14C238AC008D2C6A /* NSData+Base64.m in Sources */,
+				5A86044B14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
+				5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */,
+				5A86046414C482E5008D2C6A /* NSData+MD5.m in Sources */,
+				5A8604A014C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

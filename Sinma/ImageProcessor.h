@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class DbcConnector;
+
 @interface ImageProcessor : NSObject
+
+@property (nonatomic, retain) DbcConnector *dbc;
 
 - (NSString *)processImage:(UIImage *)image;
 - (float)balance;
