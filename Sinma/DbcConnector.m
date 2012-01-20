@@ -11,13 +11,15 @@
 #import "NSData+MD5.h"
 #import "NSMutableArray+QueueAdditions.h"
 
+#include <stdlib.h>
+
 
 #warning TEMPORARY
 NSString *kUser = @"abstracture";
 NSString *kPass = @"i8Kn37rD8v";
 NSString *kHostname = @"api.deathbycaptcha.com";
-#warning Make port a range
-const int kPort = 8123; // to 8131
+const int kPortStart = 8123;
+const int kPortEnd = 8131;
 
 const long kLoginTag = 1;
 const long kUserTag = 2;
@@ -67,6 +69,12 @@ const long kCaptchaTag = 4;
 #pragma mark - API methods
 
 
+- (int)randomPort {
+  int delta = kPortEnd - kPortStart;
+  return kPortStart + (arc4random() % (delta+1));
+}
+
+
 - (BOOL)connect {
   if (self.connected) {
     NSLog(@"already connected");
@@ -75,7 +83,7 @@ const long kCaptchaTag = 4;
   
   NSLog(@"connecting...");
   NSError *err = nil;
-  if (![self.socket connectToHost:kHostname onPort:kPort error:&err]) {
+  if (![self.socket connectToHost:kHostname onPort:[self randomPort] error:&err]) {
     // If there was an error, it's likely something like "already connected" or "no delegate set"
     NSLog(@"Connection error: %@", err);
     self.connected = NO;
