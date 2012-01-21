@@ -10,9 +10,23 @@
 #import "GCDAsyncSocket.h"
 
 
+// delegate protocal
+
+@protocol DbcConnectorDelegate <NSObject>
+
+- (void)decodedImageId:(NSString *)imageId result:(NSString *)result;
+- (void)receivedBalance:(NSNumber *)balance;
+
+@end
+
+
+// class declaration
+
 @interface DbcConnector : NSObject <NSStreamDelegate> {
   dispatch_queue_t requestQueue;
 }
+
+@property (nonatomic, assign) id<DbcConnectorDelegate> delegate;
 
 @property (nonatomic, retain) GCDAsyncSocket *socket;
 @property (assign) BOOL connected;
@@ -39,6 +53,7 @@
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
 - (NSString *)decode:(UIImage *)image;
+
 
 @end
 

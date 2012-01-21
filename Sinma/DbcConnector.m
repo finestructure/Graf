@@ -29,6 +29,7 @@ const long kCaptchaTag = 4;
 
 @implementation DbcConnector
 
+@synthesize delegate = _delegate;
 @synthesize socket = _socket;
 @synthesize connected = _connected;
 @synthesize loggedIn = _loggedIn;
@@ -222,6 +223,10 @@ const long kCaptchaTag = 4;
     id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSAssert((error == nil), @"error must be nil but is: %@", error);
     self.user = res;
+    if ([self.delegate respondsToSelector:@selector(receivedBalance:)]
+        && [self.user objectForKey:@"balance"] != nil) {
+      [self.delegate receivedBalance:[self.user objectForKey:@"balance"]];
+    }
   } else if (tag == kUploadTag) {
     NSError *error = nil;
     id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -238,6 +243,12 @@ const long kCaptchaTag = 4;
     id imageId = [self.captchaQueue dequeue];
     NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
+    if ([self.delegate respondsToSelector:@selector(decodedImageId:result:)]) {
+      NSString *textResult = [dict objectForKey:@"text"];
+      if (textResult != nil && ! [textResult isEqualToString:@""]) {
+        [self.delegate decodedImageId:imageId result:textResult];
+      }
+    }
   }
 }
 
