@@ -103,10 +103,11 @@ const NSInteger kCheckProgressStatus = 1000;
 
   __block NSString *imageId = nil;
   __block NSString *textResult = nil;
+  __block typeof(self) bself = self;
   self.didDecodeDelegateHandler = ^(NSString *anImageId, NSString *result){
     imageId = anImageId;
     textResult = result;
-    [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_04_decoded)];
+    [bself notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_04_decoded)];
   };
 
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
@@ -125,10 +126,11 @@ const NSInteger kCheckProgressStatus = 1000;
   
   __block NSString *imageId = nil;
   __block NSString *textResult = nil;
+  __block typeof(self) bself = self;
   self.didDecodeDelegateHandler = ^(NSString *anImageId, NSString *result){
     imageId = anImageId;
     textResult = result;
-    [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_05_poll)];
+    [bself notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_05_poll)];
   };
 
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
