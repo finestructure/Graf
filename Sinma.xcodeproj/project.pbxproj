@@ -47,8 +47,6 @@
 		5AD8927114C02772005595BA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD8927014C02772005595BA /* SenTestingKit.framework */; };
 		5AD8927214C02772005595BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5AD8927314C02772005595BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
-		5AD8927914C02772005595BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AD8927714C02772005595BA /* InfoPlist.strings */; };
-		5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8927B14C02772005595BA /* TestDbcConnector.m */; };
 		5AD8928114C02898005595BA /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8926514C026BE005595BA /* DbcConnector.m */; };
 		5ADC3DAC14CD70F4004992F7 /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8926514C026BE005595BA /* DbcConnector.m */; };
 		5ADC3DAE14CD7137004992F7 /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
@@ -111,11 +109,6 @@
 		5AD8926514C026BE005595BA /* DbcConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnector.m; sourceTree = "<group>"; };
 		5AD8926F14C02772005595BA /* TestDbcConnector.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDbcConnector.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AD8927014C02772005595BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		5AD8927614C02772005595BA /* TestDbcConnector-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestDbcConnector-Info.plist"; sourceTree = "<group>"; };
-		5AD8927814C02772005595BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5AD8927A14C02772005595BA /* TestDbcConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDbcConnector.h; sourceTree = "<group>"; };
-		5AD8927B14C02772005595BA /* TestDbcConnector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestDbcConnector.m; sourceTree = "<group>"; };
-		5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestDbcConnector-Prefix.pch"; sourceTree = "<group>"; };
 		5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				5A2263CD14B1FB190078EBEF /* Sinma */,
-				5AD8927414C02772005595BA /* TestDbcConnector */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
 				5A56F0B014CD480300F7D75B /* Tests */,
@@ -282,26 +274,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		5AD8927414C02772005595BA /* TestDbcConnector */ = {
-			isa = PBXGroup;
-			children = (
-				5AD8927A14C02772005595BA /* TestDbcConnector.h */,
-				5AD8927B14C02772005595BA /* TestDbcConnector.m */,
-				5AD8927514C02772005595BA /* Supporting Files */,
-			);
-			path = TestDbcConnector;
-			sourceTree = "<group>";
-		};
-		5AD8927514C02772005595BA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5AD8927614C02772005595BA /* TestDbcConnector-Info.plist */,
-				5AD8927714C02772005595BA /* InfoPlist.strings */,
-				5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -411,7 +383,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AD8927914C02772005595BA /* InfoPlist.strings in Resources */,
 				5A86043514C2332F008D2C6A /* test222.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,7 +458,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AD8927C14C02772005595BA /* TestDbcConnector.m in Sources */,
 				5AD8928114C02898005595BA /* DbcConnector.m in Sources */,
 				5A86044B14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044D14C438CD008D2C6A /* NSData+Base64.m in Sources */,
@@ -511,14 +481,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				5A56F0B414CD480300F7D75B /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		5AD8927714C02772005595BA /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5AD8927814C02772005595BA /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
