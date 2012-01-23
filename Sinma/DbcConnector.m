@@ -108,6 +108,11 @@ const long kCaptchaTag = 4;
 }
 
 
+- (NSString *)resultForId:(NSString *)imageId {
+  return [[self.decoded objectForKey:imageId] objectForKey:@"text"];
+}
+
+
 #pragma mark - internal methods
 
 
@@ -162,7 +167,7 @@ const long kCaptchaTag = 4;
 - (void)poll:(NSString *)imageId {
   NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
 
-  NSLog(@"polling");
+  NSLog(@"polling for captchaObject: %@", captchaObject);
   id captchaId = [captchaObject objectForKey:@"captcha"];
   NSLog(@"captchaId: %@", captchaId);
   if (captchaId != nil) { // can be nil if we poll before the upload is done

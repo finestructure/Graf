@@ -55,6 +55,7 @@
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
 - (void)poll:(NSString *)imageId;
+- (NSString *)resultForId:(NSString *)imageId;
 
 
 @end

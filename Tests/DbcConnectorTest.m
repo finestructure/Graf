@@ -116,6 +116,7 @@ const NSInteger kCheckProgressStatus = 1000;
   
   GHAssertEqualStrings(actualImageId, imageId, nil);
   GHAssertEqualStrings(@"037233", textResult, nil);
+  GHAssertEqualStrings(@"037233", [self.dbc resultForId:imageId], nil);
 }
 
 
