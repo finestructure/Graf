@@ -45,6 +45,8 @@
 		5ADC3DB214CD718D004992F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */; };
 		5ADC3DB614CD8EC3004992F7 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
+		5ADC3DBD14CDBEAD004992F7 /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DBC14CDBEAD004992F7 /* ImagePoller.m */; };
+		5ADC3DBE14CDBEAD004992F7 /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DBC14CDBEAD004992F7 /* ImagePoller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		5AD8926514C026BE005595BA /* DbcConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnector.m; sourceTree = "<group>"; };
 		5AD8927014C02772005595BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
+		5ADC3DBB14CDBEAD004992F7 /* ImagePoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePoller.h; sourceTree = "<group>"; };
+		5ADC3DBC14CDBEAD004992F7 /* ImagePoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePoller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +182,8 @@
 				5A4766F614BC832B00D8FA66 /* Constants.m */,
 				5AD8926414C026BE005595BA /* DbcConnector.h */,
 				5AD8926514C026BE005595BA /* DbcConnector.m */,
+				5ADC3DBB14CDBEAD004992F7 /* ImagePoller.h */,
+				5ADC3DBC14CDBEAD004992F7 /* ImagePoller.m */,
 			);
 			path = Sinma;
 			sourceTree = "<group>";
@@ -368,6 +374,7 @@
 				5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */,
 				5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */,
 				5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */,
+				5ADC3DBD14CDBEAD004992F7 /* ImagePoller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +389,7 @@
 				5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */,
 				5ADC3DB114CD714B004992F7 /* NSMutableArray+QueueAdditions.m in Sources */,
 				5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */,
+				5ADC3DBE14CDBEAD004992F7 /* ImagePoller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
