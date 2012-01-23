@@ -104,10 +104,6 @@ const long kCaptchaTag = 4;
 
 
 - (float)balance {
-  [self call:@"user" tag:kUserTag];
-  [self withTimeout:5 monitorForSuccess:^BOOL{
-    return self.user != nil;
-  }];
   return [[self.user objectForKey:@"balance"] floatValue];
 }
 

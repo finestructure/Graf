@@ -47,7 +47,9 @@
 	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:5];
   GHAssertTrue(self.dbc.loggedIn, nil);
   GHAssertEqualStrings(@"50402", [[self.dbc.user objectForKey:@"user"] stringValue], nil);
+  GHAssertTrue(self.dbc.balance > 0, nil);
 }
+
 
 
 #pragma mark - delegate
