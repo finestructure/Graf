@@ -27,62 +27,7 @@
 }
 
 
-- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
-  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
-  NSDate *step = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:step]) {
-    // break when the timeout is reached 
-    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
-      break;
-    }
-    step = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  }
-}
-
-
 #pragma mark - tests
-
-
-- (void)test_connect {
-  STAssertTrue([self.dbc connect], @"connect");
-  [self withTimeout:2 monitorForSuccess:^BOOL{
-    return self.dbc.connected;
-  }];
-  STAssertTrue(self.dbc.connected, @"connected");
-}
-
-
-- (void)test_login {
-  [self.dbc connect];
-  [self.dbc login];
-  [self withTimeout:2 monitorForSuccess:^BOOL{
-    return self.dbc.loggedIn;
-  }];
-  STAssertTrue(self.dbc.loggedIn, @"logged in");
-}
-
-
-- (void)test_call {
-  [self.dbc connect];
-  [self.dbc login];
-  [self.dbc call:@"user" tag:2];
-
-  [self withTimeout:2 monitorForSuccess:^BOOL{
-    return self.dbc.user != nil;
-  }];
-
-  STAssertNotNil(self.dbc.user, @"user is nil");
-  STAssertEqualObjects([self.dbc.user objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
-  STAssertEqualObjects([self.dbc.user objectForKey:@"status"], [NSNumber numberWithInt:0], nil);
-  STAssertEqualObjects([self.dbc.user objectForKey:@"user"], [NSNumber numberWithInt:50402], nil);
-}
-
-
-- (void)test_balance {
-  [self.dbc connect];
-  [self.dbc login];
-  STAssertTrue([self.dbc balance] > 0, @"balance must be > 0", nil);
-}
 
 
 - (void)test_upload {

@@ -25,6 +25,18 @@
 }
 
 
+
+- (void)checkProgress_upload:(NSString *)imageId {
+  if ([[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
+      && [self.dbc.uploadQueue count] == 0) {
+    [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_upload)];
+  } else {
+    [self performSelector:@selector(checkProgress_upload:) withObject:imageId afterDelay:0.1];
+  }
+}
+
+
+
 #pragma mark - tests
 
 
@@ -50,6 +62,27 @@
   GHAssertTrue(self.dbc.balance > 0, nil);
 }
 
+
+- (void)test_upload {
+  [self.dbc connect];
+  [self.dbc login];
+  [self prepare];
+
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  GHAssertNotNil(image, @"image must not be nil", nil);
+  
+  NSString *imageId = [self.dbc upload:image];
+  GHAssertNotNil(imageId, @"imageId must not be nil", nil);
+  
+  [self checkProgress_upload:imageId];
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30]; 
+  
+  GHAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
+  NSDictionary *result = [self.dbc.decoded objectForKey:imageId];
+  GHAssertNotNil(result, @"result must not be nil", nil);
+  id captcha = [result objectForKey:@"captcha"];
+  GHAssertNotNil(captcha, @"captcha must not be nil", nil);
+}
 
 
 #pragma mark - delegate
