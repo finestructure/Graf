@@ -20,6 +20,8 @@
 @synthesize processingTimeLabel = _processingTimeLabel;
 @synthesize snapshotPreview = _snapshotPreview;
 @synthesize balanceLabel = _balanceLabel;
+@synthesize imageIdLabel = _imageIdLabel;
+@synthesize statusTextView = _statusTextView;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 
@@ -71,7 +73,10 @@
   [super viewDidLoad];
   
   // set up image processor
-  self.imageProcessor = [[ImageProcessor alloc] init];
+  self.imageProcessor = [[DbcConnector alloc] init];
+  self.imageProcessor.delegate = self;
+  [self.imageProcessor connect];
+  [self.imageProcessor login];
   
   // update labels and ui controls
   
@@ -79,6 +84,8 @@
   self.textResultView.text = @"";
   self.processingTimeLabel.text = @"";
   self.balanceLabel.text = @"";
+  self.imageIdLabel.text = @"";
+  self.statusTextView.text = @"";
   
   // session init
   
@@ -172,6 +179,8 @@
   [self setProcessingTimeLabel:nil];
   [self setSnapshotPreview:nil];
   [self setBalanceLabel:nil];
+  [self setImageIdLabel:nil];
+  [self setStatusTextView:nil];
   [super viewDidUnload];
 }
 
@@ -200,6 +209,9 @@
 - (IBAction)takePicture:(id)sender {
   NSDate *start = [NSDate date];
   MBProgressHUD *progressHud = [MBProgressHUD showHUDAddedTo:self.textResultView animated:YES];
+  self.imageIdLabel.text = @"";
+  self.textResultView.text = @"";
+  self.processingTimeLabel.text = @"";
   
   // timer for ui update
   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);  
@@ -212,7 +224,7 @@
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:start];
       NSLog(@"updating label: %.0fs", elapsed);
-      progressHud.labelText = [NSString stringWithFormat:@"Blah OCR (%.0fs)", elapsed];
+      progressHud.labelText = [NSString stringWithFormat:@"Decoding (%.0fs)", elapsed];
     });
   });
   dispatch_resume(_timer);
@@ -235,15 +247,14 @@
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       self.snapshotPreview.image = image;
-//      self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
     });
     
-    NSString *result = [self.imageProcessor processImage:image];
+    NSString *imageId = [self.imageProcessor upload:image];
     
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
-      self.textResultView.text = result;
+      self.imageIdLabel.text = imageId;
       // update processing time label
       NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
       NSLog(@"duration: %f", duration);      
@@ -264,6 +275,44 @@
 
 - (void)stopSession {
   [self.session stopRunning];
+}
+
+
+# pragma mark - DbcConnectorDelegate
+
+
+- (void)addToStatusView:(NSString *)string {
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    NSLog(@"status update: %@", string);
+    if ([self.statusTextView.text isEqualToString:@""]) {
+      self.statusTextView.text = string;
+    } else {
+      self.statusTextView.text = [self.statusTextView.text stringByAppendingFormat:@"\n%@", string];
+    }
+  });
+}
+
+
+- (void)didConnectToHost:(NSString *)host port:(UInt16)port {
+  NSString *string = [NSString stringWithFormat:@"Connected to %@:%d", host, port];
+  [self addToStatusView:string];
+}
+
+
+- (void)didLogInAs:(NSString *)user {
+  NSString *string = [NSString stringWithFormat:@"Logged in as: %@", user];
+  [self addToStatusView:string];
+  self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
+}
+
+
+- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
+    [self addToStatusView:string];
+    self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
+    self.textResultView.text = result;
+  });
 }
 
 

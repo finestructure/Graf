@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "ImageProcessor.h"
+#import "DbcConnector.h"
 
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate>
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
-@property (nonatomic, retain) ImageProcessor *imageProcessor;
+@property (nonatomic, retain) DbcConnector *imageProcessor;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *imageIdLabel;
+@property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 
 
 - (IBAction)takePicture:(id)sender;
