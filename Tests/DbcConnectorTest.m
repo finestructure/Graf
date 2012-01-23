@@ -4,6 +4,7 @@
 @interface DbcConnectorTest : GHAsyncTestCase<DbcConnectorDelegate> { }
 
 @property (nonatomic, retain) DbcConnector *dbc;
+@property (nonatomic, retain) NSMutableDictionary *results;
 
 @end
 
@@ -11,12 +12,14 @@
 @implementation DbcConnectorTest
 
 @synthesize dbc = _dbc;
+@synthesize results = _results;
 
 
 - (void)setUp {
   [super setUp];  
   self.dbc = [[DbcConnector alloc] init];
   self.dbc.delegate = self;
+  self.results = [NSMutableDictionary dictionary];
 }
 
 
@@ -39,30 +42,30 @@
 #pragma mark - tests
 
 
-- (void)test_connect {
+- (void)test_01_connect {
 	[self prepare];
   
 	[self.dbc connect];
 	
-	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:5];
+	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
   GHAssertTrue(self.dbc.connected, nil);
 }
 
 
-- (void)test_login {
+- (void)test_02_login {
   [self.dbc connect];
   [self prepare];
   
   [self.dbc login];
 
-	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:5];
+	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
   GHAssertTrue(self.dbc.loggedIn, nil);
   GHAssertEqualStrings(@"50402", [[self.dbc.user objectForKey:@"user"] stringValue], nil);
   GHAssertTrue(self.dbc.balance > 0, nil);
 }
 
 
-- (void)test_upload {
+- (void)test_03_upload {
   [self.dbc connect];
   [self.dbc login];
   [self prepare];
@@ -77,7 +80,7 @@
     return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
     && [self.dbc.uploadQueue count] == 0;
   }];
-  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30]; 
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
   
   GHAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
   NSDictionary *result = [self.dbc.decoded objectForKey:imageId];
@@ -87,16 +90,38 @@
 }
 
 
+- (void)test_04_decoded {
+  [self.dbc connect];
+  [self.dbc login];
+  [self prepare];
+
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+
+  NSString *imageId = [self.dbc upload:image];
+  
+	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:40];
+  
+  GHAssertEqualObjects(@"037233", [self.results objectForKey:imageId], nil);
+}
+
+
 #pragma mark - delegate
 
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port {
-	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_connect)];
+	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_01_connect)];
 }
 
 
 - (void)didLogInAs:(NSString *)user {
-  [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_login)];
+  [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_02_login)];
 }
+
+
+- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
+  [self.results setObject:result forKey:imageId];
+  [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_04_decoded)];
+}
+
 
 @end

@@ -18,8 +18,7 @@
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)didLogInAs:(NSString *)user;
-- (void)decodedImageId:(NSString *)imageId result:(NSString *)result;
-- (void)receivedBalance:(NSNumber *)balance;
+- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
 
 @end
 
@@ -50,13 +49,11 @@
 - (void)login;
 - (void)call:(NSString *)command tag:(long)tag;
 - (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag;
-- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block;
 
 // API
   
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
-- (NSString *)decode:(UIImage *)image;
 
 
 @end

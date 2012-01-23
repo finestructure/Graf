@@ -30,27 +30,6 @@
 #pragma mark - tests
 
 
-- (void)test_upload {
-  [self.dbc connect];
-  [self.dbc login];
-  UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[DbcConnector class]] pathForResource:@"test222" ofType:@"png"]];
-  STAssertNotNil(image, @"image must not be nil", nil);
-  
-  NSString *imageId = [self.dbc upload:image];
-  STAssertNotNil(imageId, @"imageId must not be nil", nil);
-  
-  [self withTimeout:30 monitorForSuccess:^BOOL{
-    return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
-    && [self.dbc.uploadQueue count] == 0;
-  }];
-  STAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
-  NSDictionary *result = [self.dbc.decoded objectForKey:imageId];
-  STAssertNotNil(result, @"result must not be nil", nil);
-  id captcha = [result objectForKey:@"captcha"];
-  STAssertNotNil(captcha, @"captcha must not be nil", nil);
-}
-
-
 - (void)test_decode {
   [self.dbc connect];
   [self.dbc login];

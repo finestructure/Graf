@@ -111,17 +111,17 @@ const long kCaptchaTag = 4;
 #pragma mark - internal methods
 
 
-- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
-  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
-  NSDate *step = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:step]) {
-    // break when the timeout is reached 
-    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
-      break;
-    }
-    step = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  }
-}
+//- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
+//  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
+//  NSDate *step = [NSDate dateWithTimeIntervalSinceNow:0.1];
+//  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:step]) {
+//    // break when the timeout is reached 
+//    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
+//      break;
+//    }
+//    step = [NSDate dateWithTimeIntervalSinceNow:0.1];
+//  }
+//}
 
 
 - (void)call:(NSString *)command tag:(long)tag {
@@ -159,40 +159,40 @@ const long kCaptchaTag = 4;
 }
 
 
-- (NSString *)decode:(UIImage *)image {
-  NSString *imageId = [self upload:image];
-  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
-
-  NSUInteger maxTries = 12;
-  NSUInteger callCount = 0;
-  while (callCount < maxTries) {
-    // check for result key - will be set asynchronously from socket:didReadData:withTag:
-    NSLog(@"waiting for result");
-    [self withTimeout:5 monitorForSuccess:^BOOL{
-      NSString *textResult = [captchaObject objectForKey:@"text"];
-      return (textResult != nil && ! [textResult isEqualToString:@""]);
-    }];
-
-    // check if we have a result value, if so, return
-    NSString *textResult = [captchaObject objectForKey:@"text"];
-    if (textResult != nil && ! [textResult isEqualToString:@""]) {
-      NSLog(@"returning result: >%@<", textResult);
-      return textResult;
-    } else { // otherwise poll
-      NSLog(@"polling");
-      id captchaId = [captchaObject objectForKey:@"captcha"];
-      NSLog(@"captchaId: %@", captchaId);
-      if (captchaId != nil) { // can be nil if we poll before the upload is done
-        // put image id in queue to be picked up by socket:didReadData:withTag:
-        [self.captchaQueue enqueue:imageId];
-        // and call 'captcha'
-        [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
-      }
-    }
-    callCount++;
-  }
-  return nil;
-}
+//- (NSString *)_decode:(UIImage *)image {
+//  NSString *imageId = [self upload:image];
+//  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
+//
+//  NSUInteger maxTries = 12;
+//  NSUInteger callCount = 0;
+//  while (callCount < maxTries) {
+//    // check for result key - will be set asynchronously from socket:didReadData:withTag:
+//    NSLog(@"waiting for result");
+//    [self withTimeout:5 monitorForSuccess:^BOOL{
+//      NSString *textResult = [captchaObject objectForKey:@"text"];
+//      return (textResult != nil && ! [textResult isEqualToString:@""]);
+//    }];
+//
+//    // check if we have a result value, if so, return
+//    NSString *textResult = [captchaObject objectForKey:@"text"];
+//    if (textResult != nil && ! [textResult isEqualToString:@""]) {
+//      NSLog(@"returning result: >%@<", textResult);
+//      return textResult;
+//    } else { // otherwise poll
+//      NSLog(@"polling");
+//      id captchaId = [captchaObject objectForKey:@"captcha"];
+//      NSLog(@"captchaId: %@", captchaId);
+//      if (captchaId != nil) { // can be nil if we poll before the upload is done
+//        // put image id in queue to be picked up by socket:didReadData:withTag:
+//        [self.captchaQueue enqueue:imageId];
+//        // and call 'captcha'
+//        [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
+//      }
+//    }
+//    callCount++;
+//  }
+//  return nil;
+//}
 
 
 #pragma mark - GCDAsyncSocketDelegate
@@ -212,48 +212,51 @@ const long kCaptchaTag = 4;
 }
 
 
+- (id)jsonResponse:(NSData *)data {
+  NSError *error = nil;
+  id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+  NSAssert((error == nil), @"error must be nil but is: %@", error);
+  return res;
+}
+
+
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
   NSLog(@"tag: %ld", tag);
   NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   if (tag == kLoginTag) {
-    NSError *error = nil;
-    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSAssert((error == nil), @"error must be nil but is: %@", error);
-    self.user = res;
+    self.user = [self jsonResponse:data];
     self.loggedIn = YES;
     if ([self.delegate respondsToSelector:@selector(didLogInAs:)]
         && [self.user objectForKey:@"user"] != nil) {
       [self.delegate didLogInAs:[self.user objectForKey:@"user"]];
     }
   } else if (tag == kUserTag) {
-    NSError *error = nil;
-    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSAssert((error == nil), @"error must be nil but is: %@", error);
-    self.user = res;
-    if ([self.delegate respondsToSelector:@selector(receivedBalance:)]
-        && [self.user objectForKey:@"balance"] != nil) {
-      [self.delegate receivedBalance:[self.user objectForKey:@"balance"]];
-    }
+    self.user = [self jsonResponse:data];
   } else if (tag == kUploadTag) {
-    NSError *error = nil;
-    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSAssert((error == nil), @"error must be nil but is: %@", error);
+    id res = [self jsonResponse:data];
     NSLog(@"upload response: %@", res);
+    
     id imageId = [self.uploadQueue dequeue];
     NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
+    
+    NSString *textResult = [dict objectForKey:@"text"];
+    if (textResult != nil && ! [textResult isEqualToString:@""]) {
+      if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
+        [self.delegate didDecodeImageId:imageId result:textResult];
+      }
+    }
   } else if (tag == kCaptchaTag) {
-    NSError *error = nil;
-    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSAssert((error == nil), @"error must be nil but is: %@", error);
+    id res = [self jsonResponse:data];
     NSLog(@"captcha response: %@", res);
+
     id imageId = [self.captchaQueue dequeue];
     NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
-    if ([self.delegate respondsToSelector:@selector(decodedImageId:result:)]) {
+    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
       NSString *textResult = [dict objectForKey:@"text"];
       if (textResult != nil && ! [textResult isEqualToString:@""]) {
-        [self.delegate decodedImageId:imageId result:textResult];
+        [self.delegate didDecodeImageId:imageId result:textResult];
       }
     }
   }
