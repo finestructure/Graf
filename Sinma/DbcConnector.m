@@ -205,6 +205,9 @@ const long kCaptchaTag = 4;
 - (void)socket:(GCDAsyncSocket *)sender didConnectToHost:(NSString *)host port:(UInt16)port {
   NSLog(@"connected!");
   self.connected = YES;
+  if ([self.delegate respondsToSelector:@selector(didConnectToHost:port:)]) {
+    [self.delegate didConnectToHost:host port:port];
+  }
 }
 
 

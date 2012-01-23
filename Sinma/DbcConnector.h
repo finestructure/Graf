@@ -14,6 +14,9 @@
 
 @protocol DbcConnectorDelegate <NSObject>
 
+@optional
+
+- (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)decodedImageId:(NSString *)imageId result:(NSString *)result;
 - (void)receivedBalance:(NSNumber *)balance;
 
