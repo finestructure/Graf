@@ -159,6 +159,21 @@ const long kCaptchaTag = 4;
 }
 
 
+- (void)poll:(NSString *)imageId {
+  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
+
+  NSLog(@"polling");
+  id captchaId = [captchaObject objectForKey:@"captcha"];
+  NSLog(@"captchaId: %@", captchaId);
+  if (captchaId != nil) { // can be nil if we poll before the upload is done
+    // put image id in queue to be picked up by socket:didReadData:withTag:
+    [self.captchaQueue enqueue:imageId];
+    // and call 'captcha'
+    [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
+  }
+}
+
+
 //- (NSString *)_decode:(UIImage *)image {
 //  NSString *imageId = [self upload:image];
 //  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
