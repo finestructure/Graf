@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ImagePoller : NSObject
+@class DbcConnector;
+
+@interface ImagePoller : NSObject {
+
+@private
+
+  dispatch_source_t _timer;
+  
+}
+
+@property (nonatomic, retain) NSDate *start;
+
+
+- (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc;
 
 @end
