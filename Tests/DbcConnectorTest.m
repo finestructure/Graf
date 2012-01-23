@@ -25,16 +25,15 @@
 }
 
 
-
-- (void)checkProgress_upload:(NSString *)imageId {
-  if ([[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
-      && [self.dbc.uploadQueue count] == 0) {
-    [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_upload)];
-  } else {
-    [self performSelector:@selector(checkProgress_upload:) withObject:imageId afterDelay:0.1];
-  }
+- (void)checkProgress:(BOOL (^)())hasResult {
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+    if (hasResult() == YES) {
+      [self notify:kGHUnitWaitStatusSuccess];
+    } else {
+      [self checkProgress:hasResult];
+    }
+  });
 }
-
 
 
 #pragma mark - tests
@@ -74,7 +73,10 @@
   NSString *imageId = [self.dbc upload:image];
   GHAssertNotNil(imageId, @"imageId must not be nil", nil);
   
-  [self checkProgress_upload:imageId];
+  [self checkProgress:^BOOL{
+    return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
+    && [self.dbc.uploadQueue count] == 0;
+  }];
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30]; 
   
   GHAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
