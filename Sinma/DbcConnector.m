@@ -220,7 +220,15 @@ const long kCaptchaTag = 4;
   NSLog(@"tag: %ld", tag);
   NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   if (tag == kLoginTag) {
+    NSError *error = nil;
+    id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSAssert((error == nil), @"error must be nil but is: %@", error);
+    self.user = res;
     self.loggedIn = YES;
+    if ([self.delegate respondsToSelector:@selector(didLogInAs:)]
+        && [self.user objectForKey:@"user"] != nil) {
+      [self.delegate didLogInAs:[self.user objectForKey:@"user"]];
+    }
   } else if (tag == kUserTag) {
     NSError *error = nil;
     id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
