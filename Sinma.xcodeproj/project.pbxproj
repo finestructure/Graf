@@ -25,7 +25,6 @@
 		5A56F0B514CD480300F7D75B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A56F0B314CD480300F7D75B /* InfoPlist.strings */; };
 		5A56F0B714CD480300F7D75B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A56F0B614CD480300F7D75B /* main.m */; };
 		5A56F0C114CD482F00F7D75B /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */; };
-		5A56F0C314CD58FB00F7D75B /* DbcConnectorTest.m in Resources */ = {isa = PBXBuildFile; fileRef = 5A56F0C214CD58FB00F7D75B /* DbcConnectorTest.m */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
 		5A86043514C2332F008D2C6A /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
@@ -57,6 +56,7 @@
 		5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5ADC3DB114CD714B004992F7 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
 		5ADC3DB214CD718D004992F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
+		5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,7 +84,6 @@
 		5A56F0B614CD480300F7D75B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5A56F0B814CD480300F7D75B /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = other/GHUnitIOS.framework; sourceTree = "<group>"; };
-		5A56F0C214CD58FB00F7D75B /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
@@ -116,6 +115,7 @@
 		5AD8927A14C02772005595BA /* TestDbcConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDbcConnector.h; sourceTree = "<group>"; };
 		5AD8927B14C02772005595BA /* TestDbcConnector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestDbcConnector.m; sourceTree = "<group>"; };
 		5AD8927D14C02772005595BA /* TestDbcConnector-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestDbcConnector-Prefix.pch"; sourceTree = "<group>"; };
+		5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				5A56F0B114CD480300F7D75B /* Supporting Files */,
-				5A56F0C214CD58FB00F7D75B /* DbcConnectorTest.m */,
+				5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -402,7 +402,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A56F0B514CD480300F7D75B /* InfoPlist.strings in Resources */,
-				5A56F0C314CD58FB00F7D75B /* DbcConnectorTest.m in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +477,7 @@
 				5ADC3DAF14CD713C004992F7 /* GCDAsyncSocket.m in Sources */,
 				5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */,
 				5ADC3DB114CD714B004992F7 /* NSMutableArray+QueueAdditions.m in Sources */,
+				5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

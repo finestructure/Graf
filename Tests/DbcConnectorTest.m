@@ -1,6 +1,5 @@
-#import <GHUnitIOS/GHUnit.h>
+#import <GHUnitIOS/GHUnit.h> 
 #import "DbcConnector.h"
-
 
 @interface DbcConnectorTest : GHAsyncTestCase<DbcConnectorDelegate> { }
 
@@ -26,32 +25,23 @@
 }
 
 
-- (void)testFoo {       
-  NSString *a = @"foo";
-  GHTestLog(@"I can log to the GHUnit test console: %@", a);
-  
-  // Assert a is not NULL, with no custom error description
-  GHAssertNotNil(a, @"a must not be nil");
-  
-  // Assert equal objects, add custom error description
-  NSString *b = @"bar";
-  GHAssertEqualObjects(a, b, @"A custom error message. a should be equal to: %@.", b);
-}
+#pragma mark - tests
 
 
-- (void)testConnect {
-	[self prepare:@selector(testConnect)];
+- (void)test_connect {
+	[self prepare];
   
 	[self.dbc connect];
 	
 	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
+  GHAssertTrue(self.dbc.connected, nil);
 }
 
 
 #pragma mark - delegate
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port {
-	//[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(testAsync1)];
+	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_connect)];
 }
 
 @end
