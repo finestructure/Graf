@@ -28,7 +28,7 @@ version=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" $product/Info.plis
 base=$(basename "$product" .app)
 ipafile="$base"_$version.ipa
 
-/usr/bin/xcrun -sdk iphoneos PackageApplication -v $product -o `pwd`/releases/$ipafile --sign $dev_certificate --embed $prov_profile
+/usr/bin/xcrun -sdk iphoneos PackageApplication -v $product -o `pwd`/releases/$ipafile --sign "$dev_certificate" --embed "$prov_profile"
 
 echo Version: $version
 
