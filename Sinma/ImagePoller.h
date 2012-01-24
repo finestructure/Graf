@@ -18,9 +18,14 @@
   
 }
 
-@property (nonatomic, retain) NSDate *start;
+@property (nonatomic, retain) NSDate *startDate;
+@property (nonatomic, assign) NSTimeInterval interval;
+@property (nonatomic, assign) BOOL isRunning;
 
 
 - (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc;
+
+- (void)start;
+- (void)stop;
 
 @end

@@ -12,21 +12,21 @@
 
 @implementation ImagePoller
 
-@synthesize start = _start;
+@synthesize startDate = _startDate;
+@synthesize interval = _interval;
+@synthesize isRunning = _isRunning;
 
 
 - (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc {
   self = [super init];
   if (self) {
-    self.start = [NSDate date];
+    self.isRunning = NO;
+    self.interval = interval;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(_timer,
-                              dispatch_time(DISPATCH_TIME_NOW, 0),
-                              interval * NSEC_PER_SEC, 0);
     
     dispatch_source_set_event_handler(_timer, ^{
-      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.start];
+      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.startDate];
       NSLog(@"elapsed: %.1f", elapsed);
       NSString *result = [dbc resultForId:imageId];
       NSLog(@"result: %@", result);
@@ -38,11 +38,34 @@
         dispatch_source_cancel(_timer);
       }
     });
-    
-    // now that our timer is all set to go, start it
-    dispatch_resume(_timer);
   }
   return self;
 }
+
+
+- (void)dealloc {
+  dispatch_source_cancel(_timer);
+  dispatch_release(_timer);
+}
+
+
+- (void)start {
+  if (self.isRunning) {
+    return;
+  }
+  dispatch_source_set_timer(_timer,
+                            dispatch_time(DISPATCH_TIME_NOW, 0),
+                            self.interval * NSEC_PER_SEC, 0);
+  self.startDate = [NSDate date];
+  self.isRunning = YES;
+  dispatch_resume(_timer);  
+}
+
+
+- (void)stop {
+  dispatch_source_cancel(_timer);
+  self.isRunning = NO;
+}
+
 
 @end

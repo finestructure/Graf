@@ -50,6 +50,7 @@
   NSString *imageId = [self.dbc upload:image];
   
   ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 timeout:50 imageId:imageId dbc:self.dbc];
+  [poller start];
   [self checkProgress:^BOOL{
     NSString *result = [self.dbc resultForId:imageId];
     return (result != nil && ![result isEqualToString:@""]);
