@@ -107,7 +107,7 @@
 
   // start session
   
-  [self startSession];
+  [self.session startRunning];
 }
 
 
@@ -225,16 +225,6 @@
       });
     }];
   }];
-}
-
-
-- (void)startSession {
-  [self.session startRunning];
-}
-
-
-- (void)stopSession {
-  [self.session stopRunning];
 }
 
 

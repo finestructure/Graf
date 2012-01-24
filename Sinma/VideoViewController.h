@@ -41,8 +41,6 @@ typedef enum ControllerState {
 
 - (IBAction)takePicture:(id)sender;
 
-- (void)startSession;
-- (void)stopSession;
 - (void)transitionToState:(ControllerState)newState;
 
 
