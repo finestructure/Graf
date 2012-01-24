@@ -220,7 +220,9 @@
     
     NSString *imageId = [self.imageProcessor upload:image];
     [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId completionHandler:^{
-      [self transitionToState:kIdle];
+      dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [self transitionToState:kIdle];
+      });
     }];
   }];
 }
