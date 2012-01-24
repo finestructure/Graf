@@ -46,6 +46,8 @@
 		5AED510214CEF85F00D8B6BB /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */; };
 		5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED510014CEF85F00D8B6BB /* VideoViewController.m */; };
 		5AED510514CEF85F00D8B6BB /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AED510114CEF85F00D8B6BB /* VideoViewController.xib */; };
+		5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */; };
+		5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -391,6 +393,8 @@
 				5ADC3DB114CD714B004992F7 /* NSMutableArray+QueueAdditions.m in Sources */,
 				5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */,
 				5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */,
+				5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */,
+				5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
