@@ -249,6 +249,7 @@
     
     NSString *imageId = [self.imageProcessor upload:image];
     [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId];
+    [self.imageProcessor updateBalance];
     
     // update UI elements on main thread
     dispatch_async(dispatch_get_main_queue(), ^(void) {
@@ -316,7 +317,14 @@
     // clean up timer
     dispatch_source_cancel(_timer);
     dispatch_release(_timer);
-});
+  });
+}
+
+
+- (void)didUpdateBalance:(float)newBalance {
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
+  });
 }
 
 

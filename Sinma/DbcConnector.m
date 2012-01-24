@@ -104,6 +104,11 @@ const long kCaptchaTag = 4;
 }
 
 
+- (void)updateBalance {
+  [self call:@"user" tag:kUserTag];  
+}
+
+
 - (float)balance {
   return [[self.user objectForKey:@"balance"] floatValue];
 }
@@ -262,6 +267,9 @@ const long kCaptchaTag = 4;
     }
   } else if (tag == kUserTag) {
     self.user = [self jsonResponse:data];
+    if ([self.delegate respondsToSelector:@selector(didUpdateBalance:)]) {
+      [self.delegate didUpdateBalance:[self balance]];
+    }
   } else if (tag == kUploadTag) {
     id res = [self jsonResponse:data];
     NSLog(@"upload response: %@", res);

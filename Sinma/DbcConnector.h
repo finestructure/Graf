@@ -21,6 +21,7 @@
 - (void)didLogInAs:(NSString *)user;
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
 - (void)didDisconnectWithError:(NSError *)error;
+- (void)didUpdateBalance:(float)newBalance;
 
 @end
 
@@ -55,6 +56,7 @@
 
 // API
   
+- (void)updateBalance;
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
 - (void)poll:(NSString *)imageId;
