@@ -2,7 +2,7 @@
 
 product_name="Graf"
 product="build/Release-iphoneos/$product_name.app"
-artwork="Resources/app_icon-512.png"
+artwork="Resources/app_icon-114.png"
 publishing_target="abslogin:~/public_html/Graf/"
 manifest="graf_manifest.plist"
 tempdir=.tmp
