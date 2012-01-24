@@ -35,6 +35,7 @@ typedef enum ControllerState {
 @property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
 @property (nonatomic, retain) MBProgressHUD *progressHud;
 

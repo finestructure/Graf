@@ -20,6 +20,7 @@
 @synthesize snapshotPreview = _snapshotPreview;
 @synthesize balanceLabel = _balanceLabel;
 @synthesize statusTextView = _statusTextView;
+@synthesize versionLabel = _versionLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize progressHud = _progressHud;
@@ -85,6 +86,7 @@
   self.processingTimeLabel.text = @"";
   self.balanceLabel.text = @"";
   self.statusTextView.text = @"";
+  self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
   
   // session init
   
@@ -178,6 +180,7 @@
   [self setSnapshotPreview:nil];
   [self setBalanceLabel:nil];
   [self setStatusTextView:nil];
+  [self setVersionLabel:nil];
   [super viewDidUnload];
 }
 
