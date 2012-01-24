@@ -8,11 +8,31 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
+#import "ImagePoller.h"
 
+
+// delegate protocal
+
+@protocol DbcConnectorDelegate <NSObject>
+
+@optional
+
+- (void)didConnectToHost:(NSString *)host port:(UInt16)port;
+- (void)didLogInAs:(NSString *)user;
+- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
+- (void)didDisconnectWithError:(NSError *)error;
+- (void)didUpdateBalance:(float)newBalance;
+
+@end
+
+
+// class declaration
 
 @interface DbcConnector : NSObject <NSStreamDelegate> {
   dispatch_queue_t requestQueue;
 }
+
+@property (nonatomic, assign) id<DbcConnectorDelegate> delegate;
 
 @property (nonatomic, retain) GCDAsyncSocket *socket;
 @property (assign) BOOL connected;
@@ -25,6 +45,7 @@
 @property (nonatomic, retain) NSMutableDictionary *decoded;
 @property (nonatomic, retain) NSMutableArray *uploadQueue;
 @property (nonatomic, retain) NSMutableArray *captchaQueue;
+@property (nonatomic, retain) ImagePoller *imagePoller;
 
 // internal
 
@@ -32,13 +53,16 @@
 - (void)login;
 - (void)call:(NSString *)command tag:(long)tag;
 - (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag;
-- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block;
 
 // API
   
+- (void)updateBalance;
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
-- (NSString *)decode:(UIImage *)image;
+- (void)poll:(NSString *)imageId;
+- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId completionHandler:(void (^)())block;
+- (NSString *)resultForId:(NSString *)imageId;
+
 
 @end
 
