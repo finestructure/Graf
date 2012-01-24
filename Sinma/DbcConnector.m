@@ -171,12 +171,12 @@ const long kCaptchaTag = 4;
 }
 
 
-- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId
+- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId completionHandler:(void (^)())block
 {
   if (self.imagePoller != nil && self.imagePoller.isRunning) {
     NSLog(@"Warning: there's already a poller running. It will be disabled.");
   }
-  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self];
+  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self completionHandler:block];
   [self.imagePoller start];  
 }
 

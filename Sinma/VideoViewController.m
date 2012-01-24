@@ -15,7 +15,6 @@
 
 @synthesize preview = _preview;
 @synthesize session = _session;
-@synthesize imageSizeLabel = _imageSizeLabel;
 @synthesize textResultView = _textResultView;
 @synthesize processingTimeLabel = _processingTimeLabel;
 @synthesize snapshotPreview = _snapshotPreview;
@@ -25,6 +24,7 @@
 @synthesize imageProcessor = _imageProcessor;
 @synthesize progressHud = _progressHud;
 @synthesize start = _start;
+@synthesize state = _state;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -81,7 +81,6 @@
   
   // update labels and ui controls
   
-  self.imageSizeLabel.text = @"";
   self.textResultView.text = @"";
   self.processingTimeLabel.text = @"";
   self.balanceLabel.text = @"";
@@ -174,7 +173,6 @@
 {
   [self setPreview:nil];
   self.session = nil;
-  [self setImageSizeLabel:nil];
   [self setTextResultView:nil];
   [self setProcessingTimeLabel:nil];
   [self setSnapshotPreview:nil];
@@ -193,25 +191,52 @@
 #pragma mark - Actions
 
 
-- (void)updateHud:(NSTimer *)timer {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    NSLog(@"timer fired");
-    NSDate *start = [[timer userInfo] objectForKey:@"start"];
-    MBProgressHUD *progressHud = [[timer userInfo] objectForKey:@"progressHud"];
-    NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:start];
-    NSLog(@"updating label: %.0fs", elapsed);
-    progressHud.labelText = [NSString stringWithFormat:@"Blah OCR (%.0fs)", elapsed];
-  });
+- (UIImage *)convertSampleBufferToUIImage:(CMSampleBufferRef)sampleBuffer {
+  UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
+  image = [UIImage imageWithCGImage:image.CGImage scale:2 orientation:UIImageOrientationRight];
+  CGSize previewSize = self.preview.frame.size;
+  
+  CGFloat scale = image.size.width/previewSize.width;
+  CGRect cropRect = CGRectMake(0,
+                               image.size.height/2 - previewSize.height/2*scale,
+                               image.size.width,
+                               previewSize.height*scale);
+  image = [self cropImage:image toFrame:cropRect];
+  NSLog(@"image size: %.0f x %.0f", image.size.width, image.size.height);
+  return image;
 }
 
 
 - (IBAction)takePicture:(id)sender {
-  self.start = [NSDate date];
-  self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  self.textResultView.text = @"";
-  self.processingTimeLabel.text = @"";
+  [self transitionToState:kProcessing];
   
-  // timer for ui update
+  AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
+  [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
+    UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
+          
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      self.snapshotPreview.image = image;
+    });
+    
+    NSString *imageId = [self.imageProcessor upload:image];
+    [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId completionHandler:^{
+      [self transitionToState:kIdle];
+    }];
+  }];
+}
+
+
+- (void)startSession {
+  [self.session startRunning];
+}
+
+
+- (void)stopSession {
+  [self.session stopRunning];
+}
+
+
+- (void)startHudUpdateTimer {
   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);  
   _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,
                                   queue);
@@ -225,46 +250,47 @@
     });
   });
   dispatch_resume(_timer);
-
-  
-  AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
-  [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
-    
-    UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-    image = [UIImage imageWithCGImage:image.CGImage scale:2 orientation:UIImageOrientationRight];
-    CGSize previewSize = self.preview.frame.size;
-    
-    CGFloat scale = image.size.width/previewSize.width;
-    CGRect cropRect = CGRectMake(0,
-                                 image.size.height/2 - previewSize.height/2*scale,
-                                 image.size.width,
-                                 previewSize.height*scale);
-    image = [self cropImage:image toFrame:cropRect];
-          
-    // update UI elements on main thread
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      self.snapshotPreview.image = image;
-    });
-    
-    NSString *imageId = [self.imageProcessor upload:image];
-    [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId];
-    [self.imageProcessor updateBalance];
-    
-    // update UI elements on main thread
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      self.imageSizeLabel.text = [NSString stringWithFormat:@"%.0f x %.0f", image.size.width, image.size.height];
-    });
-  }];
 }
 
 
-- (void)startSession {
-  [self.session startRunning];
+- (void)stopHudUpdateTimer {
+  dispatch_source_cancel(_timer);
+  dispatch_release(_timer);
 }
 
 
-- (void)stopSession {
-  [self.session stopRunning];
+- (void)updateProcessingTimeLabel {
+  NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
+  NSLog(@"duration: %f", duration);      
+  self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
+}
+
+
+- (void)transitionToState:(ControllerState)newState {
+  switch (self.state) {
+    case kIdle:
+      if (newState == kProcessing) {
+        self.start = [NSDate date];
+        self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.textResultView.text = @"";
+        self.processingTimeLabel.text = @"";
+        [self startHudUpdateTimer];
+
+      }
+      break;
+      
+    case kProcessing:
+      if (newState == kIdle) {
+        [self.progressHud hide:YES];
+        [self updateProcessingTimeLabel];
+        [self stopHudUpdateTimer];
+      }
+      break;
+      
+  }
+  // update balance on every state transition for good measure
+  self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
+  self.state = newState;
 }
 
 
@@ -304,18 +330,8 @@
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
     [self addToStatusView:string];
-    self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
     self.textResultView.text = result;
-
-    [self.progressHud hide:YES];
-
-    // update processing time label
-    NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
-    NSLog(@"duration: %f", duration);      
-    self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
-    // clean up timer
-    dispatch_source_cancel(_timer);
-    dispatch_release(_timer);
+    [self transitionToState:kIdle];
   });
 }
 

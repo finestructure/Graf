@@ -15,13 +15,15 @@
 @synthesize startDate = _startDate;
 @synthesize interval = _interval;
 @synthesize isRunning = _isRunning;
+@synthesize completionHandler = _completionHandler;
 
 
-- (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc {
+- (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc completionHandler:(void (^)())block {
   self = [super init];
   if (self) {
     self.isRunning = NO;
     self.interval = interval;
+    self.completionHandler = block;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     
@@ -35,6 +37,7 @@
         [dbc poll:imageId];
       } else {
         NSLog(@"done");
+        self.completionHandler();
         dispatch_source_cancel(_timer);
       }
     });
@@ -63,6 +66,7 @@
 
 
 - (void)stop {
+  self.completionHandler();
   dispatch_source_cancel(_timer);
   self.isRunning = NO;
 }

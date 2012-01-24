@@ -12,6 +12,13 @@
 
 @class MBProgressHUD;
 
+typedef enum ControllerState {
+  kIdle,
+  kProcessing
+} ControllerState;
+
+
+
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate> {
   dispatch_source_t _timer;
 }
@@ -20,9 +27,9 @@
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
 @property (nonatomic, retain) DbcConnector *imageProcessor;
 @property (nonatomic, retain) NSDate *start;
+@property (nonatomic, assign) ControllerState state;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
-@property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
 @property (weak, nonatomic) IBOutlet UITextView *textResultView;
 @property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
@@ -36,5 +43,7 @@
 
 - (void)startSession;
 - (void)stopSession;
+- (void)transitionToState:(ControllerState)newState;
+
 
 @end
