@@ -284,11 +284,15 @@
 - (void)addToStatusView:(NSString *)string {
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSLog(@"status update: %@", string);
+    NSUInteger pos = [self.statusTextView.text length];
     if ([self.statusTextView.text isEqualToString:@""]) {
       self.statusTextView.text = string;
     } else {
+      pos += 1;
       self.statusTextView.text = [self.statusTextView.text stringByAppendingFormat:@"\n%@", string];
     }
+    NSRange range = NSMakeRange(pos, [string length]);
+    [self.statusTextView scrollRangeToVisible:range];
   });
 }
 
