@@ -316,4 +316,10 @@
 }
 
 
+- (void)didDisconnectWithError:(NSError *)error {
+  NSString *string = [NSString stringWithFormat:@"Disconnected! Error: %@", error];
+  [self addToStatusView:string];
+}
+
+
 @end

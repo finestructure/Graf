@@ -19,6 +19,7 @@
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)didLogInAs:(NSString *)user;
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
+- (void)didDisconnectWithError:(NSError *)error;
 
 @end
 

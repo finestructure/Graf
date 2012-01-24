@@ -312,6 +312,9 @@ const long kCaptchaTag = 4;
   NSLog(@"disconnected! %@", [error localizedDescription]);
   self.connected = NO;
   self.loggedIn = NO;
+  if ([self.delegate respondsToSelector:@selector(didDisconnectWithError:)]) {
+    [self.delegate didDisconnectWithError:error];
+  }
 }
 
 
