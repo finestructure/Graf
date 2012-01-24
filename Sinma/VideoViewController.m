@@ -275,7 +275,6 @@
         self.textResultView.text = @"";
         self.processingTimeLabel.text = @"";
         [self startHudUpdateTimer];
-
       }
       break;
       
@@ -284,12 +283,11 @@
         [self.progressHud hide:YES];
         [self updateProcessingTimeLabel];
         [self stopHudUpdateTimer];
+        [self.imageProcessor updateBalance];
       }
       break;
       
   }
-  // update balance on every state transition for good measure
-  self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
   self.state = newState;
 }
 
