@@ -41,6 +41,7 @@ const long kCaptchaTag = 4;
 @synthesize decoded = _decoded;
 @synthesize uploadQueue = _uploadQueue;
 @synthesize captchaQueue = _captchaQueue;
+@synthesize imagePoller = _imagePoller;
 
 
 #pragma mark - initializers
@@ -161,6 +162,16 @@ const long kCaptchaTag = 4;
   [self call:@"upload" withData:data tag:kUploadTag];
   
   return imageId;
+}
+
+
+- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId
+{
+  if (self.imagePoller != nil && self.imagePoller.isRunning) {
+    NSLog(@"Warning: there's already a poller running. It will be disabled.");
+  }
+  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self];
+  [self.imagePoller start];  
 }
 
 

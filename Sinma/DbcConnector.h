@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
+#import "ImagePoller.h"
 
 
 // delegate protocal
@@ -43,6 +44,7 @@
 @property (nonatomic, retain) NSMutableDictionary *decoded;
 @property (nonatomic, retain) NSMutableArray *uploadQueue;
 @property (nonatomic, retain) NSMutableArray *captchaQueue;
+@property (nonatomic, retain) ImagePoller *imagePoller;
 
 // internal
 
@@ -56,6 +58,7 @@
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
 - (void)poll:(NSString *)imageId;
+- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId;
 - (NSString *)resultForId:(NSString *)imageId;
 
 
