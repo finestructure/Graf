@@ -51,14 +51,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5A2263C314B1FB190078EBEF /* Sinma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sinma.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A2263C314B1FB190078EBEF /* Graf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5A2263C914B1FB190078EBEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5A2263CF14B1FB190078EBEF /* Sinma-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sinma-Info.plist"; sourceTree = "<group>"; };
+		5A2263CF14B1FB190078EBEF /* Graf-Info.plist */ = {isa = PBXFileReference; path = "Graf-Info.plist"; sourceTree = "<group>"; };
 		5A2263D114B1FB190078EBEF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A2263D314B1FB190078EBEF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5A2263D514B1FB190078EBEF /* Sinma-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sinma-Prefix.pch"; sourceTree = "<group>"; };
+		5A2263D514B1FB190078EBEF /* Graf-Prefix.pch */ = {isa = PBXFileReference; path = "Graf-Prefix.pch"; sourceTree = "<group>"; };
 		5A2263D614B1FB190078EBEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A2263D714B1FB190078EBEF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5A4766DD14B5DCFD00D8FA66 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		5A2263C414B1FB190078EBEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5A2263C314B1FB190078EBEF /* Sinma.app */,
+				5A2263C314B1FB190078EBEF /* Graf.app */,
 				5A56F0AB14CD480300F7D75B /* Tests.app */,
 			);
 			name = Products;
@@ -193,10 +193,10 @@
 		5A2263CE14B1FB190078EBEF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5A2263CF14B1FB190078EBEF /* Sinma-Info.plist */,
+				5A2263CF14B1FB190078EBEF /* Graf-Info.plist */,
 				5A2263D014B1FB190078EBEF /* InfoPlist.strings */,
 				5A2263D314B1FB190078EBEF /* main.m */,
-				5A2263D514B1FB190078EBEF /* Sinma-Prefix.pch */,
+				5A2263D514B1FB190078EBEF /* Graf-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -258,9 +258,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A2263C214B1FB190078EBEF /* Sinma */ = {
+		5A2263C214B1FB190078EBEF /* Graf */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A2263E114B1FB190078EBEF /* Build configuration list for PBXNativeTarget "Sinma" */;
+			buildConfigurationList = 5A2263E114B1FB190078EBEF /* Build configuration list for PBXNativeTarget "Graf" */;
 			buildPhases = (
 				5A2263BF14B1FB190078EBEF /* Sources */,
 				5A2263C014B1FB190078EBEF /* Frameworks */,
@@ -271,9 +271,9 @@
 			);
 			dependencies = (
 			);
-			name = Sinma;
+			name = Graf;
 			productName = Sinma;
-			productReference = 5A2263C314B1FB190078EBEF /* Sinma.app */;
+			productReference = 5A2263C314B1FB190078EBEF /* Graf.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5A56F0AA14CD480300F7D75B /* Tests */ = {
@@ -302,7 +302,7 @@
 				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "abstracture GmbH & Co. KG";
 			};
-			buildConfigurationList = 5A2263BD14B1FB190078EBEF /* Build configuration list for PBXProject "Sinma" */;
+			buildConfigurationList = 5A2263BD14B1FB190078EBEF /* Build configuration list for PBXProject "Graf" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -314,7 +314,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A2263C214B1FB190078EBEF /* Sinma */,
+				5A2263C214B1FB190078EBEF /* Graf */,
 				5A56F0AA14CD480300F7D75B /* Tests */,
 			);
 		};
@@ -468,11 +468,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sinma/Sinma-Prefix.pch";
-				INFOPLIST_FILE = "Sinma/Sinma-Info.plist";
+				GCC_PREFIX_HEADER = "Sinma/Graf-Prefix.pch";
+				INFOPLIST_FILE = "Sinma/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -482,11 +482,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sinma/Sinma-Prefix.pch";
-				INFOPLIST_FILE = "Sinma/Sinma-Info.plist";
+				GCC_PREFIX_HEADER = "Sinma/Graf-Prefix.pch";
+				INFOPLIST_FILE = "Sinma/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -535,7 +535,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A2263BD14B1FB190078EBEF /* Build configuration list for PBXProject "Sinma" */ = {
+		5A2263BD14B1FB190078EBEF /* Build configuration list for PBXProject "Graf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A2263DF14B1FB190078EBEF /* Debug */,
@@ -544,7 +544,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A2263E114B1FB190078EBEF /* Build configuration list for PBXNativeTarget "Sinma" */ = {
+		5A2263E114B1FB190078EBEF /* Build configuration list for PBXNativeTarget "Graf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A2263E214B1FB190078EBEF /* Debug */,
