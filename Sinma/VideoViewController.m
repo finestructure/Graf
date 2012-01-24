@@ -206,7 +206,7 @@
 
 
 - (IBAction)takePicture:(id)sender {
-  NSDate *start = [NSDate date];
+  self.start = [NSDate date];
   self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   self.textResultView.text = @"";
   self.processingTimeLabel.text = @"";
@@ -220,7 +220,7 @@
                             1*NSEC_PER_SEC, 0);
   dispatch_source_set_event_handler(_timer, ^{
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:start];
+      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.start];
       NSLog(@"updating label: %.0fs", elapsed);
       self.progressHud.labelText = [NSString stringWithFormat:@"Decoding (%.0fs)", elapsed];
     });
