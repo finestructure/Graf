@@ -241,8 +241,7 @@ const long kCaptchaTag = 4;
 
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-  NSLog(@"tag: %ld", tag);
-  NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+  NSLog(@"didReadData: (%ld) %@", tag, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   if (tag == kLoginTag) {
     self.user = [self jsonResponse:data];
     self.loggedIn = YES;
@@ -285,6 +284,34 @@ const long kCaptchaTag = 4;
 
 - (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag {
   NSLog(@"didReadPartialDataOfLength: %d for tag: %ld", partialLength, tag);
+}
+
+
+- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag elapsed:(NSTimeInterval)elapsed bytesDone:(NSUInteger)length
+{
+  NSLog(@"read timeout: (%ld) %ud", tag, length);
+  return 0;
+}
+
+
+- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag elapsed:(NSTimeInterval)elapsed bytesDone:(NSUInteger)length
+{
+  NSLog(@"write timeout: (%ld) %ud", tag, length);
+  return 0;
+}
+
+
+- (void)socketDidCloseReadStream:(GCDAsyncSocket *)socket {
+  NSLog(@"socket closed");
+  self.connected = NO;
+  self.loggedIn = NO;
+}
+
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)error {
+  NSLog(@"disconnected! %@", [error localizedDescription]);
+  self.connected = NO;
+  self.loggedIn = NO;
 }
 
 
