@@ -10,12 +10,16 @@
 #import <AVFoundation/AVFoundation.h>
 #import "DbcConnector.h"
 
+@class MBProgressHUD;
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate>
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate> {
+  dispatch_source_t _timer;
+}
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
 @property (nonatomic, retain) DbcConnector *imageProcessor;
+@property (nonatomic, retain) NSDate *start;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (weak, nonatomic) IBOutlet UILabel *imageSizeLabel;
@@ -23,8 +27,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *imageIdLabel;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
+
+@property (nonatomic, retain) MBProgressHUD *progressHud;
 
 
 - (IBAction)takePicture:(id)sender;
