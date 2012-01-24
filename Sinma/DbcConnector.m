@@ -83,9 +83,10 @@ const long kCaptchaTag = 4;
     return YES;
   }
   
-  NSLog(@"connecting...");
+  int port = [self randomPort];
+  NSLog(@"connecting at port %d...", port);
   NSError *err = nil;
-  if (![self.socket connectToHost:kHostname onPort:[self randomPort] error:&err]) {
+  if (![self.socket connectToHost:kHostname onPort:port error:&err]) {
     // If there was an error, it's likely something like "already connected" or "no delegate set"
     NSLog(@"Connection error: %@", err);
     self.connected = NO;

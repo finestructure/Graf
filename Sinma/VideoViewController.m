@@ -221,7 +221,6 @@
   dispatch_source_set_event_handler(_timer, ^{
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.start];
-      NSLog(@"updating label: %.0fs", elapsed);
       self.progressHud.labelText = [NSString stringWithFormat:@"Decoding (%.0fs)", elapsed];
     });
   });
@@ -329,7 +328,7 @@
 
 
 - (void)didDisconnectWithError:(NSError *)error {
-  NSString *string = [NSString stringWithFormat:@"Disconnected! Error: %@", [error localizedDescription]];
+  NSString *string = [NSString stringWithFormat:@"Disconnected! Error %d: %@", [error code], [error localizedDescription]];
   [self addToStatusView:string];
 }
 
