@@ -30,9 +30,7 @@ typedef enum ControllerState {
 @property (nonatomic, assign) ControllerState state;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
-@property (weak, nonatomic) IBOutlet UITextView *textResultView;
-@property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;

@@ -14,10 +14,8 @@
 @implementation VideoViewController
 
 @synthesize preview = _preview;
+@synthesize tableView = _tableView;
 @synthesize session = _session;
-@synthesize textResultView = _textResultView;
-@synthesize processingTimeLabel = _processingTimeLabel;
-@synthesize snapshotPreview = _snapshotPreview;
 @synthesize balanceLabel = _balanceLabel;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
@@ -74,6 +72,9 @@
 {
   [super viewDidLoad];
   
+  // register custom table view cell
+  [self.tableView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellReuseIdentifier:@"ImageCell"];
+  
   // set up image processor
   self.imageProcessor = [[DbcConnector alloc] init];
   self.imageProcessor.delegate = self;
@@ -82,8 +83,6 @@
   
   // update labels and ui controls
   
-  self.textResultView.text = @"";
-  self.processingTimeLabel.text = @"";
   self.balanceLabel.text = @"";
   self.statusTextView.text = @"";
   self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
@@ -175,12 +174,10 @@
 {
   [self setPreview:nil];
   self.session = nil;
-  [self setTextResultView:nil];
-  [self setProcessingTimeLabel:nil];
-  [self setSnapshotPreview:nil];
   [self setBalanceLabel:nil];
   [self setStatusTextView:nil];
   [self setVersionLabel:nil];
+  [self setTableView:nil];
   [super viewDidUnload];
 }
 
@@ -218,7 +215,7 @@
     UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
           
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-      self.snapshotPreview.image = image;
+//      self.snapshotPreview.image = image;
     });
     
     NSString *imageId = [self.imageProcessor upload:image];
@@ -257,7 +254,7 @@
 - (void)updateProcessingTimeLabel {
   NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
   NSLog(@"duration: %f", duration);      
-  self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
+//  self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
 }
 
 
@@ -267,8 +264,6 @@
       if (newState == kProcessing) {
         self.start = [NSDate date];
         self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.textResultView.text = @"";
-        self.processingTimeLabel.text = @"";
         [self startHudUpdateTimer];
       }
       break;
@@ -284,6 +279,20 @@
       
   }
   self.state = newState;
+}
+
+
+#pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+
+  return cell;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return 1;
 }
 
 
@@ -323,7 +332,7 @@
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
     [self addToStatusView:string];
-    self.textResultView.text = result;
+//    self.textResultView.text = result;
     [self transitionToState:kIdle];
   });
 }
