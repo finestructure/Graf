@@ -165,6 +165,7 @@ const long kCaptchaTag = 4;
   // put image id in queue to be picked up by socket:didReadData:withTag:
   [self.uploadQueue enqueue:imageId];
   // and call 'upload'
+#warning temporarily disabled
   [self call:@"upload" withData:data tag:kUploadTag];
   
   return imageId;
