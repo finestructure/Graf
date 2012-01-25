@@ -217,7 +217,7 @@
     Image *img = [[Image alloc] init];
     img.image = image;
     img.imageId = imageId;
-    [self.images addObject:img];
+    [self.images insertObject:img atIndex:0];
     [self.tableView reloadData];
 
     
