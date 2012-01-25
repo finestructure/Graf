@@ -296,6 +296,14 @@
 }
 
 
+#pragma mark - UITableViewDelegate
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return 100;
+}
+
+
 # pragma mark - DbcConnectorDelegate
 
 
