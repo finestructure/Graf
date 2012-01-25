@@ -12,5 +12,34 @@
 
 @synthesize image = _image;
 @synthesize imageId = _imageId;
+@synthesize state = _state;
+
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.state = kIdle;
+  }
+  return self;
+}
+
+
+- (void)transitionTo:(ImageState)newState {
+  switch (self.state) {
+    case kIdle:
+      if (newState == kProcessing) {
+        
+      }
+      break;
+      
+    case kProcessing:
+      if (newState == kIdle) {
+        
+      }
+      break;
+  }
+  self.state = newState;
+}
+
 
 @end

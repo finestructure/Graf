@@ -218,14 +218,14 @@
     img.image = image;
     img.imageId = imageId;
     [self.images insertObject:img atIndex:0];
+    [img transitionTo:kProcessing];
     [self.tableView reloadData];
 
     
-//    [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId completionHandler:^{
-//      dispatch_async(dispatch_get_main_queue(), ^(void) {
-//        [self transitionToState:kIdle];
-//      });
-//    }];
+    [self.imageProcessor pollWithInterval:5 timeout:10 forImageId:imageId completionHandler:^{
+      [img transitionTo:kIdle];
+      [self.tableView reloadData];
+    }];
   }];
 }
 
@@ -237,8 +237,14 @@
   Image *image = [self.images objectAtIndex:indexPath.row];
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
-  UIImageView *iv = (UIImageView *)[cell.contentView viewWithTag:1];
-  iv.image = image.image;
+  {
+    UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:1];
+    subview.image = image.image;
+  }
+  {
+    UIActivityIndicatorView *subview = (UIActivityIndicatorView *)[cell.contentView viewWithTag:4];
+    image.state == kIdle ? [subview stopAnimating] : [subview startAnimating];
+  }
   
   return cell;
 }

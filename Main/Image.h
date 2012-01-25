@@ -8,9 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum ImageState {
+  kIdle,
+  kProcessing
+} ImageState;
+
+
 @interface Image : NSObject
+
 
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;
+@property (nonatomic, assign) ImageState state;
+
+
+- (void)transitionTo:(ImageState)newState;
 
 @end
