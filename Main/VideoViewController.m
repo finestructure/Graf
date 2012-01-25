@@ -9,7 +9,6 @@
 #import "VideoViewController.h"
 
 #import "Constants.h"
-#import "MBProgressHUD.h"
 #import "Image.h"
 
 @implementation VideoViewController
@@ -22,9 +21,6 @@
 @synthesize versionLabel = _versionLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
-@synthesize progressHud = _progressHud;
-@synthesize start = _start;
-@synthesize state = _state;
 @synthesize images = _images;
 
 
@@ -234,61 +230,8 @@
 }
 
 
-- (void)startHudUpdateTimer {
-  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);  
-  _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,
-                                  queue);
-  dispatch_source_set_timer(_timer,
-                            dispatch_time(DISPATCH_TIME_NOW, 0),
-                            1*NSEC_PER_SEC, 0);
-  dispatch_source_set_event_handler(_timer, ^{
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.start];
-      self.progressHud.labelText = [NSString stringWithFormat:@"Decoding (%.0fs)", elapsed];
-    });
-  });
-  dispatch_resume(_timer);
-}
-
-
-- (void)stopHudUpdateTimer {
-  dispatch_source_cancel(_timer);
-  dispatch_release(_timer);
-}
-
-
-- (void)updateProcessingTimeLabel {
-  NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
-  NSLog(@"duration: %f", duration);      
-//  self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
-}
-
-
-- (void)transitionToState:(ControllerState)newState {
-  switch (self.state) {
-    case kIdle:
-      if (newState == kProcessing) {
-        self.start = [NSDate date];
-        self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [self startHudUpdateTimer];
-      }
-      break;
-      
-    case kProcessing:
-      if (newState == kIdle) {
-        [self.progressHud hide:YES];
-        [self updateProcessingTimeLabel];
-        [self stopHudUpdateTimer];
-        [self.imageProcessor updateBalance];
-      }
-      break;
-      
-  }
-  self.state = newState;
-}
-
-
 #pragma mark - UITableViewDataSource
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   Image *image = [self.images objectAtIndex:indexPath.row];
@@ -350,8 +293,6 @@
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
     [self addToStatusView:string];
-//    self.textResultView.text = result;
-    [self transitionToState:kIdle];
   });
 }
 
