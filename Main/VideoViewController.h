@@ -28,6 +28,7 @@ typedef enum ControllerState {
 @property (nonatomic, retain) DbcConnector *imageProcessor;
 @property (nonatomic, retain) NSDate *start;
 @property (nonatomic, assign) ControllerState state;
+@property (nonatomic, assign) NSMutableArray *images;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

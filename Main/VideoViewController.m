@@ -24,15 +24,16 @@
 @synthesize progressHud = _progressHud;
 @synthesize start = _start;
 @synthesize state = _state;
+@synthesize images = _images;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.images = [NSMutableArray array];
+  }
+  return self;
 }
 
 - (void)didReceiveMemoryWarning
