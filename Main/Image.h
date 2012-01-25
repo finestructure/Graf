@@ -10,5 +10,7 @@
 
 @interface Image : NSObject
 
+@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, copy) NSString *imageId;
 
 @end

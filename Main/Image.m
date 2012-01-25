@@ -10,4 +10,7 @@
 
 @implementation Image
 
+@synthesize image = _image;
+@synthesize imageId = _imageId;
+
 @end
