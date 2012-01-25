@@ -41,7 +41,7 @@ const long kCaptchaTag = 4;
 @synthesize decoded = _decoded;
 @synthesize uploadQueue = _uploadQueue;
 @synthesize captchaQueue = _captchaQueue;
-@synthesize imagePoller = _imagePoller;
+@synthesize imagePollers = _imagePollers;
 
 
 #pragma mark - initializers
@@ -58,6 +58,7 @@ const long kCaptchaTag = 4;
     self.decoded = [NSMutableDictionary dictionary];
     self.uploadQueue = [NSMutableArray array];
     self.captchaQueue = [NSMutableArray array];
+    self.imagePollers = [NSMutableArray array];
   }
   return self;
 }
@@ -173,12 +174,16 @@ const long kCaptchaTag = 4;
 
 
 - (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId completionHandler:(void (^)())block
-{
-  if (self.imagePoller != nil && self.imagePoller.isRunning) {
-    NSLog(@"Warning: there's already a poller running. It will be disabled.");
-  }
-  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self completionHandler:block];
-  [self.imagePoller start];  
+{  
+  ImagePoller *imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self completionHandler:block];
+  [imagePoller start];
+  [self.imagePollers addObject:imagePoller];
+
+  // remove stopped pollers
+  NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+    return ((ImagePoller *)evaluatedObject).isRunning == NO;
+  }];
+  [self.imagePollers filterUsingPredicate:filter];
 }
 
 

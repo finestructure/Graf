@@ -45,7 +45,7 @@
 @property (nonatomic, retain) NSMutableDictionary *decoded;
 @property (nonatomic, retain) NSMutableArray *uploadQueue;
 @property (nonatomic, retain) NSMutableArray *captchaQueue;
-@property (nonatomic, retain) ImagePoller *imagePoller;
+@property (nonatomic, retain) NSMutableArray *imagePollers;
 
 // internal
 
