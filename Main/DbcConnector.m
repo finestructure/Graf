@@ -166,7 +166,7 @@ const long kCaptchaTag = 4;
   [self.uploadQueue enqueue:imageId];
   // and call 'upload'
 #warning temporarily disabled
-  [self call:@"upload" withData:data tag:kUploadTag];
+//  [self call:@"upload" withData:data tag:kUploadTag];
   
   return imageId;
 }
