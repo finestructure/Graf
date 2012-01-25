@@ -219,12 +219,15 @@
     img.imageId = imageId;
     [self.images insertObject:img atIndex:0];
     [img transitionTo:kProcessing];
-    [self.tableView reloadData];
-
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      [self.tableView reloadData];
+    });
     
     [self.imageProcessor pollWithInterval:5 timeout:10 forImageId:imageId completionHandler:^{
       [img transitionTo:kIdle];
-      [self.tableView reloadData];
+      dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [self.tableView reloadData];
+      });
     }];
   }];
 }
