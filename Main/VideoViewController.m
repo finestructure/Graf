@@ -10,6 +10,7 @@
 
 #import "Constants.h"
 #import "MBProgressHUD.h"
+#import "Image.h"
 
 @implementation VideoViewController
 
@@ -209,22 +210,26 @@
 
 
 - (IBAction)takePicture:(id)sender {
-  [self transitionToState:kProcessing];
+  //[self transitionToState:kProcessing];
   
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
           
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-//      self.snapshotPreview.image = image;
-    });
-    
     NSString *imageId = [self.imageProcessor upload:image];
-    [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId completionHandler:^{
-      dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [self transitionToState:kIdle];
-      });
-    }];
+
+    Image *img = [[Image alloc] init];
+    img.image = image;
+    img.imageId = imageId;
+    [self.images addObject:img];
+    [self.tableView reloadData];
+
+    
+//    [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId completionHandler:^{
+//      dispatch_async(dispatch_get_main_queue(), ^(void) {
+//        [self transitionToState:kIdle];
+//      });
+//    }];
   }];
 }
 
@@ -286,14 +291,18 @@
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Image *image = [self.images objectAtIndex:indexPath.row];
+  
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
-
+  UIImageView *iv = (UIImageView *)[cell.contentView viewWithTag:1];
+  iv.image = image.image;
+  
   return cell;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 1;
+  return [self.images count];
 }
 
 
