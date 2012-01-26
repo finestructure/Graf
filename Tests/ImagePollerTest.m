@@ -49,7 +49,7 @@
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   NSString *imageId = [self.dbc upload:image];
   
-  ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 timeout:50 imageId:imageId dbc:self.dbc completionHandler:^{}];
+  ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 timeout:50 imageId:imageId dbc:self.dbc completionHandler:^{} timeoutHandler:^{}];
   [poller start];
   [self checkProgress:^BOOL{
     NSString *result = [self.dbc resultForId:imageId];
