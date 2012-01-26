@@ -246,6 +246,10 @@
     subview.image = image.image;
   }
   {
+    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:2];
+    subview.text = image.textResult;
+  }
+  {
     UILabel *subview = (UILabel *)[cell.contentView viewWithTag:3];
     if (image.state == kProcessing) {
       subview.hidden = YES;

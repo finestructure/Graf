@@ -22,6 +22,7 @@ typedef enum ImageState {
 @property (nonatomic, assign) ImageState state;
 @property (nonatomic, retain) NSDate *start;
 @property (nonatomic, assign) NSTimeInterval processingTime;
+@property (nonatomic, copy) NSString *textResult;
 
 
 - (void)transitionTo:(ImageState)newState;

@@ -14,7 +14,8 @@
 @synthesize imageId = _imageId;
 @synthesize state = _state;
 @synthesize start = _start;
-@synthesize processingTime;
+@synthesize processingTime = _processingTime;
+@synthesize textResult = _textResult;
 
 
 - (id)init {
