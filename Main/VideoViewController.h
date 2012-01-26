@@ -26,6 +26,7 @@
 
 
 - (IBAction)takePicture:(id)sender;
+- (void)refreshButtonPressed:(id)sender;
 
 
 @end

@@ -248,6 +248,11 @@ const int kPollingTimeout = 60;
 }
 
 
+- (void)refreshButtonPressed:(id)sender {
+  NSLog(@"Pressed!");
+}
+
+
 #pragma mark - UITableViewDataSource
 
 
@@ -304,14 +309,16 @@ const int kPollingTimeout = 60;
     image.state == kIdle ? [subview stopAnimating] : [subview startAnimating];
   }
   { // status icon
-    UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:5];
+    UIButton *subview = (UIButton *)[cell.contentView viewWithTag:5];
     if (image.state == kProcessing) {
       subview.alpha = 0;
+      [subview removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
       if (image.state == kTimeout || [image.textResult isEqualToString:@"?"]) {
-        subview.image = [UIImage imageNamed:@"01-refresh.png"];
+        [subview setBackgroundImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
+        [subview addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
       } else {
-        subview.image = [UIImage imageNamed:@"258-checkmark.png"];
+        [subview setBackgroundImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
       }
       [UIView animateWithDuration:0.5 animations:^{
         subview.alpha = 1;
