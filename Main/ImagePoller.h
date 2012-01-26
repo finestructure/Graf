@@ -22,10 +22,15 @@
 @property (nonatomic, assign) NSTimeInterval interval;
 @property (nonatomic, assign) BOOL isRunning;
 @property (nonatomic, copy) void (^completionHandler)();
+@property (nonatomic, copy) void (^timeoutHandler)();
 
 
-- (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc completionHandler:(void (^)())block;
-
+- (id)initWithInterval:(NSTimeInterval)interval 
+               timeout:(NSTimeInterval)timeout 
+               imageId:(NSString *)imageId 
+                   dbc:(DbcConnector *)dbc 
+     completionHandler:(void (^)())completionHandler
+         timeoutHandler:(void (^)())timeoutHandler;
 - (void)start;
 - (void)stop;
 

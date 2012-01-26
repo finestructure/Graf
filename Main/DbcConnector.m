@@ -163,9 +163,17 @@ const int kReadTimeout = 30;
 }
 
 
-- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId completionHandler:(void (^)())block
+- (void)pollWithInterval:(NSTimeInterval)interval 
+                 timeout:(NSTimeInterval)timeout 
+              forImageId:(NSString *)imageId 
+       completionHandler:(void (^)())completionHandler
+           timeoutHandler:(void (^)())timeoutHandler
 {  
-  ImagePoller *imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self completionHandler:block];
+  ImagePoller *imagePoller = [[ImagePoller alloc] initWithInterval:interval 
+                                                           timeout:timeout 
+                                                           imageId:imageId 
+                                                               dbc:self 
+                                                 completionHandler:completionHandler timeoutHandler:timeoutHandler];
   [imagePoller start];
   [self.imagePollers addObject:imagePoller];
 

@@ -228,12 +228,22 @@ const int kPollingTimeout = 60;
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     });
     
-    [self.imageProcessor pollWithInterval:kPollingInterval timeout:kPollingTimeout forImageId:imageId completionHandler:^{
-      [img transitionTo:kIdle];
-      dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [self.tableView reloadData];
-      });
-    }];
+    [self.imageProcessor pollWithInterval:kPollingInterval 
+                                  timeout:kPollingTimeout 
+                               forImageId:imageId 
+                        completionHandler:^{
+                          [img transitionTo:kIdle];
+                          dispatch_async(dispatch_get_main_queue(), ^(void) {
+                            [self.tableView reloadData];
+                          });
+                        }
+                           timeoutHandler:^{
+                             [img transitionTo:kTimeout];
+                             dispatch_async(dispatch_get_main_queue(), ^(void) {
+                               [self.tableView reloadData];
+                             });
+                           }
+     ];
   }];
 }
 
@@ -269,7 +279,13 @@ const int kPollingTimeout = 60;
         subview.alpha = 1;
         subview.frame = targetFrame;
       }];
-      subview.text = image.textResult;
+      if (image.state == kTimeout) {
+        subview.text = @"timeout";
+        subview.font = [UIFont italicSystemFontOfSize:14];
+      } else {
+        subview.text = image.textResult;
+        subview.font = [UIFont systemFontOfSize:14];
+      }
     }
   }
   { // processing time label
@@ -292,7 +308,11 @@ const int kPollingTimeout = 60;
     if (image.state == kProcessing) {
       subview.alpha = 0;
     } else {
-      subview.image = [UIImage imageNamed:@"258-checkmark.png"];
+      if (image.state == kTimeout || [image.textResult isEqualToString:@"?"]) {
+        subview.image = [UIImage imageNamed:@"01-refresh.png"];
+      } else {
+        subview.image = [UIImage imageNamed:@"258-checkmark.png"];
+      }
       [UIView animateWithDuration:0.5 animations:^{
         subview.alpha = 1;
       }];

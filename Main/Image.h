@@ -10,7 +10,8 @@
 
 typedef enum ImageState {
   kIdle,
-  kProcessing
+  kProcessing,
+  kTimeout
 } ImageState;
 
 

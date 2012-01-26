@@ -16,14 +16,22 @@
 @synthesize interval = _interval;
 @synthesize isRunning = _isRunning;
 @synthesize completionHandler = _completionHandler;
+@synthesize timeoutHandler = _timeoutHandler;
 
 
-- (id)initWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout imageId:(NSString *)imageId dbc:(DbcConnector *)dbc completionHandler:(void (^)())block {
+- (id)initWithInterval:(NSTimeInterval)interval 
+               timeout:(NSTimeInterval)timeout 
+               imageId:(NSString *)imageId 
+                   dbc:(DbcConnector *)dbc 
+     completionHandler:(void (^)())completionHandler
+         timeoutHandler:(void (^)())timeoutHandler
+{
   self = [super init];
   if (self) {
     self.isRunning = NO;
     self.interval = interval;
-    self.completionHandler = block;
+    self.completionHandler = completionHandler;
+    self.timeoutHandler = timeoutHandler;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     
@@ -32,13 +40,18 @@
       NSLog(@"elapsed: %.1f", elapsed);
       NSString *result = [dbc resultForId:imageId];
       NSLog(@"result: %@", result);
-      if ((elapsed <= timeout) && (result == nil || [result isEqualToString:@""])) {
-        NSLog(@"polling...");
-        [dbc poll:imageId];
-      } else {
+      if (result != nil 
+          && ! [result isEqualToString:@""]) { // success
         NSLog(@"done");
         self.completionHandler();
         dispatch_source_cancel(_timer);
+      } else if (elapsed > timeout) { // timeout
+        NSLog(@"timeout");
+        self.timeoutHandler();
+        dispatch_source_cancel(_timer);
+      } else { // poll again
+        NSLog(@"polling...");
+        [dbc poll:imageId];
       }
     });
   }

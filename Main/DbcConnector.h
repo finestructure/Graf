@@ -60,7 +60,11 @@
 - (float)balance;
 - (NSString *)upload:(UIImage *)image;
 - (void)poll:(NSString *)imageId;
-- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId completionHandler:(void (^)())block;
+- (void)pollWithInterval:(NSTimeInterval)interval 
+                 timeout:(NSTimeInterval)timeout 
+              forImageId:(NSString *)imageId 
+       completionHandler:(void (^)())completionHandler
+          timeoutHandler:(void (^)())timeoutHandler;
 - (NSString *)resultForId:(NSString *)imageId;
 
 
