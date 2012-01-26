@@ -331,6 +331,7 @@ const int kPollingTimeout = 60;
     Image *image = (Image *)obj;
     if ([image.imageId isEqualToString:imageId]) {
       image.textResult = result;
+      [image transitionTo:kIdle];
       *stop = YES;
     }
   }];
