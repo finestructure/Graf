@@ -26,5 +26,6 @@ typedef enum ImageState {
 
 
 - (void)transitionTo:(ImageState)newState;
+- (NSTimeInterval)elapsed;
 
 @end

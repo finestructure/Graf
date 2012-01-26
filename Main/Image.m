@@ -37,11 +37,16 @@
       
     case kProcessing:
       if (newState == kIdle) {
-        self.processingTime = [[NSDate date] timeIntervalSinceDate:self.start];
+        self.processingTime = [self elapsed];
       }
       break;
   }
   self.state = newState;
+}
+
+
+- (NSTimeInterval)elapsed {
+  return [[NSDate date] timeIntervalSinceDate:self.start];
 }
 
 
