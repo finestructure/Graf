@@ -13,6 +13,8 @@
 @synthesize image = _image;
 @synthesize imageId = _imageId;
 @synthesize state = _state;
+@synthesize start = _start;
+@synthesize processingTime;
 
 
 - (id)init {
@@ -28,13 +30,13 @@
   switch (self.state) {
     case kIdle:
       if (newState == kProcessing) {
-        
+        self.start = [NSDate date];
       }
       break;
       
     case kProcessing:
       if (newState == kIdle) {
-        
+        self.processingTime = [[NSDate date] timeIntervalSinceDate:self.start];
       }
       break;
   }

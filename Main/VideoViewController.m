@@ -245,6 +245,15 @@
     subview.image = image.image;
   }
   {
+    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:3];
+    if (image.state == kProcessing) {
+      subview.hidden = YES;
+    } else {
+      subview.hidden = NO;
+      subview.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
+    }
+  }
+  {
     UIActivityIndicatorView *subview = (UIActivityIndicatorView *)[cell.contentView viewWithTag:4];
     image.state == kIdle ? [subview stopAnimating] : [subview startAnimating];
   }
