@@ -190,7 +190,7 @@ const int kPollingTimeout = 60;
 }
 
 
-#pragma mark - Actions
+#pragma mark - Helpers
 
 
 - (UIImage *)convertSampleBufferToUIImage:(CMSampleBufferRef)sampleBuffer {
@@ -209,9 +209,31 @@ const int kPollingTimeout = 60;
 }
 
 
-- (IBAction)takePicture:(id)sender {
-  //[self transitionToState:kProcessing];
-  
+- (void)startProcessingImage:(Image *)image {
+  [image transitionTo:kProcessing];
+  [self.imageProcessor pollWithInterval:kPollingInterval 
+                                timeout:kPollingTimeout 
+                             forImageId:image.imageId 
+                      completionHandler:^{
+                        [image transitionTo:kIdle];
+                        dispatch_async(dispatch_get_main_queue(), ^(void) {
+                          [self.tableView reloadData];
+                        });
+                      }
+                         timeoutHandler:^{
+                           [image transitionTo:kTimeout];
+                           dispatch_async(dispatch_get_main_queue(), ^(void) {
+                             [self.tableView reloadData];
+                           });
+                         }
+   ];
+}
+
+
+#pragma mark - Helpers
+
+
+- (IBAction)takePicture:(id)sender {  
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
@@ -221,35 +243,26 @@ const int kPollingTimeout = 60;
     Image *img = [[Image alloc] init];
     img.image = image;
     img.imageId = imageId;
+    
+    [self startProcessingImage:img];
+    
     [self.images insertObject:img atIndex:0];
-    [img transitionTo:kProcessing];
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     });
-    
-    [self.imageProcessor pollWithInterval:kPollingInterval 
-                                  timeout:kPollingTimeout 
-                               forImageId:imageId 
-                        completionHandler:^{
-                          [img transitionTo:kIdle];
-                          dispatch_async(dispatch_get_main_queue(), ^(void) {
-                            [self.tableView reloadData];
-                          });
-                        }
-                           timeoutHandler:^{
-                             [img transitionTo:kTimeout];
-                             dispatch_async(dispatch_get_main_queue(), ^(void) {
-                               [self.tableView reloadData];
-                             });
-                           }
-     ];
   }];
 }
 
 
 - (void)refreshButtonPressed:(id)sender {
-  NSLog(@"Pressed!");
+  NSLog(@"Refresh started");
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[sender superview]];
+  Image *image = [self.images objectAtIndex:indexPath.row];
+  [self startProcessingImage:image];
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [self.tableView reloadData];
+  });
 }
 
 
@@ -306,7 +319,7 @@ const int kPollingTimeout = 60;
   }
   { // activity indicator
     UIActivityIndicatorView *subview = (UIActivityIndicatorView *)[cell.contentView viewWithTag:4];
-    image.state == kIdle ? [subview stopAnimating] : [subview startAnimating];
+    image.state == kProcessing ? [subview startAnimating] : [subview stopAnimating];
   }
   { // status icon
     UIButton *subview = (UIButton *)[cell.contentView viewWithTag:5];
@@ -314,11 +327,11 @@ const int kPollingTimeout = 60;
       subview.alpha = 0;
       [subview removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
-      if (image.state == kTimeout || [image.textResult isEqualToString:@"?"]) {
-        [subview setBackgroundImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
+      if (image.textResult == nil || [image.textResult isEqualToString:@""]) {
+        [subview setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
         [subview addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
       } else {
-        [subview setBackgroundImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
+        [subview setImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
       }
       [UIView animateWithDuration:0.5 animations:^{
         subview.alpha = 1;

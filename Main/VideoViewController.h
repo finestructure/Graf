@@ -10,6 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "DbcConnector.h"
 
+@class Image;
+
 
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate>
 
@@ -24,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
+- (void)startProcessingImage:(Image *)image;
 
 - (IBAction)takePicture:(id)sender;
 - (void)refreshButtonPressed:(id)sender;
