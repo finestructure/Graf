@@ -220,7 +220,8 @@
     [self.images insertObject:img atIndex:0];
     [img transitionTo:kProcessing];
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-      [self.tableView reloadData];
+      NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+      [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     });
     
     [self.imageProcessor pollWithInterval:5 timeout:10 forImageId:imageId completionHandler:^{
