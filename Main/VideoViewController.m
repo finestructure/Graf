@@ -322,6 +322,17 @@
     NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
     [self addToStatusView:string];
   });
+  // set result for appropriate image object
+  [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    Image *image = (Image *)obj;
+    if ([image.imageId isEqualToString:imageId]) {
+      image.textResult = result;
+      *stop = YES;
+    }
+  }];
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [self.tableView reloadData];
+  });
 }
 
 
