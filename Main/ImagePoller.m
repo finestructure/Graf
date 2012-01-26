@@ -50,7 +50,7 @@
         self.timeoutHandler();
         dispatch_source_cancel(_timer);
       } else { // poll again
-        NSLog(@"polling...");
+        NSLog(@"polling for image id %@ ...", imageId);
         [dbc poll:imageId];
       }
     });
