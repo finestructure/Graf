@@ -33,6 +33,12 @@ const int kPollingTimeout = 60;
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     self.images = [NSMutableArray array];
+
+    // set up image processor
+    self.imageProcessor = [[DbcConnector alloc] init];
+    self.imageProcessor.delegate = self;
+    [self.imageProcessor connect];
+    [self.imageProcessor login];
   }
   return self;
 }
@@ -76,12 +82,6 @@ const int kPollingTimeout = 60;
   
   // register custom table view cell
   [self.tableView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellReuseIdentifier:@"ImageCell"];
-  
-  // set up image processor
-  self.imageProcessor = [[DbcConnector alloc] init];
-  self.imageProcessor.delegate = self;
-  [self.imageProcessor connect];
-  [self.imageProcessor login];
   
   // update labels and ui controls
   
@@ -377,7 +377,38 @@ const int kPollingTimeout = 60;
 
 - (void)didDisconnectWithError:(NSError *)error {
   NSString *string = [NSString stringWithFormat:@"Disconnected! Error %d: %@", [error code], [error localizedDescription]];
-  [self addToStatusView:string];
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    if ([error code] == 7) { // remote host closed connection
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:@"The remote host closed the connection" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reconnect", nil];
+      [alert show];
+    } else if (! self.imageProcessor.connected) {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:@"The connection was lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reconnect", nil];
+      [alert show];
+    } else if (! self.imageProcessor.loggedIn) {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged Out" message:@"The account was logged out" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
+      [alert show];
+    } else {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      [alert show];
+    }
+    [self addToStatusView:string];
+  });
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  NSLog(@"alert dismissed with buttonIndex: %d", buttonIndex);
+  if (buttonIndex == 1) { // reconnect or log in
+    if (! self.imageProcessor.connected) {
+      [self.imageProcessor connect];
+      [self.imageProcessor login];
+    } else if (! self.imageProcessor.loggedIn) {
+      [self.imageProcessor login];
+    }
+  }
 }
 
 
