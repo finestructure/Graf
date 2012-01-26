@@ -245,29 +245,45 @@ const int kPollingTimeout = 60;
   Image *image = [self.images objectAtIndex:indexPath.row];
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
-  {
+  { // image view
     UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:1];
-    subview.image = image.image;
-  }
-  {
-    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:2];
-    subview.text = image.textResult;
-  }
-  {
-    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:3];
+    subview.image = image.image;    
     if (image.state == kProcessing) {
-      subview.hidden = YES;
+      subview.frame = CGRectMake(20, 20, 240, 60);
+    } else {
+      CGRect targetFrame = subview.frame;
+      targetFrame.size = CGSizeMake(200, 50);
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.frame = targetFrame;
+      }];  
+    }
+  }
+  { // text result label
+    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:2];
+    if (image.state == kProcessing) {
       subview.alpha = 0;
     } else {
-      subview.hidden = NO;
-      [UIView animateWithDuration:0.5
-                       animations:^{
-                           subview.alpha = 1;
-                       }];
+      CGRect targetFrame = subview.frame;
+      targetFrame.origin.y = 78;
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.alpha = 1;
+        subview.frame = targetFrame;
+      }];
+      subview.text = image.textResult;
+    }
+  }
+  { // processing time label
+    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:3];
+    if (image.state == kProcessing) {
+      subview.alpha = 0;
+    } else {
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.alpha = 1;
+      }];
       subview.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
     }
   }
-  {
+  { // activity indicator
     UIActivityIndicatorView *subview = (UIActivityIndicatorView *)[cell.contentView viewWithTag:4];
     image.state == kIdle ? [subview stopAnimating] : [subview startAnimating];
   }
