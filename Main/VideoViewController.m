@@ -24,6 +24,10 @@
 @synthesize images = _images;
 
 
+const int kPollingInterval = 5;
+const int kPollingTimeout = 60;
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -224,7 +228,7 @@
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     });
     
-    [self.imageProcessor pollWithInterval:5 timeout:10 forImageId:imageId completionHandler:^{
+    [self.imageProcessor pollWithInterval:kPollingInterval timeout:kPollingTimeout forImageId:imageId completionHandler:^{
       [img transitionTo:kIdle];
       dispatch_async(dispatch_get_main_queue(), ^(void) {
         [self.tableView reloadData];
