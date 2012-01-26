@@ -249,8 +249,13 @@
     UILabel *subview = (UILabel *)[cell.contentView viewWithTag:3];
     if (image.state == kProcessing) {
       subview.hidden = YES;
+      subview.alpha = 0;
     } else {
       subview.hidden = NO;
+      [UIView animateWithDuration:0.5
+                       animations:^{
+                           subview.alpha = 1;
+                       }];
       subview.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
     }
   }
