@@ -14,7 +14,6 @@
 #include <stdlib.h>
 
 
-#warning TEMPORARY
 NSString *kUser = @"abstracture";
 NSString *kPass = @"i8Kn37rD8v";
 NSString *kHostname = @"api.deathbycaptcha.com";
