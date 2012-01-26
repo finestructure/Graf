@@ -287,6 +287,17 @@ const int kPollingTimeout = 60;
     UIActivityIndicatorView *subview = (UIActivityIndicatorView *)[cell.contentView viewWithTag:4];
     image.state == kIdle ? [subview stopAnimating] : [subview startAnimating];
   }
+  { // status icon
+    UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:5];
+    if (image.state == kProcessing) {
+      subview.alpha = 0;
+    } else {
+      subview.image = [UIImage imageNamed:@"258-checkmark.png"];
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.alpha = 1;
+      }];
+    }
+  }
   
   return cell;
 }

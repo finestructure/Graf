@@ -30,6 +30,10 @@
 		5AC6543C14CF0AAB004635D8 /* app_icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543B14CF0AAB004635D8 /* app_icon-114.png */; };
 		5AC6546E14D01F15004635D8 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6546D14D01F15004635D8 /* ImageCell.xib */; };
 		5AC6547A14D032B8004635D8 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC6547914D032B8004635D8 /* Image.m */; };
+		5AC6548A14D16924004635D8 /* 01-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548814D16924004635D8 /* 01-refresh.png */; };
+		5AC6548B14D16924004635D8 /* 01-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548914D16924004635D8 /* 01-refresh@2x.png */; };
+		5AC6548E14D16942004635D8 /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548C14D16942004635D8 /* 258-checkmark.png */; };
+		5AC6548F14D16942004635D8 /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548D14D16942004635D8 /* 258-checkmark@2x.png */; };
 		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
 		5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924E14C02275005595BA /* UIImage+Resize.m */; };
@@ -85,6 +89,10 @@
 		5AC6546D14D01F15004635D8 /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageCell.xib; path = Main/ImageCell.xib; sourceTree = SOURCE_ROOT; };
 		5AC6547814D032B8004635D8 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Main/Image.h; sourceTree = SOURCE_ROOT; };
 		5AC6547914D032B8004635D8 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = Main/Image.m; sourceTree = SOURCE_ROOT; };
+		5AC6548814D16924004635D8 /* 01-refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01-refresh.png"; sourceTree = "<group>"; };
+		5AC6548914D16924004635D8 /* 01-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01-refresh@2x.png"; sourceTree = "<group>"; };
+		5AC6548C14D16942004635D8 /* 258-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark.png"; sourceTree = "<group>"; };
+		5AC6548D14D16942004635D8 /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
 		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
 		5AD8924A14C02275005595BA /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = other/MBProgressHUD.m; sourceTree = "<group>"; };
 		5AD8924B14C02275005595BA /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "other/UIImage+Alpha.h"; sourceTree = "<group>"; };
@@ -261,6 +269,10 @@
 		5A7B0EAF14B47315000314C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5AC6548C14D16942004635D8 /* 258-checkmark.png */,
+				5AC6548D14D16942004635D8 /* 258-checkmark@2x.png */,
+				5AC6548814D16924004635D8 /* 01-refresh.png */,
+				5AC6548914D16924004635D8 /* 01-refresh@2x.png */,
 				5AC6543714CF0A99004635D8 /* app_icon-57.png */,
 				5AC6543B14CF0AAB004635D8 /* app_icon-114.png */,
 				5A86043414C2332F008D2C6A /* test222.tif */,
@@ -347,6 +359,10 @@
 				5AC6543914CF0A99004635D8 /* app_icon-57.png in Resources */,
 				5AC6543C14CF0AAB004635D8 /* app_icon-114.png in Resources */,
 				5AC6546E14D01F15004635D8 /* ImageCell.xib in Resources */,
+				5AC6548A14D16924004635D8 /* 01-refresh.png in Resources */,
+				5AC6548B14D16924004635D8 /* 01-refresh@2x.png in Resources */,
+				5AC6548E14D16942004635D8 /* 258-checkmark.png in Resources */,
+				5AC6548F14D16942004635D8 /* 258-checkmark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
