@@ -22,6 +22,10 @@
 
 @interface ImageProcessor : NSObject
 
+
+@property (nonatomic, retain) NSOperationQueue *queue;
+
+
 - (NSString *)upload:(UIImage *)image;
 - (void)pollForImageId:(NSString *)imageId;
 
