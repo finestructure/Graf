@@ -58,6 +58,7 @@
 		5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnector.m */; };
 		5AF582C114D2A3D7007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C014D2A3D7007942AD /* ImageProcessor.m */; };
 		5AF582C214D2A3D7007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C014D2A3D7007942AD /* ImageProcessor.m */; };
+		5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +124,7 @@
 		5AED510114CEF85F00D8B6BB /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoViewController.xib; path = Main/VideoViewController.xib; sourceTree = SOURCE_ROOT; };
 		5AF582BF14D2A3D7007942AD /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = SOURCE_ROOT; };
 		5AF582C014D2A3D7007942AD /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = SOURCE_ROOT; };
+		5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessorTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +259,7 @@
 				5A56F0B114CD480300F7D75B /* Supporting Files */,
 				5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */,
 				5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */,
+				5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */,
 				5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */,
 				5AF582C214D2A3D7007942AD /* ImageProcessor.m in Sources */,
+				5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
