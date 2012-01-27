@@ -1,7 +1,12 @@
 #import <GHUnitIOS/GHUnit.h> 
 #import "DbcConnector.h"
 
-@interface DbcConnectorTest : GHAsyncTestCase<DbcConnectorDelegate> { }
+@interface DbcConnectorTest : GHAsyncTestCase<DbcConnectorDelegate> {
+  BOOL connectNotification;
+  BOOL loginNotification;
+  BOOL uploadNotification;
+  BOOL decodeNotification;
+}
 
 @property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, copy) NSString *imageId;
@@ -26,6 +31,10 @@ const NSInteger kCheckProgressStatus = 1000;
   self.dbc.delegate = self;
   self.imageId = nil;
   self.captchaId = nil;
+  connectNotification = NO;
+  loginNotification = NO;
+  uploadNotification = NO;
+  decodeNotification = NO;
 }
 
 
@@ -49,6 +58,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)test_01_connect {
+  connectNotification = YES;
 	[self prepare];
   
 	[self.dbc connect];
@@ -59,6 +69,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)test_02_login {
+  loginNotification = YES;
   [self.dbc connect];
   [self prepare];
   
@@ -70,6 +81,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)test_03_upload {
+  uploadNotification = YES;
   [self.dbc connect];
   [self.dbc login];
 
@@ -80,7 +92,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
   [self.dbc upload:image];
   
-  [self waitForStatus:kCheckProgressStatus timeout:20]; 
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
   GHAssertNotNil(self.imageId, nil);
   GHAssertNotNil(self.captchaId, nil);
 }
@@ -90,25 +102,28 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port {
-	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_01_connect)];
-	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_06_issue_4)];
+  if (connectNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 
 - (void)didLogInAs:(NSString *)user {
-  [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_02_login)];
+  if (loginNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 
 - (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId {
   self.imageId = imageId;
   self.captchaId = captchaId;
-  [self notify:kGHUnitWaitStatusSuccess];
+  if (uploadNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 
 - (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result {
-
+  if (decodeNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 
