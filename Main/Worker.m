@@ -16,6 +16,7 @@
 @synthesize image = _image;
 @synthesize imageId = _imageId;
 @synthesize textResut = _textResut;
+@synthesize command = _command;
 
 
 - (id)initWithImage:(UIImage *)image {
@@ -27,6 +28,8 @@
     self.image = image;
     NSData *imageData = UIImagePNGRepresentation(image);
     self.imageId = [imageData MD5];
+    // default command
+    self.command = kUpload;
   }
   return self;
 }
@@ -56,7 +59,19 @@
       [self.dbc login];
       self.dbc.delegate = self;
 
-      [self.dbc upload:self.image];
+      if (self.command == kUpload) {
+        [self.dbc upload:self.image];
+      } else if (self.command == kPoll) {
+        [self.dbc pollWithInterval:5 
+                           timeout:60 
+                        forImageId:self.imageId 
+                 completionHandler:^{} 
+                    timeoutHandler:^{
+                      [self completeOperation];
+                    }];
+      } else {
+        NSLog(@"Error: Unknown command sent to Worker");
+      }
     }
   } @catch(...) {
     // Do not rethrow exceptions.

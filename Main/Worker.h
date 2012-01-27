@@ -10,6 +10,12 @@
 #import "DbcConnector.h"
 
 
+typedef enum WorkerCommands {
+  kUpload,
+  kPoll
+} WorkerCommands;
+
+
 @interface Worker : NSOperation<DbcConnectorDelegate> {
   BOOL        executing;
   BOOL        finished;
@@ -20,6 +26,7 @@
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, copy) NSString *textResut;
+@property (nonatomic, assign) WorkerCommands command;
 
 
 - (id)initWithImage:(UIImage *)image;
