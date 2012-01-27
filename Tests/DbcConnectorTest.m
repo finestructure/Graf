@@ -145,11 +145,37 @@ const NSInteger kCheckProgressStatus = 1000;
 }
 
 
+- (void)test_06_issue_4 {
+  [self.dbc connect];
+  [self.dbc login];
+  [self prepare];
+  
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  GHAssertNotNil(image, @"image must not be nil", nil);
+  
+  NSString *imageId = [self.dbc upload:image];
+  GHAssertNotNil(imageId, @"imageId must not be nil", nil);
+  
+  self.didDecodeDelegateHandler = ^(NSString *imageId, NSString *result){};
+  
+  [self.dbc updateBalance];
+  [self checkProgress:^BOOL{
+    return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
+    && [self.dbc.uploadQueue count] == 0;
+  }];
+  [self waitForStatus:kCheckProgressStatus timeout:20]; 
+  
+  GHAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
+  GHAssertTrue(self.dbc.connected, nil);
+}
+
+
 #pragma mark - delegate
 
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port {
 	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_01_connect)];
+	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_06_issue_4)];
 }
 
 
