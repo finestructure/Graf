@@ -23,6 +23,7 @@
 @interface ImageProcessor : NSObject
 
 
+@property (nonatomic, weak) id<ImageProcessorDelegate> delegate;
 @property (nonatomic, retain) NSOperationQueue *queue;
 
 

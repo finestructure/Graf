@@ -7,11 +7,14 @@
 //
 
 #import "Worker.h"
+#import "NSData+MD5.h"
+
 
 @implementation Worker
 
 @synthesize dbc = _dbc;
 @synthesize image = _image;
+@synthesize imageId = _imageId;
 @synthesize textResut = _textResut;
 
 
@@ -22,6 +25,8 @@
     finished = NO;
     self.dbc = [[DbcConnector alloc] init];
     self.image = image;
+    NSData *imageData = UIImagePNGRepresentation(image);
+    self.imageId = [imageData MD5];
   }
   return self;
 }

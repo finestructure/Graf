@@ -13,6 +13,7 @@
 
 @implementation ImageProcessor
 
+@synthesize delegate = _delegate;
 @synthesize queue = _queue;
 
 
@@ -51,7 +52,9 @@
     Worker *worker = (Worker *)object;
     if ([worker isFinished]) {
       NSLog(@"result: %@", worker.textResut);
-#warning call delegate
+      if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
+        [self.delegate didDecodeImageId:worker.imageId result:worker.textResut];
+      }
     } else {
       NSLog(@"not finished");
     }

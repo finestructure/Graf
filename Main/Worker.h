@@ -18,6 +18,7 @@
 
 @property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, retain) UIImage *image;
+@property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, copy) NSString *textResut;
 
 
