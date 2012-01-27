@@ -20,7 +20,7 @@
 
 
 
-@interface ImageProcessor : UITableViewCell
+@interface ImageProcessor : NSObject
 
 - (NSString *)upload:(UIImage *)image;
 - (void)pollForImageId:(NSString *)imageId;
