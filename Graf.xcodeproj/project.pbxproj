@@ -56,6 +56,8 @@
 		5AED510514CEF85F00D8B6BB /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AED510114CEF85F00D8B6BB /* VideoViewController.xib */; };
 		5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */; };
 		5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnector.m */; };
+		5AF582C114D2A3D7007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C014D2A3D7007942AD /* ImageProcessor.m */; };
+		5AF582C214D2A3D7007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C014D2A3D7007942AD /* ImageProcessor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +121,8 @@
 		5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoViewController.h; path = Main/VideoViewController.h; sourceTree = SOURCE_ROOT; };
 		5AED510014CEF85F00D8B6BB /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoViewController.m; path = Main/VideoViewController.m; sourceTree = SOURCE_ROOT; };
 		5AED510114CEF85F00D8B6BB /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoViewController.xib; path = Main/VideoViewController.xib; sourceTree = SOURCE_ROOT; };
+		5AF582BF14D2A3D7007942AD /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = SOURCE_ROOT; };
+		5AF582C014D2A3D7007942AD /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessor.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,8 @@
 				5AC6546D14D01F15004635D8 /* ImageCell.xib */,
 				5AC6547814D032B8004635D8 /* Image.h */,
 				5AC6547914D032B8004635D8 /* Image.m */,
+				5AF582BF14D2A3D7007942AD /* ImageProcessor.h */,
+				5AF582C014D2A3D7007942AD /* ImageProcessor.m */,
 			);
 			name = Main;
 			path = Sinma;
@@ -413,6 +419,7 @@
 				5AED510214CEF85F00D8B6BB /* ImagePoller.m in Sources */,
 				5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */,
 				5AC6547A14D032B8004635D8 /* Image.m in Sources */,
+				5AF582C114D2A3D7007942AD /* ImageProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +436,7 @@
 				5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */,
 				5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */,
 				5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */,
+				5AF582C214D2A3D7007942AD /* ImageProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
