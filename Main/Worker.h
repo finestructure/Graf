@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSString *textResut;
 
 
-- (id)initWithImageId:(UIImage *)image;
+- (id)initWithImage:(UIImage *)image;
 - (void)completeOperation;
 
 @end

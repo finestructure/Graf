@@ -18,7 +18,7 @@
 @synthesize textResut = _textResut;
 
 
-- (id)initWithImageId:(UIImage *)image {
+- (id)initWithImage:(UIImage *)image {
   self = [super init];
   if (self) {
     executing = NO;

@@ -31,7 +31,7 @@
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *imageId = [imageData MD5];
   
-  Worker *worker = [[Worker alloc] initWithImageId:image];
+  Worker *worker = [[Worker alloc] initWithImage:image];
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
   [self.queue addOperation:worker];
 
