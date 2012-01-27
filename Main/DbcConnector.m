@@ -14,7 +14,6 @@
 #include <stdlib.h>
 
 
-#warning TEMPORARY
 NSString *kUser = @"abstracture";
 NSString *kPass = @"i8Kn37rD8v";
 NSString *kHostname = @"api.deathbycaptcha.com";
@@ -41,7 +40,11 @@ const long kCaptchaTag = 4;
 @synthesize decoded = _decoded;
 @synthesize uploadQueue = _uploadQueue;
 @synthesize captchaQueue = _captchaQueue;
-@synthesize imagePoller = _imagePoller;
+@synthesize imagePollers = _imagePollers;
+
+
+const int kWriteTimeout = 30;
+const int kReadTimeout = 30;
 
 
 #pragma mark - initializers
@@ -58,6 +61,7 @@ const long kCaptchaTag = 4;
     self.decoded = [NSMutableDictionary dictionary];
     self.uploadQueue = [NSMutableArray array];
     self.captchaQueue = [NSMutableArray array];
+    self.imagePollers = [NSMutableArray array];
   }
   return self;
 }
@@ -123,19 +127,6 @@ const long kCaptchaTag = 4;
 #pragma mark - internal methods
 
 
-//- (void)withTimeout:(NSUInteger)seconds monitorForSuccess:(BOOL (^)())block {
-//  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
-//  NSDate *step = [NSDate dateWithTimeIntervalSinceNow:0.1];
-//  while (!block() && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:step]) {
-//    // break when the timeout is reached 
-//    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
-//      break;
-//    }
-//    step = [NSDate dateWithTimeIntervalSinceNow:0.1];
-//  }
-//}
-
-
 - (void)call:(NSString *)command tag:(long)tag {
   return [self call:command withData:nil tag:tag];
 }
@@ -150,8 +141,8 @@ const long kCaptchaTag = 4;
   NSAssert((error == nil), @"error must be nil, it is: %@", error);
   NSLog(@"request byte count: %d", [request length]);
   
-  [self.socket writeData:request withTimeout:30 tag:tag];
-  [self.socket readDataWithTimeout:30 tag:tag];
+  [self.socket writeData:request withTimeout:kWriteTimeout tag:tag];
+  [self.socket readDataWithTimeout:kReadTimeout tag:tag];
 }
 
 
@@ -171,13 +162,25 @@ const long kCaptchaTag = 4;
 }
 
 
-- (void)pollWithInterval:(NSTimeInterval)interval timeout:(NSTimeInterval)timeout forImageId:(NSString *)imageId completionHandler:(void (^)())block
-{
-  if (self.imagePoller != nil && self.imagePoller.isRunning) {
-    NSLog(@"Warning: there's already a poller running. It will be disabled.");
-  }
-  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval timeout:timeout imageId:imageId dbc:self completionHandler:block];
-  [self.imagePoller start];  
+- (void)pollWithInterval:(NSTimeInterval)interval 
+                 timeout:(NSTimeInterval)timeout 
+              forImageId:(NSString *)imageId 
+       completionHandler:(void (^)())completionHandler
+           timeoutHandler:(void (^)())timeoutHandler
+{  
+  ImagePoller *imagePoller = [[ImagePoller alloc] initWithInterval:interval 
+                                                           timeout:timeout 
+                                                           imageId:imageId 
+                                                               dbc:self 
+                                                 completionHandler:completionHandler timeoutHandler:timeoutHandler];
+  [imagePoller start];
+  [self.imagePollers addObject:imagePoller];
+
+  // remove stopped pollers
+  NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+    return ((ImagePoller *)evaluatedObject).isRunning == NO;
+  }];
+  [self.imagePollers filterUsingPredicate:filter];
 }
 
 
@@ -194,42 +197,6 @@ const long kCaptchaTag = 4;
     [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
   }
 }
-
-
-//- (NSString *)_decode:(UIImage *)image {
-//  NSString *imageId = [self upload:image];
-//  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
-//
-//  NSUInteger maxTries = 12;
-//  NSUInteger callCount = 0;
-//  while (callCount < maxTries) {
-//    // check for result key - will be set asynchronously from socket:didReadData:withTag:
-//    NSLog(@"waiting for result");
-//    [self withTimeout:5 monitorForSuccess:^BOOL{
-//      NSString *textResult = [captchaObject objectForKey:@"text"];
-//      return (textResult != nil && ! [textResult isEqualToString:@""]);
-//    }];
-//
-//    // check if we have a result value, if so, return
-//    NSString *textResult = [captchaObject objectForKey:@"text"];
-//    if (textResult != nil && ! [textResult isEqualToString:@""]) {
-//      NSLog(@"returning result: >%@<", textResult);
-//      return textResult;
-//    } else { // otherwise poll
-//      NSLog(@"polling");
-//      id captchaId = [captchaObject objectForKey:@"captcha"];
-//      NSLog(@"captchaId: %@", captchaId);
-//      if (captchaId != nil) { // can be nil if we poll before the upload is done
-//        // put image id in queue to be picked up by socket:didReadData:withTag:
-//        [self.captchaQueue enqueue:imageId];
-//        // and call 'captcha'
-//        [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
-//      }
-//    }
-//    callCount++;
-//  }
-//  return nil;
-//}
 
 
 #pragma mark - GCDAsyncSocketDelegate

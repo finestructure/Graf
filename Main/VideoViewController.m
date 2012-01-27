@@ -9,32 +9,38 @@
 #import "VideoViewController.h"
 
 #import "Constants.h"
-#import "MBProgressHUD.h"
+#import "Image.h"
 
 @implementation VideoViewController
 
 @synthesize preview = _preview;
+@synthesize tableView = _tableView;
 @synthesize session = _session;
-@synthesize textResultView = _textResultView;
-@synthesize processingTimeLabel = _processingTimeLabel;
-@synthesize snapshotPreview = _snapshotPreview;
 @synthesize balanceLabel = _balanceLabel;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
-@synthesize progressHud = _progressHud;
-@synthesize start = _start;
-@synthesize state = _state;
+@synthesize images = _images;
+
+
+const int kPollingInterval = 5;
+const int kPollingTimeout = 60;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.images = [NSMutableArray array];
+
+    // set up image processor
+    self.imageProcessor = [[DbcConnector alloc] init];
+    self.imageProcessor.delegate = self;
+    [self.imageProcessor connect];
+    [self.imageProcessor login];
+  }
+  return self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,16 +80,11 @@
 {
   [super viewDidLoad];
   
-  // set up image processor
-  self.imageProcessor = [[DbcConnector alloc] init];
-  self.imageProcessor.delegate = self;
-  [self.imageProcessor connect];
-  [self.imageProcessor login];
+  // register custom table view cell
+  [self.tableView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellReuseIdentifier:@"ImageCell"];
   
   // update labels and ui controls
   
-  self.textResultView.text = @"";
-  self.processingTimeLabel.text = @"";
   self.balanceLabel.text = @"";
   self.statusTextView.text = @"";
   self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
@@ -175,12 +176,10 @@
 {
   [self setPreview:nil];
   self.session = nil;
-  [self setTextResultView:nil];
-  [self setProcessingTimeLabel:nil];
-  [self setSnapshotPreview:nil];
   [self setBalanceLabel:nil];
   [self setStatusTextView:nil];
   [self setVersionLabel:nil];
+  [self setTableView:nil];
   [super viewDidUnload];
 }
 
@@ -191,7 +190,7 @@
 }
 
 
-#pragma mark - Actions
+#pragma mark - Helpers
 
 
 - (UIImage *)convertSampleBufferToUIImage:(CMSampleBufferRef)sampleBuffer {
@@ -210,80 +209,150 @@
 }
 
 
-- (IBAction)takePicture:(id)sender {
-  [self transitionToState:kProcessing];
-  
+- (void)startProcessingImage:(Image *)image {
+  [image transitionTo:kProcessing];
+  [self.imageProcessor pollWithInterval:kPollingInterval 
+                                timeout:kPollingTimeout 
+                             forImageId:image.imageId 
+                      completionHandler:^{
+                        [image transitionTo:kIdle];
+                        dispatch_async(dispatch_get_main_queue(), ^(void) {
+                          [self.tableView reloadData];
+                        });
+                      }
+                         timeoutHandler:^{
+                           [image transitionTo:kTimeout];
+                           dispatch_async(dispatch_get_main_queue(), ^(void) {
+                             [self.tableView reloadData];
+                           });
+                         }
+   ];
+}
+
+
+#pragma mark - Helpers
+
+
+- (IBAction)takePicture:(id)sender {  
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
           
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      self.snapshotPreview.image = image;
-    });
-    
     NSString *imageId = [self.imageProcessor upload:image];
-    [self.imageProcessor pollWithInterval:5 timeout:60 forImageId:imageId completionHandler:^{
-      dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [self transitionToState:kIdle];
-      });
-    }];
+
+    Image *img = [[Image alloc] init];
+    img.image = image;
+    img.imageId = imageId;
+    
+    [self startProcessingImage:img];
+    
+    [self.images insertObject:img atIndex:0];
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+      [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    });
   }];
 }
 
 
-- (void)startHudUpdateTimer {
-  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);  
-  _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,
-                                  queue);
-  dispatch_source_set_timer(_timer,
-                            dispatch_time(DISPATCH_TIME_NOW, 0),
-                            1*NSEC_PER_SEC, 0);
-  dispatch_source_set_event_handler(_timer, ^{
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.start];
-      self.progressHud.labelText = [NSString stringWithFormat:@"Decoding (%.0fs)", elapsed];
-    });
+- (void)refreshButtonPressed:(id)sender {
+  NSLog(@"Refresh started");
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[sender superview]];
+  Image *image = [self.images objectAtIndex:indexPath.row];
+  [self startProcessingImage:image];
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [self.tableView reloadData];
   });
-  dispatch_resume(_timer);
 }
 
 
-- (void)stopHudUpdateTimer {
-  dispatch_source_cancel(_timer);
-  dispatch_release(_timer);
-}
+#pragma mark - UITableViewDataSource
 
 
-- (void)updateProcessingTimeLabel {
-  NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.start];
-  NSLog(@"duration: %f", duration);      
-  self.processingTimeLabel.text = [NSString stringWithFormat:@"%.0f s", duration];
-}
-
-
-- (void)transitionToState:(ControllerState)newState {
-  switch (self.state) {
-    case kIdle:
-      if (newState == kProcessing) {
-        self.start = [NSDate date];
-        self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.textResultView.text = @"";
-        self.processingTimeLabel.text = @"";
-        [self startHudUpdateTimer];
-      }
-      break;
-      
-    case kProcessing:
-      if (newState == kIdle) {
-        [self.progressHud hide:YES];
-        [self updateProcessingTimeLabel];
-        [self stopHudUpdateTimer];
-        [self.imageProcessor updateBalance];
-      }
-      break;
-      
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  Image *image = [self.images objectAtIndex:indexPath.row];
+  
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  { // image view
+    UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:1];
+    subview.image = image.image;    
+    if (image.state == kProcessing) {
+      subview.frame = CGRectMake(20, 20, 240, 60);
+    } else {
+      CGRect targetFrame = subview.frame;
+      targetFrame.size = CGSizeMake(200, 50);
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.frame = targetFrame;
+      }];  
+    }
   }
-  self.state = newState;
+  { // text result label
+    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:2];
+    if (image.state == kProcessing) {
+      subview.alpha = 0;
+    } else {
+      CGRect targetFrame = subview.frame;
+      targetFrame.origin.y = 78;
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.alpha = 1;
+        subview.frame = targetFrame;
+      }];
+      if (image.state == kTimeout) {
+        subview.text = @"timeout";
+        subview.font = [UIFont italicSystemFontOfSize:14];
+      } else {
+        subview.text = image.textResult;
+        subview.font = [UIFont systemFontOfSize:14];
+      }
+    }
+  }
+  { // processing time label
+    UILabel *subview = (UILabel *)[cell.contentView viewWithTag:3];
+    if (image.state == kProcessing) {
+      subview.alpha = 0;
+    } else {
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.alpha = 1;
+      }];
+      subview.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
+    }
+  }
+  { // activity indicator
+    UIActivityIndicatorView *subview = (UIActivityIndicatorView *)[cell.contentView viewWithTag:4];
+    image.state == kProcessing ? [subview startAnimating] : [subview stopAnimating];
+  }
+  { // status icon
+    UIButton *subview = (UIButton *)[cell.contentView viewWithTag:5];
+    if (image.state == kProcessing) {
+      subview.alpha = 0;
+      [subview removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+      if (image.textResult == nil || [image.textResult isEqualToString:@""]) {
+        [subview setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
+        [subview addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+      } else {
+        [subview setImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
+      }
+      [UIView animateWithDuration:0.5 animations:^{
+        subview.alpha = 1;
+      }];
+    }
+  }
+  
+  return cell;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return [self.images count];
+}
+
+
+#pragma mark - UITableViewDelegate
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return 100;
 }
 
 
@@ -323,8 +392,18 @@
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
     [self addToStatusView:string];
-    self.textResultView.text = result;
-    [self transitionToState:kIdle];
+  });
+  // set result for appropriate image object
+  [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    Image *image = (Image *)obj;
+    if ([image.imageId isEqualToString:imageId]) {
+      image.textResult = result;
+      [image transitionTo:kIdle];
+      *stop = YES;
+    }
+  }];
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [self.tableView reloadData];
   });
 }
 
@@ -338,7 +417,38 @@
 
 - (void)didDisconnectWithError:(NSError *)error {
   NSString *string = [NSString stringWithFormat:@"Disconnected! Error %d: %@", [error code], [error localizedDescription]];
-  [self addToStatusView:string];
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    if ([error code] == 7) { // remote host closed connection
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:@"The remote host closed the connection" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reconnect", nil];
+      [alert show];
+    } else if (! self.imageProcessor.connected) {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:@"The connection was lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reconnect", nil];
+      [alert show];
+    } else if (! self.imageProcessor.loggedIn) {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged Out" message:@"The account was logged out" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
+      [alert show];
+    } else {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      [alert show];
+    }
+    [self addToStatusView:string];
+  });
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  NSLog(@"alert dismissed with buttonIndex: %d", buttonIndex);
+  if (buttonIndex == 1) { // reconnect or log in
+    if (! self.imageProcessor.connected) {
+      [self.imageProcessor connect];
+      [self.imageProcessor login];
+    } else if (! self.imageProcessor.loggedIn) {
+      [self.imageProcessor login];
+    }
+  }
 }
 
 

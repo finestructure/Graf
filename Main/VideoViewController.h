@@ -10,39 +10,26 @@
 #import <AVFoundation/AVFoundation.h>
 #import "DbcConnector.h"
 
-@class MBProgressHUD;
-
-typedef enum ControllerState {
-  kIdle,
-  kProcessing
-} ControllerState;
+@class Image;
 
 
-
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate> {
-  dispatch_source_t _timer;
-}
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate>
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
 @property (nonatomic, retain) DbcConnector *imageProcessor;
-@property (nonatomic, retain) NSDate *start;
-@property (nonatomic, assign) ControllerState state;
+@property (nonatomic, retain) NSMutableArray *images;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
-@property (weak, nonatomic) IBOutlet UITextView *textResultView;
-@property (weak, nonatomic) IBOutlet UILabel *processingTimeLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *snapshotPreview;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
-@property (nonatomic, retain) MBProgressHUD *progressHud;
-
+- (void)startProcessingImage:(Image *)image;
 
 - (IBAction)takePicture:(id)sender;
-
-- (void)transitionToState:(ControllerState)newState;
+- (void)refreshButtonPressed:(id)sender;
 
 
 @end
