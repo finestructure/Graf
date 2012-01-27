@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol ImageProcessorDelegate <NSObject>
+
+@optional
+
+- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
+- (void)didTimeoutDecodingImageId:(NSString *)imageId;
+
+@end
+
+
+
 @interface ImageProcessor : UITableViewCell
+
+- (NSString *)upload:(UIImage *)image;
+- (void)pollForImageId:(NSString *)imageId;
+
 
 @end
