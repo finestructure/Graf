@@ -20,6 +20,7 @@
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)didLogInAs:(NSString *)user;
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
+- (void)didUploadImageId:(NSString *)imageId;
 - (void)didDisconnectWithError:(NSError *)error;
 - (void)didUpdateBalance:(float)newBalance;
 

@@ -246,6 +246,10 @@ const int kReadTimeout = 30;
     NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
     [dict addEntriesFromDictionary:res];
     
+    if ([self.delegate respondsToSelector:@selector(didUploadImageId:)]) {
+      [self.delegate didUploadImageId:imageId];
+    }
+    
     NSString *textResult = [dict objectForKey:@"text"];
     if (textResult != nil && ! [textResult isEqualToString:@""]) {
       if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {

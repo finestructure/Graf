@@ -8,6 +8,7 @@
 
 #import "ImageProcessor.h"
 #import "NSData+MD5.h"
+#import "Worker.h"
 
 
 @implementation ImageProcessor
@@ -29,6 +30,9 @@
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *imageId = [imageData MD5];
   
+  Worker *worker = [[Worker alloc] initWithImageId:image];
+  [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
+  [self.queue addOperation:worker];
 
   return imageId;
 }
@@ -36,6 +40,22 @@
 
 - (void)pollForImageId:(NSString *)imageId {
   
+}
+
+#pragma KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  NSLog(@"KVO: %@ %@ %@", keyPath, object, change);
+  if ([keyPath isEqualToString:@"isFinished"]) {
+    Worker *worker = (Worker *)object;
+    if ([worker isFinished]) {
+      NSLog(@"result: %@", worker.textResut);
+#warning call delegate
+    } else {
+      NSLog(@"not finished");
+    }
+  }
 }
 
 
