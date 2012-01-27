@@ -14,6 +14,7 @@
 
 @synthesize dbc = _dbc;
 @synthesize image = _image;
+@synthesize captchaId = _captchaId;
 @synthesize imageId = _imageId;
 @synthesize textResut = _textResut;
 @synthesize command = _command;
@@ -26,8 +27,6 @@
     finished = NO;
     self.dbc = [[DbcConnector alloc] init];
     self.image = image;
-    NSData *imageData = UIImagePNGRepresentation(image);
-    self.imageId = [imageData MD5];
     // default command
     self.command = kUpload;
   }
@@ -62,13 +61,17 @@
       if (self.command == kUpload) {
         [self.dbc upload:self.image];
       } else if (self.command == kPoll) {
-        [self.dbc pollWithInterval:5 
-                           timeout:60 
-                        forImageId:self.imageId 
-                 completionHandler:^{} 
-                    timeoutHandler:^{
-                      [self completeOperation];
-                    }];
+        if (self.captchaId != nil) {
+          [self.dbc pollWithInterval:5 
+                             timeout:60 
+                           captchaId:self.captchaId 
+                   completionHandler:^{} 
+                      timeoutHandler:^{
+                        [self completeOperation];
+                      }];
+        } else {
+          NSLog(@"Error: poll called without captcha id being set");
+        }
       } else {
         NSLog(@"Error: Unknown command sent to Worker");
       }
@@ -113,22 +116,25 @@
 - (void)didLogInAs:(NSString *)user {
 }
 
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result {
+  self.imageId = imageId;
+  self.captchaId = captchaId;
   self.textResut = result;
   [self completeOperation];
 }
 
-- (void)didUploadImageId:(NSString *)imageId {
-  NSLog(@"uploaded image %@", imageId);
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId {
+  NSLog(@"uploaded image %@ %@", imageId, captchaId);
+  self.imageId = imageId;
+  self.captchaId = captchaId;
   [self.dbc pollWithInterval:5 
                      timeout:60 
-                  forImageId:imageId 
+                   captchaId:captchaId 
            completionHandler:^{} 
               timeoutHandler:^{
                 [self completeOperation];
               }];
 }
-
 
 - (void)didDisconnectWithError:(NSError *)error {
   [self completeOperation];

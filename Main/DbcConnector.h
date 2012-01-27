@@ -19,8 +19,8 @@
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)didLogInAs:(NSString *)user;
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
-- (void)didUploadImageId:(NSString *)imageId;
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result;
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId;
 - (void)didDisconnectWithError:(NSError *)error;
 - (void)didUpdateBalance:(float)newBalance;
 
@@ -42,11 +42,9 @@
 @property (nonatomic, retain) NSOutputStream *outputStream;
 @property (nonatomic, assign) BOOL done;
 @property (nonatomic, retain) NSString *response;
-@property (nonatomic, retain) NSDictionary *user;
-@property (nonatomic, retain) NSMutableDictionary *decoded;
-@property (nonatomic, retain) NSMutableArray *uploadQueue;
-@property (nonatomic, retain) NSMutableArray *captchaQueue;
-@property (nonatomic, retain) NSMutableArray *imagePollers;
+@property (nonatomic, retain) ImagePoller *imagePoller;
+@property (nonatomic, copy) NSString *imageId;
+@property (nonatomic, copy) NSString *textResult;
 
 // internal
 
@@ -58,15 +56,13 @@
 // API
   
 - (void)updateBalance;
-- (float)balance;
-- (NSString *)upload:(UIImage *)image;
-- (void)poll:(NSString *)imageId;
+- (void)upload:(UIImage *)image;
+- (void)pollWithCaptchaId:(NSString *)captchaId;
 - (void)pollWithInterval:(NSTimeInterval)interval 
                  timeout:(NSTimeInterval)timeout 
-              forImageId:(NSString *)imageId 
+               captchaId:(NSString *)imageId 
        completionHandler:(void (^)())completionHandler
           timeoutHandler:(void (^)())timeoutHandler;
-- (NSString *)resultForId:(NSString *)imageId;
 
 
 @end

@@ -36,11 +36,9 @@ const long kCaptchaTag = 4;
 @synthesize outputStream = _outputStream;
 @synthesize done = _done;
 @synthesize response = _response;
-@synthesize user = _user;
-@synthesize decoded = _decoded;
-@synthesize uploadQueue = _uploadQueue;
-@synthesize captchaQueue = _captchaQueue;
-@synthesize imagePollers = _imagePollers;
+@synthesize imagePoller = _imagePoller;
+@synthesize imageId = _imageId;
+@synthesize textResult = _textResult;
 
 
 const int kWriteTimeout = 30;
@@ -58,10 +56,6 @@ const int kReadTimeout = 30;
     self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:requestQueue];
     self.connected = NO;
     self.loggedIn = NO;
-    self.decoded = [NSMutableDictionary dictionary];
-    self.uploadQueue = [NSMutableArray array];
-    self.captchaQueue = [NSMutableArray array];
-    self.imagePollers = [NSMutableArray array];
   }
   return self;
 }
@@ -114,16 +108,6 @@ const int kReadTimeout = 30;
 }
 
 
-- (float)balance {
-  return [[self.user objectForKey:@"balance"] floatValue];
-}
-
-
-- (NSString *)resultForId:(NSString *)imageId {
-  return [[self.decoded objectForKey:imageId] objectForKey:@"text"];
-}
-
-
 #pragma mark - internal methods
 
 
@@ -139,60 +123,40 @@ const int kReadTimeout = 30;
   NSError *error = nil;
   NSData *request = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
   NSAssert((error == nil), @"error must be nil, it is: %@", error);
-  NSLog(@"request byte count: %d", [request length]);
   
   [self.socket writeData:request withTimeout:kWriteTimeout tag:tag];
   [self.socket readDataWithTimeout:kReadTimeout tag:tag];
 }
 
 
-- (NSString *)upload:(UIImage *)image {
+- (void)upload:(UIImage *)image {
   NSData *imageData = UIImagePNGRepresentation(image);
-  NSString *imageId = [imageData MD5];
   NSString *base64Data = [imageData base64EncodedString];
+  self.imageId = [imageData MD5];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
-  [self.decoded setObject:[NSMutableDictionary dictionary] forKey:imageId];
-
-  // put image id in queue to be picked up by socket:didReadData:withTag:
-  [self.uploadQueue enqueue:imageId];
-  // and call 'upload'
   [self call:@"upload" withData:data tag:kUploadTag];
-  
-  return imageId;
 }
 
 
 - (void)pollWithInterval:(NSTimeInterval)interval 
                  timeout:(NSTimeInterval)timeout 
-              forImageId:(NSString *)imageId 
+               captchaId:(NSString *)captchaId 
        completionHandler:(void (^)())completionHandler
            timeoutHandler:(void (^)())timeoutHandler
 {  
-  ImagePoller *imagePoller = [[ImagePoller alloc] initWithInterval:interval 
-                                                           timeout:timeout 
-                                                           imageId:imageId 
-                                                               dbc:self 
-                                                 completionHandler:completionHandler timeoutHandler:timeoutHandler];
-  [imagePoller start];
-  [self.imagePollers addObject:imagePoller];
-
-  // remove stopped pollers
-  NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-    return ((ImagePoller *)evaluatedObject).isRunning == NO;
-  }];
-  [self.imagePollers filterUsingPredicate:filter];
+  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval 
+                                                   timeout:timeout 
+                                                 captchaId:captchaId
+                                                       dbc:self 
+                                         completionHandler:completionHandler
+                                            timeoutHandler:timeoutHandler];
+  [self.imagePoller start];
 }
 
 
-- (void)poll:(NSString *)imageId {
-  NSDictionary *captchaObject = [self.decoded objectForKey:imageId];
-
-  NSLog(@"polling for captchaObject: %@", captchaObject);
-  id captchaId = [captchaObject objectForKey:@"captcha"];
-  NSLog(@"captchaId: %@", captchaId);
+- (void)pollWithCaptchaId:(NSString *)captchaId {
+  NSLog(@"polling captchaId: %@", captchaId);
   if (captchaId != nil) { // can be nil if we poll before the upload is done
-    // put image id in queue to be picked up by socket:didReadData:withTag:
-    [self.captchaQueue enqueue:imageId];
     // and call 'captcha'
     [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"] tag:kCaptchaTag];
   }
@@ -227,46 +191,42 @@ const int kReadTimeout = 30;
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
   NSLog(@"didReadData: (%ld) %@", tag, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
   if (tag == kLoginTag) {
-    self.user = [self jsonResponse:data];
+    id res = [self jsonResponse:data];
     self.loggedIn = YES;
     if ([self.delegate respondsToSelector:@selector(didLogInAs:)]
-        && [self.user objectForKey:@"user"] != nil) {
-      [self.delegate didLogInAs:[self.user objectForKey:@"user"]];
+        && [res objectForKey:@"user"] != nil) {
+      [self.delegate didLogInAs:[res objectForKey:@"user"]];
     }
   } else if (tag == kUserTag) {
-    self.user = [self jsonResponse:data];
-    if ([self.delegate respondsToSelector:@selector(didUpdateBalance:)]) {
-      [self.delegate didUpdateBalance:[self balance]];
+    id res = [self jsonResponse:data];
+    NSLog(@"user response: %@", res);
+    NSNumber *balance = [res objectForKey:@"balance"];
+    if (balance != nil && [self.delegate respondsToSelector:@selector(didUpdateBalance:)]) {
+      [self.delegate didUpdateBalance:[balance floatValue]];
     }
   } else if (tag == kUploadTag) {
     id res = [self jsonResponse:data];
     NSLog(@"upload response: %@", res);
+    NSString *captchaId = [res objectForKey:@"captcha"];
     
-    id imageId = [self.uploadQueue dequeue];
-    NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
-    [dict addEntriesFromDictionary:res];
-    
-    if ([self.delegate respondsToSelector:@selector(didUploadImageId:)]) {
-      [self.delegate didUploadImageId:imageId];
+    if ([self.delegate respondsToSelector:@selector(didUploadImageId:captchaId:)]) {
+      [self.delegate didUploadImageId:self.imageId captchaId:captchaId];
     }
     
-    NSString *textResult = [dict objectForKey:@"text"];
-    if (textResult != nil && ! [textResult isEqualToString:@""]) {
-      if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
-        [self.delegate didDecodeImageId:imageId result:textResult];
+    self.textResult = [res objectForKey:@"text"];
+    if (self.textResult != nil && ! [self.textResult isEqualToString:@""]) {
+      if ([self.delegate respondsToSelector:@selector(didDecodeImageId:captchaId:result:)]) {
+        [self.delegate didDecodeImageId:self.imageId captchaId:captchaId result:self.textResult];
       }
     }
   } else if (tag == kCaptchaTag) {
     id res = [self jsonResponse:data];
     NSLog(@"captcha response: %@", res);
+    NSString *captchaId = [res objectForKey:@"captcha"];
 
-    id imageId = [self.captchaQueue dequeue];
-    NSMutableDictionary *dict = [self.decoded objectForKey:imageId];
-    [dict addEntriesFromDictionary:res];
-    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
-      NSString *textResult = [dict objectForKey:@"text"];
-      if (textResult != nil && ! [textResult isEqualToString:@""]) {
-        [self.delegate didDecodeImageId:imageId result:textResult];
+    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:captchaId:result:)]) {
+      if (self.textResult != nil && ! [self.textResult isEqualToString:@""]) {
+        [self.delegate didDecodeImageId:self.imageId captchaId:captchaId result:self.textResult];
       }
     }
   }

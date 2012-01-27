@@ -21,7 +21,7 @@
 
 - (id)initWithInterval:(NSTimeInterval)interval 
                timeout:(NSTimeInterval)timeout 
-               imageId:(NSString *)imageId 
+             captchaId:(NSString *)captchaId 
                    dbc:(DbcConnector *)dbc 
      completionHandler:(void (^)())completionHandler
          timeoutHandler:(void (^)())timeoutHandler
@@ -38,10 +38,9 @@
     dispatch_source_set_event_handler(_timer, ^{
       NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:self.startDate];
       NSLog(@"elapsed: %.1f", elapsed);
-      NSString *result = [dbc resultForId:imageId];
-      NSLog(@"result: %@", result);
-      if (result != nil 
-          && ! [result isEqualToString:@""]) { // success
+      NSLog(@"result: %@", dbc.textResult);
+      if (dbc.textResult != nil 
+          && ! [dbc.textResult isEqualToString:@""]) { // success
         NSLog(@"done");
         self.completionHandler();
         dispatch_source_cancel(_timer);
@@ -50,8 +49,8 @@
         self.timeoutHandler();
         dispatch_source_cancel(_timer);
       } else { // poll again
-        NSLog(@"polling for image id %@ ...", imageId);
-        [dbc poll:imageId];
+        NSLog(@"polling for captcha id %@ ...", captchaId);
+        [dbc pollWithCaptchaId:captchaId];
       }
     });
   }

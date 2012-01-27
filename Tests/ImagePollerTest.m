@@ -5,6 +5,8 @@
 @interface ImagePollerTest : GHAsyncTestCase<DbcConnectorDelegate> { }
 
 @property (nonatomic, retain) DbcConnector *dbc;
+@property (nonatomic, copy) NSString *captchaId;
+@property (nonatomic, copy) NSString *result;
 
 @end
 
@@ -13,6 +15,8 @@
 
 
 @synthesize dbc = _dbc;
+@synthesize captchaId = _captchaId;
+@synthesize result = _result;
 
 
 
@@ -20,6 +24,8 @@
   [super setUp];  
   self.dbc = [[DbcConnector alloc] init];
   self.dbc.delegate = self;
+  self.captchaId = nil;
+  self.result = nil;
 }
 
 
@@ -49,15 +55,16 @@
   [self prepare];
 
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
-  NSString *imageId = [self.dbc upload:image];
+  [self.dbc upload:image];
 
 	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
+  GHAssertNotNil(self.captchaId, nil);
 
   [self prepare];
   
   ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 
                                                       timeout:50 
-                                                      imageId:imageId 
+                                                    captchaId:self.captchaId 
                                                           dbc:self.dbc 
                                             completionHandler:^{
                                               [self notify:kGHUnitWaitStatusSuccess];
@@ -68,15 +75,27 @@
   [poller start];
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60];
 
-  GHAssertEqualStrings(@"037233", [self.dbc resultForId:imageId], nil);
+  GHAssertEqualStrings(@"037233", self.result, nil);
 }
 
 
 #pragma mark - delegate
 
 
-- (void)didUploadImageId:(NSString *)imageId {
-	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_01_poll)];
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId {
+  self.captchaId = captchaId;
+	[self notify:kGHUnitWaitStatusSuccess];
+}
+
+
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result {
+  self.result = result;
+  [self notify:kGHUnitWaitStatusSuccess];
+}
+
+
+- (void)didTimeoutDecodingImageId:(NSString *)imageId {
+  [self notify:kGHUnitWaitStatusFailure];
 }
 
 
