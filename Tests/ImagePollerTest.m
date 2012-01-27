@@ -2,7 +2,7 @@
 #import "ImagePoller.h"
 #import "DbcConnector.h"
 
-@interface ImagePollerTest : GHAsyncTestCase { }
+@interface ImagePollerTest : GHAsyncTestCase<DbcConnectorDelegate> { }
 
 @property (nonatomic, retain) DbcConnector *dbc;
 
@@ -19,6 +19,7 @@
 - (void)setUp {
   [super setUp];  
   self.dbc = [[DbcConnector alloc] init];
+  self.dbc.delegate = self;
 }
 
 
@@ -44,20 +45,38 @@
 - (void)test_01_poll {
   [self.dbc connect];
   [self.dbc login];
-  [self prepare];
   
+  [self prepare];
+
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   NSString *imageId = [self.dbc upload:image];
+
+	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
+
+  [self prepare];
   
-  ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 timeout:50 imageId:imageId dbc:self.dbc completionHandler:^{} timeoutHandler:^{}];
+  ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 
+                                                      timeout:50 
+                                                      imageId:imageId 
+                                                          dbc:self.dbc 
+                                            completionHandler:^{
+                                              [self notify:kGHUnitWaitStatusSuccess];
+                                            } 
+                                               timeoutHandler:^{
+                                                 [self notify:kGHUnitWaitStatusFailure];
+                                               }];
   [poller start];
-  [self checkProgress:^BOOL{
-    NSString *result = [self.dbc resultForId:imageId];
-    return (result != nil && ![result isEqualToString:@""]);
-  }];
-  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60]; 
-  
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60];
+
   GHAssertEqualStrings(@"037233", [self.dbc resultForId:imageId], nil);
+}
+
+
+#pragma mark - delegate
+
+
+- (void)didUploadImageId:(NSString *)imageId {
+	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_01_poll)];
 }
 
 
