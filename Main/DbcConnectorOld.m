@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
-#import "DbcConnector.h"
+#import "DbcConnectorOld.h"
 #import "NSData+Base64.h"
 #import "NSData+MD5.h"
 #import "NSMutableArray+QueueAdditions.h"

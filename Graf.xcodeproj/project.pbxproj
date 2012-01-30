@@ -50,12 +50,12 @@
 		5AED50F214CEF80400D8B6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AED50F014CEF80400D8B6BB /* InfoPlist.strings */; };
 		5AED50F914CEF81500D8B6BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F414CEF81500D8B6BB /* AppDelegate.m */; };
 		5AED50FA14CEF81500D8B6BB /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F614CEF81500D8B6BB /* Constants.m */; };
-		5AED50FB14CEF81500D8B6BB /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnector.m */; };
+		5AED50FB14CEF81500D8B6BB /* DbcConnectorOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnectorOld.m */; };
 		5AED510214CEF85F00D8B6BB /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */; };
 		5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED510014CEF85F00D8B6BB /* VideoViewController.m */; };
 		5AED510514CEF85F00D8B6BB /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AED510114CEF85F00D8B6BB /* VideoViewController.xib */; };
 		5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */; };
-		5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnector.m */; };
+		5AED510714CEFB3900D8B6BB /* DbcConnectorOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F814CEF81500D8B6BB /* DbcConnectorOld.m */; };
 		5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */; };
 		5AF582C914D2AA4F007942AD /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* Worker.m */; };
 		5AF582CA14D2AA4F007942AD /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* Worker.m */; };
@@ -117,8 +117,8 @@
 		5AED50F414CEF81500D8B6BB /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Main/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		5AED50F514CEF81500D8B6BB /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Main/Constants.h; sourceTree = SOURCE_ROOT; };
 		5AED50F614CEF81500D8B6BB /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Main/Constants.m; sourceTree = SOURCE_ROOT; };
-		5AED50F714CEF81500D8B6BB /* DbcConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DbcConnector.h; path = Main/DbcConnector.h; sourceTree = SOURCE_ROOT; };
-		5AED50F814CEF81500D8B6BB /* DbcConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DbcConnector.m; path = Main/DbcConnector.m; sourceTree = SOURCE_ROOT; };
+		5AED50F714CEF81500D8B6BB /* DbcConnectorOld.h */ = {isa = PBXFileReference; fileEncoding = 4; name = DbcConnectorOld.h; path = Main/DbcConnectorOld.h; sourceTree = SOURCE_ROOT; };
+		5AED50F814CEF81500D8B6BB /* DbcConnectorOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DbcConnectorOld.m; path = Main/DbcConnectorOld.m; sourceTree = SOURCE_ROOT; };
 		5AED50FC14CEF85F00D8B6BB /* ImagePoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePoller.h; path = Main/ImagePoller.h; sourceTree = SOURCE_ROOT; };
 		5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagePoller.m; path = Main/ImagePoller.m; sourceTree = SOURCE_ROOT; };
 		5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoViewController.h; path = Main/VideoViewController.h; sourceTree = SOURCE_ROOT; };
@@ -205,8 +205,8 @@
 				5AED50F414CEF81500D8B6BB /* AppDelegate.m */,
 				5AED50F514CEF81500D8B6BB /* Constants.h */,
 				5AED50F614CEF81500D8B6BB /* Constants.m */,
-				5AED50F714CEF81500D8B6BB /* DbcConnector.h */,
-				5AED50F814CEF81500D8B6BB /* DbcConnector.m */,
+				5AED50F714CEF81500D8B6BB /* DbcConnectorOld.h */,
+				5AED50F814CEF81500D8B6BB /* DbcConnectorOld.m */,
 				5AED50FC14CEF85F00D8B6BB /* ImagePoller.h */,
 				5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */,
 				5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */,
@@ -424,7 +424,7 @@
 				5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */,
 				5AED50F914CEF81500D8B6BB /* AppDelegate.m in Sources */,
 				5AED50FA14CEF81500D8B6BB /* Constants.m in Sources */,
-				5AED50FB14CEF81500D8B6BB /* DbcConnector.m in Sources */,
+				5AED50FB14CEF81500D8B6BB /* DbcConnectorOld.m in Sources */,
 				5AED510214CEF85F00D8B6BB /* ImagePoller.m in Sources */,
 				5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */,
 				5AC6547A14D032B8004635D8 /* Image.m in Sources */,
@@ -445,7 +445,7 @@
 				5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */,
 				5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */,
 				5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */,
-				5AED510714CEFB3900D8B6BB /* DbcConnector.m in Sources */,
+				5AED510714CEFB3900D8B6BB /* DbcConnectorOld.m in Sources */,
 				5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */,
 				5AF582CA14D2AA4F007942AD /* Worker.m in Sources */,
 				5AF582CE14D41E07007942AD /* ImageProcessor.m in Sources */,
