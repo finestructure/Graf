@@ -52,7 +52,8 @@ const int kPortEnd = 8130;
 - (void)connect {
   CFReadStreamRef readStream;
   CFWriteStreamRef writeStream;
-  CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)kHostname, [self randomPort], &readStream, &writeStream);
+  int port = [self randomPort];
+  CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)kHostname, port, &readStream, &writeStream);
   self.inputStream = (__bridge_transfer NSInputStream *)readStream;
   self.outputStream = (__bridge_transfer NSOutputStream *)writeStream;
 
@@ -66,6 +67,9 @@ const int kPortEnd = 8130;
   [self.outputStream open];
 
   self.connected = YES;
+  if ([self.delegate respondsToSelector:@selector(didConnectToHost:port:)]) {
+    [self.delegate didConnectToHost:[kHostname copy] port:port];
+  }
 }
 
 
