@@ -7,27 +7,55 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ImagePoller.h"
+
+
+// delegate protocol
+
+@protocol DbcConnectorDelegate <NSObject>
+
+@optional
+
+- (void)didConnectToHost:(NSString *)host port:(UInt16)port;
+- (void)didLogInAs:(NSString *)user;
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result;
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId;
+- (void)didDisconnectWithError:(NSError *)error;
+- (void)didUpdateBalance:(float)newBalance;
+
+@end
 
 
 @interface DbcConnector : NSObject <NSStreamDelegate>
+
+@property (nonatomic, assign) id<DbcConnectorDelegate> delegate;
 
 @property (assign) BOOL connected;
 @property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSInputStream *inputStream;
 @property (nonatomic, retain) NSOutputStream *outputStream;
-@property (nonatomic, assign) BOOL done;
-@property (nonatomic, retain) NSString *response;
+@property (nonatomic, retain) ImagePoller *imagePoller;
+@property (nonatomic, copy) NSString *imageId;
+@property (nonatomic, copy) NSString *textResult;
 
-+ (DbcConnector *)sharedInstance;
 
-- (BOOL)connect;
+// internal
+
+- (void)call:(NSString *)command;
+- (void)call:(NSString *)command withData:(NSDictionary *)data;
+- (void)pollWithInterval:(NSTimeInterval)interval 
+                 timeout:(NSTimeInterval)timeout 
+               captchaId:(NSString *)imageId 
+       completionHandler:(void (^)())completionHandler
+          timeoutHandler:(void (^)())timeoutHandler;
+
+// API
+
+- (void)connect;
 - (void)login;
-- (id)call:(NSString *)command;
-- (id)call:(NSString *)command withData:(NSDictionary *)data;
-
-- (float)balance;
-- (NSUInteger)upload:(UIImage *)image;
-- (NSString *)decode:(UIImage *)image;
+- (void)updateBalance;
+- (void)upload:(UIImage *)image;
+- (void)pollWithCaptchaId:(NSString *)captchaId;
 
 @end
 

@@ -14,36 +14,20 @@
 const NSString *kUser = @"abstracture";
 const NSString *kPass = @"i8Kn37rD8v";
 const NSString *kHostname = @"api.deathbycaptcha.com";
-const int kPort = 8123; // to 8131
+const int kPortStart = 8123;
+const int kPortEnd = 8130;
 
 
 @implementation DbcConnector
 
+@synthesize delegate = _delegate;
 @synthesize connected = _connected;
 @synthesize loggedIn = _loggedIn;
 @synthesize inputStream = _inputStream;
 @synthesize outputStream = _outputStream;
-@synthesize done = _done;
-@synthesize response = _response;
-
-
-+ (DbcConnector *)sharedInstance {
-  static DbcConnector *sharedInstance = nil;
-  
-  if (sharedInstance) {
-    return sharedInstance;
-  }
-  
-  @synchronized(self) {
-    if (!sharedInstance) {
-      sharedInstance = [[DbcConnector alloc] init];
-      [sharedInstance connect];
-      [sharedInstance login];
-    }
-    
-    return sharedInstance;
-  }
-}
+@synthesize imagePoller = _imagePoller;
+@synthesize textResult = _textResult;
+@synthesize imageId = _imageId;
 
 
 - (id)init {
@@ -56,10 +40,19 @@ const int kPort = 8123; // to 8131
 }
 
 
-- (BOOL)connect {
+#pragma mark - API methods
+
+
+- (int)randomPort {
+  int delta = kPortEnd - kPortStart;
+  return kPortStart + (arc4random() % (delta+1));
+}
+
+
+- (void)connect {
   CFReadStreamRef readStream;
   CFWriteStreamRef writeStream;
-  CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)kHostname, kPort, &readStream, &writeStream);
+  CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)kHostname, [self randomPort], &readStream, &writeStream);
   self.inputStream = (__bridge_transfer NSInputStream *)readStream;
   self.outputStream = (__bridge_transfer NSOutputStream *)writeStream;
 
@@ -73,20 +66,7 @@ const int kPort = 8123; // to 8131
   [self.outputStream open];
 
   self.connected = YES;
-  return YES;
 }
-
-
-- (void)waitWithTimeout:(NSUInteger)seconds {
-  NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
-  while (!self.done && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeout]) {
-    // break when the timeout is reached 
-    if ([timeout timeIntervalSinceDate:[NSDate date]] < 0) {
-      break;
-    }
-  }
-}
-
 
 
 - (void)login {
@@ -99,12 +79,37 @@ const int kPort = 8123; // to 8131
 }
 
 
-- (NSString *)call:(NSString *)command {
-  return [self call:command withData:nil];
+- (void)updateBalance {
+  [self call:@"user"];  
 }
 
 
-- (NSString *)call:(NSString *)command withData:(NSDictionary *)data {
+- (void)upload:(UIImage *)image {
+  NSData *imageData = UIImagePNGRepresentation(image);
+  NSString *base64Data = [imageData base64EncodedString];
+  NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
+  [self call:@"upload" withData:data];
+}
+
+
+- (void)pollWithCaptchaId:(NSString *)captchaId {
+  NSLog(@"polling captchaId: %@", captchaId);
+  if (captchaId != nil) { // can be nil if we poll before the upload is done
+    // and call 'captcha'
+    [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"]];
+  }
+}
+
+
+#pragma mark - internal methods
+
+
+- (void)call:(NSString *)command {
+  [self call:command withData:nil];
+}
+
+
+- (void)call:(NSString *)command withData:(NSDictionary *)data {
   NSLog(@"call: %@", command);
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
   [dict setObject:command forKey:@"cmd"];
@@ -112,8 +117,6 @@ const int kPort = 8123; // to 8131
   NSData *request = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
   NSAssert((error == nil), @"error must be nil, it is: %@", error);
   
-  self.done = NO;
-  self.response = nil;
   NSLog(@"request byte count: %d", [request length]);
   
   NSRange range = NSMakeRange(0, [request length]);
@@ -122,64 +125,22 @@ const int kPort = 8123; // to 8131
     range = NSMakeRange(written, range.length - written);
     request = [request subdataWithRange:range];
   }
-  
-  [self waitWithTimeout:15];
-  
-  id res = nil;
-  {
-    NSData *data = [self.response dataUsingEncoding:NSASCIIStringEncoding];
-    if (data != nil) {
-      NSError *error = nil;
-      res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-      NSAssert((error == nil), @"error must be nil, it is: %@", error);
-    }
-  }
-  
-  if (res == nil || [res objectForKey:@"error"] != nil) {
-    NSLog(@"error in response: %@", [res objectForKey:@"error"]);
-  }
-  
-  return res;
 }
 
 
-- (float)balance {
-  return [[[self call:@"user"] objectForKey:@"balance"] floatValue];
-}
-
-
-- (NSUInteger)upload:(UIImage *)image {
-  NSData *imageData = UIImagePNGRepresentation(image);
-  NSString *base64Data = [imageData base64EncodedString];
-  NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
-  id response = [self call:@"upload" withData:data];
-  NSLog(@"upload response: %@", response);
-  id captchaId = [response objectForKey:@"captcha"];
-  return [captchaId unsignedIntegerValue];
-}
-
-
-- (NSString *)decode:(UIImage *)image {
-  NSUInteger captchaId = [self upload:image];
-  if (captchaId > 0) {
-    NSUInteger maxTries = 6;
-    NSUInteger callCount = 0;
-    while (callCount < maxTries) {
-      if (callCount > 0) {
-        NSLog(@"waiting for result");
-        [self waitWithTimeout:5];
-      }
-      NSLog(@"polling");
-      id response = [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:captchaId] forKey:@"captcha"]];
-      callCount++;
-      if (response != nil && [response objectForKey:@"text"] != nil) {
-        return [response objectForKey:@"text"];    
-      }
-    }
-  } else {
-    NSLog(@"captcha id returned from upload was <= 0: %d", captchaId);
-  }
-  return nil;
+- (void)pollWithInterval:(NSTimeInterval)interval 
+                 timeout:(NSTimeInterval)timeout 
+               captchaId:(NSString *)captchaId 
+       completionHandler:(void (^)())completionHandler
+          timeoutHandler:(void (^)())timeoutHandler
+{  
+  self.imagePoller = [[ImagePoller alloc] initWithInterval:interval 
+                                                   timeout:timeout 
+                                                 captchaId:captchaId
+                                                       dbc:self 
+                                         completionHandler:completionHandler
+                                            timeoutHandler:timeoutHandler];
+  [self.imagePoller start];
 }
 
 
@@ -216,9 +177,8 @@ const int kPort = 8123; // to 8131
         
         if (result != nil) {
           NSLog(@"server said: %@", result);
-          self.response = result;
+#warning implement result handling
         }
-        self.done = YES;
       }
       break;
       
@@ -227,7 +187,7 @@ const int kPort = 8123; // to 8131
       break;
       
 		case NSStreamEventErrorOccurred:
-			NSLog(@"Can not connect to the host!");
+			NSLog(@"Error");
 			break;
       
 		case NSStreamEventEndEncountered:
@@ -235,7 +195,7 @@ const int kPort = 8123; // to 8131
 			break;
       
     default:
-			NSLog(@"Unknown event");
+			NSLog(@"Unknown event: %@", streamEvent);
 	}
 }
 
