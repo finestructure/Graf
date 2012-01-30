@@ -61,6 +61,8 @@
 		5AF582CA14D2AA4F007942AD /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* Worker.m */; };
 		5AF582CD14D41E07007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582CC14D41E07007942AD /* ImageProcessor.m */; };
 		5AF582CE14D41E07007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582CC14D41E07007942AD /* ImageProcessor.m */; };
+		5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582D814D6DF3B007942AD /* DbcConnector.m */; };
+		5AF582DA14D6DF3B007942AD /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582D814D6DF3B007942AD /* DbcConnector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,7 +119,7 @@
 		5AED50F414CEF81500D8B6BB /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Main/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		5AED50F514CEF81500D8B6BB /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Main/Constants.h; sourceTree = SOURCE_ROOT; };
 		5AED50F614CEF81500D8B6BB /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Main/Constants.m; sourceTree = SOURCE_ROOT; };
-		5AED50F714CEF81500D8B6BB /* DbcConnectorOld.h */ = {isa = PBXFileReference; fileEncoding = 4; name = DbcConnectorOld.h; path = Main/DbcConnectorOld.h; sourceTree = SOURCE_ROOT; };
+		5AED50F714CEF81500D8B6BB /* DbcConnectorOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DbcConnectorOld.h; path = Main/DbcConnectorOld.h; sourceTree = SOURCE_ROOT; };
 		5AED50F814CEF81500D8B6BB /* DbcConnectorOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DbcConnectorOld.m; path = Main/DbcConnectorOld.m; sourceTree = SOURCE_ROOT; };
 		5AED50FC14CEF85F00D8B6BB /* ImagePoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePoller.h; path = Main/ImagePoller.h; sourceTree = SOURCE_ROOT; };
 		5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagePoller.m; path = Main/ImagePoller.m; sourceTree = SOURCE_ROOT; };
@@ -129,6 +131,8 @@
 		5AF582C814D2AA4F007942AD /* Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Worker.m; path = Main/Worker.m; sourceTree = SOURCE_ROOT; };
 		5AF582CB14D41E07007942AD /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcessor.h; path = Main/ImageProcessor.h; sourceTree = SOURCE_ROOT; };
 		5AF582CC14D41E07007942AD /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessor.m; path = Main/ImageProcessor.m; sourceTree = SOURCE_ROOT; };
+		5AF582D714D6DF3B007942AD /* DbcConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DbcConnector.h; path = Main/DbcConnector.h; sourceTree = SOURCE_ROOT; };
+		5AF582D814D6DF3B007942AD /* DbcConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DbcConnector.m; path = Main/DbcConnector.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +211,8 @@
 				5AED50F614CEF81500D8B6BB /* Constants.m */,
 				5AED50F714CEF81500D8B6BB /* DbcConnectorOld.h */,
 				5AED50F814CEF81500D8B6BB /* DbcConnectorOld.m */,
+				5AF582D714D6DF3B007942AD /* DbcConnector.h */,
+				5AF582D814D6DF3B007942AD /* DbcConnector.m */,
 				5AED50FC14CEF85F00D8B6BB /* ImagePoller.h */,
 				5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */,
 				5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */,
@@ -430,6 +436,7 @@
 				5AC6547A14D032B8004635D8 /* Image.m in Sources */,
 				5AF582C914D2AA4F007942AD /* Worker.m in Sources */,
 				5AF582CD14D41E07007942AD /* ImageProcessor.m in Sources */,
+				5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +456,7 @@
 				5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */,
 				5AF582CA14D2AA4F007942AD /* Worker.m in Sources */,
 				5AF582CE14D41E07007942AD /* ImageProcessor.m in Sources */,
+				5AF582DA14D6DF3B007942AD /* DbcConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
