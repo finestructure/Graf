@@ -10,7 +10,7 @@
 
 @property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, copy) NSString *imageId;
-@property (nonatomic, copy) NSString *captchaId;
+@property (nonatomic, copy) NSNumber *captchaId;
 
 @end
 
@@ -113,7 +113,7 @@ const NSInteger kCheckProgressStatus = 1000;
 }
 
 
-- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId {
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
   self.imageId = imageId;
   self.captchaId = captchaId;
   if (uploadNotification)
@@ -121,7 +121,7 @@ const NSInteger kCheckProgressStatus = 1000;
 }
 
 
-- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result {
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {
   if (decodeNotification)
     [self notify:kGHUnitWaitStatusSuccess];
 }

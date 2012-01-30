@@ -18,8 +18,8 @@
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)didLogInAs:(NSString *)user;
-- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result;
-- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId;
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result;
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId;
 - (void)didDisconnectWithError:(NSError *)error;
 - (void)didUpdateBalance:(float)newBalance;
 

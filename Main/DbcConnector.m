@@ -8,6 +8,7 @@
 
 #import "DbcConnector.h"
 #import "NSData+Base64.h"
+#import "NSData+MD5.h"
 
 
 #warning TEMPORARY
@@ -97,6 +98,7 @@ NSString *kCaptchaCommand = @"captcha";
 - (void)upload:(UIImage *)image {
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
+  self.imageId = [imageData MD5];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
   [self call:kUploadCommand withData:data];
 }
@@ -167,11 +169,36 @@ NSString *kCaptchaCommand = @"captcha";
 
 
 - (void)handleLoginResponse:(id)response {
+  // Example response:
+  // {"is_banned": false, "status": 0, "rate": 0.139, "balance": 668.173, "user": 50402}
   id user = [response objectForKey:@"user"];
   if (user != nil) {
     self.loggedIn = YES;
     if ([self.delegate respondsToSelector:@selector(didLogInAs:)]) {
       [self.delegate didLogInAs:user];
+    }
+  }
+}
+
+
+- (void)handleUploadResponse:(id)response {
+  // Example response:
+  // {"status": 0, "captcha": 231930898, "is_correct": true, "text": "037233"}
+  // (NB: "text" is typically null or "" and is only filled in if the image has been
+  // seen and decoded before by the server
+  NSNumber *captchaId = [response objectForKey:@"captcha"];
+  if (captchaId != nil) {
+    NSLog(@"Warning: upload response without captcha id!");
+  }
+  
+  if ([self.delegate respondsToSelector:@selector(didUploadImageId:captchaId:)]) {
+    [self.delegate didUploadImageId:self.imageId captchaId:captchaId];
+  }
+  
+  self.textResult = [response objectForKey:@"text"];
+  if (self.textResult != nil && ! [self.textResult isEqualToString:@""]) {
+    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:captchaId:result:)]) {
+      [self.delegate didDecodeImageId:self.imageId captchaId:captchaId result:self.textResult];
     }
   }
 }
@@ -214,6 +241,8 @@ NSString *kCaptchaCommand = @"captcha";
           id response = [self jsonResponse:data];
           if ([self.currentCommand isEqualToString:kLoginCommand]) {
             [self handleLoginResponse:response];
+          } else if ([self.currentCommand isEqualToString:kUploadCommand]) {
+            [self handleUploadResponse:response];
           }
         }
       }
