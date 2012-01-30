@@ -137,6 +137,11 @@ NSString *kCaptchaCommand = @"captcha";
   NSRange range = NSMakeRange(0, [request length]);
   while (range.length > 0) {
     NSInteger written = [self.outputStream write:[request bytes] maxLength:[request length]];
+    if (written == -1) {
+      NSError *error = [self.outputStream streamError];
+      NSLog(@"Error while writing data: %d %@", [error code], [error localizedDescription]);
+      return;
+    }
     range = NSMakeRange(written, range.length - written);
     request = [request subdataWithRange:range];
   }
@@ -239,7 +244,7 @@ NSString *kCaptchaCommand = @"captcha";
         
         NSMutableData *data = nil;
         uint8_t buffer[1024];
-        int len;
+        NSInteger len;
         
         while ([self.inputStream hasBytesAvailable]) {
           len = [self.inputStream read:buffer maxLength:sizeof(buffer)];
@@ -281,20 +286,38 @@ NSString *kCaptchaCommand = @"captcha";
       NSLog(@"Has space available");
       break;
       
-		case NSStreamEventErrorOccurred:
+		case NSStreamEventErrorOccurred: {
 			NSLog(@"Error");
+      NSLog(@"Stream status: %d", [self.inputStream streamStatus]);
+      NSError *error = [self.inputStream streamError];
+      if (error != nil) {
+        NSLog(@"Error info: %d %@", [error code], [error localizedDescription]);
+      }
+    }
 			break;
       
-		case NSStreamEventEndEncountered:
+		case NSStreamEventEndEncountered: {
       if ([self.commandQueue count] > 0) {
         NSLog(@"Error: Stream closed while commands are active!");
+        NSLog(@"Stream status: %d", [self.inputStream streamStatus]);
+        NSError *error = [self.inputStream streamError];
+        if (error != nil) {
+          NSLog(@"Error info: %d %@", [error code], [error localizedDescription]);
+        }
       } else {
         NSLog(@"Stream end event");
       }
+    }
 			break;
       
-    default:
+    default: {
 			NSLog(@"Unknown event: %@", streamEvent);
+      NSLog(@"Stream status: %d", [self.inputStream streamStatus]);
+      NSError *error = [self.inputStream streamError];
+      if (error != nil) {
+        NSLog(@"Error info: %d %@", [error code], [error localizedDescription]);
+      }
+    }
 	}
 }
 
