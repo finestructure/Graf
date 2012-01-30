@@ -5,7 +5,7 @@
 @interface ImagePollerTest : GHAsyncTestCase<DbcConnectorDelegate> { }
 
 @property (nonatomic, retain) DbcConnector *dbc;
-@property (nonatomic, copy) NSString *captchaId;
+@property (nonatomic, copy) NSNumber *captchaId;
 @property (nonatomic, copy) NSString *result;
 
 @end
@@ -82,7 +82,7 @@
 #pragma mark - delegate
 
 
-- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId {
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
   self.captchaId = captchaId;
 	[self notify:kGHUnitWaitStatusSuccess];
 }

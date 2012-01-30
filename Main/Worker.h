@@ -25,7 +25,7 @@ typedef enum WorkerCommands {
 @property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;
-@property (nonatomic, copy) NSString *captchaId;
+@property (nonatomic, copy) NSNumber *captchaId;
 @property (nonatomic, copy) NSString *textResut;
 @property (nonatomic, assign) WorkerCommands command;
 

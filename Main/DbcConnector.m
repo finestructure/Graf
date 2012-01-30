@@ -104,7 +104,7 @@ NSString *kCaptchaCommand = @"captcha";
 }
 
 
-- (void)pollWithCaptchaId:(NSString *)captchaId {
+- (void)pollWithCaptchaId:(NSNumber *)captchaId {
   NSLog(@"polling captchaId: %@", captchaId);
   if (captchaId != nil) { // can be nil if we poll before the upload is done
     // and call 'captcha'
@@ -145,7 +145,7 @@ NSString *kCaptchaCommand = @"captcha";
 
 - (void)pollWithInterval:(NSTimeInterval)interval 
                  timeout:(NSTimeInterval)timeout 
-               captchaId:(NSString *)captchaId 
+               captchaId:(NSNumber *)captchaId 
        completionHandler:(void (^)())completionHandler
           timeoutHandler:(void (^)())timeoutHandler
 {  

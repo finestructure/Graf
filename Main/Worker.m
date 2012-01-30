@@ -116,14 +116,14 @@
 - (void)didLogInAs:(NSString *)user {
 }
 
-- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result {
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {
   self.imageId = imageId;
   self.captchaId = captchaId;
   self.textResut = result;
   [self completeOperation];
 }
 
-- (void)didUploadImageId:(NSString *)imageId captchaId:(NSString *)captchaId {
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
   NSLog(@"uploaded image %@ %@", imageId, captchaId);
   self.imageId = imageId;
   self.captchaId = captchaId;

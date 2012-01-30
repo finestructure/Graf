@@ -46,7 +46,7 @@
 - (void)call:(NSString *)command withData:(NSDictionary *)data;
 - (void)pollWithInterval:(NSTimeInterval)interval 
                  timeout:(NSTimeInterval)timeout 
-               captchaId:(NSString *)imageId 
+               captchaId:(NSNumber *)imageId 
        completionHandler:(void (^)())completionHandler
           timeoutHandler:(void (^)())timeoutHandler;
 
@@ -56,7 +56,7 @@
 - (void)login;
 - (void)updateBalance;
 - (void)upload:(UIImage *)image;
-- (void)pollWithCaptchaId:(NSString *)captchaId;
+- (void)pollWithCaptchaId:(NSNumber *)captchaId;
 
 @end
 

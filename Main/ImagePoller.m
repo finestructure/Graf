@@ -21,7 +21,7 @@
 
 - (id)initWithInterval:(NSTimeInterval)interval 
                timeout:(NSTimeInterval)timeout 
-             captchaId:(NSString *)captchaId 
+             captchaId:(NSNumber *)captchaId 
                    dbc:(DbcConnector *)dbc 
      completionHandler:(void (^)())completionHandler
          timeoutHandler:(void (^)())timeoutHandler
