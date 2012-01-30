@@ -11,6 +11,7 @@
 @property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, copy) NSNumber *captchaId;
+@property (nonatomic, copy) NSString *textResult;
 
 @end
 
@@ -20,6 +21,7 @@
 @synthesize dbc = _dbc;
 @synthesize imageId = _imageId;
 @synthesize captchaId = _captchaId;
+@synthesize textResult = _textResult;
 
 
 const NSInteger kCheckProgressStatus = 1000;
@@ -98,6 +100,33 @@ const NSInteger kCheckProgressStatus = 1000;
 }
 
 
+- (void)test_04_pollWithCaptcha {
+  [self.dbc connect];
+  [self.dbc login];
+  
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  GHAssertNotNil(image, @"image must not be nil", nil);
+  
+  uploadNotification = YES;
+  decodeNotification = NO;
+  [self prepare];
+  
+  [self.dbc upload:image];
+
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
+
+  GHAssertNotNil(self.captchaId, nil);
+
+  uploadNotification = NO;
+  decodeNotification = YES;
+  [self prepare];
+
+  [self.dbc pollWithCaptchaId:self.captchaId];
+
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
+}
+
+
 #pragma mark - delegate
 
 
@@ -122,6 +151,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {
+  self.textResult = result;
   if (decodeNotification)
     [self notify:kGHUnitWaitStatusSuccess];
 }

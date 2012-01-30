@@ -206,6 +206,23 @@ NSString *kCaptchaCommand = @"captcha";
 }
 
 
+- (void)handleCaptchaResponse:(id)response {
+  // Example response:
+  // {"status": 0, "captcha": 232316060, "is_correct": true, "text": "037233"}
+  NSNumber *captchaId = [response objectForKey:@"captcha"];
+  if (captchaId == nil) {
+    NSLog(@"Warning: captcha response without captcha id!");
+  }
+
+  self.textResult = [response objectForKey:@"text"];
+  if (self.textResult != nil && ! [self.textResult isEqualToString:@""]) {
+    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:captchaId:result:)]) {
+      [self.delegate didDecodeImageId:self.imageId captchaId:captchaId result:self.textResult];
+    }
+  }
+}
+
+
 #pragma mark - NSStreamDelegate
 
 
@@ -253,6 +270,8 @@ NSString *kCaptchaCommand = @"captcha";
             [self handleLoginResponse:response];
           } else if ([currentCommand isEqualToString:kUploadCommand]) {
             [self handleUploadResponse:response];
+          } else if ([currentCommand isEqualToString:kCaptchaCommand]) {
+            [self handleCaptchaResponse:response];
           }
         }
       }
@@ -267,7 +286,11 @@ NSString *kCaptchaCommand = @"captcha";
 			break;
       
 		case NSStreamEventEndEncountered:
-			NSLog(@"Stream end event");
+      if ([self.commandQueue count] > 0) {
+        NSLog(@"Error: Stream closed while commands are active!");
+      } else {
+        NSLog(@"Stream end event");
+      }
 			break;
       
     default:
