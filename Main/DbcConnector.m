@@ -11,7 +11,6 @@
 #import "NSData+MD5.h"
 
 
-#warning TEMPORARY
 const NSString *kUser = @"abstracture";
 const NSString *kPass = @"i8Kn37rD8v";
 const NSString *kHostname = @"api.deathbycaptcha.com";
@@ -35,7 +34,7 @@ NSString *kCaptchaCommand = @"captcha";
 @synthesize imagePoller = _imagePoller;
 @synthesize textResult = _textResult;
 @synthesize imageId = _imageId;
-@synthesize currentCommand = _currentCommand;
+@synthesize commandQueue = _commandQueue;
 
 
 - (id)init {
@@ -43,6 +42,7 @@ NSString *kCaptchaCommand = @"captcha";
   if (self) {
     self.connected = NO;
     self.loggedIn = NO;
+    self.commandQueue = [NSMutableArray array];
   }
   return self;
 }
@@ -122,7 +122,9 @@ NSString *kCaptchaCommand = @"captcha";
 
 
 - (void)call:(NSString *)command withData:(NSDictionary *)data {
-  self.currentCommand = command;
+  @synchronized(self.commandQueue) {
+    [self.commandQueue addObject:command];
+  }
   NSLog(@"call: %@", command);
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
   [dict setObject:command forKey:@"cmd"];
@@ -187,7 +189,7 @@ NSString *kCaptchaCommand = @"captcha";
   // (NB: "text" is typically null or "" and is only filled in if the image has been
   // seen and decoded before by the server
   NSNumber *captchaId = [response objectForKey:@"captcha"];
-  if (captchaId != nil) {
+  if (captchaId == nil) {
     NSLog(@"Warning: upload response without captcha id!");
   }
   
@@ -235,13 +237,21 @@ NSString *kCaptchaCommand = @"captcha";
 
         }
         
+        NSString *currentCommand = nil;
+        @synchronized(self.commandQueue) {
+          if ([self.commandQueue count] > 0) {
+            currentCommand = [self.commandQueue objectAtIndex:0];
+            [self.commandQueue removeObjectAtIndex:0];
+          }
+        }
+        
         if (data != nil) {
-          NSLog(@"current command: %@", self.currentCommand);
+          NSLog(@"current command: %@", currentCommand);
           NSLog(@"server said: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
           id response = [self jsonResponse:data];
-          if ([self.currentCommand isEqualToString:kLoginCommand]) {
+          if ([currentCommand isEqualToString:kLoginCommand]) {
             [self handleLoginResponse:response];
-          } else if ([self.currentCommand isEqualToString:kUploadCommand]) {
+          } else if ([currentCommand isEqualToString:kUploadCommand]) {
             [self handleUploadResponse:response];
           }
         }

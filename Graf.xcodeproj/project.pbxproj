@@ -25,7 +25,6 @@
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
-		5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
 		5AC6543914CF0A99004635D8 /* app_icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543714CF0A99004635D8 /* app_icon-57.png */; };
 		5AC6543C14CF0AAB004635D8 /* app_icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543B14CF0AAB004635D8 /* app_icon-114.png */; };
 		5AC6546E14D01F15004635D8 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6546D14D01F15004635D8 /* ImageCell.xib */; };
@@ -41,7 +40,6 @@
 		5ADC3DAE14CD7137004992F7 /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5ADC3DAF14CD713C004992F7 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */; };
 		5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
-		5ADC3DB114CD714B004992F7 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */; };
 		5ADC3DB214CD718D004992F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */; };
 		5ADC3DB614CD8EC3004992F7 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
@@ -87,8 +85,6 @@
 		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5A86046114C482E5008D2C6A /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "other/NSData+MD5.h"; sourceTree = "<group>"; };
 		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
-		5A86049D14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueueAdditions.h"; path = "other/NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
-		5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueAdditions.m"; path = "other/NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		5AC6543714CF0A99004635D8 /* app_icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-57.png"; sourceTree = "<group>"; };
 		5AC6543B14CF0AAB004635D8 /* app_icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-114.png"; sourceTree = "<group>"; };
 		5AC6546D14D01F15004635D8 /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageCell.xib; path = Main/ImageCell.xib; sourceTree = SOURCE_ROOT; };
@@ -253,8 +249,6 @@
 				5AD8924E14C02275005595BA /* UIImage+Resize.m */,
 				5AD8924F14C02275005595BA /* UIImage+RoundedCorner.h */,
 				5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */,
-				5A86049D14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.h */,
-				5A86049E14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -420,7 +414,6 @@
 				5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */,
 				5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */,
-				5A86049F14C56DBF008D2C6A /* NSMutableArray+QueueAdditions.m in Sources */,
 				5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */,
 				5AED50F914CEF81500D8B6BB /* AppDelegate.m in Sources */,
 				5AED50FA14CEF81500D8B6BB /* Constants.m in Sources */,
@@ -441,7 +434,6 @@
 				5ADC3DAE14CD7137004992F7 /* NSData+MD5.m in Sources */,
 				5ADC3DAF14CD713C004992F7 /* GCDAsyncSocket.m in Sources */,
 				5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */,
-				5ADC3DB114CD714B004992F7 /* NSMutableArray+QueueAdditions.m in Sources */,
 				5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */,
 				5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */,
 				5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */,
