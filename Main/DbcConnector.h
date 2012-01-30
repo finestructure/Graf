@@ -37,6 +37,7 @@
 @property (nonatomic, retain) ImagePoller *imagePoller;
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, copy) NSString *textResult;
+@property (nonatomic, copy) NSString *currentCommand;
 
 
 // internal

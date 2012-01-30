@@ -17,6 +17,12 @@ const NSString *kHostname = @"api.deathbycaptcha.com";
 const int kPortStart = 8123;
 const int kPortEnd = 8130;
 
+// valid commands
+NSString *kLoginCommand = @"login";
+NSString *kUploadCommand = @"upload";
+NSString *kUserCommand = @"user";
+NSString *kCaptchaCommand = @"captcha";
+
 
 @implementation DbcConnector
 
@@ -28,6 +34,7 @@ const int kPortEnd = 8130;
 @synthesize imagePoller = _imagePoller;
 @synthesize textResult = _textResult;
 @synthesize imageId = _imageId;
+@synthesize currentCommand = _currentCommand;
 
 
 - (id)init {
@@ -75,16 +82,15 @@ const int kPortEnd = 8130;
 
 - (void)login {
   NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                        @"abstracture", @"username",
-                        @"i8Kn37rD8v", @"password",
+                        kUser, @"username",
+                        kPass, @"password",
                         nil];
-  [self call:@"login" withData:dict];
-  self.loggedIn = YES;
+  [self call:kLoginCommand withData:dict];
 }
 
 
 - (void)updateBalance {
-  [self call:@"user"];  
+  [self call:kUserCommand];  
 }
 
 
@@ -92,7 +98,7 @@ const int kPortEnd = 8130;
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
-  [self call:@"upload" withData:data];
+  [self call:kUploadCommand withData:data];
 }
 
 
@@ -100,12 +106,12 @@ const int kPortEnd = 8130;
   NSLog(@"polling captchaId: %@", captchaId);
   if (captchaId != nil) { // can be nil if we poll before the upload is done
     // and call 'captcha'
-    [self call:@"captcha" withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"]];
+    [self call:kCaptchaCommand withData:[NSDictionary dictionaryWithObject:captchaId forKey:@"captcha"]];
   }
 }
 
 
-#pragma mark - internal methods
+#pragma mark - Internal methods
 
 
 - (void)call:(NSString *)command {
@@ -114,6 +120,7 @@ const int kPortEnd = 8130;
 
 
 - (void)call:(NSString *)command withData:(NSDictionary *)data {
+  self.currentCommand = command;
   NSLog(@"call: %@", command);
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:data];
   [dict setObject:command forKey:@"cmd"];
@@ -148,6 +155,28 @@ const int kPortEnd = 8130;
 }
 
 
+#pragma mark - Helpers
+
+
+- (id)jsonResponse:(NSData *)data {
+  NSError *error = nil;
+  id res = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+  NSAssert((error == nil), @"error must be nil but is: %@", error);
+  return res;
+}
+
+
+- (void)handleLoginResponse:(id)response {
+  id user = [response objectForKey:@"user"];
+  if (user != nil) {
+    self.loggedIn = YES;
+    if ([self.delegate respondsToSelector:@selector(didLogInAs:)]) {
+      [self.delegate didLogInAs:user];
+    }
+  }
+}
+
+
 #pragma mark - NSStreamDelegate
 
 
@@ -162,26 +191,30 @@ const int kPortEnd = 8130;
 		case NSStreamEventHasBytesAvailable:
       if (theStream == self.inputStream) {
         
-        NSMutableString *result = nil;
+        NSMutableData *data = nil;
         uint8_t buffer[1024];
         int len;
         
         while ([self.inputStream hasBytesAvailable]) {
           len = [self.inputStream read:buffer maxLength:sizeof(buffer)];
           if (len > 0) {
-            NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
-            if (result != nil) {
-              [result appendString:output];
+            NSData *newData = [NSData dataWithBytes:buffer length:len];
+            if (data != nil) {
+              [data appendData:newData];
             } else {
-              result = [NSMutableString stringWithString:output];
+              data = [NSMutableData dataWithData:newData];
             }
           }
 
         }
         
-        if (result != nil) {
-          NSLog(@"server said: %@", result);
-#warning implement result handling
+        if (data != nil) {
+          NSLog(@"current command: %@", self.currentCommand);
+          NSLog(@"server said: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+          id response = [self jsonResponse:data];
+          if ([self.currentCommand isEqualToString:kLoginCommand]) {
+            [self handleLoginResponse:response];
+          }
         }
       }
       break;
