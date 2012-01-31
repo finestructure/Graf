@@ -1,19 +1,43 @@
-//
-//  WorkerTest.m
-//  Graf
-//
-//  Created by Sven A. Schmidt on 31.01.12.
-//  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
-//
+#import <GHUnitIOS/GHUnit.h> 
+#import "Worker.h"
 
-#import "WorkerTest.h"
+
+@interface WorkerTest : GHAsyncTestCase { }
+
+@end
+
 
 @implementation WorkerTest
 
-// All code under test must be linked into the Unit Test bundle
-- (void)testMath
-{
-    STAssertTrue((1 + 1) == 2, @"Compiler isn't feeling well today :-(");
+
+#pragma mark - tests
+
+
+- (void)test_01_worker {
+  [self prepare];
+  
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  Worker *worker = [[Worker alloc] initWithImage:image];
+ 
+  [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
+  
+  [worker main];
+
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20];
+  GHAssertEqualStrings(@"037233", worker.textResult, nil);
 }
+
+
+#pragma mark KVO
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  NSLog(@"KVO: %@ %@ %@", keyPath, object, change);
+  if ([keyPath isEqualToString:@"isFinished"]) {
+    [self notify:kGHUnitWaitStatusSuccess];
+  }
+}
+
 
 @end
