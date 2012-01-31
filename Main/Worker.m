@@ -7,7 +7,6 @@
 //
 
 #import "Worker.h"
-#import "NSData+MD5.h"
 
 
 @implementation Worker
