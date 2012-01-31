@@ -45,7 +45,7 @@
 							<object class="IBUIImageView" id="25863657">
 								<reference key="NSNextResponder" ref="519204764"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 20}, {240, 60}}</string>
+								<string key="NSFrame">{{0, 5}, {280, 70}}</string>
 								<reference key="NSSuperview" ref="519204764"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="392097521"/>
@@ -57,7 +57,7 @@
 							<object class="IBUIActivityIndicatorView" id="794151363">
 								<reference key="NSNextResponder" ref="519204764"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{280, 40}, {20, 20}}</string>
+								<string key="NSFrame">{{290, 30}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="519204764"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="437438485"/>
@@ -71,7 +71,7 @@
 							<object class="IBUILabel" id="437438485">
 								<reference key="NSNextResponder" ref="519204764"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{269, 78}, {42, 21}}</string>
+								<string key="NSFrame">{{266, 61}, {48, 18}}</string>
 								<reference key="NSSuperview" ref="519204764"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -82,7 +82,7 @@
 								<int key="IBUITag">3</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">time</string>
+								<string key="IBUIText">999s</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
@@ -104,7 +104,7 @@
 							<object class="IBUILabel" id="392097521">
 								<reference key="NSNextResponder" ref="519204764"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 40}, {240, 21}}</string>
+								<string key="NSFrame">{{0, 31}, {254, 18}}</string>
 								<reference key="NSSuperview" ref="519204764"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="969503393"/>
@@ -129,7 +129,7 @@
 							<object class="IBUIButton" id="969503393">
 								<reference key="NSNextResponder" ref="519204764"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{270, 30}, {40, 40}}</string>
+								<string key="NSFrame">{{280, 20}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="519204764"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="794151363"/>
@@ -166,7 +166,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 99}</string>
+						<string key="NSFrameSize">{320, 79}</string>
 						<reference key="NSSuperview" ref="716377736"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="25863657"/>
@@ -182,14 +182,14 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 100}</string>
+				<string key="NSFrameSize">{320, 80}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="519204764"/>
 				<string key="NSReuseIdentifierKey">_NS:384</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="519204764"/>
-				<real value="102" key="IBUIRowHeight"/>
+				<real value="92" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -217,11 +217,11 @@
 						<int key="objectID">2</int>
 						<reference key="object" ref="716377736"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="25863657"/>
 							<reference ref="794151363"/>
+							<reference ref="969503393"/>
+							<reference ref="25863657"/>
 							<reference ref="437438485"/>
 							<reference ref="392097521"/>
-							<reference ref="969503393"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

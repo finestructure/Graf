@@ -92,7 +92,7 @@
 						<string key="NSFrame">{{0, 314}, {320, 79}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="993600176"/>
 						<string key="NSReuseIdentifierKey">_NS:639</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -168,7 +168,7 @@
 						<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
 						<bool key="IBUIAllowsSelection">NO</bool>
 						<bool key="IBUIShowsSelectionImmediatelyOnTouchBegin">YES</bool>
-						<float key="IBUIRowHeight">100</float>
+						<float key="IBUIRowHeight">80</float>
 						<float key="IBUISectionHeaderHeight">22</float>
 						<float key="IBUISectionFooterHeight">22</float>
 					</object>
@@ -4758,17 +4758,12 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						</object>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="balanceLabel">UILabel</string>
 						<string key="preview">UIView</string>
 						<string key="statusTextView">UITextView</string>
 						<string key="tableView">UITableView</string>
 						<string key="versionLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="balanceLabel">
-							<string key="name">balanceLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="preview">
 							<string key="name">preview</string>
 							<string key="candidateClassName">UIView</string>

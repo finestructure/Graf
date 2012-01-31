@@ -28,6 +28,8 @@
 const int kPollingInterval = 5;
 const int kPollingTimeout = 60;
 
+const int kRowHeight = 80;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -274,10 +276,9 @@ const int kPollingTimeout = 60;
     UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:1];
     subview.image = image.image;    
     if (image.state == kProcessing) {
-      subview.frame = CGRectMake(20, 20, 240, 60);
+      subview.frame = CGRectMake(0, 5, 280, 70);
     } else {
-      CGRect targetFrame = subview.frame;
-      targetFrame.size = CGSizeMake(200, 50);
+      CGRect targetFrame = CGRectMake(10, 5, 200, 50);
       [UIView animateWithDuration:0.5 animations:^{
         subview.frame = targetFrame;
       }];  
@@ -287,9 +288,10 @@ const int kPollingTimeout = 60;
     UILabel *subview = (UILabel *)[cell.contentView viewWithTag:2];
     if (image.state == kProcessing) {
       subview.alpha = 0;
+      subview.frame = CGRectMake(10, 31, 245, 18);
     } else {
       CGRect targetFrame = subview.frame;
-      targetFrame.origin.y = 78;
+      targetFrame.origin.y = 61;
       [UIView animateWithDuration:0.5 animations:^{
         subview.alpha = 1;
         subview.frame = targetFrame;
@@ -349,7 +351,7 @@ const int kPollingTimeout = 60;
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return 100;
+  return kRowHeight;
 }
 
 
