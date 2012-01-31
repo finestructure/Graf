@@ -35,10 +35,8 @@ const int kPollingTimeout = 60;
     self.images = [NSMutableArray array];
 
     // set up image processor
-    self.imageProcessor = [[DbcConnector alloc] init];
+    self.imageProcessor = [[ImageProcessor alloc] init];
     self.imageProcessor.delegate = self;
-    [self.imageProcessor connect];
-    [self.imageProcessor login];
   }
   return self;
 }
@@ -211,26 +209,27 @@ const int kPollingTimeout = 60;
 
 - (void)startProcessingImage:(Image *)image {
   [image transitionTo:kProcessing];
-  [self.imageProcessor pollWithInterval:kPollingInterval 
-                                timeout:kPollingTimeout 
-                             forImageId:image.imageId 
-                      completionHandler:^{
-                        [image transitionTo:kIdle];
-                        dispatch_async(dispatch_get_main_queue(), ^(void) {
-                          [self.tableView reloadData];
-                        });
-                      }
-                         timeoutHandler:^{
-                           [image transitionTo:kTimeout];
-                           dispatch_async(dispatch_get_main_queue(), ^(void) {
-                             [self.tableView reloadData];
-                           });
-                         }
-   ];
+  [self.imageProcessor upload:image.image];
 }
 
 
-#pragma mark - Helpers
+- (void)addToStatusView:(NSString *)string {
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    NSLog(@"status update: %@", string);
+    NSUInteger pos = [self.statusTextView.text length];
+    if ([self.statusTextView.text isEqualToString:@""]) {
+      self.statusTextView.text = string;
+    } else {
+      pos += 1;
+      self.statusTextView.text = [self.statusTextView.text stringByAppendingFormat:@"\n%@", string];
+    }
+    NSRange range = NSMakeRange(pos, [string length]);
+    [self.statusTextView scrollRangeToVisible:range];
+  });
+}
+
+
+#pragma mark - Actions
 
 
 - (IBAction)takePicture:(id)sender {  
@@ -356,36 +355,7 @@ const int kPollingTimeout = 60;
 }
 
 
-# pragma mark - DbcConnectorDelegate
-
-
-- (void)addToStatusView:(NSString *)string {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    NSLog(@"status update: %@", string);
-    NSUInteger pos = [self.statusTextView.text length];
-    if ([self.statusTextView.text isEqualToString:@""]) {
-      self.statusTextView.text = string;
-    } else {
-      pos += 1;
-      self.statusTextView.text = [self.statusTextView.text stringByAppendingFormat:@"\n%@", string];
-    }
-    NSRange range = NSMakeRange(pos, [string length]);
-    [self.statusTextView scrollRangeToVisible:range];
-  });
-}
-
-
-- (void)didConnectToHost:(NSString *)host port:(UInt16)port {
-  NSString *string = [NSString stringWithFormat:@"Connected to %@:%d", host, port];
-  [self addToStatusView:string];
-}
-
-
-- (void)didLogInAs:(NSString *)user {
-  NSString *string = [NSString stringWithFormat:@"Logged in as: %@", user];
-  [self addToStatusView:string];
-  self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
-}
+# pragma mark - ImageProcessorDelegate
 
 
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
@@ -408,47 +378,11 @@ const int kPollingTimeout = 60;
 }
 
 
-- (void)didUpdateBalance:(float)newBalance {
+- (void)didTimeoutDecodingImageId:(NSString *)imageId {
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    self.balanceLabel.text = [NSString stringWithFormat:@"%.1f¢", [self.imageProcessor balance]];
-  });
-}
-
-
-- (void)didDisconnectWithError:(NSError *)error {
-  NSString *string = [NSString stringWithFormat:@"Disconnected! Error %d: %@", [error code], [error localizedDescription]];
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    if ([error code] == 7) { // remote host closed connection
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:@"The remote host closed the connection" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reconnect", nil];
-      [alert show];
-    } else if (! self.imageProcessor.connected) {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Lost" message:@"The connection was lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reconnect", nil];
-      [alert show];
-    } else if (! self.imageProcessor.loggedIn) {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logged Out" message:@"The account was logged out" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
-      [alert show];
-    } else {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-      [alert show];
-    }
+    NSString *string = [NSString stringWithFormat:@"Timeout while decoding: %@", imageId];
     [self addToStatusView:string];
   });
-}
-
-
-#pragma mark - UIAlertViewDelegate
-
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-  NSLog(@"alert dismissed with buttonIndex: %d", buttonIndex);
-  if (buttonIndex == 1) { // reconnect or log in
-    if (! self.imageProcessor.connected) {
-      [self.imageProcessor connect];
-      [self.imageProcessor login];
-    } else if (! self.imageProcessor.loggedIn) {
-      [self.imageProcessor login];
-    }
-  }
 }
 
 

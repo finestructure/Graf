@@ -40,6 +40,12 @@
         self.processingTime = [self elapsed];
       }
       break;
+
+    case kTimeout:
+      if (newState == kProcessing) {
+        self.start = [NSDate date];
+      }
+      break;
   }
   self.state = newState;
 }
