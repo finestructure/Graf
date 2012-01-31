@@ -276,7 +276,7 @@ const int kRowHeight = 80;
     UIImageView *subview = (UIImageView *)[cell.contentView viewWithTag:1];
     subview.image = image.image;    
     if (image.state == kProcessing) {
-      subview.frame = CGRectMake(0, 5, 280, 70);
+      subview.frame = CGRectMake(10, 7, 260, 65);
     } else {
       CGRect targetFrame = CGRectMake(10, 5, 200, 50);
       [UIView animateWithDuration:0.5 animations:^{
