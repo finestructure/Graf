@@ -11,17 +11,17 @@
 #import "NSData+MD5.h"
 
 
-const NSString *kUser = @"abstracture";
-const NSString *kPass = @"i8Kn37rD8v";
-const NSString *kHostname = @"api.deathbycaptcha.com";
+NSString * const kUser = @"abstracture";
+NSString * const kPass = @"i8Kn37rD8v";
+NSString * const kHostname = @"api.deathbycaptcha.com";
 const int kPortStart = 8123;
 const int kPortEnd = 8130;
 
 // valid commands
-NSString *kLoginCommand = @"login";
-NSString *kUploadCommand = @"upload";
-NSString *kUserCommand = @"user";
-NSString *kCaptchaCommand = @"captcha";
+NSString * const kLoginCommand = @"login";
+NSString * const kUploadCommand = @"upload";
+NSString * const kUserCommand = @"user";
+NSString * const kCaptchaCommand = @"captcha";
 
 
 @implementation DbcConnector
@@ -76,7 +76,7 @@ NSString *kCaptchaCommand = @"captcha";
 
   self.connected = YES;
   if ([self.delegate respondsToSelector:@selector(didConnectToHost:port:)]) {
-    [self.delegate didConnectToHost:[kHostname copy] port:port];
+    [self.delegate didConnectToHost:kHostname port:port];
   }
 }
 
@@ -271,11 +271,11 @@ NSString *kCaptchaCommand = @"captcha";
           NSLog(@"current command: %@", currentCommand);
           NSLog(@"server said: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
           id response = [self jsonResponse:data];
-          if ([currentCommand isEqualToString:kLoginCommand]) {
+          if (currentCommand == kLoginCommand) {
             [self handleLoginResponse:response];
-          } else if ([currentCommand isEqualToString:kUploadCommand]) {
+          } else if (currentCommand == kUploadCommand) {
             [self handleUploadResponse:response];
-          } else if ([currentCommand isEqualToString:kCaptchaCommand]) {
+          } else if (currentCommand == kCaptchaCommand) {
             [self handleCaptchaResponse:response];
           }
         }
