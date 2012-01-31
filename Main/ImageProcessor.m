@@ -51,9 +51,9 @@
   if ([keyPath isEqualToString:@"isFinished"]) {
     Worker *worker = (Worker *)object;
     if ([worker isFinished]) {
-      NSLog(@"result: %@", worker.textResut);
+      NSLog(@"result: %@", worker.textResult);
       if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
-        [self.delegate didDecodeImageId:worker.imageId result:worker.textResut];
+        [self.delegate didDecodeImageId:worker.imageId result:worker.textResult];
       }
     } else {
       NSLog(@"not finished");

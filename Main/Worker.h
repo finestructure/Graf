@@ -26,7 +26,7 @@ typedef enum WorkerCommands {
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, retain) NSNumber *captchaId;
-@property (nonatomic, copy) NSString *textResut;
+@property (nonatomic, copy) NSString *textResult;
 @property (nonatomic, assign) WorkerCommands command;
 
 

@@ -16,7 +16,7 @@
 @synthesize image = _image;
 @synthesize captchaId = _captchaId;
 @synthesize imageId = _imageId;
-@synthesize textResut = _textResut;
+@synthesize textResult = _textResult;
 @synthesize command = _command;
 
 
@@ -121,7 +121,7 @@
 - (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {
   self.imageId = imageId;
   self.captchaId = captchaId;
-  self.textResut = result;
+  self.textResult = result;
   [self completeOperation];
 }
 
