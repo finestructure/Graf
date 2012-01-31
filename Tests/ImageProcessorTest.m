@@ -4,7 +4,7 @@
 
 @interface ImageProcessorTest : GHAsyncTestCase<ImageProcessorDelegate> { }
 
-@property (nonatomic, copy) NSString *result;
+@property (nonatomic, copy) NSString *textResult;
 
 @end
 
@@ -12,12 +12,12 @@
 
 @implementation ImageProcessorTest
 
-@synthesize result;
+@synthesize textResult = _textResult;
 
 
 - (void)setUp {
   [super setUp];
-  self.result = nil;
+  self.textResult = nil;
 }
 
 
@@ -60,7 +60,7 @@
   }];
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30];
   
-  GHAssertEqualStrings(@"037233", self.result, nil);
+  GHAssertEqualStrings(@"037233", self.textResult, nil);
 }
 
 
@@ -76,15 +76,16 @@
   
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60];
   
-  GHAssertEqualStrings(@"037233", self.result, nil);
+  GHAssertEqualStrings(@"037233", self.textResult, nil);
 }
 
 
 #pragma mark ImageProcessorDelegate
 
 
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)aResult {
-  self.result = aResult;
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result
+{
+  self.textResult = result;
   [self notify:kGHUnitWaitStatusSuccess];
 }
 

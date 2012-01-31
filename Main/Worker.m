@@ -26,6 +26,7 @@
     executing = NO;
     finished = NO;
     self.dbc = [[DbcConnector alloc] init];
+    self.dbc.delegate = self;
     self.image = image;
     // default command
     self.command = kUpload;
@@ -56,11 +57,12 @@
     @autoreleasepool {
       [self.dbc connect];
       [self.dbc login];
-      self.dbc.delegate = self;
 
       if (self.command == kUpload) {
+        NSLog(@"Worker executing upload command");
         [self.dbc upload:self.image];
       } else if (self.command == kPoll) {
+        NSLog(@"Worker executing poll command");
         if (self.captchaId != nil) {
           [self.dbc pollWithInterval:5 
                              timeout:60 
