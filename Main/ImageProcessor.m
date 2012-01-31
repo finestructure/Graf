@@ -7,7 +7,6 @@
 //
 
 #import "ImageProcessor.h"
-#import "NSData+MD5.h"
 #import "Worker.h"
 
 
@@ -26,16 +25,11 @@
 }
 
 
-- (NSString *)upload:(UIImage *)image {
-  NSData *imageData = UIImagePNGRepresentation(image);
-  NSString *imageId = [imageData MD5];
-  
+- (void)upload:(UIImage *)image {  
   Worker *worker = [[Worker alloc] initWithImage:image];
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
   [worker main];
   [self.queue addObject:worker];
-
-  return imageId;
 }
 
 

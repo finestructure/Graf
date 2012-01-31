@@ -27,7 +27,7 @@
 @property (nonatomic, retain) NSMutableArray *queue;
 
 
-- (NSString *)upload:(UIImage *)image;
+- (void)upload:(UIImage *)image;
 
 
 @end

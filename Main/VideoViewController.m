@@ -10,6 +10,8 @@
 
 #import "Constants.h"
 #import "Image.h"
+#import "NSData+MD5.h"
+
 
 @implementation VideoViewController
 
@@ -236,12 +238,11 @@ const int kPollingTimeout = 60;
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
-          
-    NSString *imageId = [self.imageProcessor upload:image];
+    NSData *imageData = UIImagePNGRepresentation(image);
 
     Image *img = [[Image alloc] init];
     img.image = image;
-    img.imageId = imageId;
+    img.imageId = [imageData MD5];
     
     [self startProcessingImage:img];
     
