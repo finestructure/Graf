@@ -123,7 +123,9 @@ const NSInteger kCheckProgressStatus = 1000;
 
   [self.dbc pollWithCaptchaId:self.captchaId];
 
-  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20];
+  
+  GHAssertEqualStrings(@"037233", self.textResult, nil);
 }
 
 
