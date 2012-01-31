@@ -39,11 +39,6 @@
 }
 
 
-- (void)pollForImageId:(NSString *)imageId {
-  
-}
-
-
 #pragma KVO
 
 
