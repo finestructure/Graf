@@ -28,7 +28,7 @@
 
 
 - (NSString *)upload:(UIImage *)image;
-- (void)pollForImageId:(NSString *)imageId;
+//- (void)pollForImageId:(NSString *)imageId;
 
 
 @end
