@@ -89,7 +89,7 @@
 					<object class="IBUITextView" id="788298704">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 314}, {320, 79}}</string>
+						<string key="NSFrame">{{0, 346}, {320, 47}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="993600176"/>
@@ -132,11 +132,8 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">12345</string>
 						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAxIDEAA</bytes>
-							<object class="NSColorSpace" key="NSCustomColorSpace">
-								<int key="NSID">1</int>
-							</object>
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -155,7 +152,7 @@
 					<object class="IBUITableView" id="986481440">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{0, 88}, {320, 218}}</string>
+						<string key="NSFrame">{{0, 88}, {320, 250}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="788298704"/>
@@ -4657,8 +4654,8 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="100735656"/>
 							<reference ref="788298704"/>
 							<reference ref="322322591"/>
-							<reference ref="986481440"/>
 							<reference ref="993600176"/>
+							<reference ref="986481440"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
