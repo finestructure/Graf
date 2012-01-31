@@ -116,6 +116,7 @@
 }
 
 - (void)didLogInAs:(NSString *)user {
+  NSLog(@"worker logged in as %@", user);
 }
 
 - (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {

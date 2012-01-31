@@ -50,13 +50,13 @@
   
   [self prepare];
   [self checkProgress:^BOOL{
-    return [ip.queue operationCount] == 1;
+    return [ip.queue count] == 1;
   }];
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:2];
   
   [self prepare];
   [self checkProgress:^BOOL{
-    return [ip.queue operationCount] == 0;
+    return [ip.queue count] == 0;
   }];
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30];
   

@@ -24,7 +24,7 @@
   [worker main];
 
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20];
-  GHAssertEqualStrings(@"037233", worker.textResult, nil);
+  GHAssertEqualStrings(worker.textResult, @"037233", nil);
 }
 
 

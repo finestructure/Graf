@@ -24,7 +24,7 @@
 
 
 @property (nonatomic, weak) id<ImageProcessorDelegate> delegate;
-@property (nonatomic, retain) NSOperationQueue *queue;
+@property (nonatomic, retain) NSMutableArray *queue;
 
 
 - (NSString *)upload:(UIImage *)image;

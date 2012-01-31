@@ -20,8 +20,7 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.queue = [[NSOperationQueue alloc] init];
-    [self.queue setMaxConcurrentOperationCount:4];
+    self.queue = [NSMutableArray array];
   }
   return self;
 }
@@ -33,7 +32,8 @@
   
   Worker *worker = [[Worker alloc] initWithImage:image];
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
-  [self.queue addOperation:worker];
+  [worker main];
+  [self.queue addObject:worker];
 
   return imageId;
 }
@@ -55,6 +55,7 @@
       if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
         [self.delegate didDecodeImageId:worker.imageId result:worker.textResult];
       }
+      [self.queue removeObject:worker];
     } else {
       NSLog(@"not finished");
     }
