@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "DbcConnector.h"
+#import "ImageProcessor.h"
+
 
 @class Image;
 
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, DbcConnectorDelegate>
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate>
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
-@property (nonatomic, retain) DbcConnector *imageProcessor;
+@property (nonatomic, retain) ImageProcessor *imageProcessor;
 @property (nonatomic, retain) NSMutableArray *images;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;

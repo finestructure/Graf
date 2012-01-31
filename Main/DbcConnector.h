@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GCDAsyncSocket.h"
 #import "ImagePoller.h"
 
 
-// delegate protocal
+// delegate protocol
 
 @protocol DbcConnectorDelegate <NSObject>
 
@@ -19,54 +18,46 @@
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port;
 - (void)didLogInAs:(NSString *)user;
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result;
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId;
 - (void)didDisconnectWithError:(NSError *)error;
 - (void)didUpdateBalance:(float)newBalance;
 
 @end
 
 
-// class declaration
-
-@interface DbcConnector : NSObject <NSStreamDelegate> {
-  dispatch_queue_t requestQueue;
-}
+@interface DbcConnector : NSObject <NSStreamDelegate>
 
 @property (nonatomic, assign) id<DbcConnectorDelegate> delegate;
 
-@property (nonatomic, retain) GCDAsyncSocket *socket;
 @property (assign) BOOL connected;
 @property (assign) BOOL loggedIn;
 @property (nonatomic, retain) NSInputStream *inputStream;
 @property (nonatomic, retain) NSOutputStream *outputStream;
-@property (nonatomic, assign) BOOL done;
-@property (nonatomic, retain) NSString *response;
-@property (nonatomic, retain) NSDictionary *user;
-@property (nonatomic, retain) NSMutableDictionary *decoded;
-@property (nonatomic, retain) NSMutableArray *uploadQueue;
-@property (nonatomic, retain) NSMutableArray *captchaQueue;
-@property (nonatomic, retain) NSMutableArray *imagePollers;
+@property (nonatomic, retain) ImagePoller *imagePoller;
+@property (nonatomic, copy) NSString *imageId;
+@property (nonatomic, copy) NSString *textResult;
+@property (nonatomic, retain) NSMutableArray *commandQueue;
+
 
 // internal
 
-- (BOOL)connect;
-- (void)login;
-- (void)call:(NSString *)command tag:(long)tag;
-- (void)call:(NSString *)command withData:(NSDictionary *)data tag:(long)tag;
-
-// API
-  
-- (void)updateBalance;
-- (float)balance;
-- (NSString *)upload:(UIImage *)image;
-- (void)poll:(NSString *)imageId;
+- (void)call:(NSString *)command;
+- (void)call:(NSString *)command withData:(NSDictionary *)data;
 - (void)pollWithInterval:(NSTimeInterval)interval 
                  timeout:(NSTimeInterval)timeout 
-              forImageId:(NSString *)imageId 
+               captchaId:(NSNumber *)imageId 
        completionHandler:(void (^)())completionHandler
           timeoutHandler:(void (^)())timeoutHandler;
-- (NSString *)resultForId:(NSString *)imageId;
+- (NSArray *)jsonResponses:(NSData *)data;
 
+// API
+
+- (void)connect;
+- (void)login;
+- (void)updateBalance;
+- (void)upload:(UIImage *)image;
+- (void)pollWithCaptchaId:(NSNumber *)captchaId;
 
 @end
 

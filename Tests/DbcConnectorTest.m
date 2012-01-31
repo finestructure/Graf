@@ -1,10 +1,17 @@
 #import <GHUnitIOS/GHUnit.h> 
 #import "DbcConnector.h"
 
-@interface DbcConnectorTest : GHAsyncTestCase<DbcConnectorDelegate> { }
+@interface DbcConnectorTest : GHAsyncTestCase<DbcConnectorDelegate> {
+  BOOL connectNotification;
+  BOOL loginNotification;
+  BOOL uploadNotification;
+  BOOL decodeNotification;
+}
 
 @property (nonatomic, retain) DbcConnector *dbc;
-@property (nonatomic, copy) void (^didDecodeDelegateHandler)(NSString *imageId, NSString *result);
+@property (nonatomic, copy) NSString *imageId;
+@property (nonatomic, copy) NSNumber *captchaId;
+@property (nonatomic, copy) NSString *textResult;
 
 @end
 
@@ -12,7 +19,9 @@
 @implementation DbcConnectorTest
 
 @synthesize dbc = _dbc;
-@synthesize didDecodeDelegateHandler = _didDecodeDelegateHandler;
+@synthesize imageId = _imageId;
+@synthesize captchaId = _captchaId;
+@synthesize textResult = _textResult;
 
 
 const NSInteger kCheckProgressStatus = 1000;
@@ -22,7 +31,12 @@ const NSInteger kCheckProgressStatus = 1000;
   [super setUp];  
   self.dbc = [[DbcConnector alloc] init];
   self.dbc.delegate = self;
-  self.didDecodeDelegateHandler = nil;
+  self.imageId = nil;
+  self.captchaId = nil;
+  connectNotification = NO;
+  loginNotification = NO;
+  uploadNotification = NO;
+  decodeNotification = NO;
 }
 
 
@@ -46,6 +60,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)test_01_connect {
+  connectNotification = YES;
 	[self prepare];
   
 	[self.dbc connect];
@@ -56,6 +71,7 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)test_02_login {
+  loginNotification = YES;
   [self.dbc connect];
   [self prepare];
   
@@ -63,110 +79,62 @@ const NSInteger kCheckProgressStatus = 1000;
 
 	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
   GHAssertTrue(self.dbc.loggedIn, nil);
-  GHAssertEqualStrings(@"50402", [[self.dbc.user objectForKey:@"user"] stringValue], nil);
-  GHAssertTrue(self.dbc.balance > 0, nil);
 }
 
 
 - (void)test_03_upload {
+  uploadNotification = YES;
   [self.dbc connect];
   [self.dbc login];
-  [self prepare];
 
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   GHAssertNotNil(image, @"image must not be nil", nil);
   
-  NSString *imageId = [self.dbc upload:image];
-  GHAssertNotNil(imageId, @"imageId must not be nil", nil);
+  [self prepare];
+
+  [self.dbc upload:image];
   
-  self.didDecodeDelegateHandler = ^(NSString *imageId, NSString *result){
-  };
-  
-  [self checkProgress:^BOOL{
-    return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
-    && [self.dbc.uploadQueue count] == 0;
-  }];
-  [self waitForStatus:kCheckProgressStatus timeout:20]; 
-  
-  GHAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
-  NSDictionary *result = [self.dbc.decoded objectForKey:imageId];
-  GHAssertNotNil(result, @"result must not be nil", nil);
-  id captcha = [result objectForKey:@"captcha"];
-  GHAssertNotNil(captcha, @"captcha must not be nil", nil);
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
+  GHAssertNotNil(self.imageId, nil);
+  GHAssertNotNil(self.captchaId, nil);
 }
 
 
-- (void)test_04_decoded {
+- (void)test_04_pollWithCaptcha {
   [self.dbc connect];
   [self.dbc login];
-  [self prepare];
-
-  __block NSString *imageId = nil;
-  __block NSString *textResult = nil;
-  __block typeof(self) bself = self;
-  self.didDecodeDelegateHandler = ^(NSString *anImageId, NSString *result){
-    imageId = anImageId;
-    textResult = result;
-    [bself notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_04_decoded)];
-  };
-
-  UIImage *image = [UIImage imageNamed:@"test222.tif"];
-  NSString *actualImageId = [self.dbc upload:image];  
-	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:40];
-  
-  GHAssertEqualStrings(actualImageId, imageId, nil);
-  GHAssertEqualStrings(@"037233", textResult, nil);
-  GHAssertEqualStrings(@"037233", [self.dbc resultForId:imageId], nil);
-}
-
-
-- (void)test_05_poll {
-  [self.dbc connect];
-  [self.dbc login];
-  [self prepare];
-  
-  __block NSString *imageId = nil;
-  __block NSString *textResult = nil;
-  __block typeof(self) bself = self;
-  self.didDecodeDelegateHandler = ^(NSString *anImageId, NSString *result){
-    imageId = anImageId;
-    textResult = result;
-    [bself notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_05_poll)];
-  };
-
-  UIImage *image = [UIImage imageNamed:@"test222.tif"];
-  NSString *actualImageId = [self.dbc upload:image];
-
-  [self.dbc poll:imageId];
-	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:40];
-  
-  GHAssertEqualStrings(actualImageId, imageId, nil);
-  GHAssertEqualStrings(@"037233", textResult, nil);
-}
-
-
-- (void)test_06_issue_4 {
-  [self.dbc connect];
-  [self.dbc login];
-  [self prepare];
   
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   GHAssertNotNil(image, @"image must not be nil", nil);
   
-  NSString *imageId = [self.dbc upload:image];
-  GHAssertNotNil(imageId, @"imageId must not be nil", nil);
+  uploadNotification = YES;
+  decodeNotification = NO;
+  [self prepare];
   
-  self.didDecodeDelegateHandler = ^(NSString *imageId, NSString *result){};
+  [self.dbc upload:image];
+
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20]; 
+
+  GHAssertNotNil(self.captchaId, nil);
+
+  uploadNotification = NO;
+  decodeNotification = YES;
+  [self prepare];
+
+  [self.dbc pollWithCaptchaId:self.captchaId];
+
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20];
   
-  [self.dbc updateBalance];
-  [self checkProgress:^BOOL{
-    return [[self.dbc.decoded objectForKey:imageId] objectForKey:@"captcha"] != nil
-    && [self.dbc.uploadQueue count] == 0;
-  }];
-  [self waitForStatus:kCheckProgressStatus timeout:20]; 
-  
-  GHAssertTrue([self.dbc.uploadQueue count] == 0, @"upload queue size must be 0", nil);
-  GHAssertTrue(self.dbc.connected, nil);
+  GHAssertEqualStrings(@"037233", self.textResult, nil);
+}
+
+
+- (void)test_05_jsonResponses {
+  NSData *response = [@"{\"is_banned\": false, \"status\": 0, \"rate\": 0.139, \"balance\": 664.42, \"user\": 50402}{\"status\": 0, \"captcha\": 235323249, \"is_correct\": true, \"text\": \"037233\"}" dataUsingEncoding:NSASCIIStringEncoding];
+  NSArray *res = [self.dbc jsonResponses:response];
+  GHAssertEquals([res count], (NSUInteger)2, nil);
+  GHAssertEqualStrings([[res objectAtIndex:0] objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
+  GHAssertEqualStrings([[res objectAtIndex:1] objectForKey:@"is_correct"], [NSNumber numberWithBool:YES], nil);
 }
 
 
@@ -174,18 +142,29 @@ const NSInteger kCheckProgressStatus = 1000;
 
 
 - (void)didConnectToHost:(NSString *)host port:(UInt16)port {
-	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_01_connect)];
-	[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_06_issue_4)];
+  if (connectNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 
 - (void)didLogInAs:(NSString *)user {
-  [self notify:kGHUnitWaitStatusSuccess forSelector:@selector(test_02_login)];
+  if (loginNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
-  self.didDecodeDelegateHandler(imageId, result);
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
+  self.imageId = imageId;
+  self.captchaId = captchaId;
+  if (uploadNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
+}
+
+
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {
+  self.textResult = result;
+  if (decodeNotification)
+    [self notify:kGHUnitWaitStatusSuccess];
 }
 
 

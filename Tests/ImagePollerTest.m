@@ -2,9 +2,11 @@
 #import "ImagePoller.h"
 #import "DbcConnector.h"
 
-@interface ImagePollerTest : GHAsyncTestCase { }
+@interface ImagePollerTest : GHAsyncTestCase<DbcConnectorDelegate> { }
 
 @property (nonatomic, retain) DbcConnector *dbc;
+@property (nonatomic, copy) NSNumber *captchaId;
+@property (nonatomic, copy) NSString *result;
 
 @end
 
@@ -13,12 +15,17 @@
 
 
 @synthesize dbc = _dbc;
+@synthesize captchaId = _captchaId;
+@synthesize result = _result;
 
 
 
 - (void)setUp {
   [super setUp];  
   self.dbc = [[DbcConnector alloc] init];
+  self.dbc.delegate = self;
+  self.captchaId = nil;
+  self.result = nil;
 }
 
 
@@ -44,20 +51,51 @@
 - (void)test_01_poll {
   [self.dbc connect];
   [self.dbc login];
+  
+  [self prepare];
+
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  [self.dbc upload:image];
+
+	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
+  GHAssertNotNil(self.captchaId, nil);
+
   [self prepare];
   
-  UIImage *image = [UIImage imageNamed:@"test222.tif"];
-  NSString *imageId = [self.dbc upload:image];
-  
-  ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 timeout:50 imageId:imageId dbc:self.dbc completionHandler:^{} timeoutHandler:^{}];
+  ImagePoller *poller = [[ImagePoller alloc] initWithInterval:5 
+                                                      timeout:50 
+                                                    captchaId:self.captchaId 
+                                                          dbc:self.dbc 
+                                            completionHandler:^{
+                                              [self notify:kGHUnitWaitStatusSuccess];
+                                            } 
+                                               timeoutHandler:^{
+                                                 [self notify:kGHUnitWaitStatusFailure];
+                                               }];
   [poller start];
-  [self checkProgress:^BOOL{
-    NSString *result = [self.dbc resultForId:imageId];
-    return (result != nil && ![result isEqualToString:@""]);
-  }];
-  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60]; 
-  
-  GHAssertEqualStrings(@"037233", [self.dbc resultForId:imageId], nil);
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60];
+
+  GHAssertEqualStrings(@"037233", self.result, nil);
+}
+
+
+#pragma mark - delegate
+
+
+- (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
+  self.captchaId = captchaId;
+	[self notify:kGHUnitWaitStatusSuccess];
+}
+
+
+- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSString *)captchaId result:(NSString *)result {
+  self.result = result;
+  [self notify:kGHUnitWaitStatusSuccess];
+}
+
+
+- (void)didTimeoutDecodingImageId:(NSString *)imageId {
+  [self notify:kGHUnitWaitStatusFailure];
 }
 
 
