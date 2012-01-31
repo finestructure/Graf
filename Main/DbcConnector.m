@@ -228,6 +228,21 @@ NSString * const kCaptchaCommand = @"captcha";
 }
 
 
+- (NSArray *)jsonResponses:(NSData *)data {
+  NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+  NSArray *components = [string componentsSeparatedByString:@"}"];
+  NSMutableArray *results = [NSMutableArray array];
+  for (NSString *comp in components) {
+    if (! [comp isEqualToString:@""]) {
+      NSString *jsonString = [NSString stringWithFormat:@"%@}", comp];
+      id jsonObject = [self jsonResponse:[jsonString dataUsingEncoding:NSASCIIStringEncoding]];
+      [results addObject:jsonObject];
+    }
+  }
+  return results;
+}
+
+
 #pragma mark - NSStreamDelegate
 
 
@@ -270,13 +285,15 @@ NSString * const kCaptchaCommand = @"captcha";
         if (data != nil) {
           NSLog(@"current command: %@", currentCommand);
           NSLog(@"server said: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-          id response = [self jsonResponse:data];
-          if (currentCommand == kLoginCommand) {
-            [self handleLoginResponse:response];
-          } else if (currentCommand == kUploadCommand) {
-            [self handleUploadResponse:response];
-          } else if (currentCommand == kCaptchaCommand) {
-            [self handleCaptchaResponse:response];
+          NSArray *responses = [self jsonResponses:data];
+          for (id response in responses) {
+            if (currentCommand == kLoginCommand) {
+              [self handleLoginResponse:response];
+            } else if (currentCommand == kUploadCommand) {
+              [self handleUploadResponse:response];
+            } else if (currentCommand == kCaptchaCommand) {
+              [self handleCaptchaResponse:response];
+            }
           }
         }
       }

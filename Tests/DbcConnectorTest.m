@@ -129,6 +129,15 @@ const NSInteger kCheckProgressStatus = 1000;
 }
 
 
+- (void)test_05_jsonResponses {
+  NSData *response = [@"{\"is_banned\": false, \"status\": 0, \"rate\": 0.139, \"balance\": 664.42, \"user\": 50402}{\"status\": 0, \"captcha\": 235323249, \"is_correct\": true, \"text\": \"037233\"}" dataUsingEncoding:NSASCIIStringEncoding];
+  NSArray *res = [self.dbc jsonResponses:response];
+  GHAssertEquals([res count], (NSUInteger)2, nil);
+  GHAssertEqualStrings([[res objectAtIndex:0] objectForKey:@"is_banned"], [NSNumber numberWithBool:NO], nil);
+  GHAssertEqualStrings([[res objectAtIndex:1] objectForKey:@"is_correct"], [NSNumber numberWithBool:YES], nil);
+}
+
+
 #pragma mark - delegate
 
 

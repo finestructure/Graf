@@ -49,6 +49,7 @@
                captchaId:(NSNumber *)imageId 
        completionHandler:(void (^)())completionHandler
           timeoutHandler:(void (^)())timeoutHandler;
+- (NSArray *)jsonResponses:(NSData *)data;
 
 // API
 
