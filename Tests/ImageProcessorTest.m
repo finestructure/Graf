@@ -40,7 +40,7 @@
 #pragma mark - tests
 
 
-- (void)test_01_queue {
+- (void)test_01_image_processor {
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   GHAssertNotNil(image, @"image must not be nil", nil);
 
@@ -60,30 +60,14 @@
   }];
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30];
   
-  GHAssertEqualStrings(@"037233", self.textResult, nil);
-}
-
-
-- (void)test_02_result {
-  UIImage *image = [UIImage imageNamed:@"test222.tif"];
-  GHAssertNotNil(image, @"image must not be nil", nil);
-  
-  [self prepare];
-
-  ImageProcessor *ip = [[ImageProcessor alloc] init];
-  ip.delegate = self;
-  [ip upload:image];
-  
-  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:60];
-  
-  GHAssertEqualStrings(@"037233", self.textResult, nil);
+  GHAssertEqualStrings(self.textResult, @"037233", nil);
 }
 
 
 #pragma mark ImageProcessorDelegate
 
 
-- (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result
+- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result
 {
   self.textResult = result;
   [self notify:kGHUnitWaitStatusSuccess];
