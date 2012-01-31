@@ -18,7 +18,6 @@
 @synthesize preview = _preview;
 @synthesize tableView = _tableView;
 @synthesize session = _session;
-@synthesize balanceLabel = _balanceLabel;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
 @synthesize imageOutput = _imageOutput;
@@ -85,7 +84,6 @@ const int kPollingTimeout = 60;
   
   // update labels and ui controls
   
-  self.balanceLabel.text = @"";
   self.statusTextView.text = @"";
   self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
   
@@ -176,7 +174,6 @@ const int kPollingTimeout = 60;
 {
   [self setPreview:nil];
   self.session = nil;
-  [self setBalanceLabel:nil];
   [self setStatusTextView:nil];
   [self setVersionLabel:nil];
   [self setTableView:nil];
