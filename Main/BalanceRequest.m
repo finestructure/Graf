@@ -10,4 +10,27 @@
 
 @implementation BalanceRequest
 
+
+@synthesize rate = _rate;
+@synthesize balance = _balance;
+
+
+- (void)start {
+  [self.dbc connect];
+  [self.dbc login];  
+  NSLog(@"Worker executing balance command");
+  [self.dbc refreshBalance];
+}
+
+
+#pragma mark - DbcConnectorDelegate
+
+
+- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate {
+  self.balance = balance;
+  self.rate = rate;
+  self.isFinished = YES;
+}
+
+
 @end
