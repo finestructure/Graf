@@ -36,7 +36,7 @@
       break;
       
     case kProcessing:
-      if (newState == kIdle) {
+      if (newState == kIdle || newState == kTimeout) {
         self.processingTime = [self elapsed];
       }
       break;
