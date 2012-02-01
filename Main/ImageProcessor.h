@@ -15,7 +15,7 @@
 
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
 - (void)didTimeoutDecodingImageId:(NSString *)imageId;
-- (void)didReceiveRemaining:(NSUInteger)remaining;
+- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate;
 
 @end
 

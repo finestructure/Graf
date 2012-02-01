@@ -7,31 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DbcConnector.h"
+#import "BaseRequest.h"
 
 
-typedef enum WorkerCommands {
-  kUpload,
-  kPoll
-} WorkerCommands;
+@interface UploadRequest : BaseRequest
 
-
-@interface Worker : NSOperation<DbcConnectorDelegate> {
-  BOOL executing;
-  BOOL finished;
-}
-
-
-@property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, retain) NSNumber *captchaId;
 @property (nonatomic, copy) NSString *textResult;
-@property (nonatomic, assign) WorkerCommands command;
-@property (nonatomic, assign) BOOL hasTimedOut;
 
 
 - (id)initWithImage:(UIImage *)image;
-- (void)completeOperation;
+
 
 @end

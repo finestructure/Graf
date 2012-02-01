@@ -90,7 +90,7 @@ NSString * const kCaptchaCommand = @"captcha";
 }
 
 
-- (void)updateBalance {
+- (void)refreshBalance {
   [self call:kUserCommand];  
 }
 
@@ -183,6 +183,19 @@ NSString * const kCaptchaCommand = @"captcha";
     self.loggedIn = YES;
     if ([self.delegate respondsToSelector:@selector(didLogInAs:)]) {
       [self.delegate didLogInAs:user];
+    }
+  }
+}
+
+
+- (void)handleUserResponse:(id)response {
+  // Example response:
+  // {"is_banned": false, "status": 0, "rate": 0.139, "balance": 668.173, "user": 50402}
+  NSNumber *rate = [response objectForKey:@"rate"];
+  NSNumber *balance = [response objectForKey:@"balance"];
+  if (rate != nil && balance != nil) {
+    if ([self.delegate respondsToSelector:@selector(didRefreshBalance:rate:)]) {
+      [self.delegate didRefreshBalance:balance rate:rate];
     }
   }
 }
@@ -289,6 +302,8 @@ NSString * const kCaptchaCommand = @"captcha";
           for (id response in responses) {
             if (currentCommand == kLoginCommand) {
               [self handleLoginResponse:response];
+            } else if (currentCommand == kUserCommand) {
+              [self handleUserResponse:response];
             } else if (currentCommand == kUploadCommand) {
               [self handleUploadResponse:response];
             } else if (currentCommand == kCaptchaCommand) {

@@ -7,7 +7,8 @@
 //
 
 #import "ImageProcessor.h"
-#import "Worker.h"
+#import "UploadRequest.h"
+#import "BalanceRequest.h"
 
 
 @implementation ImageProcessor
@@ -25,45 +26,77 @@
 }
 
 
+- (void)sendRequest:(BaseRequest *)request {
+  [request addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
+  [request start];
+  [self.queue addObject:request];
+}
+
+
 - (void)upload:(UIImage *)image {  
-  Worker *worker = [[Worker alloc] initWithImage:image];
-  [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
-  [worker main];
-  [self.queue addObject:worker];
+  UploadRequest *request = [[UploadRequest alloc] initWithImage:image];
+  [self sendRequest:request];
 }
 
 
 - (void)refreshBalance {
-#warning implement me!
-//  Worker *worker = [[Worker alloc] init];
-//  [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
-//  [worker refreshBalance];
-//  [self.queue addObject:worker];
+  BalanceRequest *request = [[BalanceRequest alloc] init];
+  [self sendRequest:request];
 }
 
 
-#pragma KVO
+#pragma mark - Helpers
+
+
+- (void)uploadRequestFinished:(UploadRequest *)request {
+  if (request.hasTimedOut) {
+    if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {
+      [self.delegate didTimeoutDecodingImageId:request.imageId];
+    }
+  } else {
+    NSLog(@"result: %@", request.textResult);
+    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
+      [self.delegate didDecodeImageId:request.imageId result:request.textResult];
+    }
+  }
+}
+
+
+- (void)balanceRequestFinished:(BalanceRequest *)request {
+  if (request.hasTimedOut) {
+    return;
+  }
+  if ([self.delegate respondsToSelector:@selector(didRefreshBalance:rate:)]) {
+    [self.delegate didRefreshBalance:request.balance rate:request.rate];
+  }
+}
+
+
+#pragma mark - KVO
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
   NSLog(@"KVO: %@ %@ %@", keyPath, object, change);
-  if ([keyPath isEqualToString:@"isFinished"]) {
-    Worker *worker = (Worker *)object;
-    if ([worker isFinished]) {
-      if (worker.hasTimedOut) {
-        if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {
-          [self.delegate didTimeoutDecodingImageId:worker.imageId];
-        }
-      } else {
-        NSLog(@"result: %@", worker.textResult);
-        if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
-          [self.delegate didDecodeImageId:worker.imageId result:worker.textResult];
-        }
-      }
-      [self.queue removeObject:worker];
-    }
+  if (! [keyPath isEqualToString:@"isFinished"]) {
+    return;
   }
+  
+  NSAssert([object isKindOfClass:[BaseRequest class]],
+           @"object value is not of type BaseRequest as expected.");
+  BaseRequest *request = (BaseRequest *)object;
+  if (! request.isFinished) {
+    return;
+  }
+  
+  if ([object isKindOfClass:[UploadRequest class]]) {
+    [self uploadRequestFinished:(UploadRequest *)request];
+  } else if ([object isKindOfClass:[BalanceRequest class]]) {
+    [self balanceRequestFinished:(BalanceRequest *)request];
+  }
+  
+  [request removeObserver:self forKeyPath:@"isFinished"];
+  [self.queue removeObject:request];
 }
 
 

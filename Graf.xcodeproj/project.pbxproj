@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */; };
+		5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */; };
+		5A1B61B114D9774600CC0273 /* BalanceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61B014D9774600CC0273 /* BalanceRequest.m */; };
+		5A1B61B214D9774600CC0273 /* BalanceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61B014D9774600CC0273 /* BalanceRequest.m */; };
 		5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
@@ -44,7 +48,7 @@
 		5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */; };
 		5ADC3DB614CD8EC3004992F7 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
 		5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */; };
-		5AE1FB4814D7E4FD00151025 /* WorkerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE1FB4714D7E4FD00151025 /* WorkerTest.m */; };
+		5AE1FB4814D7E4FD00151025 /* RequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE1FB4714D7E4FD00151025 /* RequestTest.m */; };
 		5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50EB14CEF7CD00D8B6BB /* main.m */; };
 		5AED50F214CEF80400D8B6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AED50F014CEF80400D8B6BB /* InfoPlist.strings */; };
 		5AED50F914CEF81500D8B6BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F414CEF81500D8B6BB /* AppDelegate.m */; };
@@ -54,8 +58,8 @@
 		5AED510514CEF85F00D8B6BB /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AED510114CEF85F00D8B6BB /* VideoViewController.xib */; };
 		5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */; };
 		5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */; };
-		5AF582C914D2AA4F007942AD /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* Worker.m */; };
-		5AF582CA14D2AA4F007942AD /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* Worker.m */; };
+		5AF582C914D2AA4F007942AD /* UploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* UploadRequest.m */; };
+		5AF582CA14D2AA4F007942AD /* UploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C814D2AA4F007942AD /* UploadRequest.m */; };
 		5AF582CD14D41E07007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582CC14D41E07007942AD /* ImageProcessor.m */; };
 		5AF582CE14D41E07007942AD /* ImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582CC14D41E07007942AD /* ImageProcessor.m */; };
 		5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582D814D6DF3B007942AD /* DbcConnector.m */; };
@@ -63,6 +67,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseRequest.h; path = Main/BaseRequest.h; sourceTree = SOURCE_ROOT; };
+		5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseRequest.m; path = Main/BaseRequest.m; sourceTree = SOURCE_ROOT; };
+		5A1B61AF14D9774600CC0273 /* BalanceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalanceRequest.h; path = Main/BalanceRequest.h; sourceTree = SOURCE_ROOT; };
+		5A1B61B014D9774600CC0273 /* BalanceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BalanceRequest.m; path = Main/BalanceRequest.m; sourceTree = SOURCE_ROOT; };
 		5A2263C314B1FB190078EBEF /* Graf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5A2263C914B1FB190078EBEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -106,7 +114,7 @@
 		5AD8927014C02772005595BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
 		5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePollerTest.m; sourceTree = "<group>"; };
-		5AE1FB4714D7E4FD00151025 /* WorkerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkerTest.m; sourceTree = "<group>"; };
+		5AE1FB4714D7E4FD00151025 /* RequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; path = RequestTest.m; sourceTree = "<group>"; };
 		5AED50E914CEF7CD00D8B6BB /* Graf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Graf-Info.plist"; path = "Main/Graf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5AED50EA14CEF7CD00D8B6BB /* Graf-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Graf-Prefix.pch"; path = "Main/Graf-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		5AED50EB14CEF7CD00D8B6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Main/main.m; sourceTree = SOURCE_ROOT; };
@@ -121,8 +129,8 @@
 		5AED510014CEF85F00D8B6BB /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoViewController.m; path = Main/VideoViewController.m; sourceTree = SOURCE_ROOT; };
 		5AED510114CEF85F00D8B6BB /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoViewController.xib; path = Main/VideoViewController.xib; sourceTree = SOURCE_ROOT; };
 		5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessorTest.m; sourceTree = "<group>"; };
-		5AF582C714D2AA4F007942AD /* Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Worker.h; path = Main/Worker.h; sourceTree = SOURCE_ROOT; };
-		5AF582C814D2AA4F007942AD /* Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Worker.m; path = Main/Worker.m; sourceTree = SOURCE_ROOT; };
+		5AF582C714D2AA4F007942AD /* UploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadRequest.h; path = Main/UploadRequest.h; sourceTree = SOURCE_ROOT; };
+		5AF582C814D2AA4F007942AD /* UploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadRequest.m; path = Main/UploadRequest.m; sourceTree = SOURCE_ROOT; };
 		5AF582CB14D41E07007942AD /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcessor.h; path = Main/ImageProcessor.h; sourceTree = SOURCE_ROOT; };
 		5AF582CC14D41E07007942AD /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessor.m; path = Main/ImageProcessor.m; sourceTree = SOURCE_ROOT; };
 		5AF582D714D6DF3B007942AD /* DbcConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DbcConnector.h; path = Main/DbcConnector.h; sourceTree = SOURCE_ROOT; };
@@ -216,8 +224,12 @@
 				5AC6547914D032B8004635D8 /* Image.m */,
 				5AF582CB14D41E07007942AD /* ImageProcessor.h */,
 				5AF582CC14D41E07007942AD /* ImageProcessor.m */,
-				5AF582C714D2AA4F007942AD /* Worker.h */,
-				5AF582C814D2AA4F007942AD /* Worker.m */,
+				5AF582C714D2AA4F007942AD /* UploadRequest.h */,
+				5AF582C814D2AA4F007942AD /* UploadRequest.m */,
+				5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */,
+				5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */,
+				5A1B61AF14D9774600CC0273 /* BalanceRequest.h */,
+				5A1B61B014D9774600CC0273 /* BalanceRequest.m */,
 			);
 			name = Main;
 			path = Sinma;
@@ -262,7 +274,7 @@
 				5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */,
 				5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */,
 				5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */,
-				5AE1FB4714D7E4FD00151025 /* WorkerTest.m */,
+				5AE1FB4714D7E4FD00151025 /* RequestTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -423,9 +435,11 @@
 				5AED510214CEF85F00D8B6BB /* ImagePoller.m in Sources */,
 				5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */,
 				5AC6547A14D032B8004635D8 /* Image.m in Sources */,
-				5AF582C914D2AA4F007942AD /* Worker.m in Sources */,
+				5AF582C914D2AA4F007942AD /* UploadRequest.m in Sources */,
 				5AF582CD14D41E07007942AD /* ImageProcessor.m in Sources */,
 				5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */,
+				5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */,
+				5A1B61B114D9774600CC0273 /* BalanceRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,10 +455,12 @@
 				5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */,
 				5AED510614CEFB2A00D8B6BB /* ImagePoller.m in Sources */,
 				5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */,
-				5AF582CA14D2AA4F007942AD /* Worker.m in Sources */,
+				5AF582CA14D2AA4F007942AD /* UploadRequest.m in Sources */,
 				5AF582CE14D41E07007942AD /* ImageProcessor.m in Sources */,
 				5AF582DA14D6DF3B007942AD /* DbcConnector.m in Sources */,
-				5AE1FB4814D7E4FD00151025 /* WorkerTest.m in Sources */,
+				5AE1FB4814D7E4FD00151025 /* RequestTest.m in Sources */,
+				5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */,
+				5A1B61B214D9774600CC0273 /* BalanceRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
