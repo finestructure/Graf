@@ -89,6 +89,7 @@ const int kRowHeight = 80;
   
   self.statusTextView.text = @"";
   self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+  self.remainingLabel.text = @"";
   
   // session init
   
@@ -112,6 +113,9 @@ const int kRowHeight = 80;
   // start session
   
   [self.session startRunning];
+  
+  // refresh balance
+  [self.imageProcessor refreshBalance];
 }
 
 
@@ -403,6 +407,8 @@ const int kRowHeight = 80;
   Image *image = [self imageWithId:imageId];
   image.textResult = result;
   [image transitionTo:kIdle];
+  
+  [self.imageProcessor refreshBalance];
 
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
@@ -425,9 +431,12 @@ const int kRowHeight = 80;
 }
 
 
-- (void)didReceiveRemaining:(NSUInteger)remaining {
+- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate {
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    self.remainingLabel.text = [NSString stringWithFormat:@"%d remaining", remaining];
+    if (balance != nil && rate != nil && [rate floatValue] != 0.0 ) {
+      NSUInteger remaining = round([balance floatValue]/[rate floatValue]);
+      self.remainingLabel.text = [NSString stringWithFormat:@"%d remaining", remaining];
+    }
   });
 }
 
