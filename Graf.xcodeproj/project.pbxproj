@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */; };
 		5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */; };
+		5A1B61B114D9774600CC0273 /* BalanceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61B014D9774600CC0273 /* BalanceRequest.m */; };
+		5A1B61B214D9774600CC0273 /* BalanceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61B014D9774600CC0273 /* BalanceRequest.m */; };
 		5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
@@ -67,6 +69,8 @@
 /* Begin PBXFileReference section */
 		5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseRequest.h; path = Main/BaseRequest.h; sourceTree = SOURCE_ROOT; };
 		5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseRequest.m; path = Main/BaseRequest.m; sourceTree = SOURCE_ROOT; };
+		5A1B61AF14D9774600CC0273 /* BalanceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalanceRequest.h; path = Main/BalanceRequest.h; sourceTree = SOURCE_ROOT; };
+		5A1B61B014D9774600CC0273 /* BalanceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BalanceRequest.m; path = Main/BalanceRequest.m; sourceTree = SOURCE_ROOT; };
 		5A2263C314B1FB190078EBEF /* Graf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5A2263C914B1FB190078EBEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -224,6 +228,8 @@
 				5AF582C814D2AA4F007942AD /* UploadRequest.m */,
 				5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */,
 				5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */,
+				5A1B61AF14D9774600CC0273 /* BalanceRequest.h */,
+				5A1B61B014D9774600CC0273 /* BalanceRequest.m */,
 			);
 			name = Main;
 			path = Sinma;
@@ -433,6 +439,7 @@
 				5AF582CD14D41E07007942AD /* ImageProcessor.m in Sources */,
 				5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */,
 				5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */,
+				5A1B61B114D9774600CC0273 /* BalanceRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +460,7 @@
 				5AF582DA14D6DF3B007942AD /* DbcConnector.m in Sources */,
 				5AE1FB4814D7E4FD00151025 /* WorkerTest.m in Sources */,
 				5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */,
+				5A1B61B214D9774600CC0273 /* BalanceRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
