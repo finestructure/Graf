@@ -33,6 +33,15 @@
 }
 
 
+- (void)refreshBalance {
+#warning implement me!
+//  Worker *worker = [[Worker alloc] init];
+//  [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
+//  [worker refreshBalance];
+//  [self.queue addObject:worker];
+}
+
+
 #pragma KVO
 
 

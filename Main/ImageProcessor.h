@@ -15,6 +15,7 @@
 
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
 - (void)didTimeoutDecodingImageId:(NSString *)imageId;
+- (void)didReceiveRemaining:(NSUInteger)remaining;
 
 @end
 
@@ -28,6 +29,7 @@
 
 
 - (void)upload:(UIImage *)image;
+- (void)refreshBalance;
 
 
 @end
