@@ -255,9 +255,11 @@ const int kRowHeight = 80;
 
 
 - (void)refreshButtonPressed:(id)sender {
-  NSLog(@"Refresh started");
-  NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[sender superview]];
+  UIView *contentView = [sender superview];
+  UITableViewCell *cell = (UITableViewCell *)[contentView superview];
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
   Image *image = [self.images objectAtIndex:indexPath.row];
+  NSLog(@"Refresh started for image: %@", image.imageId);
   [self startProcessingImage:image];
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
