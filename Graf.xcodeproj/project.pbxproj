@@ -25,7 +25,6 @@
 		5A56F0C114CD482F00F7D75B /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
-		5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
@@ -37,12 +36,10 @@
 		5AC6548B14D16924004635D8 /* 01-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548914D16924004635D8 /* 01-refresh@2x.png */; };
 		5AC6548E14D16942004635D8 /* 258-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548C14D16942004635D8 /* 258-checkmark.png */; };
 		5AC6548F14D16942004635D8 /* 258-checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6548D14D16942004635D8 /* 258-checkmark@2x.png */; };
-		5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924A14C02275005595BA /* MBProgressHUD.m */; };
 		5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924C14C02275005595BA /* UIImage+Alpha.m */; };
 		5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8924E14C02275005595BA /* UIImage+Resize.m */; };
 		5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD8925014C02276005595BA /* UIImage+RoundedCorner.m */; };
 		5ADC3DAE14CD7137004992F7 /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
-		5ADC3DAF14CD713C004992F7 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */; };
 		5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5ADC3DB214CD718D004992F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */; };
@@ -87,8 +84,6 @@
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
-		5A86044614C438CD008D2C6A /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = other/GCDAsyncSocket.h; sourceTree = "<group>"; };
-		5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = other/GCDAsyncSocket.m; sourceTree = "<group>"; };
 		5A86044814C438CD008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "other/NSData+Base64.h"; sourceTree = "<group>"; };
 		5A86044914C438CD008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "other/NSData+Base64.m"; sourceTree = "<group>"; };
 		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -103,8 +98,6 @@
 		5AC6548914D16924004635D8 /* 01-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01-refresh@2x.png"; sourceTree = "<group>"; };
 		5AC6548C14D16942004635D8 /* 258-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark.png"; sourceTree = "<group>"; };
 		5AC6548D14D16942004635D8 /* 258-checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "258-checkmark@2x.png"; sourceTree = "<group>"; };
-		5AD8924914C02275005595BA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = other/MBProgressHUD.h; sourceTree = "<group>"; };
-		5AD8924A14C02275005595BA /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = other/MBProgressHUD.m; sourceTree = "<group>"; };
 		5AD8924B14C02275005595BA /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "other/UIImage+Alpha.h"; sourceTree = "<group>"; };
 		5AD8924C14C02275005595BA /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "other/UIImage+Alpha.m"; sourceTree = "<group>"; };
 		5AD8924D14C02275005595BA /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "other/UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -114,7 +107,7 @@
 		5AD8927014C02772005595BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
 		5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePollerTest.m; sourceTree = "<group>"; };
-		5AE1FB4714D7E4FD00151025 /* RequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; path = RequestTest.m; sourceTree = "<group>"; };
+		5AE1FB4714D7E4FD00151025 /* RequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTest.m; sourceTree = "<group>"; };
 		5AED50E914CEF7CD00D8B6BB /* Graf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Graf-Info.plist"; path = "Main/Graf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5AED50EA14CEF7CD00D8B6BB /* Graf-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Graf-Prefix.pch"; path = "Main/Graf-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		5AED50EB14CEF7CD00D8B6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Main/main.m; sourceTree = SOURCE_ROOT; };
@@ -251,12 +244,8 @@
 			children = (
 				5A86046114C482E5008D2C6A /* NSData+MD5.h */,
 				5A86046214C482E5008D2C6A /* NSData+MD5.m */,
-				5A86044614C438CD008D2C6A /* GCDAsyncSocket.h */,
-				5A86044714C438CD008D2C6A /* GCDAsyncSocket.m */,
 				5A86044814C438CD008D2C6A /* NSData+Base64.h */,
 				5A86044914C438CD008D2C6A /* NSData+Base64.m */,
-				5AD8924914C02275005595BA /* MBProgressHUD.h */,
-				5AD8924A14C02275005595BA /* MBProgressHUD.m */,
 				5AD8924B14C02275005595BA /* UIImage+Alpha.h */,
 				5AD8924C14C02275005595BA /* UIImage+Alpha.m */,
 				5AD8924D14C02275005595BA /* UIImage+Resize.h */,
@@ -422,11 +411,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AD8925114C02276005595BA /* MBProgressHUD.m in Sources */,
 				5AD8925214C02276005595BA /* UIImage+Alpha.m in Sources */,
 				5AD8925314C02276005595BA /* UIImage+Resize.m in Sources */,
 				5AD8925414C02276005595BA /* UIImage+RoundedCorner.m in Sources */,
-				5A86044A14C438CD008D2C6A /* GCDAsyncSocket.m in Sources */,
 				5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */,
 				5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */,
 				5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */,
@@ -449,7 +436,6 @@
 			files = (
 				5A56F0B714CD480300F7D75B /* main.m in Sources */,
 				5ADC3DAE14CD7137004992F7 /* NSData+MD5.m in Sources */,
-				5ADC3DAF14CD713C004992F7 /* GCDAsyncSocket.m in Sources */,
 				5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */,
 				5ADC3DB514CD8389004992F7 /* DbcConnectorTest.m in Sources */,
 				5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */,
