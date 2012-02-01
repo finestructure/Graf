@@ -10,7 +10,7 @@
 #import "BaseRequest.h"
 
 
-@interface UploadRequest : BaseRequest<DbcConnectorDelegate>
+@interface UploadRequest : BaseRequest
 
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;

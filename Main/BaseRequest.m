@@ -34,4 +34,29 @@ int const kTimeout = 15;
   [NSException raise:NSInternalInconsistencyException format:@"%@ was called in the base class %@!\n", NSStringFromSelector(_cmd), [self class]];
 }
 
+
+#pragma mark - DbcConnectorDelegate
+
+
+- (void)didConnectToHost:(NSString *)host port:(UInt16)port {
+  NSLog(@"connected to host %@:%d", host, port);
+}
+
+
+- (void)didLogInAs:(NSString *)user {
+  NSLog(@"logged in as %@", user);
+}
+
+
+- (void)didDisconnectWithError:(NSError *)error {
+  self.hasTimedOut = YES;
+  self.isFinished = YES;
+}
+
+
+- (void)didDisconnect {
+  self.isFinished = YES;
+}
+
+
 @end

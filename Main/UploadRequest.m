@@ -40,13 +40,6 @@
 
 #pragma mark - DbcConnectorDelegate
 
-- (void)didConnectToHost:(NSString *)host port:(UInt16)port {
-  NSLog(@"worker connected to host %@:%d", host, port);
-}
-
-- (void)didLogInAs:(NSString *)user {
-  NSLog(@"worker logged in as %@", user);
-}
 
 - (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result {
   self.imageId = imageId;
@@ -54,6 +47,7 @@
   self.textResult = result;
   self.isFinished = YES;
 }
+
 
 - (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
   NSLog(@"uploaded image %@ %@", imageId, captchaId);
@@ -67,19 +61,6 @@
                 self.hasTimedOut = YES;
                 self.isFinished = YES;
               }];
-}
-
-- (void)didDisconnectWithError:(NSError *)error {
-  self.hasTimedOut = YES;
-  self.isFinished = YES;
-}
-
-- (void)didDisconnect {
-  self.isFinished = YES;
-}
-
-- (void)didUpdateBalance:(float)newBalance {
-  
 }
 
 
