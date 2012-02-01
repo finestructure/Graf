@@ -11,14 +11,10 @@
 
 @implementation UploadRequest
 
-@synthesize isFinished = _isFinished;
-@synthesize hasTimedOut = _hasTimedOut;
-@synthesize dbc = _dbc;
 @synthesize image = _image;
 @synthesize captchaId = _captchaId;
 @synthesize imageId = _imageId;
 @synthesize textResult = _textResult;
-
 
 
 - (id)initWithImage:(UIImage *)image {
