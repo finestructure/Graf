@@ -20,16 +20,10 @@
 @synthesize textResult = _textResult;
 
 
-const int kTimeout = 15;
-
 
 - (id)initWithImage:(UIImage *)image {
   self = [super init];
   if (self) {
-    self.isFinished = NO;
-    self.hasTimedOut = NO;
-    self.dbc = [[DbcConnector alloc] init];
-    self.dbc.delegate = self;
     self.image = image;
   }
   return self;

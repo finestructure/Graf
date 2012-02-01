@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */; };
+		5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */; };
 		5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
@@ -63,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseRequest.h; path = Main/BaseRequest.h; sourceTree = SOURCE_ROOT; };
+		5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseRequest.m; path = Main/BaseRequest.m; sourceTree = SOURCE_ROOT; };
 		5A2263C314B1FB190078EBEF /* Graf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5A2263C914B1FB190078EBEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -121,7 +125,7 @@
 		5AED510014CEF85F00D8B6BB /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoViewController.m; path = Main/VideoViewController.m; sourceTree = SOURCE_ROOT; };
 		5AED510114CEF85F00D8B6BB /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoViewController.xib; path = Main/VideoViewController.xib; sourceTree = SOURCE_ROOT; };
 		5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessorTest.m; sourceTree = "<group>"; };
-		5AF582C714D2AA4F007942AD /* UploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; name = UploadRequest.h; path = Main/UploadRequest.h; sourceTree = SOURCE_ROOT; };
+		5AF582C714D2AA4F007942AD /* UploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadRequest.h; path = Main/UploadRequest.h; sourceTree = SOURCE_ROOT; };
 		5AF582C814D2AA4F007942AD /* UploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadRequest.m; path = Main/UploadRequest.m; sourceTree = SOURCE_ROOT; };
 		5AF582CB14D41E07007942AD /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcessor.h; path = Main/ImageProcessor.h; sourceTree = SOURCE_ROOT; };
 		5AF582CC14D41E07007942AD /* ImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessor.m; path = Main/ImageProcessor.m; sourceTree = SOURCE_ROOT; };
@@ -218,6 +222,8 @@
 				5AF582CC14D41E07007942AD /* ImageProcessor.m */,
 				5AF582C714D2AA4F007942AD /* UploadRequest.h */,
 				5AF582C814D2AA4F007942AD /* UploadRequest.m */,
+				5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */,
+				5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */,
 			);
 			name = Main;
 			path = Sinma;
@@ -426,6 +432,7 @@
 				5AF582C914D2AA4F007942AD /* UploadRequest.m in Sources */,
 				5AF582CD14D41E07007942AD /* ImageProcessor.m in Sources */,
 				5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */,
+				5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +452,7 @@
 				5AF582CE14D41E07007942AD /* ImageProcessor.m in Sources */,
 				5AF582DA14D6DF3B007942AD /* DbcConnector.m in Sources */,
 				5AE1FB4814D7E4FD00151025 /* WorkerTest.m in Sources */,
+				5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

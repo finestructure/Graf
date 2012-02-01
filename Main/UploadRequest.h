@@ -7,15 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DbcConnector.h"
+#import "BaseRequest.h"
 
 
+@interface UploadRequest : BaseRequest<DbcConnectorDelegate>
 
-@interface UploadRequest : NSObject<DbcConnectorDelegate>
-
-@property (nonatomic, assign) BOOL hasTimedOut;
-@property (nonatomic, assign) BOOL isFinished;
-@property (nonatomic, retain) DbcConnector *dbc;
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, retain) NSNumber *captchaId;
@@ -23,8 +19,5 @@
 
 
 - (id)initWithImage:(UIImage *)image;
-
-- (void)start;
-- (BOOL)isFinished;
 
 @end
