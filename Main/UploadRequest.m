@@ -30,7 +30,7 @@
   [self.dbc connect];
   [self.dbc login];  
   NSLog(@"Worker executing upload command");
-  [self.dbc upload:self.image];
+  self.imageId = [self.dbc upload:self.image];
 }
 
 

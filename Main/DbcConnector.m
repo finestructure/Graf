@@ -95,12 +95,13 @@ NSString * const kCaptchaCommand = @"captcha";
 }
 
 
-- (void)upload:(UIImage *)image {
+- (NSString *)upload:(UIImage *)image {
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
   self.imageId = [imageData MD5];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
   [self call:kUploadCommand withData:data];
+  return self.imageId;
 }
 
 

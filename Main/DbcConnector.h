@@ -57,7 +57,7 @@
 - (void)connect;
 - (void)login;
 - (void)refreshBalance;
-- (void)upload:(UIImage *)image;
+- (NSString *)upload:(UIImage *)image;
 - (void)pollWithCaptchaId:(NSNumber *)captchaId;
 
 @end
