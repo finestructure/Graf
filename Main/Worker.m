@@ -146,6 +146,11 @@ const int kTimeout = 15;
 }
 
 - (void)didDisconnectWithError:(NSError *)error {
+  self.hasTimedOut = YES;
+  [self completeOperation];
+}
+
+- (void)didDisconnect {
   [self completeOperation];
 }
 

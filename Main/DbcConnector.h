@@ -21,6 +21,7 @@
 - (void)didDecodeImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId result:(NSString *)result;
 - (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId;
 - (void)didDisconnectWithError:(NSError *)error;
+- (void)didDisconnect;
 - (void)didUpdateBalance:(float)newBalance;
 
 @end

@@ -314,6 +314,7 @@ NSString * const kCaptchaCommand = @"captcha";
 			break;
       
 		case NSStreamEventEndEncountered: {
+      NSLog(@"Stream end event");
       if ([self.commandQueue count] > 0) {
         NSLog(@"Error: Stream closed while commands are active!");
         NSLog(@"Stream status: %d", [self.inputStream streamStatus]);
@@ -326,7 +327,12 @@ NSString * const kCaptchaCommand = @"captcha";
           [self.delegate didDisconnectWithError:error];
         }
       } else {
-        NSLog(@"Stream end event");
+        // we don't really care about error state if the command queue is empty, i.e. all
+        // responses that we expected have been handled
+        // just report that the stream is closed
+        if ([self.delegate respondsToSelector:@selector(didDisconnect)]) {
+          [self.delegate didDisconnect];
+        }
       }
     }
 			break;
