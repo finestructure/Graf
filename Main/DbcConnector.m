@@ -321,6 +321,10 @@ NSString * const kCaptchaCommand = @"captcha";
         if (error != nil) {
           NSLog(@"Error info: %d %@", [error code], [error localizedDescription]);
         }
+        if ([self.delegate respondsToSelector:@selector(didDisconnectWithError:)]) {
+          NSError *error = [NSError errorWithDomain:@"DbcConnector" code:1 userInfo:nil];
+          [self.delegate didDisconnectWithError:error];
+        }
       } else {
         NSLog(@"Stream end event");
       }
