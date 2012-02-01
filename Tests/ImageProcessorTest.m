@@ -5,6 +5,8 @@
 @interface ImageProcessorTest : GHAsyncTestCase<ImageProcessorDelegate> { }
 
 @property (nonatomic, copy) NSString *textResult;
+@property (nonatomic, retain) NSNumber *rate;
+@property (nonatomic, retain) NSNumber *balance;
 
 @end
 
@@ -13,11 +15,15 @@
 @implementation ImageProcessorTest
 
 @synthesize textResult = _textResult;
+@synthesize rate = _rate;
+@synthesize balance = _balance;
 
 
 - (void)setUp {
   [super setUp];
   self.textResult = nil;
+  self.rate = nil;
+  self.balance = nil;
 }
 
 
@@ -40,7 +46,7 @@
 #pragma mark - tests
 
 
-- (void)test_01_image_processor {
+- (void)test_01_upload {
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   GHAssertNotNil(image, @"image must not be nil", nil);
 
@@ -64,6 +70,20 @@
 }
 
 
+- (void)test_02_balance {
+  ImageProcessor *ip = [[ImageProcessor alloc] init];
+  ip.delegate = self;
+  
+  [self prepare];
+  [ip refreshBalance];
+  
+  [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10];
+  
+  GHAssertNotNil(self.rate, nil);
+  GHAssertNotNil(self.balance, nil);
+}
+
+
 #pragma mark ImageProcessorDelegate
 
 
@@ -77,6 +97,14 @@
 - (void)didTimeoutDecodingImageId:(NSString *)imageId {
   [self notify:kGHUnitWaitStatusFailure];
 }
+
+
+- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate {
+  self.rate = rate;
+  self.balance = balance;
+  [self notify:kGHUnitWaitStatusSuccess];
+}
+
 
 
 @end
