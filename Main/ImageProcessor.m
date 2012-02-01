@@ -26,19 +26,22 @@
 }
 
 
+- (void)sendRequest:(BaseRequest *)request {
+  [request addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
+  [request start];
+  [self.queue addObject:request];
+}
+
+
 - (void)upload:(UIImage *)image {  
-  UploadRequest *worker = [[UploadRequest alloc] initWithImage:image];
-  [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
-  [worker start];
-  [self.queue addObject:worker];
+  UploadRequest *request = [[UploadRequest alloc] initWithImage:image];
+  [self sendRequest:request];
 }
 
 
 - (void)refreshBalance {
   BalanceRequest *request = [[BalanceRequest alloc] init];
-  [request addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
-  [request start];
-  [self.queue addObject:request];
+  [self sendRequest:request];
 }
 
 
