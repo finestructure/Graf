@@ -18,6 +18,8 @@
 @synthesize textResult = _textResult;
 @synthesize command = _command;
 
+const int kTimeout = 15;
+
 
 - (id)initWithImage:(UIImage *)image {
   self = [super init];
@@ -64,7 +66,7 @@
         NSLog(@"Worker executing poll command");
         if (self.captchaId != nil) {
           [self.dbc pollWithInterval:5 
-                             timeout:60 
+                             timeout:kTimeout 
                            captchaId:self.captchaId 
                    completionHandler:^{} 
                       timeoutHandler:^{
@@ -130,7 +132,7 @@
   self.imageId = imageId;
   self.captchaId = captchaId;
   [self.dbc pollWithInterval:5 
-                     timeout:60 
+                     timeout:kTimeout 
                    captchaId:captchaId 
            completionHandler:^{} 
               timeoutHandler:^{
