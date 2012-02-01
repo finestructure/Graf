@@ -28,7 +28,7 @@
 - (void)upload:(UIImage *)image {  
   Worker *worker = [[Worker alloc] initWithImage:image];
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
-  [worker main];
+  [worker start];
   [self.queue addObject:worker];
 }
 

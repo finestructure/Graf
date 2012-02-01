@@ -36,7 +36,7 @@ const int kTimeout = 15;
 }
 
 
-- (void)main {
+- (void)start {
   [self.dbc connect];
   [self.dbc login];  
   NSLog(@"Worker executing upload command");

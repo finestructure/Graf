@@ -21,7 +21,7 @@
  
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
   
-  [worker main];
+  [worker start];
 
   [self waitForStatus:kGHUnitWaitStatusSuccess timeout:20];
   GHAssertEqualStrings(worker.textResult, @"037233", nil);

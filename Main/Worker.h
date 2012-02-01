@@ -24,7 +24,7 @@
 
 - (id)initWithImage:(UIImage *)image;
 
-- (void)main;
+- (void)start;
 - (BOOL)isFinished;
 
 @end
