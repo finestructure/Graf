@@ -11,13 +11,14 @@
 
 @implementation Worker
 
+@synthesize isFinished = _isFinished;
+@synthesize hasTimedOut = _hasTimedOut;
 @synthesize dbc = _dbc;
 @synthesize image = _image;
 @synthesize captchaId = _captchaId;
 @synthesize imageId = _imageId;
 @synthesize textResult = _textResult;
 @synthesize command = _command;
-@synthesize hasTimedOut = _timedout;
 
 
 const int kTimeout = 15;
@@ -26,8 +27,7 @@ const int kTimeout = 15;
 - (id)initWithImage:(UIImage *)image {
   self = [super init];
   if (self) {
-    executing = NO;
-    finished = NO;
+    self.isFinished = NO;
     self.hasTimedOut = NO;
     self.dbc = [[DbcConnector alloc] init];
     self.dbc.delegate = self;
@@ -36,23 +36,6 @@ const int kTimeout = 15;
     self.command = kUpload;
   }
   return self;
-}
-
-
-- (void)start {
-  if ([self isCancelled]) {
-    // Must move the operation to the finished state if it is canceled
-    [self willChangeValueForKey:@"isFinished"];
-    finished = YES;
-    [self didChangeValueForKey:@"isFinished"];
-    return;
-  }
-  
-  // If the operation is not canceled, begin executing the task.
-  [self willChangeValueForKey:@"isExecuting"];
-  [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
-  executing = YES;
-  [self didChangeValueForKey:@"isExecuting"];
 }
 
 
@@ -74,7 +57,7 @@ const int kTimeout = 15;
                    completionHandler:^{} 
                       timeoutHandler:^{
                         self.hasTimedOut = YES;
-                        [self completeOperation];
+                        self.isFinished = YES;
                       }];
         } else {
           NSLog(@"Error: poll called without captcha id being set");
@@ -86,31 +69,6 @@ const int kTimeout = 15;
   } @catch(...) {
     // Do not rethrow exceptions.
   }
-}
-
-
-- (void)completeOperation {
-  [self willChangeValueForKey:@"isFinished"];
-  [self willChangeValueForKey:@"isExecuting"];
-  executing = NO;
-  finished = YES;
-  [self didChangeValueForKey:@"isExecuting"];
-  [self didChangeValueForKey:@"isFinished"];
-}
-
-
-- (BOOL)isConcurrent {
-  return YES;
-}
-
-
-- (BOOL)isExecuting {
-  return executing;
-}
-
-
-- (BOOL)isFinished {
-  return finished;
 }
 
 
@@ -128,7 +86,7 @@ const int kTimeout = 15;
   self.imageId = imageId;
   self.captchaId = captchaId;
   self.textResult = result;
-  [self completeOperation];
+  self.isFinished = YES;
 }
 
 - (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId {
@@ -141,17 +99,17 @@ const int kTimeout = 15;
            completionHandler:^{} 
               timeoutHandler:^{
                 self.hasTimedOut = YES;
-                [self completeOperation];
+                self.isFinished = YES;
               }];
 }
 
 - (void)didDisconnectWithError:(NSError *)error {
   self.hasTimedOut = YES;
-  [self completeOperation];
+  self.isFinished = YES;
 }
 
 - (void)didDisconnect {
-  [self completeOperation];
+  self.isFinished = YES;
 }
 
 - (void)didUpdateBalance:(float)newBalance {
