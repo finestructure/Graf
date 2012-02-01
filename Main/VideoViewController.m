@@ -246,11 +246,12 @@ const int kRowHeight = 80;
 - (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
   view.image = image.image;    
   if (image.state == kProcessing) {
-    view.frame = CGRectMake(10, 7, 260, 65);
-  } else {
-    CGRect targetFrame = CGRectMake(10, 5, 200, 50);
     [UIView animateWithDuration:0.5 animations:^{
-      view.frame = targetFrame;
+      view.frame = CGRectMake(10, 7, 260, 65);
+    }];
+  } else {
+    [UIView animateWithDuration:0.5 animations:^{
+      view.frame = CGRectMake(10, 5, 200, 50);
     }];  
   }
 }
@@ -258,8 +259,10 @@ const int kRowHeight = 80;
 
 - (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image {
   if (image.state == kProcessing) {
-    label.alpha = 0;
-    label.frame = CGRectMake(10, 31, 245, 18);
+    [UIView animateWithDuration:0.5 animations:^{
+      label.alpha = 0;
+      label.frame = CGRectMake(10, 31, 245, 18);
+    }];
   } else {
     CGRect targetFrame = label.frame;
     targetFrame.origin.y = 61;
@@ -280,7 +283,9 @@ const int kRowHeight = 80;
 
 - (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image {
   if (image.state == kProcessing) {
-    label.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+      label.alpha = 0;
+    }];
   } else {
     [UIView animateWithDuration:0.5 animations:^{
       label.alpha = 1;
@@ -297,8 +302,10 @@ const int kRowHeight = 80;
 
 - (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image {
   if (image.state == kProcessing) {
-    iconView.alpha = 0;
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [UIView animateWithDuration:0.5 animations:^{
+      iconView.alpha = 0;
+    }];
   } else {
     if (image.textResult == nil || [image.textResult isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
