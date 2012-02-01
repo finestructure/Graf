@@ -20,6 +20,7 @@
 @synthesize session = _session;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
+@synthesize remainingLabel = _remainingLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize images = _images;
@@ -179,6 +180,7 @@ const int kRowHeight = 80;
   [self setStatusTextView:nil];
   [self setVersionLabel:nil];
   [self setTableView:nil];
+  [self setRemainingLabel:nil];
   [super viewDidUnload];
 }
 
@@ -419,6 +421,13 @@ const int kRowHeight = 80;
   
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
+  });
+}
+
+
+- (void)didReceiveRemaining:(NSUInteger)remaining {
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    self.remainingLabel.text = [NSString stringWithFormat:@"%d remaining", remaining];
   });
 }
 
