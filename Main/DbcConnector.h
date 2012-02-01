@@ -22,7 +22,7 @@
 - (void)didUploadImageId:(NSString *)imageId captchaId:(NSNumber *)captchaId;
 - (void)didDisconnectWithError:(NSError *)error;
 - (void)didDisconnect;
-- (void)didUpdateBalance:(float)newBalance;
+- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate;
 
 @end
 
@@ -56,7 +56,7 @@
 
 - (void)connect;
 - (void)login;
-- (void)updateBalance;
+- (void)refreshBalance;
 - (void)upload:(UIImage *)image;
 - (void)pollWithCaptchaId:(NSNumber *)captchaId;
 
