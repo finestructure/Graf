@@ -3,12 +3,12 @@
 #import "BalanceRequest.h"
 
 
-@interface WorkerTest : GHAsyncTestCase { }
+@interface RequestTest : GHAsyncTestCase { }
 
 @end
 
 
-@implementation WorkerTest
+@implementation RequestTest
 
 
 #pragma mark - tests
