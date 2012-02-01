@@ -17,8 +17,8 @@ typedef enum WorkerCommands {
 
 
 @interface Worker : NSOperation<DbcConnectorDelegate> {
-  BOOL        executing;
-  BOOL        finished;
+  BOOL executing;
+  BOOL finished;
 }
 
 
@@ -28,6 +28,7 @@ typedef enum WorkerCommands {
 @property (nonatomic, retain) NSNumber *captchaId;
 @property (nonatomic, copy) NSString *textResult;
 @property (nonatomic, assign) WorkerCommands command;
+@property (nonatomic, assign) BOOL hasTimedOut;
 
 
 - (id)initWithImage:(UIImage *)image;

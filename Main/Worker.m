@@ -17,6 +17,8 @@
 @synthesize imageId = _imageId;
 @synthesize textResult = _textResult;
 @synthesize command = _command;
+@synthesize hasTimedOut = _timedout;
+
 
 const int kTimeout = 15;
 
@@ -26,6 +28,7 @@ const int kTimeout = 15;
   if (self) {
     executing = NO;
     finished = NO;
+    self.hasTimedOut = NO;
     self.dbc = [[DbcConnector alloc] init];
     self.dbc.delegate = self;
     self.image = image;
@@ -70,6 +73,7 @@ const int kTimeout = 15;
                            captchaId:self.captchaId 
                    completionHandler:^{} 
                       timeoutHandler:^{
+                        self.hasTimedOut = YES;
                         [self completeOperation];
                       }];
         } else {
@@ -136,6 +140,7 @@ const int kTimeout = 15;
                    captchaId:captchaId 
            completionHandler:^{} 
               timeoutHandler:^{
+                self.hasTimedOut = YES;
                 [self completeOperation];
               }];
 }

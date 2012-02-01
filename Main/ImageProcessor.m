@@ -42,13 +42,17 @@
   if ([keyPath isEqualToString:@"isFinished"]) {
     Worker *worker = (Worker *)object;
     if ([worker isFinished]) {
-      NSLog(@"result: %@", worker.textResult);
-      if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
-        [self.delegate didDecodeImageId:worker.imageId result:worker.textResult];
+      if (worker.hasTimedOut) {
+        if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {
+          [self.delegate didTimeoutDecodingImageId:worker.imageId];
+        }
+      } else {
+        NSLog(@"result: %@", worker.textResult);
+        if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
+          [self.delegate didDecodeImageId:worker.imageId result:worker.textResult];
+        }
       }
       [self.queue removeObject:worker];
-    } else {
-      NSLog(@"not finished");
     }
   }
 }

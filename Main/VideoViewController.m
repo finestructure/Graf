@@ -230,6 +230,19 @@ const int kRowHeight = 80;
 }
 
 
+- (Image *)imageWithId:(NSString *)imageId {
+  __block Image *result = nil;
+  [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    Image *image = (Image *)obj;
+    if ([image.imageId isEqualToString:imageId]) {
+      result = image;
+      *stop = YES;
+    }
+  }];
+  return result;
+}
+
+
 #pragma mark - Actions
 
 
@@ -365,15 +378,12 @@ const int kRowHeight = 80;
     NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
     [self addToStatusView:string];
   });
+
   // set result for appropriate image object
-  [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    Image *image = (Image *)obj;
-    if ([image.imageId isEqualToString:imageId]) {
-      image.textResult = result;
-      [image transitionTo:kIdle];
-      *stop = YES;
-    }
-  }];
+  Image *image = [self imageWithId:imageId];
+  image.textResult = result;
+  [image transitionTo:kIdle];
+
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
   });
@@ -384,6 +394,13 @@ const int kRowHeight = 80;
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSString *string = [NSString stringWithFormat:@"Timeout while decoding: %@", imageId];
     [self addToStatusView:string];
+  });
+
+  Image *image = [self imageWithId:imageId];
+  [image transitionTo:kTimeout];
+  
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [self.tableView reloadData];
   });
 }
 
