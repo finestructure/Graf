@@ -10,11 +10,6 @@
 #import "DbcConnector.h"
 
 
-typedef enum WorkerCommands {
-  kUpload,
-  kPoll
-} WorkerCommands;
-
 
 @interface Worker : NSObject<DbcConnectorDelegate>
 
@@ -25,7 +20,6 @@ typedef enum WorkerCommands {
 @property (nonatomic, copy) NSString *imageId;
 @property (nonatomic, retain) NSNumber *captchaId;
 @property (nonatomic, copy) NSString *textResult;
-@property (nonatomic, assign) WorkerCommands command;
 
 
 - (id)initWithImage:(UIImage *)image;
