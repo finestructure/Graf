@@ -7,7 +7,7 @@
 //
 
 #import "ImageProcessor.h"
-#import "Worker.h"
+#import "UploadRequest.h"
 
 
 @implementation ImageProcessor
@@ -26,7 +26,7 @@
 
 
 - (void)upload:(UIImage *)image {  
-  Worker *worker = [[Worker alloc] initWithImage:image];
+  UploadRequest *worker = [[UploadRequest alloc] initWithImage:image];
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
   [worker start];
   [self.queue addObject:worker];
@@ -49,7 +49,7 @@
 {
   NSLog(@"KVO: %@ %@ %@", keyPath, object, change);
   if ([keyPath isEqualToString:@"isFinished"]) {
-    Worker *worker = (Worker *)object;
+    UploadRequest *worker = (UploadRequest *)object;
     if ([worker isFinished]) {
       if (worker.hasTimedOut) {
         if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {

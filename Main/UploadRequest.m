@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
-#import "Worker.h"
+#import "UploadRequest.h"
 
 
-@implementation Worker
+@implementation UploadRequest
 
 @synthesize isFinished = _isFinished;
 @synthesize hasTimedOut = _hasTimedOut;

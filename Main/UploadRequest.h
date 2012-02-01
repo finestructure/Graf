@@ -11,7 +11,7 @@
 
 
 
-@interface Worker : NSObject<DbcConnectorDelegate>
+@interface UploadRequest : NSObject<DbcConnectorDelegate>
 
 @property (nonatomic, assign) BOOL hasTimedOut;
 @property (nonatomic, assign) BOOL isFinished;

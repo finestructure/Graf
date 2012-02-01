@@ -1,5 +1,5 @@
 #import <GHUnitIOS/GHUnit.h> 
-#import "Worker.h"
+#import "UploadRequest.h"
 
 
 @interface WorkerTest : GHAsyncTestCase { }
@@ -17,7 +17,7 @@
   [self prepare];
   
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
-  Worker *worker = [[Worker alloc] initWithImage:image];
+  UploadRequest *worker = [[UploadRequest alloc] initWithImage:image];
  
   [worker addObserver:self forKeyPath:@"isFinished" options:0 context:nil];
   
