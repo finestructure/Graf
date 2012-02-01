@@ -8,7 +8,7 @@
 
 #import "BaseRequest.h"
 
-int const kTimeout = 15;
+int const kTimeout = 40;
 
 
 @implementation BaseRequest
