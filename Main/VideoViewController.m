@@ -389,15 +389,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
     UIImage *sampleImage = [self convertSampleBufferToUIImage:sampleBuffer];
     NSData *imageData = UIImagePNGRepresentation(sampleImage);
 
-    Image *lastImage = [self.images lastObject];
-    if (lastImage != nil) {
-      [lastImage transitionTo:kIdle];
-      dispatch_async(dispatch_get_main_queue(), ^(void) {
-        UITableViewCell *cell = [self cellForImage:lastImage];
-        [self transitionCell:cell toState:kIdle];
-      });
-    }
-    
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       Image *image = [[Image alloc] init];
       image.image = sampleImage;
@@ -410,6 +401,12 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
       UITableViewCell *cell = [self cellForImage:image];
       [self transitionCell:cell toState:kProcessing];
+      
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        UITableViewCell *cell = [self cellForImage:image];
+        [self transitionCell:cell toState:kIdle];
+      });
+
     });
   }];
 }
