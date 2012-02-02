@@ -345,9 +345,10 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
       }];
     }
   }
-  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-  NSArray *rows = [NSArray arrayWithObject:indexPath];
-  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationNone];
+//  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+//  NSArray *rows = [NSArray arrayWithObject:indexPath];
+//  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationNone];
+  [cell setNeedsDisplay];
 }
 
 
