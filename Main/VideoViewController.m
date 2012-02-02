@@ -31,6 +31,11 @@ const int kPollingTimeout = 60;
 
 const int kRowHeight = 80;
 
+const CGRect kImageViewFrameIdle         = {{10, 5}, {200, 50}};
+const CGRect kImageViewFrameProcessing   = {{10, 7}, {260, 65}};
+const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
+const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -214,12 +219,6 @@ const int kRowHeight = 80;
 }
 
 
-- (void)startProcessingImage:(Image *)image {
-  [image transitionTo:kProcessing];
-  [self.imageProcessor upload:image.image];
-}
-
-
 - (void)addToStatusView:(NSString *)string {
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     NSLog(@"status update: %@", string);
@@ -252,50 +251,28 @@ const int kRowHeight = 80;
 - (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
   view.image = image.image;    
   if (image.state == kProcessing) {
-    [UIView animateWithDuration:0.5 animations:^{
-      view.frame = CGRectMake(10, 7, 260, 65);
-    }];
+    view.frame = kImageViewFrameProcessing;
   } else {
-    [UIView animateWithDuration:0.5 animations:^{
-      view.frame = CGRectMake(10, 5, 200, 50);
-    }];  
+    view.frame = kImageViewFrameIdle;
   }
 }
 
 
 - (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image {
-  if (image.state == kProcessing) {
-    [UIView animateWithDuration:0.5 animations:^{
-      label.alpha = 0;
-      label.frame = CGRectMake(10, 31, 245, 18);
-    }];
+  if (image.state == kTimeout) {
+    label.text = @"timeout";
+    label.font = [UIFont italicSystemFontOfSize:14];
   } else {
-    CGRect targetFrame = label.frame;
-    targetFrame.origin.y = 61;
-    [UIView animateWithDuration:0.5 animations:^{
-      label.alpha = 1;
-      label.frame = targetFrame;
-    }];
-    if (image.state == kTimeout) {
-      label.text = @"timeout";
-      label.font = [UIFont italicSystemFontOfSize:14];
-    } else {
-      label.text = image.textResult;
-      label.font = [UIFont systemFontOfSize:14];
-    }
+    label.text = image.textResult;
+    label.font = [UIFont systemFontOfSize:14];
   }
 }
 
 
 - (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image {
   if (image.state == kProcessing) {
-    [UIView animateWithDuration:0.5 animations:^{
-      label.alpha = 0;
-    }];
+    label.text = @"";
   } else {
-    [UIView animateWithDuration:0.5 animations:^{
-      label.alpha = 1;
-    }];
     label.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
   }
 }
@@ -326,6 +303,99 @@ const int kRowHeight = 80;
 }
 
 
+- (void)transitionCell:(UITableViewCell *)cell toState:(ImageState)newState {
+  { // image view
+    UIView *view = [cell.contentView viewWithTag:1];
+    if (newState == kProcessing) {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.frame = kImageViewFrameProcessing;
+      }];
+    } else {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.frame = kImageViewFrameIdle;
+      }];
+    }
+  }
+  { // text result label
+    UIView *view = [cell.contentView viewWithTag:2];
+    if (newState == kProcessing) {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.alpha = 0;
+        view.frame = kTextResultFrameProcessing;
+      }];
+    } else {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.alpha = 1;
+        view.frame = kTextResultFrameIdle;
+      }];
+    }
+  }
+  { // processing time label
+    UIView *view = [cell.contentView viewWithTag:3];
+    if (newState == kProcessing) {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.alpha = 0;
+      }];
+    } else {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.alpha = 1;
+      }];
+    }
+  }
+  { // activity indicator
+    UIView *view = [cell.contentView viewWithTag:4];
+    view.hidden = (newState != kProcessing);
+  }
+  { // status icon
+    UIView *view = [cell.contentView viewWithTag:5];
+    if (newState == kProcessing) {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.alpha = 0;
+      }];
+    } else {
+      [UIView animateWithDuration:0.5 animations:^{
+        view.alpha = 1;
+      }];
+    }
+  }
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+  NSArray *rows = [NSArray arrayWithObject:indexPath];
+  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationNone];
+}
+
+
+- (Image *)imageForView:(UIView *)view {
+  if (! [view isKindOfClass:[UITableViewCell class]]) {
+    // walk up the view hierarchy until we find a table view cell
+    return [self imageForView:[view superview]];
+  } else {
+    UITableViewCell *cell = (UITableViewCell *)view;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Image *image = [self.images objectAtIndex:indexPath.row];
+    return image;
+  }
+}
+
+
+- (UITableViewCell *)cellForImage:(Image *)image {
+  NSUInteger index = [self.images indexOfObject:image];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+  return cell;
+}
+
+
+- (void)startProcessingImage:(Image *)image {
+  [image transitionTo:kProcessing];
+  [self.imageProcessor upload:image.image];
+  
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    UITableViewCell *cell = [self cellForImage:image];
+    [self transitionCell:cell toState:kProcessing];
+  });
+}
+
+
 #pragma mark - Actions
 
 
@@ -338,10 +408,10 @@ const int kRowHeight = 80;
     Image *img = [[Image alloc] init];
     img.image = image;
     img.imageId = [imageData MD5];
+    [self.images insertObject:img atIndex:0];
     
     [self startProcessingImage:img];
     
-    [self.images insertObject:img atIndex:0];
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -351,15 +421,11 @@ const int kRowHeight = 80;
 
 
 - (void)refreshButtonPressed:(id)sender {
-  UIView *contentView = [sender superview];
-  UITableViewCell *cell = (UITableViewCell *)[contentView superview];
-  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-  Image *image = [self.images objectAtIndex:indexPath.row];
+  [sender removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+  Image *image = [self imageForView:sender];
   NSLog(@"Refresh started for image: %@", image.imageId);
   [self startProcessingImage:image];
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
 }
 
 
@@ -411,7 +477,8 @@ const int kRowHeight = 80;
   [self.imageProcessor refreshBalance];
 
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
+    UITableViewCell *cell = [self cellForImage:image];
+    [self transitionCell:cell toState:kIdle];
   });
 }
 
@@ -426,7 +493,8 @@ const int kRowHeight = 80;
   [image transitionTo:kTimeout];
   
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
+    UITableViewCell *cell = [self cellForImage:image];
+    [self transitionCell:cell toState:kTimeout];
   });
 }
 
