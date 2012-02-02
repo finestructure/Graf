@@ -375,7 +375,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 - (void)startProcessingImage:(Image *)image {
   [image transitionTo:kProcessing];
-  [self.imageProcessor upload:image.image];
+//  [self.imageProcessor upload:image.image];
 }
 
 
@@ -388,14 +388,23 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
     UIImage *sampleImage = [self convertSampleBufferToUIImage:sampleBuffer];
     NSData *imageData = UIImagePNGRepresentation(sampleImage);
 
-    Image *image = [[Image alloc] init];
-    image.image = sampleImage;
-    image.imageId = [imageData MD5];
-    [self.images insertObject:image atIndex:0];
-    
-    [self startProcessingImage:image];
+    Image *lastImage = [self.images lastObject];
+    if (lastImage != nil) {
+      [lastImage transitionTo:kIdle];
+      dispatch_async(dispatch_get_main_queue(), ^(void) {
+        UITableViewCell *cell = [self cellForImage:lastImage];
+        [self transitionCell:cell toState:kIdle];
+      });
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
+      Image *image = [[Image alloc] init];
+      image.image = sampleImage;
+      image.imageId = [imageData MD5];
+      [self.images insertObject:image atIndex:0];
+      
+      [self startProcessingImage:image];
+      
       NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
       UITableViewCell *cell = [self cellForImage:image];
