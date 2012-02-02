@@ -300,6 +300,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 
 - (void)transitionCell:(UITableViewCell *)cell toState:(ImageState)newState {
+  NSLog(@"transition cell to %d", newState);
   { // image view
     UIView *view = [cell.contentView viewWithTag:1];
     if (newState == kProcessing) {
@@ -383,7 +384,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 - (void)startProcessingImage:(Image *)image {
   [image transitionTo:kProcessing];
-//  [self.imageProcessor upload:image.image];
+  [self.imageProcessor upload:image.image];
 }
 
 
@@ -408,12 +409,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
       UITableViewCell *cell = [self cellForImage:image];
       [self transitionCell:cell toState:kProcessing];
-      
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        UITableViewCell *cell = [self cellForImage:image];
-        [self transitionCell:cell toState:kIdle];
-      });
-
     });
   }];
 }
