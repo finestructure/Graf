@@ -250,11 +250,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 - (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
   view.image = image.image;    
-  if (image.state == kProcessing) {
-    view.frame = kImageViewFrameProcessing;
-  } else {
-    view.frame = kImageViewFrameIdle;
-  }
 }
 
 
@@ -279,16 +274,13 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 
 - (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withImage:(Image *)image {
-  image.state == kProcessing ? [view startAnimating] : [view stopAnimating];
+  (image.state == kProcessing) ? [view startAnimating] : [view stopAnimating];
 }
 
 
 - (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image {
   if (image.state == kProcessing) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [UIView animateWithDuration:0.5 animations:^{
-      iconView.alpha = 0;
-    }];
   } else {
     if (image.textResult == nil || [image.textResult isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
@@ -296,9 +288,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
     } else {
       [iconView setImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
     }
-    [UIView animateWithDuration:0.5 animations:^{
-      iconView.alpha = 1;
-    }];
   }
 }
 
@@ -349,9 +338,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   { // status icon
     UIView *view = [cell.contentView viewWithTag:5];
     if (newState == kProcessing) {
-      [UIView animateWithDuration:0.5 animations:^{
-        view.alpha = 0;
-      }];
+      view.alpha = 0;
     } else {
       [UIView animateWithDuration:0.5 animations:^{
         view.alpha = 1;
@@ -388,11 +375,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 - (void)startProcessingImage:(Image *)image {
   [image transitionTo:kProcessing];
   [self.imageProcessor upload:image.image];
-  
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kProcessing];
-  });
 }
 
 
@@ -402,19 +384,21 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 - (IBAction)takePicture:(id)sender {  
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
-    UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
-    NSData *imageData = UIImagePNGRepresentation(image);
+    UIImage *sampleImage = [self convertSampleBufferToUIImage:sampleBuffer];
+    NSData *imageData = UIImagePNGRepresentation(sampleImage);
 
-    Image *img = [[Image alloc] init];
-    img.image = image;
-    img.imageId = [imageData MD5];
-    [self.images insertObject:img atIndex:0];
+    Image *image = [[Image alloc] init];
+    image.image = sampleImage;
+    image.imageId = [imageData MD5];
+    [self.images insertObject:image atIndex:0];
     
-    [self startProcessingImage:img];
+    [self startProcessingImage:image];
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
       NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+      UITableViewCell *cell = [self cellForImage:image];
+      [self transitionCell:cell toState:kProcessing];
     });
   }];
 }
@@ -426,6 +410,11 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   Image *image = [self imageForView:sender];
   NSLog(@"Refresh started for image: %@", image.imageId);
   [self startProcessingImage:image];
+  
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    UITableViewCell *cell = [self cellForImage:image];
+    [self transitionCell:cell toState:kProcessing];
+  });
 }
 
 
