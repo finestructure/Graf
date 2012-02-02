@@ -23,6 +23,8 @@
 		5A56F0B514CD480300F7D75B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A56F0B314CD480300F7D75B /* InfoPlist.strings */; };
 		5A56F0B714CD480300F7D75B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A56F0B614CD480300F7D75B /* main.m */; };
 		5A56F0C114CD482F00F7D75B /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */; };
+		5A69CE4214DAE4B9009F7DB9 /* MockImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A69CE4114DAE4B9009F7DB9 /* MockImageProcessor.m */; };
+		5A69CE4314DAE4B9009F7DB9 /* MockImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A69CE4114DAE4B9009F7DB9 /* MockImageProcessor.m */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
@@ -81,6 +83,8 @@
 		5A56F0B614CD480300F7D75B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5A56F0B814CD480300F7D75B /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = other/GHUnitIOS.framework; sourceTree = "<group>"; };
+		5A69CE4014DAE4B9009F7DB9 /* MockImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MockImageProcessor.h; path = Tests/MockImageProcessor.h; sourceTree = SOURCE_ROOT; };
+		5A69CE4114DAE4B9009F7DB9 /* MockImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MockImageProcessor.m; path = Tests/MockImageProcessor.m; sourceTree = SOURCE_ROOT; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
 		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 				5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */,
 				5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */,
 				5AE1FB4714D7E4FD00151025 /* RequestTest.m */,
+				5A69CE4014DAE4B9009F7DB9 /* MockImageProcessor.h */,
+				5A69CE4114DAE4B9009F7DB9 /* MockImageProcessor.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				5AF582D914D6DF3B007942AD /* DbcConnector.m in Sources */,
 				5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */,
 				5A1B61B114D9774600CC0273 /* BalanceRequest.m in Sources */,
+				5A69CE4214DAE4B9009F7DB9 /* MockImageProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +454,7 @@
 				5AE1FB4814D7E4FD00151025 /* RequestTest.m in Sources */,
 				5A1B61AE14D96CFA00CC0273 /* BaseRequest.m in Sources */,
 				5A1B61B214D9774600CC0273 /* BalanceRequest.m in Sources */,
+				5A69CE4314DAE4B9009F7DB9 /* MockImageProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
