@@ -35,6 +35,13 @@ int const kTimeout = 40;
 }
 
 
+- (void)close {
+  self.dbc.delegate = nil;
+  [self.dbc disconnect];
+  self.dbc = nil;
+}
+
+
 #pragma mark - DbcConnectorDelegate
 
 

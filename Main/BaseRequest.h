@@ -19,5 +19,6 @@ extern int const kTimeout;
 @property (nonatomic, retain) DbcConnector *dbc;
 
 - (void)start;
+- (void)close;
 
 @end

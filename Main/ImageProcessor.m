@@ -96,6 +96,7 @@
   }
   
   [request removeObserver:self forKeyPath:@"isFinished"];
+  [request close];
   [self.queue removeObject:request];
 }
 

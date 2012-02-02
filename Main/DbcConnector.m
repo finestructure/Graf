@@ -81,6 +81,18 @@ NSString * const kCaptchaCommand = @"captcha";
 }
 
 
+- (void)disconnect {
+  [self.inputStream close];
+  [self.outputStream close];
+  [self.inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+  [self.outputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+  [self.inputStream setDelegate:nil];
+  [self.outputStream setDelegate:nil];
+  self.inputStream = nil;
+  self.outputStream = nil;
+}
+
+
 - (void)login {
   NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                         kUser, @"username",

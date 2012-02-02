@@ -55,6 +55,7 @@
 // API
 
 - (void)connect;
+- (void)disconnect;
 - (void)login;
 - (void)refreshBalance;
 - (NSString *)upload:(UIImage *)image;
