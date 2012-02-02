@@ -6,8 +6,11 @@
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
+#define TEST 1
+
 #import "VideoViewController.h"
 
+#import "MockImageProcessor.h"
 #import "Constants.h"
 #import "Image.h"
 #import "NSData+MD5.h"
@@ -39,7 +42,11 @@ const int kRowHeight = 80;
     self.images = [NSMutableArray array];
 
     // set up image processor
+#ifdef TEST
+    self.imageProcessor = [[MockImageProcessor alloc] init];
+#else
     self.imageProcessor = [[ImageProcessor alloc] init];
+#endif
     self.imageProcessor.delegate = self;
   }
   return self;
