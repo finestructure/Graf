@@ -37,7 +37,7 @@ const int kRowHeight = 80;
 const CGRect kImageViewFrameIdle         = {{10, 5}, {200, 50}};
 const CGRect kImageViewFrameProcessing   = {{10, 7}, {260, 65}};
 const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
-const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
+const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
