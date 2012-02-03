@@ -7,6 +7,7 @@
 //
 
 
+#import <TargetConditionals.h>
 #import "VideoViewController.h"
 
 #import "MockImageProcessor.h"
@@ -385,29 +386,39 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
+- (void)addImage:(UIImage *)sampleImage {
+  NSData *imageData = UIImagePNGRepresentation(sampleImage);
+  
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    Image *image = [[Image alloc] init];
+    image.image = sampleImage;
+    image.imageId = [imageData MD5];
+    [self.images insertObject:image atIndex:0];
+    
+    [self startProcessingImage:image];
+    
+    // we don't want new images to animate into position
+    image.isInTransition = NO;
+    NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+  });
+}
+
+
 #pragma mark - Actions
 
 
-- (IBAction)takePicture:(id)sender {  
+- (IBAction)takePicture:(id)sender {
+#if !(TARGET_IPHONE_SIMULATOR)
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
-    UIImage *sampleImage = [self convertSampleBufferToUIImage:sampleBuffer];
-    NSData *imageData = UIImagePNGRepresentation(sampleImage);
-
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-      Image *image = [[Image alloc] init];
-      image.image = sampleImage;
-      image.imageId = [imageData MD5];
-      [self.images insertObject:image atIndex:0];
-      
-      [self startProcessingImage:image];
-      
-      // we don't want new images to animate into position
-      image.isInTransition = NO;
-      NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-      [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    });
+    UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
+    [self addImage:image];
   }];
+#else
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  [self addImage:image];
+#endif
 }
 
 

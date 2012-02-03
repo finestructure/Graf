@@ -7,6 +7,7 @@
 //
 
 #import "UploadRequest.h"
+#import "NSData+MD5.h"
 
 
 @implementation UploadRequest
@@ -21,6 +22,8 @@
   self = [super init];
   if (self) {
     self.image = image;
+    NSData *imageData = UIImagePNGRepresentation(image);
+    self.imageId = [imageData MD5];
   }
   return self;
 }
@@ -30,7 +33,7 @@
   [self.dbc connect];
   [self.dbc login];  
   NSLog(@"Worker executing upload command");
-  self.imageId = [self.dbc upload:self.image];
+  [self.dbc upload:self.image withImageId:self.imageId];
 }
 
 

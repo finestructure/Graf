@@ -8,7 +8,6 @@
 
 #import "DbcConnector.h"
 #import "NSData+Base64.h"
-#import "NSData+MD5.h"
 
 
 NSString * const kUser = @"abstracture";
@@ -107,13 +106,12 @@ NSString * const kCaptchaCommand = @"captcha";
 }
 
 
-- (NSString *)upload:(UIImage *)image {
+- (void)upload:(UIImage *)image withImageId:(NSString *)imageId {
+  self.imageId = imageId;
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *base64Data = [imageData base64EncodedString];
-  self.imageId = [imageData MD5];
   NSDictionary *data = [NSDictionary dictionaryWithObject:base64Data forKey:@"captcha"];
   [self call:kUploadCommand withData:data];
-  return self.imageId;
 }
 
 
@@ -337,6 +335,10 @@ NSString * const kCaptchaCommand = @"captcha";
       NSError *error = [self.inputStream streamError];
       if (error != nil) {
         NSLog(@"Error info: %d %@", [error code], [error localizedDescription]);
+      }
+      if ([self.delegate respondsToSelector:@selector(didDisconnectWithError:)]) {
+        NSError *error = [NSError errorWithDomain:@"DbcConnector" code:1 userInfo:nil];
+        [self.delegate didDisconnectWithError:error];
       }
     }
 			break;
