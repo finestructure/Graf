@@ -257,11 +257,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 - (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
   view.image = image.image;
-  if (image.state == kProcessing) {
-    view.frame = kImageViewFrameProcessing;
-  } else {
-    view.frame = kImageViewFrameIdle;
-  }
 }
 
 
@@ -304,16 +299,19 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 }
 
 
-- (void)transitionCell:(UITableViewCell *)cell toState:(ImageState)newState {
-  NSLog(@"transition cell to %d", newState);
+- (void)transitionCell:(UITableViewCell *)cell toState:(ImageState)newState animate:(BOOL)animate {
+  NSTimeInterval duration = 0;
+  if (animate) {
+    duration = 0.5;
+  }
   { // image view
     UIView *view = [cell.contentView viewWithTag:1];
     if (newState == kProcessing) {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.frame = kImageViewFrameProcessing;
       }];
     } else {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.frame = kImageViewFrameIdle;
       }];
     }
@@ -321,12 +319,12 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   { // text result label
     UIView *view = [cell.contentView viewWithTag:2];
     if (newState == kProcessing) {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.alpha = 0;
         view.frame = kTextResultFrameProcessing;
       }];
     } else {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.alpha = 1;
         view.frame = kTextResultFrameIdle;
       }];
@@ -335,11 +333,11 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   { // processing time label
     UIView *view = [cell.contentView viewWithTag:3];
     if (newState == kProcessing) {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.alpha = 0;
       }];
     } else {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.alpha = 1;
       }];
     }
@@ -353,7 +351,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
     if (newState == kProcessing) {
       view.alpha = 0;
     } else {
-      [UIView animateWithDuration:0.5 animations:^{
+      [UIView animateWithDuration:duration animations:^{
         view.alpha = 1;
       }];
     }
@@ -422,7 +420,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kProcessing];
+    [self transitionCell:cell toState:kProcessing animate:YES];
   });
 }
 
@@ -434,6 +432,8 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   Image *image = [self.images objectAtIndex:indexPath.row];
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  
+  [self transitionCell:cell toState:image.state animate:NO];
 
   [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withImage:image];
   [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withImage:image];
@@ -476,7 +476,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kIdle];
+    [self transitionCell:cell toState:kIdle animate:YES];
   });
 }
 
@@ -492,7 +492,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kTimeout];
+    [self transitionCell:cell toState:kTimeout animate:YES];
   });
 }
 
