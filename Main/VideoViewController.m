@@ -421,6 +421,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     UITableViewCell *cell = [self cellForImage:image];
     [self transitionCell:cell toState:kProcessing animate:YES];
+    [self.tableView reloadData];
   });
 }
 
@@ -433,7 +434,12 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
   
-  [self transitionCell:cell toState:image.state animate:NO];
+  if (image.isInTransition) {
+    [self transitionCell:cell toState:image.state animate:YES];
+    image.isInTransition = NO;
+  } else {
+    [self transitionCell:cell toState:image.state animate:NO];
+  }
 
   [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withImage:image];
   [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withImage:image];
@@ -477,6 +483,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     UITableViewCell *cell = [self cellForImage:image];
     [self transitionCell:cell toState:kIdle animate:YES];
+    [self.tableView reloadData];
   });
 }
 
@@ -493,6 +500,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     UITableViewCell *cell = [self cellForImage:image];
     [self transitionCell:cell toState:kTimeout animate:YES];
+    [self.tableView reloadData];
   });
 }
 
