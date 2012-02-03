@@ -16,12 +16,14 @@
 @synthesize start = _start;
 @synthesize processingTime = _processingTime;
 @synthesize textResult = _textResult;
+@synthesize isInTransition = _isInTransition;
 
 
 - (id)init {
   self = [super init];
   if (self) {
     self.state = kIdle;
+    self.isInTransition = NO;
   }
   return self;
 }
@@ -48,6 +50,7 @@
       break;
   }
   self.state = newState;
+  self.isInTransition = YES;
 }
 
 
