@@ -503,7 +503,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     if (balance != nil && rate != nil && [rate floatValue] != 0.0 ) {
       NSUInteger remaining = round([balance floatValue]/[rate floatValue]);
-      self.remainingLabel.text = [NSString stringWithFormat:@"%d remaining", remaining];
+      self.remainingLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d remaining", @"remaining label"), remaining];
     }
   });
 }
