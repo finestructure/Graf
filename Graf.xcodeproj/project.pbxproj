@@ -48,6 +48,7 @@
 		5ADC3DB614CD8EC3004992F7 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
 		5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */; };
 		5AE1FB4814D7E4FD00151025 /* RequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE1FB4714D7E4FD00151025 /* RequestTest.m */; };
+		5AE2E69C14DBF552009AD7D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AE2E69A14DBF552009AD7D1 /* Localizable.strings */; };
 		5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50EB14CEF7CD00D8B6BB /* main.m */; };
 		5AED50F214CEF80400D8B6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AED50F014CEF80400D8B6BB /* InfoPlist.strings */; };
 		5AED50F914CEF81500D8B6BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F414CEF81500D8B6BB /* AppDelegate.m */; };
@@ -112,6 +113,8 @@
 		5ADC3DB414CD8389004992F7 /* DbcConnectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbcConnectorTest.m; sourceTree = "<group>"; };
 		5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePollerTest.m; sourceTree = "<group>"; };
 		5AE1FB4714D7E4FD00151025 /* RequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTest.m; sourceTree = "<group>"; };
+		5AE2E69B14DBF552009AD7D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Main/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		5AE2E69D14DBF56C009AD7D1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Main/de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		5AED50E914CEF7CD00D8B6BB /* Graf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Graf-Info.plist"; path = "Main/Graf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5AED50EA14CEF7CD00D8B6BB /* Graf-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Graf-Prefix.pch"; path = "Main/Graf-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		5AED50EB14CEF7CD00D8B6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Main/main.m; sourceTree = SOURCE_ROOT; };
@@ -227,6 +230,7 @@
 				5AED50E914CEF7CD00D8B6BB /* Graf-Info.plist */,
 				5AED50EA14CEF7CD00D8B6BB /* Graf-Prefix.pch */,
 				5AED50F014CEF80400D8B6BB /* InfoPlist.strings */,
+				5AE2E69A14DBF552009AD7D1 /* Localizable.strings */,
 				5AED50EB14CEF7CD00D8B6BB /* main.m */,
 			);
 			name = "Supporting Files";
@@ -362,6 +366,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				de,
 			);
 			mainGroup = 5A2263B814B1FB190078EBEF;
 			productRefGroup = 5A2263C414B1FB190078EBEF /* Products */;
@@ -390,6 +395,7 @@
 				5AC6548B14D16924004635D8 /* 01-refresh@2x.png in Resources */,
 				5AC6548E14D16942004635D8 /* 258-checkmark.png in Resources */,
 				5AC6548F14D16942004635D8 /* 258-checkmark@2x.png in Resources */,
+				5AE2E69C14DBF552009AD7D1 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +481,15 @@
 				5A56F0B414CD480300F7D75B /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5AE2E69A14DBF552009AD7D1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AE2E69B14DBF552009AD7D1 /* en */,
+				5AE2E69D14DBF56C009AD7D1 /* de */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		5AED50F014CEF80400D8B6BB /* InfoPlist.strings */ = {
