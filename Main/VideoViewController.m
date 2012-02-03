@@ -356,7 +356,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
       }];
     }
   }
-  [cell setNeedsDisplay];
 }
 
 
@@ -481,8 +480,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   [self.imageProcessor refreshBalance];
 
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kIdle animate:YES];
     [self.tableView reloadData];
   });
 }
@@ -498,8 +495,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
   [image transitionTo:kTimeout];
   
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kTimeout animate:YES];
     [self.tableView reloadData];
   });
 }
