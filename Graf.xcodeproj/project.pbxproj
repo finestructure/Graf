@@ -49,6 +49,7 @@
 		5ADC3DC114CDBEDD004992F7 /* ImagePollerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC3DC014CDBEDD004992F7 /* ImagePollerTest.m */; };
 		5AE1FB4814D7E4FD00151025 /* RequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE1FB4714D7E4FD00151025 /* RequestTest.m */; };
 		5AE2E69C14DBF552009AD7D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AE2E69A14DBF552009AD7D1 /* Localizable.strings */; };
+		5AE2E69F14DC0E0C009AD7D1 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
 		5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50EB14CEF7CD00D8B6BB /* main.m */; };
 		5AED50F214CEF80400D8B6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AED50F014CEF80400D8B6BB /* InfoPlist.strings */; };
 		5AED50F914CEF81500D8B6BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F414CEF81500D8B6BB /* AppDelegate.m */; };
@@ -396,6 +397,7 @@
 				5AC6548E14D16942004635D8 /* 258-checkmark.png in Resources */,
 				5AC6548F14D16942004635D8 /* 258-checkmark@2x.png in Resources */,
 				5AE2E69C14DBF552009AD7D1 /* Localizable.strings in Resources */,
+				5AE2E69F14DC0E0C009AD7D1 /* test222.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
