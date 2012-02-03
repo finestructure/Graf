@@ -14,11 +14,23 @@
 - (void)upload:(UIImage *)image {  
   NSData *imageData = UIImagePNGRepresentation(image);
   NSString *imageId = [imageData MD5];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-    if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
-      [self.delegate didDecodeImageId:imageId result:imageId];
-    }
-  });
+  
+  int time = 2 + arc4random() % 6; // 2-7 seconds run time
+  BOOL timeout = (arc4random() % 2) == 0; // 50% timeout chance
+  
+  if (! timeout ) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, time * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+      if ([self.delegate respondsToSelector:@selector(didDecodeImageId:result:)]) {
+        [self.delegate didDecodeImageId:imageId result:imageId];
+      }
+    });
+  } else {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, time * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+      if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {
+        [self.delegate didTimeoutDecodingImageId:imageId];
+      }
+    });
+  }
 }
 
 
