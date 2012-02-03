@@ -256,7 +256,12 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
 
 
 - (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
-  view.image = image.image;    
+  view.image = image.image;
+  if (image.state == kProcessing) {
+    view.frame = kImageViewFrameProcessing;
+  } else {
+    view.frame = kImageViewFrameIdle;
+  }
 }
 
 
@@ -353,11 +358,7 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
       }];
     }
   }
-  NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-  NSArray *rows = [NSArray arrayWithObject:indexPath];
-  [self.tableView beginUpdates];
-  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationNone];
-  [self.tableView endUpdates];
+  [cell setNeedsDisplay];
 }
 
 
@@ -407,8 +408,6 @@ const CGRect kTextResultFrameProcessing  = {{10,31}, {245, 18}};
       
       NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
       [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-      UITableViewCell *cell = [self cellForImage:image];
-      [self transitionCell:cell toState:kProcessing];
     });
   }];
 }
