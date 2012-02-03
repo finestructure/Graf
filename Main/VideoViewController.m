@@ -420,8 +420,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   [self startProcessingImage:image];
   
   dispatch_async(dispatch_get_main_queue(), ^(void) {
-    UITableViewCell *cell = [self cellForImage:image];
-    [self transitionCell:cell toState:kProcessing animate:YES];
     [self.tableView reloadData];
   });
 }
