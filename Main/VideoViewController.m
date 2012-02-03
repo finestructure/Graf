@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
-#define TEST 1
 
 #import "VideoViewController.h"
 
