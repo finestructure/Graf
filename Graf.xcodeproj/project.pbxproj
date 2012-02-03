@@ -208,25 +208,14 @@
 				5AED50F414CEF81500D8B6BB /* AppDelegate.m */,
 				5AED50F514CEF81500D8B6BB /* Constants.h */,
 				5AED50F614CEF81500D8B6BB /* Constants.m */,
-				5AF582D714D6DF3B007942AD /* DbcConnector.h */,
-				5AF582D814D6DF3B007942AD /* DbcConnector.m */,
-				5AED50FC14CEF85F00D8B6BB /* ImagePoller.h */,
-				5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */,
 				5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */,
 				5AED510014CEF85F00D8B6BB /* VideoViewController.m */,
-				5AED510114CEF85F00D8B6BB /* VideoViewController.xib */,
-				5A2263CE14B1FB190078EBEF /* Supporting Files */,
-				5AC6546D14D01F15004635D8 /* ImageCell.xib */,
 				5AC6547814D032B8004635D8 /* Image.h */,
 				5AC6547914D032B8004635D8 /* Image.m */,
-				5AF582CB14D41E07007942AD /* ImageProcessor.h */,
-				5AF582CC14D41E07007942AD /* ImageProcessor.m */,
-				5AF582C714D2AA4F007942AD /* UploadRequest.h */,
-				5AF582C814D2AA4F007942AD /* UploadRequest.m */,
-				5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */,
-				5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */,
-				5A1B61AF14D9774600CC0273 /* BalanceRequest.h */,
-				5A1B61B014D9774600CC0273 /* BalanceRequest.m */,
+				5AED510114CEF85F00D8B6BB /* VideoViewController.xib */,
+				5AC6546D14D01F15004635D8 /* ImageCell.xib */,
+				5AE2E67B14DBEB63009AD7D1 /* Network */,
+				5A2263CE14B1FB190078EBEF /* Supporting Files */,
 			);
 			name = Main;
 			path = Sinma;
@@ -299,6 +288,25 @@
 				5A7B0EB114B47315000314C0 /* 14-gear@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5AE2E67B14DBEB63009AD7D1 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5AF582CB14D41E07007942AD /* ImageProcessor.h */,
+				5AF582CC14D41E07007942AD /* ImageProcessor.m */,
+				5AF582D714D6DF3B007942AD /* DbcConnector.h */,
+				5AF582D814D6DF3B007942AD /* DbcConnector.m */,
+				5AED50FC14CEF85F00D8B6BB /* ImagePoller.h */,
+				5AED50FD14CEF85F00D8B6BB /* ImagePoller.m */,
+				5AF582C714D2AA4F007942AD /* UploadRequest.h */,
+				5AF582C814D2AA4F007942AD /* UploadRequest.m */,
+				5A1B61AB14D96CFA00CC0273 /* BaseRequest.h */,
+				5A1B61AC14D96CFA00CC0273 /* BaseRequest.m */,
+				5A1B61AF14D9774600CC0273 /* BalanceRequest.h */,
+				5A1B61B014D9774600CC0273 /* BalanceRequest.m */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
