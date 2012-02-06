@@ -122,12 +122,10 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   captureVideoPreviewLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
   [self.preview.layer addSublayer:captureVideoPreviewLayer];
 
-  // start session
+  // other init work
   
   [self.session startRunning];
-  
-  // refresh balance
-  [self.imageProcessor refreshBalance];
+  [self refreshBalance];
 }
 
 
@@ -435,6 +433,11 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
+- (void)refreshBalance {
+  [self.imageProcessor refreshBalance];
+}
+
+
 #pragma mark - UITableViewDataSource
 
 
@@ -487,7 +490,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   image.textResult = result;
   [image transitionTo:kIdle];
   
-  [self.imageProcessor refreshBalance];
+  [self refreshBalance];
 
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];

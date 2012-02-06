@@ -31,6 +31,7 @@
 
 - (IBAction)takePicture:(id)sender;
 - (void)refreshButtonPressed:(id)sender;
+- (void)refreshBalance;
 
 
 @end
