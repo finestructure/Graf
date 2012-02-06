@@ -476,6 +476,24 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+  Image *image = [self.images objectAtIndex:indexPath.row];
+  if (image.state == kProcessing) {
+    return NO;
+  } else {
+    return YES;
+  }
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (editingStyle == UITableViewCellEditingStyleDelete) {
+    [self.images removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
+}
+
+
 # pragma mark - ImageProcessorDelegate
 
 
