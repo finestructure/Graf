@@ -4,7 +4,7 @@
 product_name="Graf"
 manifest="graf_manifest.plist"
 dev_certificate="iPhone Developer: Sven Schmidt (L686FULC28)"
-prov_profile="/Users/sas/Library/MobileDevice/Provisioning Profiles/8A90C6D1-7099-4E4A-8F8E-BCE9F790F102.mobileprovision"
+prov_profile="/Users/sas/Library/MobileDevice/Provisioning Profiles/CAAD0DB4-2590-4787-B211-C4057B373A3A.mobileprovision"
 
 # more variable, probably no need to change
 project_dir=`pwd`
