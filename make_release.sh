@@ -4,13 +4,24 @@
 product_name="Graf"
 manifest="graf_manifest.plist"
 dev_certificate="iPhone Developer: Sven Schmidt (L686FULC28)"
-prov_profile="/Users/sas/Library/MobileDevice/Provisioning Profiles/CAAD0DB4-2590-4787-B211-C4057B373A3A.mobileprovision"
+prov_profiles="/Users/sas/Library/MobileDevice/Provisioning Profiles"
 
-# more variable, probably no need to change
+# more variables, probably no need to change
 project_dir=`pwd`
 product="build/Release-iphoneos/$product_name.app"
 publishing_target="abslogin:~/public_html/$product_name/"
 tempdir=.tmp
+
+# find prov profile
+count=$(ls -1 "$prov_profiles"/*.mobileprovision | wc -l)
+if [ $count == 1 ]
+then
+  prov_profile=$(ls -1 "$prov_profiles"/*.mobileprovision)
+else
+  echo Need a single provisioning profile in $prov_profiles, but found:
+  ls -1 $prov_profiles
+  exit 1
+fi
 
 # build release
 xcodebuild -target $product_name -configuration Release
