@@ -14,6 +14,8 @@
 #import "Constants.h"
 #import "Image.h"
 #import "NSData+MD5.h"
+#import <CouchCocoa/CouchCocoa.h>
+#import <CouchCocoa/CouchTouchDBServer.h>
 
 
 @implementation VideoViewController
@@ -27,6 +29,7 @@
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize images = _images;
+@synthesize database = _database;
 
 
 const int kPollingInterval = 5;
@@ -53,6 +56,16 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     self.imageProcessor = [[ImageProcessor alloc] init];
 #endif
     self.imageProcessor.delegate = self;
+    
+    CouchTouchDBServer *server = [CouchTouchDBServer sharedInstance];
+    if (server.error) {
+      [self failedWithError:server.error];
+    }
+    self.database = [server databaseNamed: @"grocery-sync"];
+    NSError *error;
+    if (![self.database ensureCreated:&error]) {
+      [self failedWithError:error];
+    }
   }
   return self;
 }
@@ -543,6 +556,12 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 - (void)didReceiveError:(NSError *)error {
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"Connection error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
+
+
+- (void)failedWithError:(NSError *)error {
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
 }
 

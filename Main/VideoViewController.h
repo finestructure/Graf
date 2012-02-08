@@ -12,6 +12,7 @@
 
 
 @class Image;
+@class CouchDatabase;
 
 
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate>
@@ -20,6 +21,7 @@
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
 @property (nonatomic, retain) ImageProcessor *imageProcessor;
 @property (nonatomic, retain) NSMutableArray *images;
+@property (nonatomic, retain) CouchDatabase *database;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -33,5 +35,6 @@
 - (void)refreshButtonPressed:(id)sender;
 - (void)refreshBalance;
 
+- (void)failedWithError:(NSError *)error;
 
 @end
