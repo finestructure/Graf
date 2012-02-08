@@ -177,8 +177,6 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
-				5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */,
-				5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */,
 				5A2263CD14B1FB190078EBEF /* Main */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
@@ -200,6 +198,8 @@
 		5A2263C614B1FB190078EBEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */,
+				5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */,
 				5A86044E14C43D6D008D2C6A /* CFNetwork.framework */,
 				5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */,
 				5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */,
