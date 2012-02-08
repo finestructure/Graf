@@ -49,7 +49,11 @@
 
 
 - (void)uploadRequestFinished:(UploadRequest *)request {
-  if (request.hasTimedOut) {
+  if (request.error != nil) {
+    if ([self.delegate respondsToSelector:@selector(didReceiveError:)]) {
+      [self.delegate didReceiveError:request.error];
+    }
+  } else if (request.hasTimedOut) {
     if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {
       [self.delegate didTimeoutDecodingImageId:request.imageId];
     }
@@ -63,7 +67,11 @@
 
 
 - (void)balanceRequestFinished:(BalanceRequest *)request {
-  if (request.hasTimedOut) {
+  if (request.error != nil) {
+    if ([self.delegate respondsToSelector:@selector(didReceiveError:)]) {
+      [self.delegate didReceiveError:request.error];
+    }
+  } else if (request.hasTimedOut) {
     return;
   }
   if ([self.delegate respondsToSelector:@selector(didRefreshBalance:rate:)]) {

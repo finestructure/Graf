@@ -17,6 +17,7 @@ extern int const kTimeout;
 @property (nonatomic, assign) BOOL hasTimedOut;
 @property (nonatomic, assign) BOOL isFinished;
 @property (nonatomic, retain) DbcConnector *dbc;
+@property (nonatomic, retain) NSError *error;
 
 - (void)start;
 - (void)close;

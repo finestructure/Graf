@@ -16,6 +16,7 @@ int const kTimeout = 40;
 @synthesize hasTimedOut = _hasTimedOut;
 @synthesize isFinished = _isFinished;
 @synthesize dbc = _dbc;
+@synthesize error = _error;
 
 
 - (id)init {
@@ -56,6 +57,7 @@ int const kTimeout = 40;
 
 
 - (void)didDisconnectWithError:(NSError *)error {
+  self.error = error;
   self.hasTimedOut = YES;
   self.isFinished = YES;
 }

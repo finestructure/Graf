@@ -353,7 +353,8 @@ NSString * const kCaptchaCommand = @"captcha";
           NSLog(@"Error info: %d %@", [error code], [error localizedDescription]);
         }
         if ([self.delegate respondsToSelector:@selector(didDisconnectWithError:)]) {
-          NSError *error = [NSError errorWithDomain:@"DbcConnector" code:1 userInfo:nil];
+         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:NSLocalizedString(@"Connection closed by remote host while commands are active.", @"Connection error text") forKey:NSLocalizedDescriptionKey];
+          NSError *error = [NSError errorWithDomain:@"DbcConnector" code:1 userInfo:userInfo];
           [self.delegate didDisconnectWithError:error];
         }
       } else {
