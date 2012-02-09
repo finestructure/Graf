@@ -435,47 +435,40 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-#pragma mark - Actions
-
-
-- (IBAction)takePicture:(id)sender {
-  __block UIImage *image = nil;
-#if !(TARGET_IPHONE_SIMULATOR)
-  AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
-  [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
-    image = [self convertSampleBufferToUIImage:sampleBuffer];
-    [self addImage:image];
-  }];
-#else
-  image = [UIImage imageNamed:@"test222.tif"];
-  [self addImage:image];
-#endif
-
-  // save couchdb document
-    
+- (void)saveImage:(UIImage *)image {
   CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
   [model setValue:[NSDate date] ofProperty:@"created_at"];
   [model setValue:@"snapshot.png" ofProperty:@"image"];
-  [model createAttachmentWithName:@"snapshot.png" 
-                             type:@"image/png" 
-                             body:UIImagePNGRepresentation(image)];
-
+  [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image)];
   RESTOperation* op = [model save];
-
-//  CouchDocument* doc = [self.database untitledDocument];
-//  NSDictionary *inDocument = [NSDictionary dictionaryWithObjectsAndKeys:@"blah", @"text",
-//                              [NSNumber numberWithBool:NO], @"check",
-//                              [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
-//                              nil];
-//  CouchDocument* doc = [self.database untitledDocument];
-//  RESTOperation* op = [doc putProperties:inDocument];
-
   [op onCompletion: ^{
     if (op.error) {
       [self failedWithError:op.error];
     }
 	}];
   [op start];
+}
+
+
+#pragma mark - Actions
+
+
+- (IBAction)takePicture:(id)sender {
+#if !(TARGET_IPHONE_SIMULATOR)
+  AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
+  [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
+    UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
+    [self addImage:image];
+    [self saveImage:image];
+  }];
+#else
+  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  [self addImage:image];
+  [self saveImage:image];
+#endif
+
+  // save couchdb document
+    
 }
 
 
