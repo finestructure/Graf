@@ -416,11 +416,26 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)saveImage:(Image *)image {
+- (void)updateCouchImageId:(NSString *)imageId result:(NSString *)result {
+  CouchDocument *doc = [self.database documentWithID:imageId];
+  NSMutableDictionary *props = [NSMutableDictionary dictionaryWithDictionary:doc.properties];
+  [props setValue:result forKey:@"text_result"];
+  RESTOperation* op = [doc putProperties:props];
+  [op onCompletion: ^{
+    if (op.error) {
+      [self failedWithError:op.error];
+    }
+	}];
+  [op start];
+}
+
+
+- (void)saveCouchImage:(Image *)image {
   CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
   [model setValue:image.imageId ofProperty:@"_id"];
   [model setValue:[NSDate date] ofProperty:@"created_at"];
   [model setValue:@"snapshot.png" ofProperty:@"image"];
+  [model setValue:@"" ofProperty:@"text_result"];
   [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image.image)];
   RESTOperation* op = [model save];
   [op onCompletion: ^{
@@ -447,7 +462,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    [self saveImage:image];
+    [self saveCouchImage:image];
   });
 }
 
@@ -562,6 +577,8 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   
   [self refreshBalance];
 
+  [self updateCouchImageId:imageId result:result];
+
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
   });
@@ -576,7 +593,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
   Image *image = [self imageWithId:imageId];
   [image transitionTo:kTimeout];
-  
+    
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
   });
