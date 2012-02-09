@@ -416,12 +416,27 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)addImage:(UIImage *)sampleImage {
-  NSData *imageData = UIImagePNGRepresentation(sampleImage);
-  
+- (void)saveImage:(Image *)image {
+  CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
+  [model setValue:image.imageId ofProperty:@"_id"];
+  [model setValue:[NSDate date] ofProperty:@"created_at"];
+  [model setValue:@"snapshot.png" ofProperty:@"image"];
+  [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image.image)];
+  RESTOperation* op = [model save];
+  [op onCompletion: ^{
+    if (op.error) {
+      [self failedWithError:op.error];
+    }
+	}];
+  [op start];
+}
+
+
+- (void)addImage:(UIImage *)sampleImage {  
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     Image *image = [[Image alloc] init];
     image.image = sampleImage;
+    NSData *imageData = UIImagePNGRepresentation(sampleImage);
     image.imageId = [imageData MD5];
     [self.images insertObject:image atIndex:0];
     
@@ -431,22 +446,9 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     image.isInTransition = NO;
     NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self saveImage:image];
   });
-}
-
-
-- (void)saveImage:(UIImage *)image {
-  CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
-  [model setValue:[NSDate date] ofProperty:@"created_at"];
-  [model setValue:@"snapshot.png" ofProperty:@"image"];
-  [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image)];
-  RESTOperation* op = [model save];
-  [op onCompletion: ^{
-    if (op.error) {
-      [self failedWithError:op.error];
-    }
-	}];
-  [op start];
 }
 
 
@@ -459,12 +461,10 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
     UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
     [self addImage:image];
-    [self saveImage:image];
   }];
 #else
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   [self addImage:image];
-  [self saveImage:image];
 #endif
 
   // save couchdb document
