@@ -32,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
-@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 
 - (void)startProcessingImage:(Image *)image;
 

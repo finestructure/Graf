@@ -26,7 +26,6 @@
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
 @synthesize remainingLabel = _remainingLabel;
-@synthesize progressView = _progressView;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize images = _images;
@@ -226,7 +225,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   [self setVersionLabel:nil];
   [self setTableView:nil];
   [self setRemainingLabel:nil];
-  [self setProgressView:nil];
   [super viewDidUnload];
 }
 
@@ -669,10 +667,9 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     unsigned total = _pull.total + _push.total;
     NSLog(@"SYNC progress: %u / %u", completed, total);
     if (total > 0 && completed < total) {
-      self.progressView.hidden = NO;
-      [self.progressView setProgress:(completed / (float)total)];
+      [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     } else {
-      self.progressView.hidden = YES;
+      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
   }
 }
