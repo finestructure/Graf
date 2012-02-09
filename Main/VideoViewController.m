@@ -63,7 +63,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     
     // register user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:@"http://thebe.local:5984/graf" forKey:@"syncpoint"];
+    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:@"http://abstracture.iriscouch.com/graf" forKey:@"syncpoint"];
     [defaults registerDefaults:appdefaults];
     [defaults synchronize];
     
