@@ -430,16 +430,35 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 
 - (IBAction)takePicture:(id)sender {
+  __block UIImage *image = nil;
 #if !(TARGET_IPHONE_SIMULATOR)
   AVCaptureConnection *connection = [self.imageOutput connectionWithMediaType:AVMediaTypeVideo];
   [self.imageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef sampleBuffer, NSError *error) {
-    UIImage *image = [self convertSampleBufferToUIImage:sampleBuffer];
+    image = [self convertSampleBufferToUIImage:sampleBuffer];
     [self addImage:image];
   }];
 #else
-  UIImage *image = [UIImage imageNamed:@"test222.tif"];
+  image = [UIImage imageNamed:@"test222.tif"];
   [self addImage:image];
 #endif
+  
+  // Save the document, asynchronously:
+  CouchDocument* doc = [self.database untitledDocument];
+    
+  CouchModel *model = [CouchModel modelForDocument:doc];
+  [model setValue:[NSDate date] ofProperty:@"created_at"];
+  [model setValue:@"snapshot.png" ofProperty:@"image"];
+  [model createAttachmentWithName:@"snapshot.png" 
+                             type:@"image/png" 
+                             body:UIImagePNGRepresentation(image)];
+
+  RESTOperation* op = [model save];
+  [op onCompletion: ^{
+    if (op.error) {
+      [self failedWithError:op.error];
+    }
+	}];
+  [op start];
 }
 
 
