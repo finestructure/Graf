@@ -44,6 +44,9 @@ const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
 const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 
+#define TEST
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -449,16 +452,26 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 #endif
   
   // Save the document, asynchronously:
-  CouchDocument* doc = [self.database untitledDocument];
-    
-  CouchModel *model = [CouchModel modelForDocument:doc];
-  [model setValue:[NSDate date] ofProperty:@"created_at"];
-  [model setValue:@"snapshot.png" ofProperty:@"image"];
-  [model createAttachmentWithName:@"snapshot.png" 
-                             type:@"image/png" 
-                             body:UIImagePNGRepresentation(image)];
+//  CouchDocument* doc = [self.database untitledDocument];
+//    
+//  CouchModel *model = [CouchModel modelForDocument:doc];
+//  [model setValue:[NSDate date] ofProperty:@"created_at"];
+//  [model setValue:@"snapshot.png" ofProperty:@"image"];
+//  [model createAttachmentWithName:@"snapshot.png" 
+//                             type:@"image/png" 
+//                             body:UIImagePNGRepresentation(image)];
+//
+//  RESTOperation* op = [model save];
 
-  RESTOperation* op = [model save];
+  NSDictionary *inDocument = [NSDictionary dictionaryWithObjectsAndKeys:@"blah", @"text",
+                              [NSNumber numberWithBool:NO], @"check",
+                              [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
+                              nil];
+  
+  // Save the document, asynchronously:
+  CouchDocument* doc = [self.database untitledDocument];
+  RESTOperation* op = [doc putProperties:inDocument];
+
   [op onCompletion: ^{
     if (op.error) {
       [self failedWithError:op.error];
