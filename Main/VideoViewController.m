@@ -450,27 +450,25 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   image = [UIImage imageNamed:@"test222.tif"];
   [self addImage:image];
 #endif
-  
-  // Save the document, asynchronously:
-//  CouchDocument* doc = [self.database untitledDocument];
-//    
-//  CouchModel *model = [CouchModel modelForDocument:doc];
-//  [model setValue:[NSDate date] ofProperty:@"created_at"];
-//  [model setValue:@"snapshot.png" ofProperty:@"image"];
-//  [model createAttachmentWithName:@"snapshot.png" 
-//                             type:@"image/png" 
-//                             body:UIImagePNGRepresentation(image)];
-//
-//  RESTOperation* op = [model save];
 
-  NSDictionary *inDocument = [NSDictionary dictionaryWithObjectsAndKeys:@"blah", @"text",
-                              [NSNumber numberWithBool:NO], @"check",
-                              [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
-                              nil];
-  
-  // Save the document, asynchronously:
-  CouchDocument* doc = [self.database untitledDocument];
-  RESTOperation* op = [doc putProperties:inDocument];
+  // save couchdb document
+    
+  CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
+  [model setValue:[NSDate date] ofProperty:@"created_at"];
+  [model setValue:@"snapshot.png" ofProperty:@"image"];
+  [model createAttachmentWithName:@"snapshot.png" 
+                             type:@"image/png" 
+                             body:UIImagePNGRepresentation(image)];
+
+  RESTOperation* op = [model save];
+
+//  CouchDocument* doc = [self.database untitledDocument];
+//  NSDictionary *inDocument = [NSDictionary dictionaryWithObjectsAndKeys:@"blah", @"text",
+//                              [NSNumber numberWithBool:NO], @"check",
+//                              [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
+//                              nil];
+//  CouchDocument* doc = [self.database untitledDocument];
+//  RESTOperation* op = [doc putProperties:inDocument];
 
   [op onCompletion: ^{
     if (op.error) {
