@@ -13,9 +13,13 @@
 
 @class Image;
 @class CouchDatabase;
+@class CouchReplication;
 
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate>
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate> {
+  CouchReplication* _pull;
+  CouchReplication* _push;
+}
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
@@ -28,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 
 - (void)startProcessingImage:(Image *)image;
 
@@ -36,5 +41,8 @@
 - (void)refreshBalance;
 
 - (void)failedWithError:(NSError *)error;
+
+- (void)updateSyncURL;
+- (void)forgetSync;
 
 @end

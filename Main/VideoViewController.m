@@ -26,6 +26,7 @@
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
 @synthesize remainingLabel = _remainingLabel;
+@synthesize progressView = _progressView;
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize images = _images;
@@ -57,11 +58,18 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 #endif
     self.imageProcessor.delegate = self;
     
+    // register user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:@"http://192.168.111.241:5984/graf" forKey:@"syncpoint"];
+    [defaults registerDefaults:appdefaults];
+    [defaults synchronize];
+    
+    // set up touchdb
     CouchTouchDBServer *server = [CouchTouchDBServer sharedInstance];
     if (server.error) {
       [self failedWithError:server.error];
     }
-    self.database = [server databaseNamed: @"grocery-sync"];
+    self.database = [server databaseNamed: @"graf"];
     NSError *error;
     if (![self.database ensureCreated:&error]) {
       [self failedWithError:error];
@@ -139,6 +147,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   
   [self.session startRunning];
   [self refreshBalance];
+  [self updateSyncURL];
 }
 
 
@@ -208,6 +217,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   [self setVersionLabel:nil];
   [self setTableView:nil];
   [self setRemainingLabel:nil];
+  [self setProgressView:nil];
   [super viewDidUnload];
 }
 
@@ -563,6 +573,62 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 - (void)failedWithError:(NSError *)error {
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
+}
+
+
+#pragma mark - TouchDB Sync
+
+
+- (void)updateSyncURL {
+  if (!self.database) {
+    return;
+  }
+  NSURL* newRemoteURL = nil;
+  NSString *syncpoint = [[NSUserDefaults standardUserDefaults] objectForKey:@"syncpoint"];
+  NSLog(@"syncpoint: %@", syncpoint);
+  if (syncpoint.length > 0) {
+    newRemoteURL = [NSURL URLWithString:syncpoint];
+    if ([newRemoteURL isEqual: _pull.remoteURL]) {
+      return;  // no-op
+    }
+  }
+  
+  [self forgetSync];
+  if (newRemoteURL) {
+    _pull = [self.database pullFromDatabaseAtURL: newRemoteURL];
+    _push = [self.database pushToDatabaseAtURL: newRemoteURL];
+    _pull.continuous = _push.continuous = YES;
+    
+    [_pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+    [_push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+  }
+}
+
+
+- (void) forgetSync {
+  [_pull removeObserver: self forKeyPath: @"completed"];
+  [_pull stop];
+  _pull = nil;
+  [_push removeObserver: self forKeyPath: @"completed"];
+  [_push stop];
+  _push = nil;
+}
+
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
+                         change:(NSDictionary *)change context:(void *)context
+{
+  if (object == _pull || object == _push) {
+    unsigned completed = _pull.completed + _push.completed;
+    unsigned total = _pull.total + _push.total;
+    NSLog(@"SYNC progress: %u / %u", completed, total);
+    if (total > 0 && completed < total) {
+      self.progressView.hidden = NO;
+      [self.progressView setProgress:(completed / (float)total)];
+    } else {
+      self.progressView.hidden = YES;
+    }
+  }
 }
 
 
