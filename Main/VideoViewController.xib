@@ -176,7 +176,7 @@
 						<string key="NSFrame">{{0, 401}, {147, 15}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="993600176"/>
+						<reference key="NSNextKeyView" ref="930697817"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -191,12 +191,13 @@
 						<reference key="IBUIFontDescription" ref="453398724"/>
 						<reference key="IBUIFont" ref="795044220"/>
 					</object>
-					<object class="IBUIProgressView" id="834080287">
+					<object class="IBUIProgressView" id="930697817">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{100, 404}, {82, 9}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="993600176"/>
 						<string key="NSReuseIdentifierKey">_NS:677</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -4659,7 +4660,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">progressView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="834080287"/>
+						<reference key="destination" ref="930697817"/>
 					</object>
 					<int key="connectionID">56</int>
 				</object>
@@ -4706,7 +4707,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="993600176"/>
 							<reference ref="986481440"/>
 							<reference ref="545855985"/>
-							<reference ref="834080287"/>
+							<reference ref="930697817"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4773,7 +4774,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">55</int>
-						<reference key="object" ref="834080287"/>
+						<reference key="object" ref="930697817"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
