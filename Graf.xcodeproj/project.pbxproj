@@ -17,6 +17,7 @@
 		5A29CA9514E2EA1A00AE26D7 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */; };
 		5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */; };
 		5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */; };
+		5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA214E3C38A00AE26D7 /* libz.dylib */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
@@ -82,6 +83,7 @@
 		5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = other/CouchCocoa.framework; sourceTree = "<group>"; };
 		5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TouchDB.framework; path = other/TouchDB.framework; sourceTree = "<group>"; };
 		5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		5A29CAA214E3C38A00AE26D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -149,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
 				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
 				5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */,
 				5A29CA9514E2EA1A00AE26D7 /* CouchCocoa.framework in Frameworks */,
@@ -180,7 +183,6 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
-				5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */,
 				5A2263CD14B1FB190078EBEF /* Main */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
@@ -202,6 +204,8 @@
 		5A2263C614B1FB190078EBEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A29CAA214E3C38A00AE26D7 /* libz.dylib */,
+				5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */,
 				5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */,
 				5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */,
 				5A86044E14C43D6D008D2C6A /* CFNetwork.framework */,
@@ -574,6 +578,7 @@
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -592,6 +597,7 @@
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
