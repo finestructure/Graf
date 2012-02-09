@@ -121,7 +121,13 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   // update labels and ui controls
   
   self.statusTextView.text = @"";
-  self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+#ifdef TEST
+  NSString *prefix = @"TEST-";
+#else
+  NSString *prefix = @"";
+#endif
+  NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+  self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, version];
   self.remainingLabel.text = @"";
   
   // session init
