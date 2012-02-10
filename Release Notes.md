@@ -1,3 +1,5 @@
+* 2012-02-10: v0.11
+  * Added "couch-link", saving images to [Iriscouch](http://abstracture.iriscouch.com/_utils/database.html?graf)
 * 2012-02-07: v0.10
   * [#26](https://github.com/sas71/Graf/issues/26)
 * 2012-02-07: v0.09
