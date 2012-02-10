@@ -44,7 +44,7 @@ const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
 const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 
-#define TEST
+//#define TEST
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
