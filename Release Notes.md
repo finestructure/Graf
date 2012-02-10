@@ -1,4 +1,5 @@
 * 2012-02-10: v0.11
+  * [#27](https://github.com/sas71/Graf/issues/27)
   * Added "couch-link", saving images to [Cloudant](https://cloudant.com/futon/database.html?abstracture%2Fgraf)
 * 2012-02-07: v0.10
   * [#26](https://github.com/sas71/Graf/issues/26)
