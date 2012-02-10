@@ -60,9 +60,24 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 #endif
     self.imageProcessor.delegate = self;
     
+    // register db credentials
+    NSURLCredential* cred;
+    cred = [NSURLCredential credentialWithUser: @"abstracture"
+                                      password: @"7V2BoXr94g"
+                                   persistence: NSURLCredentialPersistencePermanent];
+    NSURLProtectionSpace* space;
+    space = [[NSURLProtectionSpace alloc] initWithHost: @"abstracture.cloudant.com"
+                                                   port: 443
+                                               protocol: @"https"
+                                                  realm: @"Cloudant Private Database"
+                                   authenticationMethod: NSURLAuthenticationMethodDefault];
+    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential: cred
+                                                        forProtectionSpace: space];
+    
     // register user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:@"http://abstracture.iriscouch.com/graf" forKey:@"syncpoint"];
+    NSString *url = @"https://abstracture.cloudant.com/graf";
+    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
     [defaults registerDefaults:appdefaults];
     [defaults synchronize];
     
