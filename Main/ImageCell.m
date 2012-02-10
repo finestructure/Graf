@@ -10,6 +10,8 @@
 
 @implementation ImageCell
 
+@synthesize recognizer = _recognizer;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -29,6 +31,16 @@
 
 - (BOOL)canBecomeFirstResponder {
   return YES;
+}
+
+
+- (void)addRecognizerWithTarget:(id)target action:(SEL)action {
+  if (self.recognizer == nil) {
+    // only add a recognizer if we don't have one yet
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:target action:action];
+    [self addGestureRecognizer:recognizer];
+    self.recognizer = recognizer;
+  }
 }
 
 

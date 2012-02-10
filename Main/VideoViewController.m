@@ -13,6 +13,7 @@
 #import "MockImageProcessor.h"
 #import "Constants.h"
 #import "Image.h"
+#import "ImageCell.h"
 #import "NSData+MD5.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
@@ -480,7 +481,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)longPress:(UILongPressGestureRecognizer *)recognizer {	
+- (void)imageCellGestureRecognizerHandler:(UILongPressGestureRecognizer *)recognizer {	
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		UIView *cell = recognizer.view;
     [cell becomeFirstResponder];
@@ -543,19 +544,8 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   Image *image = [self.images objectAtIndex:indexPath.row];
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
-  // register gesture handler for table view
-  BOOL hasRecognizer = NO;
-  for (id r in cell.gestureRecognizers) {
-    if ([r isKindOfClass:[UILongPressGestureRecognizer class]]) {
-      hasRecognizer = YES;
-      break;
-    }
-  }
-  if (! hasRecognizer) {
-    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    [cell addGestureRecognizer:recognizer];
-  }
+  ImageCell *cell = (ImageCell *)[tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  [cell addRecognizerWithTarget:self action:@selector(imageCellGestureRecognizerHandler:)];
   
   if (image.isInTransition) {
     [self transitionCell:cell toState:image.state animate:YES];

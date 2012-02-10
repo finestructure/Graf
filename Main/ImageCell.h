@@ -10,4 +10,8 @@
 
 @interface ImageCell : UITableViewCell
 
+@property (nonatomic, retain) UIGestureRecognizer *recognizer;
+
+- (void)addRecognizerWithTarget:(id)target action:(SEL)action;
+
 @end
