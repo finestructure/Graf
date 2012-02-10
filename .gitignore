@@ -1,3 +1,4 @@
 releases/*.ipa
 releases/iOS_Team_Provisioning_Profile_.mobileprovision
 Main/*.lproj/*.backup
+*.framework
