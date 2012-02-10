@@ -480,6 +480,25 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
+- (void)longPress:(UILongPressGestureRecognizer *)recognizer {	
+	if (recognizer.state == UIGestureRecognizerStateBegan) {
+		UIView *cell = recognizer.view;
+    [cell becomeFirstResponder];
+		Image *image = [self imageForView:cell];
+    UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:image.imageId action:@selector(imageIdMenu:)];
+    
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+		[menu setMenuItems:[NSArray arrayWithObject:imageIdMenu]];
+		[menu setTargetRect:cell.frame inView:cell.superview];
+    [menu setMenuVisible:YES animated:YES];
+	}
+}
+
+- (void)imageIdMenu:(id)sender {
+	NSLog(@"Cell was flagged");
+}
+
+
 #pragma mark - Actions
 
 
@@ -525,6 +544,18 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   Image *image = [self.images objectAtIndex:indexPath.row];
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  // register gesture handler for table view
+  BOOL hasRecognizer = NO;
+  for (id r in cell.gestureRecognizers) {
+    if ([r isKindOfClass:[UILongPressGestureRecognizer class]]) {
+      hasRecognizer = YES;
+      break;
+    }
+  }
+  if (! hasRecognizer) {
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [cell addGestureRecognizer:recognizer];
+  }
   
   if (image.isInTransition) {
     [self transitionCell:cell toState:image.state animate:YES];
