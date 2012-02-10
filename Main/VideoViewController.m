@@ -14,6 +14,8 @@
 #import "Constants.h"
 #import "Image.h"
 #import "NSData+MD5.h"
+#import <CouchCocoa/CouchCocoa.h>
+#import <CouchCocoa/CouchTouchDBServer.h>
 
 
 @implementation VideoViewController
@@ -27,6 +29,7 @@
 @synthesize imageOutput = _imageOutput;
 @synthesize imageProcessor = _imageProcessor;
 @synthesize images = _images;
+@synthesize database = _database;
 
 
 const int kPollingInterval = 5;
@@ -38,6 +41,9 @@ const CGRect kImageViewFrameIdle         = {{10, 5}, {200, 50}};
 const CGRect kImageViewFrameProcessing   = {{10, 7}, {260, 65}};
 const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
 const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
+
+
+#define TEST
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,6 +59,23 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     self.imageProcessor = [[ImageProcessor alloc] init];
 #endif
     self.imageProcessor.delegate = self;
+    
+    // register user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:@"http://abstracture.iriscouch.com/graf" forKey:@"syncpoint"];
+    [defaults registerDefaults:appdefaults];
+    [defaults synchronize];
+    
+    // set up touchdb
+    CouchTouchDBServer *server = [CouchTouchDBServer sharedInstance];
+    if (server.error) {
+      [self failedWithError:server.error];
+    }
+    self.database = [server databaseNamed: @"graf"];
+    NSError *error;
+    if (![self.database ensureCreated:&error]) {
+      [self failedWithError:error];
+    }
   }
   return self;
 }
@@ -100,7 +123,13 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   // update labels and ui controls
   
   self.statusTextView.text = @"";
-  self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+#ifdef TEST
+  NSString *prefix = @"TEST-";
+#else
+  NSString *prefix = @"";
+#endif
+  NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+  self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, version];
   self.remainingLabel.text = @"";
   
   // session init
@@ -126,6 +155,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   
   [self.session startRunning];
   [self refreshBalance];
+  [self updateSyncURL];
 }
 
 
@@ -384,12 +414,42 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)addImage:(UIImage *)sampleImage {
-  NSData *imageData = UIImagePNGRepresentation(sampleImage);
-  
+- (void)updateCouchImageId:(NSString *)imageId result:(NSString *)result {
+  CouchDocument *doc = [self.database documentWithID:imageId];
+  NSMutableDictionary *props = [NSMutableDictionary dictionaryWithDictionary:doc.properties];
+  [props setValue:result forKey:@"text_result"];
+  RESTOperation* op = [doc putProperties:props];
+  [op onCompletion: ^{
+    if (op.error) {
+      [self failedWithError:op.error];
+    }
+	}];
+  [op start];
+}
+
+
+- (void)saveCouchImage:(Image *)image {
+  CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
+  [model setValue:image.imageId ofProperty:@"_id"];
+  [model setValue:[NSDate date] ofProperty:@"created_at"];
+  [model setValue:@"snapshot.png" ofProperty:@"image"];
+  [model setValue:@"" ofProperty:@"text_result"];
+  [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image.image)];
+  RESTOperation* op = [model save];
+  [op onCompletion: ^{
+    if (op.error) {
+      [self failedWithError:op.error];
+    }
+	}];
+  [op start];
+}
+
+
+- (void)addImage:(UIImage *)sampleImage {  
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     Image *image = [[Image alloc] init];
     image.image = sampleImage;
+    NSData *imageData = UIImagePNGRepresentation(sampleImage);
     image.imageId = [imageData MD5];
     [self.images insertObject:image atIndex:0];
     
@@ -399,6 +459,8 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     image.isInTransition = NO;
     NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self saveCouchImage:image];
   });
 }
 
@@ -417,6 +479,9 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   UIImage *image = [UIImage imageNamed:@"test222.tif"];
   [self addImage:image];
 #endif
+
+  // save couchdb document
+    
 }
 
 
@@ -510,6 +575,8 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   
   [self refreshBalance];
 
+  [self updateCouchImageId:imageId result:result];
+
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
   });
@@ -524,7 +591,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
   Image *image = [self imageWithId:imageId];
   [image transitionTo:kTimeout];
-  
+    
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
   });
@@ -544,6 +611,67 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 - (void)didReceiveError:(NSError *)error {
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"Connection error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
+}
+
+
+- (void)failedWithError:(NSError *)error {
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
+
+
+#pragma mark - TouchDB Sync
+
+
+- (void)updateSyncURL {
+  if (!self.database) {
+    return;
+  }
+  NSURL* newRemoteURL = nil;
+  NSString *syncpoint = [[NSUserDefaults standardUserDefaults] objectForKey:@"syncpoint"];
+  NSLog(@"syncpoint: %@", syncpoint);
+  if (syncpoint.length > 0) {
+    newRemoteURL = [NSURL URLWithString:syncpoint];
+    if ([newRemoteURL isEqual: _pull.remoteURL]) {
+      return;  // no-op
+    }
+  }
+  
+  [self forgetSync];
+  if (newRemoteURL) {
+    _pull = [self.database pullFromDatabaseAtURL: newRemoteURL];
+    _push = [self.database pushToDatabaseAtURL: newRemoteURL];
+    _pull.continuous = _push.continuous = YES;
+    
+    [_pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+    [_push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+  }
+}
+
+
+- (void) forgetSync {
+  [_pull removeObserver: self forKeyPath: @"completed"];
+  [_pull stop];
+  _pull = nil;
+  [_push removeObserver: self forKeyPath: @"completed"];
+  [_push stop];
+  _push = nil;
+}
+
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
+                         change:(NSDictionary *)change context:(void *)context
+{
+  if (object == _pull || object == _push) {
+    unsigned completed = _pull.completed + _push.completed;
+    unsigned total = _pull.total + _push.total;
+    NSLog(@"SYNC progress: %u / %u", completed, total);
+    if (total > 0 && completed < total) {
+      [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    } else {
+      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }
+  }
 }
 
 

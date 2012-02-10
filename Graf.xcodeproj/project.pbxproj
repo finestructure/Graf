@@ -14,6 +14,10 @@
 		5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
+		5A29CA9514E2EA1A00AE26D7 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */; };
+		5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */; };
+		5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */; };
+		5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA214E3C38A00AE26D7 /* libz.dylib */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
@@ -76,6 +80,10 @@
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5A2263C914B1FB190078EBEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = other/CouchCocoa.framework; sourceTree = "<group>"; };
+		5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TouchDB.framework; path = other/TouchDB.framework; sourceTree = "<group>"; };
+		5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		5A29CAA214E3C38A00AE26D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -143,6 +151,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
+				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
+				5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */,
+				5A29CA9514E2EA1A00AE26D7 /* CouchCocoa.framework in Frameworks */,
 				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
 				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
 				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
@@ -192,6 +204,10 @@
 		5A2263C614B1FB190078EBEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A29CAA214E3C38A00AE26D7 /* libz.dylib */,
+				5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */,
+				5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */,
+				5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */,
 				5A86044E14C43D6D008D2C6A /* CFNetwork.framework */,
 				5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */,
 				5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */,
@@ -553,11 +569,16 @@
 		5A2263E214B1FB190078EBEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/other\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Main/Graf-Prefix.pch";
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -567,11 +588,16 @@
 		5A2263E314B1FB190078EBEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/other\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Main/Graf-Prefix.pch";
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
