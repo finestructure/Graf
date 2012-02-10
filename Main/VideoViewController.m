@@ -632,27 +632,22 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   NSLog(@"syncpoint: %@", syncpoint);
   if (syncpoint.length > 0) {
     newRemoteURL = [NSURL URLWithString:syncpoint];
-    if ([newRemoteURL isEqual: _pull.remoteURL]) {
+    if ([newRemoteURL isEqual: _push.remoteURL]) {
       return;  // no-op
     }
   }
   
   [self forgetSync];
   if (newRemoteURL) {
-    _pull = [self.database pullFromDatabaseAtURL: newRemoteURL];
     _push = [self.database pushToDatabaseAtURL: newRemoteURL];
-    _pull.continuous = _push.continuous = YES;
+    _push.continuous = YES;
     
-    [_pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
     [_push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
   }
 }
 
 
 - (void) forgetSync {
-  [_pull removeObserver: self forKeyPath: @"completed"];
-  [_pull stop];
-  _pull = nil;
   [_push removeObserver: self forKeyPath: @"completed"];
   [_push stop];
   _push = nil;
@@ -662,9 +657,9 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
                          change:(NSDictionary *)change context:(void *)context
 {
-  if (object == _pull || object == _push) {
-    unsigned completed = _pull.completed + _push.completed;
-    unsigned total = _pull.total + _push.total;
+  if (object == _push) {
+    unsigned completed = _push.completed;
+    unsigned total = _push.total;
     NSLog(@"SYNC progress: %u / %u", completed, total);
     if (total > 0 && completed < total) {
       [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

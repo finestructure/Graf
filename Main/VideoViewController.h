@@ -17,7 +17,6 @@
 
 
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate> {
-  CouchReplication* _pull;
   CouchReplication* _push;
 }
 
