@@ -34,6 +34,7 @@
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
+		5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAD36714E525A200AFB2DC /* ImageCell.m */; };
 		5AC6543914CF0A99004635D8 /* app_icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543714CF0A99004635D8 /* app_icon-57.png */; };
 		5AC6543C14CF0AAB004635D8 /* app_icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543B14CF0AAB004635D8 /* app_icon-114.png */; };
 		5AC6546E14D01F15004635D8 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6546D14D01F15004635D8 /* ImageCell.xib */; };
@@ -103,6 +104,8 @@
 		5A86044E14C43D6D008D2C6A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5A86046114C482E5008D2C6A /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "other/NSData+MD5.h"; sourceTree = "<group>"; };
 		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
+		5AAAD36614E525A200AFB2DC /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageCell.h; path = Main/ImageCell.h; sourceTree = SOURCE_ROOT; };
+		5AAAD36714E525A200AFB2DC /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageCell.m; path = Main/ImageCell.m; sourceTree = SOURCE_ROOT; };
 		5AC6543714CF0A99004635D8 /* app_icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-57.png"; sourceTree = "<group>"; };
 		5AC6543B14CF0AAB004635D8 /* app_icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-114.png"; sourceTree = "<group>"; };
 		5AC6546D14D01F15004635D8 /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageCell.xib; path = Main/ImageCell.xib; sourceTree = SOURCE_ROOT; };
@@ -233,6 +236,8 @@
 				5AC6547814D032B8004635D8 /* Image.h */,
 				5AC6547914D032B8004635D8 /* Image.m */,
 				5AED510114CEF85F00D8B6BB /* VideoViewController.xib */,
+				5AAAD36614E525A200AFB2DC /* ImageCell.h */,
+				5AAAD36714E525A200AFB2DC /* ImageCell.m */,
 				5AC6546D14D01F15004635D8 /* ImageCell.xib */,
 				5AE2E67B14DBEB63009AD7D1 /* Network */,
 				5A2263CE14B1FB190078EBEF /* Supporting Files */,
@@ -466,6 +471,7 @@
 				5A1B61AD14D96CFA00CC0273 /* BaseRequest.m in Sources */,
 				5A1B61B114D9774600CC0273 /* BalanceRequest.m in Sources */,
 				5A69CE4214DAE4B9009F7DB9 /* MockImageProcessor.m in Sources */,
+				5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

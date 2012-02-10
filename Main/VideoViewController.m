@@ -13,6 +13,7 @@
 #import "MockImageProcessor.h"
 #import "Constants.h"
 #import "Image.h"
+#import "ImageCell.h"
 #import "NSData+MD5.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
@@ -480,6 +481,25 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
+- (void)imageCellGestureRecognizerHandler:(UILongPressGestureRecognizer *)recognizer {	
+	if (recognizer.state == UIGestureRecognizerStateBegan) {
+		UIView *cell = recognizer.view;
+    [cell becomeFirstResponder];
+		Image *image = [self imageForView:cell];
+    UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:image.imageId action:@selector(imageIdMenu:)];
+    
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+		[menu setMenuItems:[NSArray arrayWithObject:imageIdMenu]];
+		[menu setTargetRect:cell.frame inView:cell.superview];
+    [menu setMenuVisible:YES animated:YES];
+	}
+}
+
+- (void)imageIdMenu:(id)sender {
+	NSLog(@"Cell was flagged");
+}
+
+
 #pragma mark - Actions
 
 
@@ -524,7 +544,8 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   Image *image = [self.images objectAtIndex:indexPath.row];
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  ImageCell *cell = (ImageCell *)[tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  [cell addRecognizerWithTarget:self action:@selector(imageCellGestureRecognizerHandler:)];
   
   if (image.isInTransition) {
     [self transitionCell:cell toState:image.state animate:YES];
