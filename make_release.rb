@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+require 'fileutils'
+
 # global constants
 PRODUCT_NAME = "Graf"
 MANIFEST_TEMPLATE = "Resources/graf_manifest.plist"
@@ -60,17 +62,11 @@ end
 
 
 def publish
-  puts "Publish version #{version}? [Y/n] "
-  reply = STDIN.getc
-  if not (reply == 10 or reply == 121 or reply == 89) # \n y Y
-    puts "Aborted"
-    exit
-  end
-
   ipafiles = Dir.glob("#{RELEASE_DIR}/*.ipa")
   names = []
   manifests = []
   ipafiles.reverse.each {|ipafile|
+    puts "Adding #{ipafile}"
     base = File.basename(ipafile, '.ipa')
     manifest = "manifest_#{base}.plist"
     names << "'#{base.sub('_', ' ')}'"
@@ -83,7 +79,22 @@ def publish
   names = "[#{names.join(',')}]"
   cmd = %=sed "s/NAMES/#{names}/" #{INDEX_HTML_TEMPLATE} | sed "s/MANIFESTS/#{manifests}/" > #{RELEASE_DIR}/index.html=
   %x[#{cmd}]
-  
+
+  ['Resources/app_icon-57.png', 'Resources/app_icon-114.png'].each {|fname|
+    base = File.basename(fname)
+    target = "#{RELEASE_DIR}/#{base}"
+    if not File.exist?(target)
+      FileUtils.cp(fname, target)
+    end
+  }
+
+  puts "Publish? [Y/n] "
+  reply = STDIN.getc
+  if not (reply == 10 or reply == 121 or reply == 89) # \n y Y
+    puts "Aborted"
+    exit
+  end
+
   %x[rsync #{RELEASE_DIR}/* #{PUBLISHING_TARGET}]
 end
 
