@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Graf Installation</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+
+	<script type="text/javascript">
+    $(document).ready(function() {
+      console.log("blah");
+
+      var ul = $("#versions-list");
+      
+      var names = NAMES
+      var manifests = MANIFESTS
+      for (i in names) {
+        url = "itms-services://?action=download-manifest&url=http://www.abstracture.de/~sas/Graf/" + manifests[i]
+        ul.append("<li><a href=\"" + url + "\">" + names[i] + "</a></li>");
+      }
+
+      $('#versions-list').listview('refresh');
+    });
+  </script>
+
+</head> 
+
+<body> 
+
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Graf Installation</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+
+  <ul id="versions-list" data-role="listview" data-inset="true" data-theme="c" data-dividertheme="f">
+  </ul>
+
+  </div>
+
+	<div data-role="footer">
+		<h4>&copy; 2012 abstracture GmbH & Co KG</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+</body>
+</html>
