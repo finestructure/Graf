@@ -60,7 +60,7 @@ end
 
 
 def publish
-  puts "Publish version #{version}? [y/N] "
+  puts "Publish version #{version}? [Y/n] "
   reply = STDIN.getc
   if not (reply == 10 or reply == 121 or reply == 89) # \n y Y
     puts "Aborted"
@@ -94,4 +94,5 @@ if __FILE__ == $0
   codesign
   publish
 
+  puts "Done."
 end
