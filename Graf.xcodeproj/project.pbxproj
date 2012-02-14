@@ -14,6 +14,7 @@
 		5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */; };
 		5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */; };
 		5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA214E3C38A00AE26D7 /* libz.dylib */; };
+		5A43CF2514EAC0290002A69C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A43CF2414EAC0290002A69C /* Image.m */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
@@ -66,6 +67,8 @@
 		5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TouchDB.framework; path = other/TouchDB.framework; sourceTree = "<group>"; };
 		5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5A29CAA214E3C38A00AE26D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		5A43CF2314EAC0290002A69C /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Main/Image.h; sourceTree = SOURCE_ROOT; };
+		5A43CF2414EAC0290002A69C /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = Main/Image.m; sourceTree = SOURCE_ROOT; };
 		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -200,6 +203,8 @@
 				5AED50F414CEF81500D8B6BB /* AppDelegate.m */,
 				5AED50F514CEF81500D8B6BB /* Constants.h */,
 				5AED50F614CEF81500D8B6BB /* Constants.m */,
+				5A43CF2314EAC0290002A69C /* Image.h */,
+				5A43CF2414EAC0290002A69C /* Image.m */,
 				5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */,
 				5AED510014CEF85F00D8B6BB /* VideoViewController.m */,
 				5AED510114CEF85F00D8B6BB /* VideoViewController.xib */,
@@ -417,6 +422,7 @@
 				5AED50FA14CEF81500D8B6BB /* Constants.m in Sources */,
 				5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */,
 				5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */,
+				5A43CF2514EAC0290002A69C /* Image.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
