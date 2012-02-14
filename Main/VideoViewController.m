@@ -15,6 +15,7 @@
 #import "NSData+MD5.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
+#import <CouchCocoa/CouchDesignDocument_Embedded.h>
 
 
 @implementation VideoViewController
@@ -63,20 +64,24 @@ NSString * const kProcessingState = @"processing";
 - (void)setupDataSource {
   self.dataSource = [[CouchUITableSource alloc] init];
   
-  // Create a CouchDB 'view' containing list items sorted by date,
+  // Create a 'view' containing list items sorted by date:
+  CouchDesignDocument* design = [self.database designDocumentWithName: @"default"];
+  [design defineViewNamed: @"byDate" mapBlock: MAPBLOCK({
+    id date = [doc objectForKey: @"created_at"];
+    if (date) emit(date, doc);
+  }) version: @"1.0"];
+  
   // and a validation function requiring parseable dates:
-  CouchDesignDocument* design = [self.database designDocumentWithName:kDatabaseName];
-  design.language = kCouchLanguageJavaScript;
-  [design defineViewNamed: @"byDate"
-                      map: @"function(doc) {if (doc.created_at) emit(doc.created_at, doc);}"];
-  design.validation = @"function(doc) {if (doc.created_at && !(Date.parse(doc.created_at) > 0))"
-  "throw({forbidden:'Invalid date'});}";
-  
-  // Create a query sorted by descending date, i.e. newest items first:
-  CouchLiveQuery* query = [[design queryViewNamed: @"byDate"] asLiveQuery];
-  query.descending = YES;
-  
-  self.dataSource.query = query;
+  design.validationBlock = VALIDATIONBLOCK({
+    if (newRevision.deleted)
+      return YES;
+    id date = [newRevision.properties objectForKey: @"created_at"];
+    if (date && ! [RESTBody dateWithJSONObject: date]) {
+      context.errorMessage = [@"invalid date " stringByAppendingString: date];
+      return NO;
+    }
+    return YES;
+  });
 }
 
 
@@ -589,6 +594,14 @@ NSString * const kProcessingState = @"processing";
 {
   
 }
+
+
+- (void)couchTableSource:(CouchUITableSource*)source
+         operationFailed:(RESTOperation*)op
+{
+  [self failedWithError:op.error];
+}
+
 
 
 #pragma mark - UITableViewDelegate
