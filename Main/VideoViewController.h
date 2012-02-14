@@ -13,6 +13,7 @@
 @class Image;
 @class CouchDatabase;
 @class CouchReplication;
+@class CouchUITableSource;
 
 
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
@@ -27,6 +28,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(nonatomic, retain) IBOutlet CouchUITableSource* dataSource;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *remainingLabel;

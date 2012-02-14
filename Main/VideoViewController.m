@@ -16,12 +16,14 @@
 #import "NSData+MD5.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
+#import <CouchCocoa/CouchUITableSource.h>
 
 
 @implementation VideoViewController
 
 @synthesize preview = _preview;
 @synthesize tableView = _tableView;
+@synthesize dataSource = _dataSource;
 @synthesize session = _session;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
@@ -41,8 +43,31 @@ const CGRect kImageViewFrameProcessing   = {{10, 7}, {260, 65}};
 const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
 const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
+NSString * const kDatabaseName = @"graf";
 
 //#define TEST
+
+#pragma mark - Initialization
+
+
+- (void)setupDataSource {
+  // Create a CouchDB 'view' containing list items sorted by date,
+  // and a validation function requiring parseable dates:
+  CouchDesignDocument* design = [self.database designDocumentWithName:kDatabaseName];
+  design.language = kCouchLanguageJavaScript;
+  [design defineViewNamed: @"byDate"
+                      map: @"function(doc) {if (doc.created_at) emit(doc.created_at, doc);}"];
+  design.validation = @"function(doc) {if (doc.created_at && !(Date.parse(doc.created_at) > 0))"
+  "throw({forbidden:'Invalid date'});}";
+  
+  // Create a query sorted by descending date, i.e. newest items first:
+  CouchLiveQuery* query = [[design queryViewNamed: @"byDate"] asLiveQuery];
+  query.descending = YES;
+  
+  self.dataSource.query = query;
+  self.dataSource.labelProperty = @"text";    // Document property to display in the cell label
+  [self updateSyncURL];
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -77,11 +102,12 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     if (server.error) {
       [self failedWithError:server.error];
     }
-    self.database = [server databaseNamed: @"graf"];
+    self.database = [server databaseNamed: kDatabaseName];
     NSError *error;
     if (![self.database ensureCreated:&error]) {
       [self failedWithError:error];
     }
+    [self setupDataSource];
   }
   return self;
 }
