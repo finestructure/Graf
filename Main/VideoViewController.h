@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "ImageProcessor.h"
 
 
 @class Image;
@@ -16,13 +15,12 @@
 @class CouchReplication;
 
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate> {
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
   CouchReplication* _push;
 }
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
-@property (nonatomic, retain) ImageProcessor *imageProcessor;
 @property (nonatomic, retain) NSMutableArray *images;
 @property (nonatomic, retain) CouchDatabase *database;
 
@@ -36,7 +34,6 @@
 
 - (IBAction)takePicture:(id)sender;
 - (void)refreshButtonPressed:(id)sender;
-- (void)refreshBalance;
 
 - (void)failedWithError:(NSError *)error;
 

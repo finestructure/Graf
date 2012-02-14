@@ -10,7 +10,6 @@
 #import <TargetConditionals.h>
 #import "VideoViewController.h"
 
-#import "MockImageProcessor.h"
 #import "Constants.h"
 #import "Image.h"
 #import "ImageCell.h"
@@ -28,7 +27,6 @@
 @synthesize versionLabel = _versionLabel;
 @synthesize remainingLabel = _remainingLabel;
 @synthesize imageOutput = _imageOutput;
-@synthesize imageProcessor = _imageProcessor;
 @synthesize images = _images;
 @synthesize database = _database;
 
@@ -53,14 +51,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   if (self) {
     self.images = [NSMutableArray array];
 
-    // set up image processor
-#ifdef TEST
-    self.imageProcessor = [[MockImageProcessor alloc] init];
-#else
-    self.imageProcessor = [[ImageProcessor alloc] init];
-#endif
-    self.imageProcessor.delegate = self;
-    
     // register db credentials
     NSURLCredential* cred;
     cred = [NSURLCredential credentialWithUser: @"abstracture"
@@ -170,7 +160,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   // other init work
   
   [self.session startRunning];
-  [self refreshBalance];
   [self updateSyncURL];
 }
 
@@ -426,7 +415,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 - (void)startProcessingImage:(Image *)image {
   [image transitionTo:kProcessing];
-  [self.imageProcessor upload:image.image];
 }
 
 
@@ -500,6 +488,12 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
+- (void)failedWithError:(NSError *)error {
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
+
+
 #pragma mark - Actions
 
 
@@ -530,11 +524,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   dispatch_async(dispatch_get_main_queue(), ^(void) {
     [self.tableView reloadData];
   });
-}
-
-
-- (void)refreshBalance {
-  [self.imageProcessor refreshBalance];
 }
 
 
@@ -592,75 +581,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     [self.images removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
   }
-}
-
-
-# pragma mark - ImageProcessorDelegate
-
-
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
-    [self addToStatusView:string];
-  });
-
-  // set result for appropriate image object
-  Image *image = [self imageWithId:imageId];
-  image.textResult = result;
-  [image transitionTo:kIdle];
-  
-  [self refreshBalance];
-
-  [self updateCouchImageId:imageId result:result];
-
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-- (void)didTimeoutDecodingImageId:(NSString *)imageId {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    NSString *string = [NSString stringWithFormat:@"Timeout while decoding: %@", imageId];
-    [self addToStatusView:string];
-  });
-
-  Image *image = [self imageWithId:imageId];
-  [image transitionTo:kTimeout];
-    
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    if (balance != nil && rate != nil && [rate floatValue] != 0.0 ) {
-      NSUInteger remaining = round([balance floatValue]/[rate floatValue]);
-      self.remainingLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d remaining", @"remaining label"), remaining];
-    }
-  });
-}
-
-
-- (void)uploadError:(NSError *)error imageId:(NSString *)imageId
-{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"Connection error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
-
-  Image *image = [self imageWithId:imageId];
-  [image transitionTo:kTimeout];
-  
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-- (void)failedWithError:(NSError *)error {
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
 }
 
 
