@@ -66,13 +66,17 @@ NSString * const kProcessingState = @"processing";
   
   // Create a 'view' containing list items sorted by date:
   CouchDesignDocument* design = [self.database designDocumentWithName: @"default"];
-  [design defineViewNamed: @"byDate" mapBlock: MAPBLOCK({
-    id date = [doc objectForKey: @"created_at"];
-    if (date) emit(date, doc);
-  }) version: @"1.0"];
+  [design defineViewNamed: @"byDate" 
+                 mapBlock: ^(NSDictionary* doc, void (^emit)(id key, id value)) {
+                   id date = [doc objectForKey: @"created_at"];
+                   if (date) {
+                     emit(date, doc);
+                   }
+                 } 
+                  version: @"1.0"];
   
   // and a validation function requiring parseable dates:
-  design.validationBlock = VALIDATIONBLOCK({
+  design.validationBlock = ^BOOL(TDRevision* newRevision, id<TDValidationContext> context) {
     if (newRevision.deleted)
       return YES;
     id date = [newRevision.properties objectForKey: @"created_at"];
@@ -81,7 +85,7 @@ NSString * const kProcessingState = @"processing";
       return NO;
     }
     return YES;
-  });
+  };
 
   // Create a query sorted by descending date, i.e. newest items first:
   CouchLiveQuery* query = [[[self.database designDocumentWithName: @"default"]
