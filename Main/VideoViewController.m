@@ -89,6 +89,8 @@ NSString * const kProcessingState = @"processing";
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
+    gCouchLogLevel = 3;
+
     // register db credentials
     NSURLCredential* cred;
     cred = [NSURLCredential credentialWithUser: @"abstracture"
