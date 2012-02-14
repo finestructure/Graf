@@ -13,6 +13,7 @@
 #import "Constants.h"
 #import "ImageCell.h"
 #import "NSData+MD5.h"
+#import "Image.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
 #import <CouchCocoa/CouchDesignDocument_Embedded.h>
@@ -42,15 +43,6 @@ const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
 const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 NSString * const kDatabaseName = @"graf";
-
-NSString * const kIdKey = @"_id";
-NSString * const kStateKey = @"state";
-NSString * const kTextResultKey = @"text_result";
-NSString * const kProcessingTimeKey = @"processing_time";
-NSString * const kCreatedAtKey = @"created_at";
-
-NSString * const kImageAttachmentKey = @"snapshot.png";
-
 
 NSString * const kTimeoutState = @"timeout";
 NSString * const kProcessingState = @"processing";
@@ -99,7 +91,7 @@ NSString * const kProcessingState = @"processing";
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    gCouchLogLevel = 1;
+    gCouchLogLevel = 0;
 
     // register db credentials
     NSURLCredential* cred;
@@ -331,11 +323,12 @@ NSString * const kProcessingState = @"processing";
 }
 
 
-- (id)imageWithId:(NSString *)imageId {
+- (Image *)imageWithId:(NSString *)imageId {
   __block Image *result = nil;
   [self.dataSource.rows enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    if ([[obj objectForKey:kIdKey] isEqualToString:imageId]) {
-      result = obj;
+    Image *image = (Image *)obj;
+    if ([image.imageId isEqualToString:imageId]) {
+      result = image;
       *stop = YES;
     }
   }];
@@ -343,46 +336,45 @@ NSString * const kProcessingState = @"processing";
 }
 
 
-- (void)configureImageView:(UIImageView *)view withModel:(CouchModel *)model {
-  CouchAttachment *attachment = [model attachmentNamed:kImageAttachmentKey];
-  if (attachment != nil) {
-    UIImage *img = [UIImage imageWithData:attachment.body];
-    view.image = img;
-  }
+- (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
+  view.image = image.image;
 }
 
 
-- (void)configureTextResultLabel:(UILabel *)label withModel:(CouchModel *)model {
-  if ([[model valueForKey:kStateKey] isEqualToString:kTimeoutState]) {
+- (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image
+{
+  if ([image.state isEqualToString:kTimeoutState]) {
     label.text = @"timeout";
     label.font = [UIFont italicSystemFontOfSize:14];
   } else {
-    label.text = [model valueForKey:kTextResultKey];
+    label.text = image.text_result;
     label.font = [UIFont systemFontOfSize:14];
   }
 }
 
 
-- (void)configureProcessingTimeLabel:(UILabel *)label withModel:(CouchModel *)model {
-  if ([[model valueForKey:kStateKey] isEqualToString:kProcessingState]) {
+- (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image
+{
+  if ([image.state isEqualToString:kProcessingState]) {
     label.text = @"";
   } else {
-    label.text = [NSString stringWithFormat:@"%.1fs", [model valueForKey:kProcessingTimeKey]];
+    label.text = [NSString stringWithFormat:@"%.1fs", [image.processing_time floatValue]];
   }
 }
 
 
-- (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withModel:(CouchModel *)model {
-  ([[model valueForKey:kStateKey] isEqualToString:kProcessingState]) ? [view startAnimating] : [view stopAnimating];
+- (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withImage:(Image *)image
+{
+  ([image.state isEqualToString:kProcessingState]) ? [view startAnimating] : [view stopAnimating];
 }
 
 
-- (void)configureStatusIconView:(UIButton *)iconView withModel:(CouchModel *)model {
-  if ([[model valueForKey:kStateKey] isEqualToString:kProcessingState]) {
+- (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image
+{
+  if ([image.state isEqualToString:kProcessingState]) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   } else {
-    NSString *textResult = [model valueForKey:kTextResultKey];
-    if (textResult == nil || [textResult isEqualToString:@""]) {
+    if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
       [iconView addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
@@ -460,30 +452,30 @@ NSString * const kProcessingState = @"processing";
 }
 
 
-- (CouchModel *)modelForIndexPath:(NSIndexPath *)indexPath
+- (Image *)imageForIndexPath:(NSIndexPath *)indexPath
 {
   CouchDocument *doc = [self documentForIndexPath:indexPath];
-  CouchModel *model = [CouchModel modelForDocument:doc];
-  return model;
+  Image *image = [Image modelForDocument:doc];
+  return image;
 }
 
 
-- (CouchModel *)modelForView:(UIView *)view
+- (Image *)imageForView:(UIView *)view
 {
   if (! [view isKindOfClass:[UITableViewCell class]]) {
     // walk up the view hierarchy until we find a table view cell
-    return [self modelForView:[view superview]];
+    return [self imageForView:[view superview]];
   } else {
     UITableViewCell *cell = (UITableViewCell *)view;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    CouchModel *model = [self modelForIndexPath:indexPath];
-    return model;
+    Image *image = [self imageForIndexPath:indexPath];
+    return image;
   }
 }
 
 
-- (UITableViewCell *)cellForModel:(CouchModel *)model {
-  NSIndexPath *indexPath = [self.dataSource indexPathForDocument:model.document];
+- (UITableViewCell *)cellForModel:(Image *)image {
+  NSIndexPath *indexPath = [self.dataSource indexPathForDocument:image.document];
   UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
   return cell;
 }
@@ -509,15 +501,9 @@ NSString * const kProcessingState = @"processing";
 //    image.isInTransition = NO;
 //    NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
 //    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-
-  NSData *imageData = UIImagePNGRepresentation(image);
     
-  CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
-  [model setValue:[imageData MD5] ofProperty:kIdKey];
-  [model setValue:[NSDate date] ofProperty:kCreatedAtKey];
-  [model setValue:@"" ofProperty:kTextResultKey];
-  [model createAttachmentWithName:kImageAttachmentKey type:@"image/png" body:imageData];
-  RESTOperation* op = [model save];
+  Image *doc = [[Image alloc] initWithImage:image inDatabase:self.database];
+  RESTOperation* op = [doc save];
   [op onCompletion: ^{
     if (op.error) {
       [self failedWithError:op.error];
@@ -532,8 +518,8 @@ NSString * const kProcessingState = @"processing";
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		UIView *cell = recognizer.view;
     [cell becomeFirstResponder];
-		CouchModel *model = [self modelForView:cell];
-    NSString *imageId = [model valueForKey:kIdKey];
+		Image *image = [self imageForView:cell];
+    NSString *imageId = image.imageId;
     UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:imageId action:@selector(imageIdMenu:)];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
@@ -578,7 +564,7 @@ NSString * const kProcessingState = @"processing";
 
 
 - (UITableViewCell *)couchTableSource:(CouchUITableSource*)source cellForRowAtIndexPath:(NSIndexPath *)indexPath; {
-  CouchModel *model = [self modelForIndexPath:indexPath];
+  Image *image = [self imageForIndexPath:indexPath];
   
   ImageCell *cell = (ImageCell *)[self.tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
   [cell addRecognizerWithTarget:self action:@selector(imageCellGestureRecognizerHandler:)];
@@ -590,11 +576,11 @@ NSString * const kProcessingState = @"processing";
 //    [self transitionCell:cell toState:image.state animate:NO];
 //  }
 
-  [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withModel:model];
-  [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withModel:model];
-  [self configureProcessingTimeLabel:(UILabel *)[cell.contentView viewWithTag:3] withModel:model];
-  [self configureActivityIndicatorView:(UIActivityIndicatorView *)[cell.contentView viewWithTag:4] withModel:model];
-  [self configureStatusIconView:(UIButton *)[cell.contentView viewWithTag:5] withModel:model];
+  [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withImage:image];
+  [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withImage:image];
+  [self configureProcessingTimeLabel:(UILabel *)[cell.contentView viewWithTag:3] withImage:image];
+  [self configureActivityIndicatorView:(UIActivityIndicatorView *)[cell.contentView viewWithTag:4] withImage:image];
+  [self configureStatusIconView:(UIButton *)[cell.contentView viewWithTag:5] withImage:image];
   
   return cell;
 }
