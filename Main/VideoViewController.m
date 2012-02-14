@@ -82,6 +82,12 @@ NSString * const kProcessingState = @"processing";
     }
     return YES;
   });
+
+  // Create a query sorted by descending date, i.e. newest items first:
+  CouchLiveQuery* query = [[[self.database designDocumentWithName: @"default"]
+                            queryViewNamed: @"byDate"] asLiveQuery];
+  query.descending = YES;
+  self.dataSource.query = query;  
 }
 
 
@@ -89,7 +95,7 @@ NSString * const kProcessingState = @"processing";
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    gCouchLogLevel = 3;
+    gCouchLogLevel = 1;
 
     // register db credentials
     NSURLCredential* cred;
