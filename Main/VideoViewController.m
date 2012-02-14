@@ -11,12 +11,10 @@
 #import "VideoViewController.h"
 
 #import "Constants.h"
-#import "Image.h"
 #import "ImageCell.h"
 #import "NSData+MD5.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
-#import <CouchCocoa/CouchUITableSource.h>
 
 
 @implementation VideoViewController
@@ -29,7 +27,6 @@
 @synthesize versionLabel = _versionLabel;
 @synthesize remainingLabel = _remainingLabel;
 @synthesize imageOutput = _imageOutput;
-@synthesize images = _images;
 @synthesize database = _database;
 
 
@@ -45,12 +42,27 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 NSString * const kDatabaseName = @"graf";
 
+NSString * const kIdKey = @"_id";
+NSString * const kStateKey = @"state";
+NSString * const kTextResultKey = @"text_result";
+NSString * const kProcessingTimeKey = @"processing_time";
+NSString * const kCreatedAtKey = @"created_at";
+
+NSString * const kImageAttachmentKey = @"snapshot.png";
+
+
+NSString * const kTimeoutState = @"timeout";
+NSString * const kProcessingState = @"processing";
+
+
 //#define TEST
 
 #pragma mark - Initialization
 
 
 - (void)setupDataSource {
+  self.dataSource = [[CouchUITableSource alloc] init];
+  
   // Create a CouchDB 'view' containing list items sorted by date,
   // and a validation function requiring parseable dates:
   CouchDesignDocument* design = [self.database designDocumentWithName:kDatabaseName];
@@ -65,8 +77,6 @@ NSString * const kDatabaseName = @"graf";
   query.descending = YES;
   
   self.dataSource.query = query;
-  self.dataSource.labelProperty = @"text";    // Document property to display in the cell label
-  [self updateSyncURL];
 }
 
 
@@ -74,8 +84,6 @@ NSString * const kDatabaseName = @"graf";
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    self.images = [NSMutableArray array];
-
     // register db credentials
     NSURLCredential* cred;
     cred = [NSURLCredential credentialWithUser: @"abstracture"
@@ -183,6 +191,11 @@ NSString * const kDatabaseName = @"graf";
   captureVideoPreviewLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
   [self.preview.layer addSublayer:captureVideoPreviewLayer];
 
+  // connect table view and data source
+  
+  self.dataSource.tableView = self.tableView;
+  self.tableView.dataSource = self.dataSource;
+  
   // other init work
   
   [self.session startRunning];
@@ -301,12 +314,11 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (Image *)imageWithId:(NSString *)imageId {
+- (id)imageWithId:(NSString *)imageId {
   __block Image *result = nil;
-  [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    Image *image = (Image *)obj;
-    if ([image.imageId isEqualToString:imageId]) {
-      result = image;
+  [self.dataSource.rows enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    if ([[obj objectForKey:kIdKey] isEqualToString:imageId]) {
+      result = obj;
       *stop = YES;
     }
   }];
@@ -314,41 +326,46 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (void)configureImageView:(UIImageView *)view withImage:(Image *)image {
-  view.image = image.image;
+- (void)configureImageView:(UIImageView *)view withModel:(CouchModel *)model {
+  CouchAttachment *attachment = [model attachmentNamed:kImageAttachmentKey];
+  if (attachment != nil) {
+    UIImage *img = [UIImage imageWithData:attachment.body];
+    view.image = img;
+  }
 }
 
 
-- (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image {
-  if (image.state == kTimeout) {
+- (void)configureTextResultLabel:(UILabel *)label withModel:(CouchModel *)model {
+  if ([[model valueForKey:kStateKey] isEqualToString:kTimeoutState]) {
     label.text = @"timeout";
     label.font = [UIFont italicSystemFontOfSize:14];
   } else {
-    label.text = image.textResult;
+    label.text = [model valueForKey:kTextResultKey];
     label.font = [UIFont systemFontOfSize:14];
   }
 }
 
 
-- (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image {
-  if (image.state == kProcessing) {
+- (void)configureProcessingTimeLabel:(UILabel *)label withModel:(CouchModel *)model {
+  if ([[model valueForKey:kStateKey] isEqualToString:kProcessingState]) {
     label.text = @"";
   } else {
-    label.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
+    label.text = [NSString stringWithFormat:@"%.1fs", [model valueForKey:kProcessingTimeKey]];
   }
 }
 
 
-- (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withImage:(Image *)image {
-  (image.state == kProcessing) ? [view startAnimating] : [view stopAnimating];
+- (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withModel:(CouchModel *)model {
+  ([[model valueForKey:kStateKey] isEqualToString:kProcessingState]) ? [view startAnimating] : [view stopAnimating];
 }
 
 
-- (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image {
-  if (image.state == kProcessing) {
+- (void)configureStatusIconView:(UIButton *)iconView withModel:(CouchModel *)model {
+  if ([[model valueForKey:kStateKey] isEqualToString:kProcessingState]) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   } else {
-    if (image.textResult == nil || [image.textResult isEqualToString:@""]) {
+    NSString *textResult = [model valueForKey:kTextResultKey];
+    if (textResult == nil || [textResult isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
       [iconView addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
@@ -358,14 +375,14 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (void)transitionCell:(UITableViewCell *)cell toState:(ImageState)newState animate:(BOOL)animate {
+- (void)transitionCell:(UITableViewCell *)cell toState:(NSString *)newState animate:(BOOL)animate {
   NSTimeInterval duration = 0;
   if (animate) {
     duration = 0.5;
   }
   { // image view
     UIView *view = [cell.contentView viewWithTag:1];
-    if (newState == kProcessing) {
+    if ([newState isEqualToString:kProcessingState]) {
       [UIView animateWithDuration:duration animations:^{
         view.frame = kImageViewFrameProcessing;
       }];
@@ -377,7 +394,7 @@ NSString * const kDatabaseName = @"graf";
   }
   { // text result label
     UIView *view = [cell.contentView viewWithTag:2];
-    if (newState == kProcessing) {
+    if ([newState isEqualToString:kProcessingState]) {
       [UIView animateWithDuration:duration animations:^{
         view.alpha = 0;
         view.frame = kTextResultFrameProcessing;
@@ -391,7 +408,7 @@ NSString * const kDatabaseName = @"graf";
   }
   { // processing time label
     UIView *view = [cell.contentView viewWithTag:3];
-    if (newState == kProcessing) {
+    if ([newState isEqualToString:kProcessingState]) {
       [UIView animateWithDuration:duration animations:^{
         view.alpha = 0;
       }];
@@ -403,11 +420,11 @@ NSString * const kDatabaseName = @"graf";
   }
   { // activity indicator
     UIView *view = [cell.contentView viewWithTag:4];
-    view.hidden = (newState != kProcessing);
+    view.hidden = (! [newState isEqualToString:kProcessingState]);
   }
   { // status icon
     UIView *view = [cell.contentView viewWithTag:5];
-    if (newState == kProcessing) {
+    if ([newState isEqualToString:kProcessingState]) {
       view.alpha = 0;
     } else {
       [UIView animateWithDuration:duration animations:^{
@@ -418,29 +435,40 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (Image *)imageForView:(UIView *)view {
+- (CouchDocument *)documentForIndexPath:(NSIndexPath *)indexPath
+{
+  CouchQueryRow *row = [self.dataSource rowAtIndex:indexPath.row];
+  CouchDocument *doc = [row document];
+  return doc;
+}
+
+
+- (CouchModel *)modelForIndexPath:(NSIndexPath *)indexPath
+{
+  CouchDocument *doc = [self documentForIndexPath:indexPath];
+  CouchModel *model = [CouchModel modelForDocument:doc];
+  return model;
+}
+
+
+- (CouchModel *)modelForView:(UIView *)view
+{
   if (! [view isKindOfClass:[UITableViewCell class]]) {
     // walk up the view hierarchy until we find a table view cell
-    return [self imageForView:[view superview]];
+    return [self modelForView:[view superview]];
   } else {
     UITableViewCell *cell = (UITableViewCell *)view;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Image *image = [self.images objectAtIndex:indexPath.row];
-    return image;
+    CouchModel *model = [self modelForIndexPath:indexPath];
+    return model;
   }
 }
 
 
-- (UITableViewCell *)cellForImage:(Image *)image {
-  NSUInteger index = [self.images indexOfObject:image];
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+- (UITableViewCell *)cellForModel:(CouchModel *)model {
+  NSIndexPath *indexPath = [self.dataSource indexPathForDocument:model.document];
   UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
   return cell;
-}
-
-
-- (void)startProcessingImage:(Image *)image {
-  [image transitionTo:kProcessing];
 }
 
 
@@ -458,40 +486,28 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (void)saveCouchImage:(Image *)image {
+- (void)addImage:(UIImage *)image {  
+        
+//    // we don't want new images to animate into position
+//    image.isInTransition = NO;
+//    NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+//    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+
+  NSData *imageData = UIImagePNGRepresentation(image);
+    
   CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
-  [model setValue:image.imageId ofProperty:@"_id"];
-  [model setValue:[NSDate date] ofProperty:@"created_at"];
-  [model setValue:@"snapshot.png" ofProperty:@"image"];
-  [model setValue:@"" ofProperty:@"text_result"];
-  [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image.image)];
+  [model setValue:[imageData MD5] ofProperty:kIdKey];
+  [model setValue:[NSDate date] ofProperty:kCreatedAtKey];
+  [model setValue:@"" ofProperty:kTextResultKey];
+  [model createAttachmentWithName:kImageAttachmentKey type:@"image/png" body:imageData];
   RESTOperation* op = [model save];
   [op onCompletion: ^{
     if (op.error) {
       [self failedWithError:op.error];
     }
-	}];
+    [self.dataSource.query start];
+  }];
   [op start];
-}
-
-
-- (void)addImage:(UIImage *)sampleImage {  
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    Image *image = [[Image alloc] init];
-    image.image = sampleImage;
-    NSData *imageData = UIImagePNGRepresentation(sampleImage);
-    image.imageId = [imageData MD5];
-    [self.images insertObject:image atIndex:0];
-    
-    [self startProcessingImage:image];
-    
-    // we don't want new images to animate into position
-    image.isInTransition = NO;
-    NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [self saveCouchImage:image];
-  });
 }
 
 
@@ -499,8 +515,9 @@ NSString * const kDatabaseName = @"graf";
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		UIView *cell = recognizer.view;
     [cell becomeFirstResponder];
-		Image *image = [self imageForView:cell];
-    UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:image.imageId action:@selector(imageIdMenu:)];
+		CouchModel *model = [self modelForView:cell];
+    NSString *imageId = [model valueForKey:kIdKey];
+    UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:imageId action:@selector(imageIdMenu:)];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
 		[menu setMenuItems:[NSArray arrayWithObject:imageIdMenu]];
@@ -540,47 +557,37 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (void)refreshButtonPressed:(id)sender {
-  [sender removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+#pragma mark - CouchUITableDelegate
 
-  Image *image = [self imageForView:sender];
-  NSLog(@"Refresh started for image: %@", image.imageId);
-  [self startProcessingImage:image];
+
+- (UITableViewCell *)couchTableSource:(CouchUITableSource*)source cellForRowAtIndexPath:(NSIndexPath *)indexPath; {
+  CouchModel *model = [self modelForIndexPath:indexPath];
   
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-#pragma mark - UITableViewDataSource
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Image *image = [self.images objectAtIndex:indexPath.row];
-  
-  ImageCell *cell = (ImageCell *)[tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  ImageCell *cell = (ImageCell *)[self.tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
   [cell addRecognizerWithTarget:self action:@selector(imageCellGestureRecognizerHandler:)];
   
-  if (image.isInTransition) {
-    [self transitionCell:cell toState:image.state animate:YES];
-    image.isInTransition = NO;
-  } else {
-    [self transitionCell:cell toState:image.state animate:NO];
-  }
+//  if (image.isInTransition) {
+//    [self transitionCell:cell toState:image.state animate:YES];
+//    image.isInTransition = NO;
+//  } else {
+//    [self transitionCell:cell toState:image.state animate:NO];
+//  }
 
-  [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withImage:image];
-  [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withImage:image];
-  [self configureProcessingTimeLabel:(UILabel *)[cell.contentView viewWithTag:3] withImage:image];
-  [self configureActivityIndicatorView:(UIActivityIndicatorView *)[cell.contentView viewWithTag:4] withImage:image];
-  [self configureStatusIconView:(UIButton *)[cell.contentView viewWithTag:5] withImage:image];
+  [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withModel:model];
+  [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withModel:model];
+  [self configureProcessingTimeLabel:(UILabel *)[cell.contentView viewWithTag:3] withModel:model];
+  [self configureActivityIndicatorView:(UIActivityIndicatorView *)[cell.contentView viewWithTag:4] withModel:model];
+  [self configureStatusIconView:(UIButton *)[cell.contentView viewWithTag:5] withModel:model];
   
   return cell;
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [self.images count];
+- (void)couchTableSource:(CouchUITableSource*)source
+             willUseCell:(UITableViewCell*)cell
+                  forRow:(CouchQueryRow*)row
+{
+  
 }
 
 
@@ -592,22 +599,22 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-  Image *image = [self.images objectAtIndex:indexPath.row];
-  if (image.state == kProcessing) {
-    return NO;
-  } else {
-    return YES;
-  }
-}
-
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (editingStyle == UITableViewCellEditingStyleDelete) {
-    [self.images removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-  }
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//  Image *image = [self.images objectAtIndex:indexPath.row];
+//  if (image.state == kProcessing) {
+//    return NO;
+//  } else {
+//    return YES;
+//  }
+//}
+//
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//  if (editingStyle == UITableViewCellEditingStyleDelete) {
+//    [self.images removeObjectAtIndex:indexPath.row];
+//    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//  }
+//}
 
 
 #pragma mark - TouchDB Sync

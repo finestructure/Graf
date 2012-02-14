@@ -13,17 +13,16 @@
 @class Image;
 @class CouchDatabase;
 @class CouchReplication;
-@class CouchUITableSource;
+#import <CouchCocoa/CouchUITableSource.h>
 
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, CouchUITableDelegate> {
   CouchReplication* _pull;
   CouchReplication* _push;
 }
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
-@property (nonatomic, retain) NSMutableArray *images;
 @property (nonatomic, retain) CouchDatabase *database;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
@@ -33,10 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
 
-- (void)startProcessingImage:(Image *)image;
-
 - (IBAction)takePicture:(id)sender;
-- (void)refreshButtonPressed:(id)sender;
 
 - (void)failedWithError:(NSError *)error;
 
