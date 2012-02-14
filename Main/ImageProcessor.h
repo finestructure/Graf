@@ -16,7 +16,7 @@
 - (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result;
 - (void)didTimeoutDecodingImageId:(NSString *)imageId;
 - (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate;
-- (void)didReceiveError:(NSError *)error;
+- (void)uploadError:(NSError *)error imageId:(NSString *)imageId;
 
 @end
 

@@ -50,8 +50,8 @@
 
 - (void)uploadRequestFinished:(UploadRequest *)request {
   if (request.error != nil) {
-    if ([self.delegate respondsToSelector:@selector(didReceiveError:)]) {
-      [self.delegate didReceiveError:request.error];
+    if ([self.delegate respondsToSelector:@selector(uploadError:imageId:)]) {
+      [self.delegate uploadError:request.error imageId:request.imageId];
     }
   } else if (request.hasTimedOut) {
     if ([self.delegate respondsToSelector:@selector(didTimeoutDecodingImageId:)]) {
@@ -68,9 +68,8 @@
 
 - (void)balanceRequestFinished:(BalanceRequest *)request {
   if (request.error != nil) {
-    if ([self.delegate respondsToSelector:@selector(didReceiveError:)]) {
-      [self.delegate didReceiveError:request.error];
-    }
+    NSLog(@"balanceRequestFinished: error: %@", [request.error localizedDescription]);
+    return;
   } else if (request.hasTimedOut) {
     return;
   }

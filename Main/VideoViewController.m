@@ -644,9 +644,17 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)didReceiveError:(NSError *)error {
+- (void)uploadError:(NSError *)error imageId:(NSString *)imageId
+{
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"Connection error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
+
+  Image *image = [self imageWithId:imageId];
+  [image transitionTo:kTimeout];
+  
+  dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [self.tableView reloadData];
+  });
 }
 
 
