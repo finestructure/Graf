@@ -303,14 +303,14 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
-				5A399F7114EBD3A600468A0B /* TouchDB.xcodeproj */,
-				5A399F5314EBD36800468A0B /* CouchCocoa.xcodeproj */,
 				5A2263CD14B1FB190078EBEF /* Main */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
 				5A56F0B014CD480300F7D75B /* Tests */,
 				5A2263C614B1FB190078EBEF /* Frameworks */,
 				5A2263C414B1FB190078EBEF /* Products */,
+				5A399F7114EBD3A600468A0B /* TouchDB.xcodeproj */,
+				5A399F5314EBD36800468A0B /* CouchCocoa.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
