@@ -513,7 +513,11 @@
 		5A2263E214B1FB190078EBEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"other/CouchCocoa/build/Debug-ios-universal",
+					"other/TouchDB-iOS/build/Debug-ios-universal",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Main/Graf-Prefix.pch";
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
@@ -529,7 +533,11 @@
 		5A2263E314B1FB190078EBEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"other/CouchCocoa/build/Debug-ios-universal",
+					"other/TouchDB-iOS/build/Debug-ios-universal",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Main/Graf-Prefix.pch";
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
