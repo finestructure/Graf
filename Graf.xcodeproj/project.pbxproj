@@ -16,6 +16,8 @@
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
 		5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
+		5A4FFFD514EBB11600E02965 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FFF9214EBB0A500E02965 /* CouchCocoa.framework */; };
+		5A4FFFD614EBB11D00E02965 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FFFB814EBB0AB00E02965 /* TouchDB.framework */; };
 		5A56F0AD14CD480300F7D75B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5A56F0AE14CD480300F7D75B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5A56F0AF14CD480300F7D75B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
@@ -281,6 +283,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A4FFFD614EBB11D00E02965 /* TouchDB.framework in Frameworks */,
+				5A4FFFD514EBB11600E02965 /* CouchCocoa.framework in Frameworks */,
 				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
 				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
 				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
