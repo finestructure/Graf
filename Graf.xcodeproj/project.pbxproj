@@ -10,8 +10,6 @@
 		5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C714B1FB190078EBEF /* UIKit.framework */; };
 		5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263C914B1FB190078EBEF /* Foundation.framework */; };
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
-		5A29CA9514E2EA1A00AE26D7 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */; };
-		5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */; };
 		5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */; };
 		5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA214E3C38A00AE26D7 /* libz.dylib */; };
 		5A43CF2514EAC0290002A69C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A43CF2414EAC0290002A69C /* Image.m */; };
@@ -30,6 +28,8 @@
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAD36714E525A200AFB2DC /* ImageCell.m */; };
+		5AACC7D814EB979A005DBEC3 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AACC7D714EB979A005DBEC3 /* CouchCocoa.framework */; };
+		5AACC7DA14EB97A4005DBEC3 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AACC7D914EB97A4005DBEC3 /* TouchDB.framework */; };
 		5AC6543914CF0A99004635D8 /* app_icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543714CF0A99004635D8 /* app_icon-57.png */; };
 		5AC6543C14CF0AAB004635D8 /* app_icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543B14CF0AAB004635D8 /* app_icon-114.png */; };
 		5AC6546E14D01F15004635D8 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6546D14D01F15004635D8 /* ImageCell.xib */; };
@@ -63,8 +63,6 @@
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5A2263C914B1FB190078EBEF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchCocoa.framework; path = other/CouchCocoa.framework; sourceTree = "<group>"; };
-		5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TouchDB.framework; path = other/TouchDB.framework; sourceTree = "<group>"; };
 		5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5A29CAA214E3C38A00AE26D7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5A43CF2314EAC0290002A69C /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Main/Image.h; sourceTree = SOURCE_ROOT; };
@@ -88,6 +86,8 @@
 		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
 		5AAAD36614E525A200AFB2DC /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageCell.h; path = Main/ImageCell.h; sourceTree = SOURCE_ROOT; };
 		5AAAD36714E525A200AFB2DC /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageCell.m; path = Main/ImageCell.m; sourceTree = SOURCE_ROOT; };
+		5AACC7D714EB979A005DBEC3 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = CouchCocoa.framework; path = other/CouchCocoa/build/Release/CouchCocoa.framework; sourceTree = "<group>"; };
+		5AACC7D914EB97A4005DBEC3 /* TouchDB.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = TouchDB.framework; path = "other/TouchDB-iOS/build/Release/TouchDB.framework"; sourceTree = "<group>"; };
 		5AC6543714CF0A99004635D8 /* app_icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-57.png"; sourceTree = "<group>"; };
 		5AC6543B14CF0AAB004635D8 /* app_icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-114.png"; sourceTree = "<group>"; };
 		5AC6546D14D01F15004635D8 /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageCell.xib; path = Main/ImageCell.xib; sourceTree = SOURCE_ROOT; };
@@ -126,10 +126,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AACC7DA14EB97A4005DBEC3 /* TouchDB.framework in Frameworks */,
+				5AACC7D814EB979A005DBEC3 /* CouchCocoa.framework in Frameworks */,
 				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
 				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
-				5A29CA9714E2EA2F00AE26D7 /* TouchDB.framework in Frameworks */,
-				5A29CA9514E2EA1A00AE26D7 /* CouchCocoa.framework in Frameworks */,
 				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
 				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
 				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
@@ -158,6 +158,8 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
+				5AACC7D914EB97A4005DBEC3 /* TouchDB.framework */,
+				5AACC7D714EB979A005DBEC3 /* CouchCocoa.framework */,
 				5A2263CD14B1FB190078EBEF /* Main */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
@@ -181,8 +183,6 @@
 			children = (
 				5A29CAA214E3C38A00AE26D7 /* libz.dylib */,
 				5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */,
-				5A29CA9614E2EA2F00AE26D7 /* TouchDB.framework */,
-				5A29CA9414E2EA1A00AE26D7 /* CouchCocoa.framework */,
 				5A86044E14C43D6D008D2C6A /* CFNetwork.framework */,
 				5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */,
 				5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */,
@@ -491,6 +491,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
@@ -509,6 +510,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
