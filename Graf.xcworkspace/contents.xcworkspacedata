@@ -4,10 +4,4 @@
    <FileRef
       location = "container:Graf.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:other/TouchDB-iOS/TouchDB.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:other/CouchCocoa/CouchCocoa.xcodeproj">
-   </FileRef>
 </Workspace>

@@ -28,8 +28,6 @@
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAD36714E525A200AFB2DC /* ImageCell.m */; };
-		5AACC7D814EB979A005DBEC3 /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AACC7D714EB979A005DBEC3 /* CouchCocoa.framework */; };
-		5AACC7DA14EB97A4005DBEC3 /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AACC7D914EB97A4005DBEC3 /* TouchDB.framework */; };
 		5AC6543914CF0A99004635D8 /* app_icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543714CF0A99004635D8 /* app_icon-57.png */; };
 		5AC6543C14CF0AAB004635D8 /* app_icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543B14CF0AAB004635D8 /* app_icon-114.png */; };
 		5AC6546E14D01F15004635D8 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6546D14D01F15004635D8 /* ImageCell.xib */; };
@@ -58,6 +56,163 @@
 		5AF582C614D2A4A7007942AD /* ImageProcessorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF582C514D2A4A7007942AD /* ImageProcessorTest.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5A4FFF9114EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27CDEBF113C67C9B00C979BB;
+			remoteInfo = "Mac Framework";
+		};
+		5A4FFF9314EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27CDEC0313C67C9B00C979BB;
+			remoteInfo = "Mac Tests";
+		};
+		5A4FFF9514EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27EF14771396D7BA0052913E;
+			remoteInfo = "Demo-Addresses";
+		};
+		5A4FFF9714EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2784E1BC13CE5249009CC5C8;
+			remoteInfo = "Demo-Shopping";
+		};
+		5A4FFF9914EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27EEA59813D602EA00D7ACA4;
+			remoteInfo = "iOS Framework";
+		};
+		5A4FFF9B14EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2739BF2B13BCE53B004829CD;
+			remoteInfo = "iOS Library";
+		};
+		5A4FFF9D14EBB0A500E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2739BF3613BCE53C004829CD;
+			remoteInfo = "iOS Tests";
+		};
+		5A4FFFB714EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 270B3DEA1489359000E0A926;
+			remoteInfo = TouchDB;
+		};
+		5A4FFFB914EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 275315D514ACF0A10065964D;
+			remoteInfo = TouchDBListener;
+		};
+		5A4FFFBB14EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 270B3DFB1489359000E0A926;
+			remoteInfo = TouchDBTests;
+		};
+		5A4FFFBD14EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27C70694148864BA00F0F099;
+			remoteInfo = "TouchDB Demo";
+		};
+		5A4FFFBF14EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E;
+			remoteInfo = Tests;
+		};
+		5A4FFFC114EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27B0B7A91492B83B00A817AD;
+			remoteInfo = "iOS Library";
+		};
+		5A4FFFC314EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27B0B7B61492B83B00A817AD;
+			remoteInfo = TouchDBiOSTests;
+		};
+		5A4FFFC514EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27B0B7E71492BB6B00A817AD;
+			remoteInfo = "iOS Framework";
+		};
+		5A4FFFC714EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27B0B80B1492C16300A817AD;
+			remoteInfo = "iOS Demo";
+		};
+		5A4FFFC914EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27731F2A1495CFEF00815D67;
+			remoteInfo = "iOS Empty App";
+		};
+		5A4FFFCB14EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA023B6414BCA94C008184BB;
+			remoteInfo = "Listener iOS Library";
+		};
+		5A4FFFCD14EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA147C3614BCAC3B0052DA4D;
+			remoteInfo = "Listener iOS Framework";
+		};
+		5A4FFFCF14EBB0AB00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 270FE0C814C5008C005FF647;
+			remoteInfo = TouchServ;
+		};
+		5A4FFFD114EBB0B600E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 27B0B7E61492BB6B00A817AD;
+			remoteInfo = "iOS Framework";
+		};
+		5A4FFFD314EBB0BD00E02965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 27EEA59713D602EA00D7ACA4;
+			remoteInfo = "iOS Framework";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5A2263C314B1FB190078EBEF /* Graf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2263C714B1FB190078EBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -70,6 +225,8 @@
 		5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CouchCocoa.xcodeproj; path = other/CouchCocoa/CouchCocoa.xcodeproj; sourceTree = "<group>"; };
+		5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchDB.xcodeproj; path = "other/TouchDB-iOS/TouchDB.xcodeproj"; sourceTree = "<group>"; };
 		5A56F0AB14CD480300F7D75B /* Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A56F0B214CD480300F7D75B /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		5A56F0B414CD480300F7D75B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -86,8 +243,6 @@
 		5A86046214C482E5008D2C6A /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "other/NSData+MD5.m"; sourceTree = "<group>"; };
 		5AAAD36614E525A200AFB2DC /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageCell.h; path = Main/ImageCell.h; sourceTree = SOURCE_ROOT; };
 		5AAAD36714E525A200AFB2DC /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageCell.m; path = Main/ImageCell.m; sourceTree = SOURCE_ROOT; };
-		5AACC7D714EB979A005DBEC3 /* CouchCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = CouchCocoa.framework; path = other/CouchCocoa/build/Release/CouchCocoa.framework; sourceTree = "<group>"; };
-		5AACC7D914EB97A4005DBEC3 /* TouchDB.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = TouchDB.framework; path = "other/TouchDB-iOS/build/Release/TouchDB.framework"; sourceTree = "<group>"; };
 		5AC6543714CF0A99004635D8 /* app_icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-57.png"; sourceTree = "<group>"; };
 		5AC6543B14CF0AAB004635D8 /* app_icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app_icon-114.png"; sourceTree = "<group>"; };
 		5AC6546D14D01F15004635D8 /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageCell.xib; path = Main/ImageCell.xib; sourceTree = SOURCE_ROOT; };
@@ -126,8 +281,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AACC7DA14EB97A4005DBEC3 /* TouchDB.framework in Frameworks */,
-				5AACC7D814EB979A005DBEC3 /* CouchCocoa.framework in Frameworks */,
 				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
 				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
 				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
@@ -158,8 +311,8 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
-				5AACC7D914EB97A4005DBEC3 /* TouchDB.framework */,
-				5AACC7D714EB979A005DBEC3 /* CouchCocoa.framework */,
+				5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */,
+				5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */,
 				5A2263CD14B1FB190078EBEF /* Main */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
@@ -247,6 +400,40 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		5A4FFF8214EBB0A500E02965 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5A4FFF9214EBB0A500E02965 /* CouchCocoa.framework */,
+				5A4FFF9414EBB0A500E02965 /* Mac Tests.octest */,
+				5A4FFF9614EBB0A500E02965 /* Addresses.app */,
+				5A4FFF9814EBB0A500E02965 /* Shopping.app */,
+				5A4FFF9A14EBB0A500E02965 /* CouchCocoa.framework */,
+				5A4FFF9C14EBB0A500E02965 /* libCouchCocoa.a */,
+				5A4FFF9E14EBB0A500E02965 /* iOS Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5A4FFFA014EBB0AB00E02965 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5A4FFFB814EBB0AB00E02965 /* TouchDB.framework */,
+				5A4FFFBA14EBB0AB00E02965 /* TouchDBListener.framework */,
+				5A4FFFBC14EBB0AB00E02965 /* TouchDBTests.octest */,
+				5A4FFFBE14EBB0AB00E02965 /* TouchDB Demo.app */,
+				5A4FFFC014EBB0AB00E02965 /* TouchDB */,
+				5A4FFFC214EBB0AB00E02965 /* libTouchDB.a */,
+				5A4FFFC414EBB0AB00E02965 /* TouchDBiOSTests.octest */,
+				5A4FFFC614EBB0AB00E02965 /* TouchDB.framework */,
+				5A4FFFC814EBB0AB00E02965 /* TouchDB Demo.app */,
+				5A4FFFCA14EBB0AB00E02965 /* TouchDB Empty App.app */,
+				5A4FFFCC14EBB0AB00E02965 /* libTouchDBListener.a */,
+				5A4FFFCE14EBB0AB00E02965 /* TouchDBListener.framework */,
+				5A4FFFD014EBB0AB00E02965 /* TouchServ */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5A56F0B014CD480300F7D75B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +495,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				5A4FFFD414EBB0BD00E02965 /* PBXTargetDependency */,
+				5A4FFFD214EBB0B600E02965 /* PBXTargetDependency */,
 			);
 			name = Graf;
 			productName = Sinma;
@@ -351,6 +540,16 @@
 			mainGroup = 5A2263B814B1FB190078EBEF;
 			productRefGroup = 5A2263C414B1FB190078EBEF /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5A4FFF8214EBB0A500E02965 /* Products */;
+					ProjectRef = 5A4FFF8114EBB0A500E02965 /* CouchCocoa.xcodeproj */;
+				},
+				{
+					ProductGroup = 5A4FFFA014EBB0AB00E02965 /* Products */;
+					ProjectRef = 5A4FFF9F14EBB0AB00E02965 /* TouchDB.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				5A2263C214B1FB190078EBEF /* Graf */,
@@ -358,6 +557,149 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5A4FFF9214EBB0A500E02965 /* CouchCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CouchCocoa.framework;
+			remoteRef = 5A4FFF9114EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFF9414EBB0A500E02965 /* Mac Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Mac Tests.octest";
+			remoteRef = 5A4FFF9314EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFF9614EBB0A500E02965 /* Addresses.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Addresses.app;
+			remoteRef = 5A4FFF9514EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFF9814EBB0A500E02965 /* Shopping.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Shopping.app;
+			remoteRef = 5A4FFF9714EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFF9A14EBB0A500E02965 /* CouchCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CouchCocoa.framework;
+			remoteRef = 5A4FFF9914EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFF9C14EBB0A500E02965 /* libCouchCocoa.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCouchCocoa.a;
+			remoteRef = 5A4FFF9B14EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFF9E14EBB0A500E02965 /* iOS Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "iOS Tests.octest";
+			remoteRef = 5A4FFF9D14EBB0A500E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFB814EBB0AB00E02965 /* TouchDB.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TouchDB.framework;
+			remoteRef = 5A4FFFB714EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFBA14EBB0AB00E02965 /* TouchDBListener.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TouchDBListener.framework;
+			remoteRef = 5A4FFFB914EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFBC14EBB0AB00E02965 /* TouchDBTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TouchDBTests.octest;
+			remoteRef = 5A4FFFBB14EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFBE14EBB0AB00E02965 /* TouchDB Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "TouchDB Demo.app";
+			remoteRef = 5A4FFFBD14EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFC014EBB0AB00E02965 /* TouchDB */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = TouchDB;
+			remoteRef = 5A4FFFBF14EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFC214EBB0AB00E02965 /* libTouchDB.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTouchDB.a;
+			remoteRef = 5A4FFFC114EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFC414EBB0AB00E02965 /* TouchDBiOSTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TouchDBiOSTests.octest;
+			remoteRef = 5A4FFFC314EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFC614EBB0AB00E02965 /* TouchDB.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TouchDB.framework;
+			remoteRef = 5A4FFFC514EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFC814EBB0AB00E02965 /* TouchDB Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "TouchDB Demo.app";
+			remoteRef = 5A4FFFC714EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFCA14EBB0AB00E02965 /* TouchDB Empty App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "TouchDB Empty App.app";
+			remoteRef = 5A4FFFC914EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFCC14EBB0AB00E02965 /* libTouchDBListener.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTouchDBListener.a;
+			remoteRef = 5A4FFFCB14EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFCE14EBB0AB00E02965 /* TouchDBListener.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TouchDBListener.framework;
+			remoteRef = 5A4FFFCD14EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5A4FFFD014EBB0AB00E02965 /* TouchServ */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = TouchServ;
+			remoteRef = 5A4FFFCF14EBB0AB00E02965 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5A2263C114B1FB190078EBEF /* Resources */ = {
@@ -441,6 +783,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5A4FFFD214EBB0B600E02965 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iOS Framework";
+			targetProxy = 5A4FFFD114EBB0B600E02965 /* PBXContainerItemProxy */;
+		};
+		5A4FFFD414EBB0BD00E02965 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iOS Framework";
+			targetProxy = 5A4FFFD314EBB0BD00E02965 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5A56F0B314CD480300F7D75B /* InfoPlist.strings */ = {
