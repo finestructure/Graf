@@ -181,8 +181,7 @@ NSString * const kProcessingState = @"processing";
 #else
   NSString *prefix = @"";
 #endif
-  NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-  self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, version];
+  self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, [[Constants sharedInstance] version]];
   self.remainingLabel.text = @"";
   
   // session init

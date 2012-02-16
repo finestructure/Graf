@@ -11,3 +11,13 @@
 extern NSString * const kImageScaleDefault;
 extern NSString * const kNumbersOnlyDefault;
 extern NSString * const kPageModeDefault;
+
+
+@interface Constants : NSObject
+
+@property (readonly) NSString *version;
+
++ (Constants *)sharedInstance;
+
+@end
+
