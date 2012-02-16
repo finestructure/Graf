@@ -496,12 +496,6 @@ NSString * const kProcessingState = @"processing";
 
 
 - (void)addImage:(UIImage *)image {  
-        
-//    // we don't want new images to animate into position
-//    image.isInTransition = NO;
-//    NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-//    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
   Image *doc = [[Image alloc] initWithImage:image inDatabase:self.database];
   RESTOperation* op = [doc save];
   [op onCompletion: ^{
