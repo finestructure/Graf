@@ -199,6 +199,20 @@
 			remoteGlobalIDString = 270FE0C814C5008C005FF647;
 			remoteInfo = TouchServ;
 		};
+		5ACFBD6314ECF70B00944EAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A399F7114EBD3A600468A0B /* TouchDB.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 27B0B7E61492BB6B00A817AD;
+			remoteInfo = "iOS Framework";
+		};
+		5ACFBD6514ECF71000944EAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A399F5314EBD36800468A0B /* CouchCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 27EEA59713D602EA00D7ACA4;
+			remoteInfo = "iOS Framework";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -489,6 +503,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				5ACFBD6614ECF71000944EAC /* PBXTargetDependency */,
+				5ACFBD6414ECF70B00944EAC /* PBXTargetDependency */,
 			);
 			name = Graf;
 			productName = Sinma;
@@ -775,6 +791,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5ACFBD6414ECF70B00944EAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iOS Framework";
+			targetProxy = 5ACFBD6314ECF70B00944EAC /* PBXContainerItemProxy */;
+		};
+		5ACFBD6614ECF71000944EAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iOS Framework";
+			targetProxy = 5ACFBD6514ECF71000944EAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5A56F0B314CD480300F7D75B /* InfoPlist.strings */ = {
