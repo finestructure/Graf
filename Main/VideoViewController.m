@@ -327,7 +327,7 @@ NSString * const kProcessingState = @"processing";
   __block Image *result = nil;
   [self.dataSource.rows enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     Image *image = (Image *)obj;
-    if ([image.imageId isEqualToString:imageId]) {
+    if ([image.image_id isEqualToString:imageId]) {
       result = image;
       *stop = YES;
     }
@@ -519,7 +519,7 @@ NSString * const kProcessingState = @"processing";
 		UIView *cell = recognizer.view;
     [cell becomeFirstResponder];
 		Image *image = [self imageForView:cell];
-    NSString *imageId = image.imageId;
+    NSString *imageId = image.image_id;
     UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:imageId action:@selector(imageIdMenu:)];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];

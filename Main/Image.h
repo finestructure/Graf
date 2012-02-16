@@ -8,10 +8,12 @@
 
 #import <CouchCocoa/CouchCocoa.h>
 
-@interface Image : CouchModel
+@interface Image : CouchModel {
+  NSString *_imageHash;
+}
 
 @property (retain) UIImage *image;
-@property (copy) NSString *imageId;
+@property (copy) NSString *image_id;
 @property (copy) NSString *state;
 @property (retain) NSDate *created_at;
 @property (copy) NSString *text_result;

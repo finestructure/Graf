@@ -15,14 +15,19 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
 
 @implementation Image
 
-@dynamic imageId, state, created_at, text_result, processing_time, owner;
+@dynamic image_id, state, created_at, text_result, processing_time, owner;
 
 
 - (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database
 {
-  self = [super initWithNewDocumentInDatabase:database];
+  self = [super init];
   if (self) {
+    // set image hash first, because it's the doc id needed by doc creation
+    // (which is triggered by the database setter below)
+    _imageHash = [UIImagePNGRepresentation(image) MD5];
+    self.database = database;
     self.image = image;
+    self.image_id = _imageHash;
     self.created_at = [NSDate date];
   }
   return self;
@@ -43,14 +48,13 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
     [self removeAttachmentNamed:kImageAttachmentKey];
   } else {
     NSData* data = UIImagePNGRepresentation(image);
-    self.imageId = [data MD5];
     [self createAttachmentWithName:kImageAttachmentKey type:@"image/png" body:data];
   }
 }
 
 
 - (NSString*)idForNewDocumentInDatabase:(CouchDatabase *)db	{
-  return self.imageId;
+  return _imageHash;
 }
 
 
