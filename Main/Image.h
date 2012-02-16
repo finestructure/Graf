@@ -19,6 +19,7 @@
 @property (copy) NSString *text_result;
 @property (retain) NSNumber *processing_time;
 @property (copy) NSString *owner;
+@property (copy) NSString *version;
 
 - (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database;
 

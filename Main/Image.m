@@ -8,6 +8,7 @@
 
 #import "Image.h"
 #import "NSData+MD5.h"
+#import "Constants.h"
 
 
 NSString * const kImageAttachmentKey = @"snapshot.png";
@@ -15,7 +16,7 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
 
 @implementation Image
 
-@dynamic image_id, state, created_at, text_result, processing_time, owner;
+@dynamic image_id, state, created_at, text_result, processing_time, owner, version;
 
 
 - (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database
@@ -29,6 +30,7 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
     self.image = image;
     self.image_id = _imageHash;
     self.created_at = [NSDate date];
+    self.version = [[Constants sharedInstance] version];
   }
   return self;
 }
