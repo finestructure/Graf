@@ -16,7 +16,7 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
 
 @implementation Image
 
-@dynamic image_id, state, created_at, text_result, processing_time, owner, version;
+@dynamic image_id, state, created_at, text_result, processing_time, source_device, version;
 
 
 - (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database
@@ -30,6 +30,7 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
     self.image = image;
     self.image_id = _imageHash;
     self.created_at = [NSDate date];
+    self.source_device = [[Constants sharedInstance] deviceUuid];
     self.version = [[Constants sharedInstance] version];
   }
   return self;
