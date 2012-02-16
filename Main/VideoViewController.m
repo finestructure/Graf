@@ -48,7 +48,7 @@ NSString * const kTimeoutState = @"timeout";
 NSString * const kProcessingState = @"processing";
 
 
-//#define TEST
+#define TEST
 
 #pragma mark - Initialization
 
@@ -91,7 +91,7 @@ NSString * const kProcessingState = @"processing";
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    gCouchLogLevel = 0;
+    gCouchLogLevel = 1;
 
     // register db credentials
     NSURLCredential* cred;
@@ -109,7 +109,11 @@ NSString * const kProcessingState = @"processing";
     
     // register user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+#ifdef TEST
+    NSString *url = @"http://thebe.local:5984/graf";
+#else
     NSString *url = @"https://abstracture.cloudant.com/graf";
+#endif
     NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
     [defaults registerDefaults:appdefaults];
     [defaults synchronize];
