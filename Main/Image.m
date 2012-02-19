@@ -32,6 +32,7 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
     self.created_at = [NSDate date];
     self.source_device = [[Constants sharedInstance] deviceUuid];
     self.version = [[Constants sharedInstance] version];
+    self.text_result = @"";
   }
   return self;
 }
