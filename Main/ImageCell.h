@@ -12,7 +12,7 @@
 
 @property (nonatomic, retain) UIGestureRecognizer *recognizer;
 
-@property (weak, nonatomic) IBOutlet UILabel *textResultBackgroundLabel;
+@property (weak, nonatomic) IBOutlet UIView *textResultBackgroundView;
 
 - (void)addRecognizerWithTarget:(id)target action:(SEL)action;
 

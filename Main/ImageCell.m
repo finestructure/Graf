@@ -13,16 +13,16 @@
 @implementation ImageCell
 
 @synthesize recognizer = _recognizer;
-@synthesize textResultBackgroundLabel = _textResultBackgroundLabel;
+@synthesize textResultBackgroundView = _textResultBackgroundView;
 
 
 - (void)awakeFromNib
 {
-  self.textResultBackgroundLabel.backgroundColor = [UIColor clearColor];
-  self.textResultBackgroundLabel.layer.backgroundColor=[UIColor colorWithWhite:85./255. alpha:0.7].CGColor;
-  self.textResultBackgroundLabel.layer.cornerRadius = 8;
-  self.textResultBackgroundLabel.layer.masksToBounds = NO;
-  self.textResultBackgroundLabel.layer.shouldRasterize = YES;
+  self.textResultBackgroundView.backgroundColor = [UIColor clearColor];
+  self.textResultBackgroundView.layer.backgroundColor=[UIColor colorWithWhite:85./255. alpha:0.7].CGColor;
+  self.textResultBackgroundView.layer.cornerRadius = 8;
+  self.textResultBackgroundView.layer.masksToBounds = NO;
+  self.textResultBackgroundView.layer.shouldRasterize = YES;
 
 }
 
