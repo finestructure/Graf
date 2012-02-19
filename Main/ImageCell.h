@@ -12,6 +12,8 @@
 
 @property (nonatomic, retain) UIGestureRecognizer *recognizer;
 
+@property (weak, nonatomic) IBOutlet UILabel *textResultBackgroundLabel;
+
 - (void)addRecognizerWithTarget:(id)target action:(SEL)action;
 
 @end
