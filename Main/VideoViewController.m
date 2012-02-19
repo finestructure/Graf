@@ -349,9 +349,15 @@ NSString * const kProcessingState = @"processing";
   if ([image.state isEqualToString:kTimeoutState]) {
     label.text = @"timeout";
     label.font = [UIFont italicSystemFontOfSize:14];
+    label.superview.hidden = NO;
   } else {
-    label.text = image.text_result;
-    label.font = [UIFont systemFontOfSize:14];
+    if (image.text_result != nil && ! [image.text_result isEqual:[NSNull null]]) {
+      label.text = image.text_result;
+      label.font = [UIFont systemFontOfSize:14];
+      label.superview.hidden = NO;
+    } else {
+      label.superview.hidden = YES;
+    }
   }
 }
 
