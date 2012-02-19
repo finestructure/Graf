@@ -534,7 +534,7 @@
 		5A2263BA14B1FB190078EBEF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "abstracture GmbH & Co. KG";
 			};
 			buildConfigurationList = 5A2263BD14B1FB190078EBEF /* Build configuration list for PBXProject "Graf" */;
