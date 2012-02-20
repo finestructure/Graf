@@ -20,10 +20,8 @@
 {
   self.textResultBackgroundView.backgroundColor = [UIColor clearColor];
   self.textResultBackgroundView.layer.backgroundColor=[UIColor colorWithWhite:85./255. alpha:0.7].CGColor;
-  self.textResultBackgroundView.layer.cornerRadius = 8;
+  self.textResultBackgroundView.layer.cornerRadius = 7;
   self.textResultBackgroundView.layer.masksToBounds = NO;
-  self.textResultBackgroundView.layer.shouldRasterize = YES;
-
 }
 
 
