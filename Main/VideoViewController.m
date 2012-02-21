@@ -564,6 +564,14 @@ NSString * const kProcessingState = @"processing";
 }
 
 
+- (void)refreshButtonPressed:(id)sender {
+  [sender removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  Image *image = [self imageForView:sender];
+  NSArray *rows = [NSArray arrayWithObject:[self.dataSource indexPathForDocument:image.document]];
+  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
+}
+
+
 #pragma mark - CouchUITableDelegate
 
 
