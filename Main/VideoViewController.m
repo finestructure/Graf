@@ -381,7 +381,16 @@ NSString * const kProcessingState = @"processing";
 
 - (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image
 {
-  [iconView setImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
+  if ([image.state isEqualToString:kProcessingState]) {
+    [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  } else {
+    if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
+      [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
+      [iconView addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+      [iconView setImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
+    }
+  }
 }
 
 
