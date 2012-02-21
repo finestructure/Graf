@@ -62,10 +62,11 @@ NSString * const kProcessingState = @"processing";
                  mapBlock: ^(NSDictionary* doc, void (^emit)(id key, id value)) {
                    id date = [doc objectForKey: @"created_at"];
                    if (date) {
-                     emit(date, doc);
+                     id _id = [doc objectForKey:@"_id"];
+                     emit([NSArray arrayWithObjects:date, _id, nil], doc);
                    }
                  } 
-                  version: @"1.0"];
+                  version: @"2.0"];
   
   // and a validation function requiring parseable dates:
   design.validationBlock = ^BOOL(TDRevision* newRevision, id<TDValidationContext> context) {
