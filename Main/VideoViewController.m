@@ -380,7 +380,9 @@ NSString * const kDatabaseName = @"graf";
 {
   if ([image.state isEqualToString:kImageStateProcessing]) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    iconView.hidden = YES;
   } else {
+    iconView.hidden = NO;
     if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
       [iconView addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
