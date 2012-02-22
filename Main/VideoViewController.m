@@ -97,10 +97,10 @@ NSString * const kDatabaseName = @"graf";
                                       password: @"BaumHinkelstein"
                                    persistence: NSURLCredentialPersistencePermanent];
     NSURLProtectionSpace* space;
-    space = [[NSURLProtectionSpace alloc] initWithHost: @"graf.office.abstracture.de"
+    space = [[NSURLProtectionSpace alloc] initWithHost: @"graf.abstracture.de"
                                                    port: 443
                                                protocol: @"https"
-                                                  realm: @"graf"
+                                                  realm: @"Graf"
                                    authenticationMethod: NSURLAuthenticationMethodDefault];
     [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential: cred
                                                         forProtectionSpace: space];
@@ -110,7 +110,7 @@ NSString * const kDatabaseName = @"graf";
 #ifdef TEST
     NSString *url = @"http://thebe.local:5984/graf";
 #else
-    NSString *url = @"http://graf.office.abstracture.de/graf";
+    NSString *url = @"https://graf.abstracture.de/graf";
 #endif
     NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
     [defaults registerDefaults:appdefaults];
