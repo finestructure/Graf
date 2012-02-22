@@ -96,14 +96,14 @@ NSString * const kProcessingState = @"processing";
 
     // register db credentials
     NSURLCredential* cred;
-    cred = [NSURLCredential credentialWithUser: @"abstracture"
-                                      password: @"7V2BoXr94g"
+    cred = [NSURLCredential credentialWithUser: @"graf"
+                                      password: @"BaumHinkelstein"
                                    persistence: NSURLCredentialPersistencePermanent];
     NSURLProtectionSpace* space;
-    space = [[NSURLProtectionSpace alloc] initWithHost: @"abstracture.cloudant.com"
+    space = [[NSURLProtectionSpace alloc] initWithHost: @"graf.office.abstracture.de"
                                                    port: 443
                                                protocol: @"https"
-                                                  realm: @"Cloudant Private Database"
+                                                  realm: @"graf"
                                    authenticationMethod: NSURLAuthenticationMethodDefault];
     [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential: cred
                                                         forProtectionSpace: space];
@@ -113,7 +113,7 @@ NSString * const kProcessingState = @"processing";
 #ifdef TEST
     NSString *url = @"http://thebe.local:5984/graf";
 #else
-    NSString *url = @"https://abstracture.cloudant.com/graf";
+    NSString *url = @"http://graf.office.abstracture.de/graf";
 #endif
     NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
     [defaults registerDefaults:appdefaults];
