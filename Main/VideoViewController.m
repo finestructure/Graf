@@ -344,7 +344,10 @@ NSString * const kDatabaseName = @"graf";
 
 - (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image
 {
-  if ([image.state isEqualToString:kImageStateTimeout]) {
+  if ([image.state isEqualToString:kImageStateNew] ||
+      [image.state isEqualToString:kImageStateProcessing]) {
+    label.superview.hidden = YES;
+  } else if ([image.state isEqualToString:kImageStateTimeout]) {
     label.text = @"timeout";
     label.font = [UIFont italicSystemFontOfSize:14];
     label.superview.hidden = NO;
@@ -362,7 +365,8 @@ NSString * const kDatabaseName = @"graf";
 
 - (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image
 {
-  if ([image.state isEqualToString:kImageStateProcessing]) {
+  if ([image.state isEqualToString:kImageStateNew] ||
+      [image.state isEqualToString:kImageStateProcessing]) {
     label.text = @"";
   } else {
     label.text = [NSString stringWithFormat:@"%.1fs", [image.processing_time floatValue]];
@@ -378,7 +382,8 @@ NSString * const kDatabaseName = @"graf";
 
 - (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image
 {
-  if ([image.state isEqualToString:kImageStateProcessing]) {
+  if ([image.state isEqualToString:kImageStateNew] ||
+      [image.state isEqualToString:kImageStateProcessing]) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     iconView.hidden = YES;
   } else {

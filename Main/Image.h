@@ -9,6 +9,7 @@
 #import <CouchCocoa/CouchCocoa.h>
 
 
+extern NSString * const kImageStateNew;
 extern NSString * const kImageStateIdle;
 extern NSString * const kImageStateProcessing;
 extern NSString * const kImageStateTimeout;
