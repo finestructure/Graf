@@ -8,6 +8,12 @@
 
 #import <CouchCocoa/CouchCocoa.h>
 
+
+extern NSString * const kImageStateIdle;
+extern NSString * const kImageStateProcessing;
+extern NSString * const kImageStateTimeout;
+
+
 @interface Image : CouchModel {
   NSString *_imageHash;
 }

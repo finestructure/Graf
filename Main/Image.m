@@ -11,6 +11,10 @@
 #import "Constants.h"
 
 
+NSString * const kImageStateIdle = @"idle";
+NSString * const kImageStateProcessing = @"processing";
+NSString * const kImageStateTimeout = @"timeout";
+
 NSString * const kImageAttachmentKey = @"snapshot.png";
 
 
@@ -33,6 +37,7 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
     self.source_device = [[Constants sharedInstance] deviceUuid];
     self.version = [[Constants sharedInstance] version];
     self.text_result = @"";
+    self.state = kImageStateIdle;
   }
   return self;
 }

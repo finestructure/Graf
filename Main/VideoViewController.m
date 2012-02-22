@@ -44,9 +44,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 NSString * const kDatabaseName = @"graf";
 
-NSString * const kTimeoutState = @"timeout";
-NSString * const kProcessingState = @"processing";
-
 
 #define TEST
 
@@ -347,7 +344,7 @@ NSString * const kProcessingState = @"processing";
 
 - (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image
 {
-  if ([image.state isEqualToString:kTimeoutState]) {
+  if ([image.state isEqualToString:kImageStateTimeout]) {
     label.text = @"timeout";
     label.font = [UIFont italicSystemFontOfSize:14];
     label.superview.hidden = NO;
@@ -365,7 +362,7 @@ NSString * const kProcessingState = @"processing";
 
 - (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image
 {
-  if ([image.state isEqualToString:kProcessingState]) {
+  if ([image.state isEqualToString:kImageStateProcessing]) {
     label.text = @"";
   } else {
     label.text = [NSString stringWithFormat:@"%.1fs", [image.processing_time floatValue]];
@@ -375,13 +372,13 @@ NSString * const kProcessingState = @"processing";
 
 - (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withImage:(Image *)image
 {
-  ([image.state isEqualToString:kProcessingState]) ? [view startAnimating] : [view stopAnimating];
+  ([image.state isEqualToString:kImageStateProcessing]) ? [view startAnimating] : [view stopAnimating];
 }
 
 
 - (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image
 {
-  if ([image.state isEqualToString:kProcessingState]) {
+  if ([image.state isEqualToString:kImageStateProcessing]) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   } else {
     if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
