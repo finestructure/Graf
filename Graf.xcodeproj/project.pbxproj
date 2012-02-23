@@ -39,6 +39,7 @@
 		5A854FE214F674CD0055A849 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EF14B5ED5D00D8FA66 /* CoreMedia.framework */; };
 		5A854FE314F675390055A849 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A43CF2414EAC0290002A69C /* Image.m */; };
 		5A854FE414F675450055A849 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F614CEF81500D8B6BB /* Constants.m */; };
+		5A85502914F67B140055A849 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A85502814F67B140055A849 /* SystemConfiguration.framework */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
@@ -250,6 +251,7 @@
 		5A854FC914F66DFB0055A849 /* VideoViewController+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VideoViewController+Helpers.h"; path = "Main/VideoViewController+Helpers.h"; sourceTree = SOURCE_ROOT; };
 		5A854FCA14F66DFB0055A849 /* VideoViewController+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VideoViewController+Helpers.m"; path = "Main/VideoViewController+Helpers.m"; sourceTree = SOURCE_ROOT; };
 		5A854FD414F670060055A849 /* VideoViewController+HelpersTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VideoViewController+HelpersTest.m"; sourceTree = "<group>"; };
+		5A85502814F67B140055A849 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
 		5A86044814C438CD008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "other/NSData+Base64.h"; sourceTree = "<group>"; };
 		5A86044914C438CD008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "other/NSData+Base64.m"; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A85502914F67B140055A849 /* SystemConfiguration.framework in Frameworks */,
 				5A854FDD14F6741C0055A849 /* libz.dylib in Frameworks */,
 				5A854FDC14F673FF0055A849 /* libsqlite3.dylib in Frameworks */,
 				5A854FE214F674CD0055A849 /* CoreMedia.framework in Frameworks */,
@@ -330,6 +333,7 @@
 		5A2263B814B1FB190078EBEF = {
 			isa = PBXGroup;
 			children = (
+				5A85502814F67B140055A849 /* SystemConfiguration.framework */,
 				5A2263CD14B1FB190078EBEF /* Main */,
 				5A2263E414B312450078EBEF /* Other */,
 				5A7B0EAF14B47315000314C0 /* Resources */,
