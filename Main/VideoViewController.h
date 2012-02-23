@@ -12,13 +12,13 @@
 
 @class Image;
 @class CouchDatabase;
-@class CouchReplication;
+@class CouchPersistentReplication;
 #import <CouchCocoa/CouchUITableSource.h>
 
 
 @interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, CouchUITableDelegate> {
-  CouchReplication* _pull;
-  CouchReplication* _push;
+  CouchPersistentReplication* _pull;
+  CouchPersistentReplication* _push;
 }
 
 @property (nonatomic, retain) AVCaptureSession *session;
