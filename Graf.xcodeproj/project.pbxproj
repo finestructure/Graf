@@ -26,6 +26,7 @@
 		5A56F0C114CD482F00F7D75B /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */; };
 		5A7B0EB214B47315000314C0 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB014B47315000314C0 /* 14-gear.png */; };
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
+		5A854FCB14F66DFB0055A849 /* VideoViewController+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A854FCA14F66DFB0055A849 /* VideoViewController+Helpers.m */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
@@ -239,6 +240,8 @@
 		5A56F0C014CD482F00F7D75B /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = other/GHUnitIOS.framework; sourceTree = "<group>"; };
 		5A7B0EB014B47315000314C0 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
 		5A7B0EB114B47315000314C0 /* 14-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear@2x.png"; sourceTree = "<group>"; };
+		5A854FC914F66DFB0055A849 /* VideoViewController+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VideoViewController+Helpers.h"; path = "Main/VideoViewController+Helpers.h"; sourceTree = SOURCE_ROOT; };
+		5A854FCA14F66DFB0055A849 /* VideoViewController+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VideoViewController+Helpers.m"; path = "Main/VideoViewController+Helpers.m"; sourceTree = SOURCE_ROOT; };
 		5A86043414C2332F008D2C6A /* test222.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test222.tif; sourceTree = "<group>"; };
 		5A86044814C438CD008D2C6A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "other/NSData+Base64.h"; sourceTree = "<group>"; };
 		5A86044914C438CD008D2C6A /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "other/NSData+Base64.m"; sourceTree = "<group>"; };
@@ -369,6 +372,8 @@
 				5AED50FF14CEF85F00D8B6BB /* VideoViewController.h */,
 				5AED510014CEF85F00D8B6BB /* VideoViewController.m */,
 				5AED510114CEF85F00D8B6BB /* VideoViewController.xib */,
+				5A854FC914F66DFB0055A849 /* VideoViewController+Helpers.h */,
+				5A854FCA14F66DFB0055A849 /* VideoViewController+Helpers.m */,
 				5AAAD36614E525A200AFB2DC /* ImageCell.h */,
 				5AAAD36714E525A200AFB2DC /* ImageCell.m */,
 				5AC6546D14D01F15004635D8 /* ImageCell.xib */,
@@ -773,6 +778,7 @@
 				5AED510414CEF85F00D8B6BB /* VideoViewController.m in Sources */,
 				5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */,
 				5A43CF2514EAC0290002A69C /* Image.m in Sources */,
+				5A854FCB14F66DFB0055A849 /* VideoViewController+Helpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

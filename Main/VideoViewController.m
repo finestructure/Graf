@@ -8,15 +8,17 @@
 
 
 #import <TargetConditionals.h>
+#import <CouchCocoa/CouchCocoa.h>
+#import <CouchCocoa/CouchTouchDBServer.h>
+#import <CouchCocoa/CouchDesignDocument_Embedded.h>
+
 #import "VideoViewController.h"
 
 #import "Constants.h"
 #import "ImageCell.h"
 #import "NSData+MD5.h"
 #import "Image.h"
-#import <CouchCocoa/CouchCocoa.h>
-#import <CouchCocoa/CouchTouchDBServer.h>
-#import <CouchCocoa/CouchDesignDocument_Embedded.h>
+#import "VideoViewController+Helpers.h"
 
 
 @implementation VideoViewController
@@ -542,11 +544,18 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (void)couchTableSource:(CouchUITableSource*)source
-             willUseCell:(UITableViewCell*)cell
-                  forRow:(CouchQueryRow*)row
+- (void)couchTableSource:(CouchUITableSource*)source updateFromQuery:(CouchLiveQuery*)query previousRows:(NSArray *)oldRows
 {
+  NSArray *newRows = query.rows.allObjects;
+  NSArray *addedIndexPaths = [self addedIndexPathsOldRows:oldRows newRows:newRows];
+  NSArray *deletedIndexPaths = [self deletedIndexPathsOldRows:oldRows newRows:newRows];
+  NSArray *modifiedIndexPaths = [self modifiedIndexPathsOldRows:oldRows newRows:newRows];
   
+  [self.tableView beginUpdates];
+  [self.tableView insertRowsAtIndexPaths:addedIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView deleteRowsAtIndexPaths:deletedIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView reloadRowsAtIndexPaths:modifiedIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+  [self.tableView endUpdates];
 }
 
 
