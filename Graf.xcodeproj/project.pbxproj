@@ -40,6 +40,7 @@
 		5A854FE414F675450055A849 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50F614CEF81500D8B6BB /* Constants.m */; };
 		5A85502914F67B140055A849 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A85502814F67B140055A849 /* SystemConfiguration.framework */; };
 		5A85502D14F67D150055A849 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED510014CEF85F00D8B6BB /* VideoViewController.m */; };
+		5A85502E14F68AE80055A849 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A85502814F67B140055A849 /* SystemConfiguration.framework */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
@@ -294,6 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A85502E14F68AE80055A849 /* SystemConfiguration.framework in Frameworks */,
 				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
 				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
 				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
