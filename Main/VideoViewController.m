@@ -549,7 +549,9 @@ NSString * const kDatabaseName = @"graf";
   NSArray *newRows = query.rows.allObjects;
   NSArray *addedIndexPaths = [self addedIndexPathsOldRows:oldRows newRows:newRows];
   NSArray *deletedIndexPaths = [self deletedIndexPathsOldRows:oldRows newRows:newRows];
-  NSArray *modifiedIndexPaths = [self modifiedIndexPathsOldRows:oldRows newRows:newRows];
+  NSArray *modifiedIndexPaths = [self modifiedIndexPathsOldRows:oldRows newRows:newRows usingBlock:^BOOL(id oldObj, id newObj) {
+    return ! [[oldObj documentRevision] isEqualToString:[newObj documentRevision]];
+  }];
   
   [self.tableView beginUpdates];
   [self.tableView insertRowsAtIndexPaths:addedIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];

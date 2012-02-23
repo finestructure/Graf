@@ -66,10 +66,10 @@
   NSDictionary *row3 = [NSDictionary dictionaryWithObjectsAndKeys:doc3, @"doc", nil];
   NSArray *new = [NSArray arrayWithObjects:[MockRow rowWithResult:row1], [MockRow rowWithResult:row2], [MockRow rowWithResult:row3], nil];
   
-  NSArray *deletedIndexPaths = [self.vvc performSelector:@selector(deletedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  NSArray *deletedIndexPaths = [self.vvc deletedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([deletedIndexPaths count], 0u, nil);
 
-  NSArray *newIndexPaths = [self.vvc performSelector:@selector(addedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  NSArray *newIndexPaths = [self.vvc addedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([newIndexPaths count], 3u, nil);
   NSSet *expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                          [NSIndexPath indexPathForRow:0 inSection:0],
@@ -86,10 +86,10 @@
   NSDictionary *row2b = [NSDictionary dictionaryWithObjectsAndKeys:doc2b, @"doc", nil];
   new = [NSArray arrayWithObjects:[MockRow rowWithResult:row1], [MockRow rowWithResult:row2], [MockRow rowWithResult:row2a], [MockRow rowWithResult:row2b], [MockRow rowWithResult:row3], nil];
   
-  deletedIndexPaths = [self.vvc performSelector:@selector(deletedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  deletedIndexPaths = [self.vvc deletedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([deletedIndexPaths count], 0u, nil);
 
-  newIndexPaths = [self.vvc performSelector:@selector(addedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  newIndexPaths = [self.vvc addedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([newIndexPaths count], 2u, nil);
   expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                   [NSIndexPath indexPathForRow:2 inSection:0],
@@ -101,7 +101,7 @@
   old = new;
   new = [NSArray arrayWithObjects:[MockRow rowWithResult:row1], [MockRow rowWithResult:row2b], [MockRow rowWithResult:row3], nil];
 
-  deletedIndexPaths = [self.vvc performSelector:@selector(deletedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  deletedIndexPaths = [self.vvc deletedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([deletedIndexPaths count], 2u, nil);
   expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                   [NSIndexPath indexPathForRow:1 inSection:0],
@@ -109,7 +109,7 @@
                                   nil]];
   GHAssertTrue([expected isEqualToSet:[NSSet setWithArray:deletedIndexPaths]], nil);
 
-  newIndexPaths = [self.vvc performSelector:@selector(addedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  newIndexPaths = [self.vvc addedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([newIndexPaths count], 0u, nil);
   
   // finally, change some rows
@@ -120,13 +120,15 @@
   NSDictionary *row3v2 = [NSDictionary dictionaryWithObjectsAndKeys:doc3v2, @"doc", nil];
   new = [NSArray arrayWithObjects:[MockRow rowWithResult:row1], [MockRow rowWithResult:row2v2], [MockRow rowWithResult:row3v2], nil];
 
-  deletedIndexPaths = [self.vvc performSelector:@selector(deletedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  deletedIndexPaths = [self.vvc deletedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([deletedIndexPaths count], 0u, nil);
 
-  newIndexPaths = [self.vvc performSelector:@selector(addedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  newIndexPaths = [self.vvc addedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([newIndexPaths count], 0u, nil);
   
-  NSArray *modifiedIndexPaths = [self.vvc performSelector:@selector(modifiedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  NSArray *modifiedIndexPaths = [self.vvc modifiedIndexPathsOldRows:old newRows:new usingBlock:^BOOL(id oldObj, id newObj) {
+    return ! [[oldObj documentRevision] isEqualToString:[newObj documentRevision]];
+  }];
   GHAssertEquals([modifiedIndexPaths count], 2u, nil);
   expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                   [NSIndexPath indexPathForRow:1 inSection:0],
@@ -163,14 +165,14 @@
          [MockRow rowWithResult:row3v2],
          nil];
 
-  deletedIndexPaths = [self.vvc performSelector:@selector(deletedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  deletedIndexPaths = [self.vvc deletedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([deletedIndexPaths count], 1u, nil);
   expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                   [NSIndexPath indexPathForRow:5 inSection:0],
                                   nil]];
   GHAssertTrue([expected isEqualToSet:[NSSet setWithArray:deletedIndexPaths]], nil);
 
-  newIndexPaths = [self.vvc performSelector:@selector(addedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  newIndexPaths = [self.vvc addedIndexPathsOldRows:old newRows:new];
   GHAssertEquals([newIndexPaths count], 3u, nil);
   expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                   [NSIndexPath indexPathForRow:0 inSection:0],
@@ -179,7 +181,9 @@
                                   nil]];
   GHAssertTrue([expected isEqualToSet:[NSSet setWithArray:newIndexPaths]], nil);
 
-  modifiedIndexPaths = [self.vvc performSelector:@selector(modifiedIndexPathsOldRows:newRows:) withObject:old withObject:new];
+  modifiedIndexPaths = [self.vvc modifiedIndexPathsOldRows:old newRows:new usingBlock:^BOOL(id oldObj, id newObj) {
+    return ! [[oldObj documentRevision] isEqualToString:[newObj documentRevision]];
+  }];
   GHAssertEquals([modifiedIndexPaths count], 2u, nil);
   expected = [NSSet setWithArray:[NSArray arrayWithObjects:
                                   [NSIndexPath indexPathForRow:5 inSection:0],

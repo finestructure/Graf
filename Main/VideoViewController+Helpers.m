@@ -53,7 +53,7 @@
 }
 
 
--(NSArray *)modifiedIndexPathsOldRows:(NSArray *)oldRows newRows:(NSArray *)newRows {
+-(NSArray *)modifiedIndexPathsOldRows:(NSArray *)oldRows newRows:(NSArray *)newRows usingBlock:(BOOL (^)(id, id))isModified {
   NSDictionary *oldIndexMap = [self indexMapForRows:oldRows];
   NSDictionary *newIndexMap = [self indexMapForRows:newRows];
   
@@ -79,7 +79,7 @@
     NSLog(@"-------------------------------------------");
     NSAssert([[oldRow documentID] isEqualToString:[newRow documentID]],
              @"document ids must be equal for objects in intersection");
-    if (! [[oldRow documentRevision] isEqualToString:[newRow documentRevision]]) {
+    if (isModified(oldRow, newRow)) {
       [modifiedIndexPaths addObject:newIndexPath];
     }
   }
