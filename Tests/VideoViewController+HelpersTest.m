@@ -47,7 +47,7 @@
 
 
 - (void)setUp {
-  self.vvc = [[VideoViewController alloc] init];
+  self.vvc = [[VideoViewController alloc] initWithNibName:nil bundle:nil];
 }
 
 
