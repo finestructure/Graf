@@ -546,17 +546,45 @@ NSString * const kDatabaseName = @"graf";
 
 - (void)couchTableSource:(CouchUITableSource*)source updateFromQuery:(CouchLiveQuery*)query previousRows:(NSArray *)oldRows
 {
+  BOOL (^isModified)(id, id) = ^ BOOL (id oldObj, id newObj) {
+    return ! [[oldObj documentRevision] isEqualToString:[newObj documentRevision]];
+  };
+  BOOL (^isNewToProcessingStateTransition)(id, id) = ^ BOOL (id oldObj, id newObj) {
+    CouchQueryRow *oldRow = oldObj;
+    CouchQueryRow *newRow = newObj;
+    if ([[oldRow.value objectForKey:@"state"] isEqualToString:kImageStateNew] &&
+        [[newRow.value objectForKey:@"state"] isEqualToString:kImageStateProcessing]) {
+      return YES;
+    } else {
+      return NO;
+    }
+  };
+  
   NSArray *newRows = query.rows.allObjects;
   NSArray *addedIndexPaths = [self addedIndexPathsOldRows:oldRows newRows:newRows];
   NSArray *deletedIndexPaths = [self deletedIndexPathsOldRows:oldRows newRows:newRows];
   NSArray *modifiedIndexPaths = [self modifiedIndexPathsOldRows:oldRows newRows:newRows usingBlock:^BOOL(id oldObj, id newObj) {
-    return ! [[oldObj documentRevision] isEqualToString:[newObj documentRevision]];
+    if (isModified(oldObj, newObj) &&
+        ! isNewToProcessingStateTransition(oldObj, newObj)) {
+      return YES;
+    } else {
+      return NO;
+    }
+  }];
+  NSArray *newToProcessingStateTransitions = [self modifiedIndexPathsOldRows:oldRows newRows:newRows usingBlock:^BOOL(id oldObj, id newObj) {
+    if (isModified(oldObj, newObj) &&
+        isNewToProcessingStateTransition(oldObj, newObj)) {
+      return YES;
+    } else {
+      return NO;
+    }
   }];
   
   [self.tableView beginUpdates];
-  [self.tableView insertRowsAtIndexPaths:addedIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-  [self.tableView deleteRowsAtIndexPaths:deletedIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView insertRowsAtIndexPaths:addedIndexPaths withRowAnimation:UITableViewRowAnimationTop];
+  [self.tableView deleteRowsAtIndexPaths:deletedIndexPaths withRowAnimation:UITableViewRowAnimationBottom];
   [self.tableView reloadRowsAtIndexPaths:modifiedIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+  [self.tableView reloadRowsAtIndexPaths:newToProcessingStateTransitions withRowAnimation:UITableViewRowAnimationNone];
   [self.tableView endUpdates];
 }
 

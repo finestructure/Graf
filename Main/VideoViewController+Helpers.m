@@ -73,10 +73,6 @@
     NSIndexPath *newIndexPath = [intersectionNewIndexPaths objectAtIndex:index];
     CouchQueryRow *oldRow = [oldRows objectAtIndex:oldIndexPath.row];
     CouchQueryRow *newRow = [newRows objectAtIndex:newIndexPath.row];
-    NSLog(@"===========================================");
-//    NSLog(@"old: %@", oldRow);
-//    NSLog(@"new: %@", newRow);
-    NSLog(@"-------------------------------------------");
     NSAssert([[oldRow documentID] isEqualToString:[newRow documentID]],
              @"document ids must be equal for objects in intersection");
     if (isModified(oldRow, newRow)) {
