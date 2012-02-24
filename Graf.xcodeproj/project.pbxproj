@@ -12,8 +12,6 @@
 		5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2263CB14B1FB190078EBEF /* CoreGraphics.framework */; };
 		5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */; };
 		5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA214E3C38A00AE26D7 /* libz.dylib */; };
-		5A399F5014EBD25D00468A0B /* CouchCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F4F14EBD25D00468A0B /* CouchCocoa.framework */; };
-		5A399F5214EBD27A00468A0B /* TouchDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F5114EBD27A00468A0B /* TouchDB.framework */; };
 		5A43CF2514EAC0290002A69C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A43CF2414EAC0290002A69C /* Image.m */; };
 		5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766E314B5E0F900D8FA66 /* AVFoundation.framework */; };
 		5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4766EB14B5ED2600D8FA66 /* CoreVideo.framework */; };
@@ -28,8 +26,6 @@
 		5A7B0EB314B47315000314C0 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7B0EB114B47315000314C0 /* 14-gear@2x.png */; };
 		5A854FCB14F66DFB0055A849 /* VideoViewController+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A854FCA14F66DFB0055A849 /* VideoViewController+Helpers.m */; };
 		5A854FD514F670060055A849 /* VideoViewController+HelpersTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A854FD414F670060055A849 /* VideoViewController+HelpersTest.m */; };
-		5A854FDA14F673CD0055A849 /* libCouchCocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F6E14EBD36900468A0B /* libCouchCocoa.a */; };
-		5A854FDB14F673E70055A849 /* libTouchDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F9414EBD3A600468A0B /* libTouchDB.a */; };
 		5A854FDC14F673FF0055A849 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA014E2ED1000AE26D7 /* libsqlite3.dylib */; };
 		5A854FDD14F6741C0055A849 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A29CAA214E3C38A00AE26D7 /* libz.dylib */; };
 		5A854FDF14F6743C0055A849 /* VideoViewController+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A854FCA14F66DFB0055A849 /* VideoViewController+Helpers.m */; };
@@ -42,7 +38,6 @@
 		5A85502D14F67D150055A849 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED510014CEF85F00D8B6BB /* VideoViewController.m */; };
 		5A85502E14F68AE80055A849 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A85502814F67B140055A849 /* SystemConfiguration.framework */; };
 		5A86044C14C438CD008D2C6A /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
-		5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A86044E14C43D6D008D2C6A /* CFNetwork.framework */; };
 		5A86046314C482E5008D2C6A /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5AAAD36814E525A200AFB2DC /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAD36714E525A200AFB2DC /* ImageCell.m */; };
 		5AC6543914CF0A99004635D8 /* app_icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC6543714CF0A99004635D8 /* app_icon-57.png */; };
@@ -58,6 +53,10 @@
 		5ADC3DAE14CD7137004992F7 /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86046214C482E5008D2C6A /* NSData+MD5.m */; };
 		5ADC3DB014CD713F004992F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86044914C438CD008D2C6A /* NSData+Base64.m */; };
 		5ADC3DB614CD8EC3004992F7 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
+		5ADEDE6414F77C7C004F2EA1 /* libCouchCocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F6E14EBD36900468A0B /* libCouchCocoa.a */; };
+		5ADEDE6514F77C88004F2EA1 /* libTouchDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F9414EBD3A600468A0B /* libTouchDB.a */; };
+		5ADEDE6614F77C9A004F2EA1 /* libCouchCocoa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F6E14EBD36900468A0B /* libCouchCocoa.a */; };
+		5ADEDE6714F77C9D004F2EA1 /* libTouchDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A399F9414EBD3A600468A0B /* libTouchDB.a */; };
 		5AE2E69C14DBF552009AD7D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AE2E69A14DBF552009AD7D1 /* Localizable.strings */; };
 		5AE2E69F14DC0E0C009AD7D1 /* test222.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5A86043414C2332F008D2C6A /* test222.tif */; };
 		5AED50ED14CEF7CD00D8B6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AED50EB14CEF7CD00D8B6BB /* main.m */; };
@@ -209,14 +208,28 @@
 			remoteGlobalIDString = 270FE0C814C5008C005FF647;
 			remoteInfo = TouchServ;
 		};
-		5ACFBD6314ECF70B00944EAC /* PBXContainerItemProxy */ = {
+		5ADEDE5C14F77BDE004F2EA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5A399F7114EBD3A600468A0B /* TouchDB.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 27B0B7E61492BB6B00A817AD;
 			remoteInfo = "iOS Framework";
 		};
-		5ACFBD6514ECF71000944EAC /* PBXContainerItemProxy */ = {
+		5ADEDE5E14F77BE5004F2EA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A399F5314EBD36800468A0B /* CouchCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 27EEA59713D602EA00D7ACA4;
+			remoteInfo = "iOS Framework";
+		};
+		5ADEDE6814F77CB7004F2EA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A399F7114EBD3A600468A0B /* TouchDB.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 27B0B7E61492BB6B00A817AD;
+			remoteInfo = "iOS Framework";
+		};
+		5ADEDE6A14F77CC1004F2EA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5A399F5314EBD36800468A0B /* CouchCocoa.xcodeproj */;
 			proxyType = 1;
@@ -295,18 +308,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */,
+				5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */,
+				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
+				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
+				5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */,
 				5A85502E14F68AE80055A849 /* SystemConfiguration.framework in Frameworks */,
+				5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */,
 				5A29CAA314E3C38A00AE26D7 /* libz.dylib in Frameworks */,
 				5A29CAA114E2ED1000AE26D7 /* libsqlite3.dylib in Frameworks */,
-				5A86044F14C43D6D008D2C6A /* CFNetwork.framework in Frameworks */,
-				5A4766EC14B5ED2600D8FA66 /* CoreVideo.framework in Frameworks */,
-				5A4766F014B5ED5D00D8FA66 /* CoreMedia.framework in Frameworks */,
-				5A4766E414B5E0F900D8FA66 /* AVFoundation.framework in Frameworks */,
-				5A2263C814B1FB190078EBEF /* UIKit.framework in Frameworks */,
-				5A2263CA14B1FB190078EBEF /* Foundation.framework in Frameworks */,
-				5A2263CC14B1FB190078EBEF /* CoreGraphics.framework in Frameworks */,
-				5A399F5014EBD25D00468A0B /* CouchCocoa.framework in Frameworks */,
-				5A399F5214EBD27A00468A0B /* TouchDB.framework in Frameworks */,
+				5ADEDE6414F77C7C004F2EA1 /* libCouchCocoa.a in Frameworks */,
+				5ADEDE6514F77C88004F2EA1 /* libTouchDB.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,17 +326,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A85502914F67B140055A849 /* SystemConfiguration.framework in Frameworks */,
-				5A854FDD14F6741C0055A849 /* libz.dylib in Frameworks */,
-				5A854FDC14F673FF0055A849 /* libsqlite3.dylib in Frameworks */,
+				5A854FE014F6748E0055A849 /* AVFoundation.framework in Frameworks */,
+				5A56F0AF14CD480300F7D75B /* CoreGraphics.framework in Frameworks */,
 				5A854FE214F674CD0055A849 /* CoreMedia.framework in Frameworks */,
 				5A854FE114F6749E0055A849 /* CoreVideo.framework in Frameworks */,
-				5A854FE014F6748E0055A849 /* AVFoundation.framework in Frameworks */,
-				5A854FDB14F673E70055A849 /* libTouchDB.a in Frameworks */,
-				5A854FDA14F673CD0055A849 /* libCouchCocoa.a in Frameworks */,
-				5A56F0AD14CD480300F7D75B /* UIKit.framework in Frameworks */,
 				5A56F0AE14CD480300F7D75B /* Foundation.framework in Frameworks */,
-				5A56F0AF14CD480300F7D75B /* CoreGraphics.framework in Frameworks */,
+				5A85502914F67B140055A849 /* SystemConfiguration.framework in Frameworks */,
+				5A56F0AD14CD480300F7D75B /* UIKit.framework in Frameworks */,
+				5A854FDC14F673FF0055A849 /* libsqlite3.dylib in Frameworks */,
+				5A854FDD14F6741C0055A849 /* libz.dylib in Frameworks */,
+				5ADEDE6614F77C9A004F2EA1 /* libCouchCocoa.a in Frameworks */,
+				5ADEDE6714F77C9D004F2EA1 /* libTouchDB.a in Frameworks */,
 				5A56F0C114CD482F00F7D75B /* GHUnitIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,8 +533,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				5ACFBD6614ECF71000944EAC /* PBXTargetDependency */,
-				5ACFBD6414ECF70B00944EAC /* PBXTargetDependency */,
+				5ADEDE5F14F77BE5004F2EA1 /* PBXTargetDependency */,
+				5ADEDE5D14F77BDE004F2EA1 /* PBXTargetDependency */,
 			);
 			name = Graf;
 			productName = Sinma;
@@ -540,6 +552,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				5ADEDE6B14F77CC1004F2EA1 /* PBXTargetDependency */,
+				5ADEDE6914F77CB7004F2EA1 /* PBXTargetDependency */,
 			);
 			name = Tests;
 			productName = Tests;
@@ -813,15 +827,25 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5ACFBD6414ECF70B00944EAC /* PBXTargetDependency */ = {
+		5ADEDE5D14F77BDE004F2EA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "iOS Framework";
-			targetProxy = 5ACFBD6314ECF70B00944EAC /* PBXContainerItemProxy */;
+			targetProxy = 5ADEDE5C14F77BDE004F2EA1 /* PBXContainerItemProxy */;
 		};
-		5ACFBD6614ECF71000944EAC /* PBXTargetDependency */ = {
+		5ADEDE5F14F77BE5004F2EA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "iOS Framework";
-			targetProxy = 5ACFBD6514ECF71000944EAC /* PBXContainerItemProxy */;
+			targetProxy = 5ADEDE5E14F77BE5004F2EA1 /* PBXContainerItemProxy */;
+		};
+		5ADEDE6914F77CB7004F2EA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iOS Framework";
+			targetProxy = 5ADEDE6814F77CB7004F2EA1 /* PBXContainerItemProxy */;
+		};
+		5ADEDE6B14F77CC1004F2EA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iOS Framework";
+			targetProxy = 5ADEDE6A14F77CC1004F2EA1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

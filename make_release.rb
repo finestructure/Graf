@@ -27,7 +27,7 @@ end
 
 
 def build
-  cmd = "xcodebuild -target #{PRODUCT_NAME} -configuration Release"
+  cmd = "xcodebuild -target #{PRODUCT_NAME} -configuration Release clean build"
   %x[#{cmd}]
   if $?.exitstatus == 0
     puts "Build succeeded"
