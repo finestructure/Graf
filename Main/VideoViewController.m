@@ -390,7 +390,9 @@ NSString * const kDatabaseName = @"graf";
     iconView.hidden = YES;
   } else {
     iconView.hidden = NO;
-    if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
+    if (image.text_result == nil ||
+        [image.text_result isEqual:[NSNull null]] ||
+        [image.text_result isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
       [iconView addTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
