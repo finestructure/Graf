@@ -1,4 +1,9 @@
-* 2012-02-24: v0.12
+* 2012-02-24: v0.15
+	* Fixed reconnection issue (reverted persistent replication)
+	* Fixed crash when text_result is NSNull
+	* Added refresh button for whole table view
+    * [#37](https://github.com/sas71/Graf/issues/37)
+* 2012-02-24: v0.14
     * [#31](https://github.com/sas71/Graf/issues/31)
     * [#33](https://github.com/sas71/Graf/issues/33)
     * [#36](https://github.com/sas71/Graf/issues/36)
