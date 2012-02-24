@@ -386,13 +386,13 @@ NSString * const kDatabaseName = @"graf";
 {
   if ([image.state isEqualToString:kImageStateNew] ||
       [image.state isEqualToString:kImageStateProcessing]) {
-    [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [iconView removeTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     iconView.hidden = YES;
   } else {
     iconView.hidden = NO;
     if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
-      [iconView addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+      [iconView addTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
       [iconView setImage:[UIImage imageNamed:@"258-checkmark.png"] forState:UIControlStateNormal];
     }
@@ -509,9 +509,13 @@ NSString * const kDatabaseName = @"graf";
     
 }
 
+- (IBAction)refreshButtonPressed:(id)sender {
+  [self updateSyncURL];
+}
 
-- (void)refreshButtonPressed:(id)sender {
-  [sender removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+- (void)cellRefreshButtonPressed:(id)sender {
+  [sender removeTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   Image *image = [self imageForView:sender];
   NSArray *rows = [NSArray arrayWithObject:[self.dataSource indexPathForDocument:image.document]];
   [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
