@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kImageScaleDefault;
-extern NSString * const kNumbersOnlyDefault;
-extern NSString * const kPageModeDefault;
+extern NSString * const kUuidDefaultsKey;
+
+
+@interface Constants : NSObject
+
+@property (readonly) NSString *version;
+
++ (Constants *)sharedInstance;
+
+- (NSString *)deviceUuid;
+
+@end
+

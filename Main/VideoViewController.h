@@ -8,35 +8,31 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "ImageProcessor.h"
 
 
 @class Image;
 @class CouchDatabase;
-@class CouchReplication;
+@class CouchPersistentReplication;
+#import <CouchCocoa/CouchUITableSource.h>
 
 
-@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, ImageProcessorDelegate> {
-  CouchReplication* _push;
+@interface VideoViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, CouchUITableDelegate> {
+  CouchPersistentReplication* _pull;
+  CouchPersistentReplication* _push;
 }
 
 @property (nonatomic, retain) AVCaptureSession *session;
 @property (nonatomic, retain) AVCaptureStillImageOutput *imageOutput;
-@property (nonatomic, retain) ImageProcessor *imageProcessor;
-@property (nonatomic, retain) NSMutableArray *images;
 @property (nonatomic, retain) CouchDatabase *database;
 
 @property (weak, nonatomic) IBOutlet UIView *preview;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(nonatomic, retain) IBOutlet CouchUITableSource* dataSource;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
 
-- (void)startProcessingImage:(Image *)image;
-
 - (IBAction)takePicture:(id)sender;
-- (void)refreshButtonPressed:(id)sender;
-- (void)refreshBalance;
 
 - (void)failedWithError:(NSError *)error;
 

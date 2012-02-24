@@ -2,60 +2,69 @@
 //  Image.m
 //  Graf
 //
-//  Created by Sven A. Schmidt on 25.01.12.
+//  Created by Sven A. Schmidt on 14.02.12.
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
 #import "Image.h"
+#import "NSData+MD5.h"
+#import "Constants.h"
+
+
+NSString * const kImageStateNew = @"new";
+NSString * const kImageStateIdle = @"idle";
+NSString * const kImageStateProcessing = @"processing";
+NSString * const kImageStateTimeout = @"timeout";
+
+NSString * const kImageAttachmentKey = @"snapshot.png";
+
 
 @implementation Image
 
-@synthesize image = _image;
-@synthesize imageId = _imageId;
-@synthesize state = _state;
-@synthesize start = _start;
-@synthesize processingTime = _processingTime;
-@synthesize textResult = _textResult;
-@synthesize isInTransition = _isInTransition;
+@dynamic image_id, state, created_at, text_result, processing_time, source_device, version;
 
 
-- (id)init {
+- (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database
+{
   self = [super init];
   if (self) {
-    self.state = kIdle;
-    self.isInTransition = NO;
+    // set image hash first, because it's the doc id needed by doc creation
+    // (which is triggered by the database setter below)
+    _imageHash = [UIImagePNGRepresentation(image) MD5];
+    self.database = database;
+    self.image = image;
+    self.image_id = _imageHash;
+    self.created_at = [NSDate date];
+    self.source_device = [[Constants sharedInstance] deviceUuid];
+    self.version = [[Constants sharedInstance] version];
+    self.text_result = @"";
+    self.state = kImageStateNew;
   }
   return self;
 }
 
 
-- (void)transitionTo:(ImageState)newState {
-  switch (self.state) {
-    case kIdle:
-      if (newState == kProcessing) {
-        self.start = [NSDate date];
-      }
-      break;
-      
-    case kProcessing:
-      if (newState == kIdle || newState == kTimeout) {
-        self.processingTime = [self elapsed];
-      }
-      break;
-
-    case kTimeout:
-      if (newState == kProcessing) {
-        self.start = [NSDate date];
-      }
-      break;
+- (UIImage*)image {
+  CouchAttachment* a = [self attachmentNamed:kImageAttachmentKey];
+  if (!a) {
+    return nil;
   }
-  self.state = newState;
-  self.isInTransition = YES;
+  return [[UIImage alloc] initWithData: a.body];
 }
 
 
-- (NSTimeInterval)elapsed {
-  return [[NSDate date] timeIntervalSinceDate:self.start];
+- (void)setImage:(UIImage*)image {
+  if (! image) {
+    [self removeAttachmentNamed:kImageAttachmentKey];
+  } else {
+    NSData* data = UIImagePNGRepresentation(image);
+    [self createAttachmentWithName:kImageAttachmentKey type:@"image/png" body:data];
+  }
+}
+
+
+- (NSString*)idForNewDocumentInDatabase:(CouchDatabase *)db	{
+  return _imageHash;
 }
 
 

@@ -2,32 +2,32 @@
 //  Image.h
 //  Graf
 //
-//  Created by Sven A. Schmidt on 25.01.12.
+//  Created by Sven A. Schmidt on 14.02.12.
 //  Copyright (c) 2012 abstracture GmbH & Co. KG. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-typedef enum ImageState {
-  kIdle,
-  kProcessing,
-  kTimeout
-} ImageState;
+#import <CouchCocoa/CouchCocoa.h>
 
 
-@interface Image : NSObject
+extern NSString * const kImageStateNew;
+extern NSString * const kImageStateIdle;
+extern NSString * const kImageStateProcessing;
+extern NSString * const kImageStateTimeout;
 
 
-@property (nonatomic, retain) UIImage *image;
-@property (nonatomic, copy) NSString *imageId;
-@property (nonatomic, assign) ImageState state;
-@property (nonatomic, retain) NSDate *start;
-@property (nonatomic, assign) NSTimeInterval processingTime;
-@property (nonatomic, copy) NSString *textResult;
-@property (nonatomic, assign) BOOL isInTransition;
+@interface Image : CouchModel {
+  NSString *_imageHash;
+}
 
+@property (retain) UIImage *image;
+@property (copy) NSString *image_id;
+@property (copy) NSString *state;
+@property (retain) NSDate *created_at;
+@property (copy) NSString *text_result;
+@property (retain) NSNumber *processing_time;
+@property (copy) NSString *source_device;
+@property (copy) NSString *version;
 
-- (void)transitionTo:(ImageState)newState;
-- (NSTimeInterval)elapsed;
+- (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database;
 
 @end

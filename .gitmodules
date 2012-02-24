@@ -4,3 +4,6 @@
 [submodule "other/CouchCocoa"]
 	path = other/CouchCocoa
 	url = https://github.com/couchbaselabs/CouchCocoa.git
+[submodule "other/GrafServer"]
+	path = other/GrafServer
+	url = https://github.com/sas71/GrafServer.git

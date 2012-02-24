@@ -8,28 +8,29 @@
 
 
 #import <TargetConditionals.h>
-#import "VideoViewController.h"
-
-#import "MockImageProcessor.h"
-#import "Constants.h"
-#import "Image.h"
-#import "ImageCell.h"
-#import "NSData+MD5.h"
 #import <CouchCocoa/CouchCocoa.h>
 #import <CouchCocoa/CouchTouchDBServer.h>
+#import <CouchCocoa/CouchDesignDocument_Embedded.h>
+
+#import "VideoViewController.h"
+
+#import "Constants.h"
+#import "ImageCell.h"
+#import "NSData+MD5.h"
+#import "Image.h"
+#import "VideoViewController+Helpers.h"
 
 
 @implementation VideoViewController
 
 @synthesize preview = _preview;
 @synthesize tableView = _tableView;
+@synthesize dataSource = _dataSource;
 @synthesize session = _session;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
 @synthesize remainingLabel = _remainingLabel;
 @synthesize imageOutput = _imageOutput;
-@synthesize imageProcessor = _imageProcessor;
-@synthesize images = _images;
 @synthesize database = _database;
 
 
@@ -43,41 +44,76 @@ const CGRect kImageViewFrameProcessing   = {{10, 7}, {260, 65}};
 const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
 const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
+NSString * const kDatabaseName = @"graf";
 
-//#define TEST
+
+#define TEST
+
+#pragma mark - Initialization
+
+
+- (void)setupDataSource {
+  self.dataSource = [[CouchUITableSource alloc] init];
+  
+  // Create a 'view' containing list items sorted by date:
+  CouchDesignDocument* design = [self.database designDocumentWithName: @"default"];
+  [design defineViewNamed: @"byDate" 
+                 mapBlock: ^(NSDictionary* doc, void (^emit)(id key, id value)) {
+                   id date = [doc objectForKey: @"created_at"];
+                   if (date) {
+                     id _id = [doc objectForKey:@"_id"];
+                     emit([NSArray arrayWithObjects:date, _id, nil], doc);
+                   }
+                 } 
+                  version: @"2.0"];
+  
+  // and a validation function requiring parseable dates:
+  design.validationBlock = ^BOOL(TDRevision* newRevision, id<TDValidationContext> context) {
+    if (newRevision.deleted)
+      return YES;
+    id date = [newRevision.properties objectForKey: @"created_at"];
+    if (date && ! [RESTBody dateWithJSONObject: date]) {
+      context.errorMessage = [@"invalid date " stringByAppendingString: date];
+      return NO;
+    }
+    return YES;
+  };
+
+  // Create a query sorted by descending date, i.e. newest items first:
+  CouchLiveQuery* query = [[[self.database designDocumentWithName: @"default"]
+                            queryViewNamed: @"byDate"] asLiveQuery];
+  query.descending = YES;
+  self.dataSource.query = query;  
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    self.images = [NSMutableArray array];
+    gCouchLogLevel = 0;
 
-    // set up image processor
-#ifdef TEST
-    self.imageProcessor = [[MockImageProcessor alloc] init];
-#else
-    self.imageProcessor = [[ImageProcessor alloc] init];
-#endif
-    self.imageProcessor.delegate = self;
-    
     // register db credentials
     NSURLCredential* cred;
-    cred = [NSURLCredential credentialWithUser: @"abstracture"
-                                      password: @"7V2BoXr94g"
+    cred = [NSURLCredential credentialWithUser: @"graf"
+                                      password: @"BaumHinkelstein"
                                    persistence: NSURLCredentialPersistencePermanent];
     NSURLProtectionSpace* space;
-    space = [[NSURLProtectionSpace alloc] initWithHost: @"abstracture.cloudant.com"
+    space = [[NSURLProtectionSpace alloc] initWithHost: @"graf.abstracture.de"
                                                    port: 443
                                                protocol: @"https"
-                                                  realm: @"Cloudant Private Database"
+                                                  realm: @"Graf"
                                    authenticationMethod: NSURLAuthenticationMethodDefault];
     [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential: cred
                                                         forProtectionSpace: space];
     
     // register user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *url = @"https://abstracture.cloudant.com/graf";
+#ifdef TEST
+    NSString *url = @"http://thebe.local:5984/graf";
+#else
+    NSString *url = @"https://graf.abstracture.de/graf";
+#endif
     NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
     [defaults registerDefaults:appdefaults];
     [defaults synchronize];
@@ -87,11 +123,12 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
     if (server.error) {
       [self failedWithError:server.error];
     }
-    self.database = [server databaseNamed: @"graf"];
+    self.database = [server databaseNamed: kDatabaseName];
     NSError *error;
     if (![self.database ensureCreated:&error]) {
       [self failedWithError:error];
     }
+    [self setupDataSource];
   }
   return self;
 }
@@ -144,8 +181,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 #else
   NSString *prefix = @"";
 #endif
-  NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-  self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, version];
+  self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, [[Constants sharedInstance] version]];
   self.remainingLabel.text = @"";
   
   // session init
@@ -167,10 +203,14 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   captureVideoPreviewLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
   [self.preview.layer addSublayer:captureVideoPreviewLayer];
 
+  // connect table view and data source
+  
+  self.dataSource.tableView = self.tableView;
+  self.tableView.dataSource = self.dataSource;
+  
   // other init work
   
   [self.session startRunning];
-  [self refreshBalance];
   [self updateSyncURL];
 }
 
@@ -288,9 +328,9 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 - (Image *)imageWithId:(NSString *)imageId {
   __block Image *result = nil;
-  [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+  [self.dataSource.rows enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     Image *image = (Image *)obj;
-    if ([image.imageId isEqualToString:imageId]) {
+    if ([image.image_id isEqualToString:imageId]) {
       result = image;
       *stop = YES;
     }
@@ -304,36 +344,53 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image {
-  if (image.state == kTimeout) {
+- (void)configureTextResultLabel:(UILabel *)label withImage:(Image *)image
+{
+  if ([image.state isEqualToString:kImageStateNew] ||
+      [image.state isEqualToString:kImageStateProcessing]) {
+    label.superview.hidden = YES;
+  } else if ([image.state isEqualToString:kImageStateTimeout]) {
     label.text = @"timeout";
     label.font = [UIFont italicSystemFontOfSize:14];
+    label.superview.hidden = NO;
   } else {
-    label.text = image.textResult;
-    label.font = [UIFont systemFontOfSize:14];
+    if (image.text_result != nil && ! [image.text_result isEqual:[NSNull null]]) {
+      label.text = image.text_result;
+      label.font = [UIFont systemFontOfSize:14];
+      label.superview.hidden = NO;
+    } else {
+      label.superview.hidden = YES;
+    }
   }
 }
 
 
-- (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image {
-  if (image.state == kProcessing) {
+- (void)configureProcessingTimeLabel:(UILabel *)label withImage:(Image *)image
+{
+  if ([image.state isEqualToString:kImageStateNew] ||
+      [image.state isEqualToString:kImageStateProcessing]) {
     label.text = @"";
   } else {
-    label.text = [NSString stringWithFormat:@"%.1fs", image.processingTime];
+    label.text = [NSString stringWithFormat:@"%.1fs", [image.processing_time floatValue]];
   }
 }
 
 
-- (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withImage:(Image *)image {
-  (image.state == kProcessing) ? [view startAnimating] : [view stopAnimating];
+- (void)configureActivityIndicatorView:(UIActivityIndicatorView *)view withImage:(Image *)image
+{
+  ([image.state isEqualToString:kImageStateProcessing]) ? [view startAnimating] : [view stopAnimating];
 }
 
 
-- (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image {
-  if (image.state == kProcessing) {
+- (void)configureStatusIconView:(UIButton *)iconView withImage:(Image *)image
+{
+  if ([image.state isEqualToString:kImageStateNew] ||
+      [image.state isEqualToString:kImageStateProcessing]) {
     [iconView removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    iconView.hidden = YES;
   } else {
-    if (image.textResult == nil || [image.textResult isEqualToString:@""]) {
+    iconView.hidden = NO;
+    if (image.text_result == nil || [image.text_result isEqualToString:@""]) {
       [iconView setImage:[UIImage imageNamed:@"01-refresh.png"] forState:UIControlStateNormal];
       [iconView addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
@@ -343,90 +400,40 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)transitionCell:(UITableViewCell *)cell toState:(ImageState)newState animate:(BOOL)animate {
-  NSTimeInterval duration = 0;
-  if (animate) {
-    duration = 0.5;
-  }
-  { // image view
-    UIView *view = [cell.contentView viewWithTag:1];
-    if (newState == kProcessing) {
-      [UIView animateWithDuration:duration animations:^{
-        view.frame = kImageViewFrameProcessing;
-      }];
-    } else {
-      [UIView animateWithDuration:duration animations:^{
-        view.frame = kImageViewFrameIdle;
-      }];
-    }
-  }
-  { // text result label
-    UIView *view = [cell.contentView viewWithTag:2];
-    if (newState == kProcessing) {
-      [UIView animateWithDuration:duration animations:^{
-        view.alpha = 0;
-        view.frame = kTextResultFrameProcessing;
-      }];
-    } else {
-      [UIView animateWithDuration:duration animations:^{
-        view.alpha = 1;
-        view.frame = kTextResultFrameIdle;
-      }];
-    }
-  }
-  { // processing time label
-    UIView *view = [cell.contentView viewWithTag:3];
-    if (newState == kProcessing) {
-      [UIView animateWithDuration:duration animations:^{
-        view.alpha = 0;
-      }];
-    } else {
-      [UIView animateWithDuration:duration animations:^{
-        view.alpha = 1;
-      }];
-    }
-  }
-  { // activity indicator
-    UIView *view = [cell.contentView viewWithTag:4];
-    view.hidden = (newState != kProcessing);
-  }
-  { // status icon
-    UIView *view = [cell.contentView viewWithTag:5];
-    if (newState == kProcessing) {
-      view.alpha = 0;
-    } else {
-      [UIView animateWithDuration:duration animations:^{
-        view.alpha = 1;
-      }];
-    }
-  }
+- (CouchDocument *)documentForIndexPath:(NSIndexPath *)indexPath
+{
+  CouchQueryRow *row = [self.dataSource rowAtIndex:indexPath.row];
+  CouchDocument *doc = [row document];
+  return doc;
 }
 
 
-- (Image *)imageForView:(UIView *)view {
+- (Image *)imageForIndexPath:(NSIndexPath *)indexPath
+{
+  CouchDocument *doc = [self documentForIndexPath:indexPath];
+  Image *image = [Image modelForDocument:doc];
+  return image;
+}
+
+
+- (Image *)imageForView:(UIView *)view
+{
   if (! [view isKindOfClass:[UITableViewCell class]]) {
     // walk up the view hierarchy until we find a table view cell
     return [self imageForView:[view superview]];
   } else {
     UITableViewCell *cell = (UITableViewCell *)view;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Image *image = [self.images objectAtIndex:indexPath.row];
+    Image *image = [self imageForIndexPath:indexPath];
     return image;
   }
 }
 
 
-- (UITableViewCell *)cellForImage:(Image *)image {
-  NSUInteger index = [self.images indexOfObject:image];
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+- (UITableViewCell *)cellForModel:(Image *)image {
+  NSIndexPath *indexPath = [self.dataSource indexPathForDocument:image.document];
   UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
   return cell;
-}
-
-
-- (void)startProcessingImage:(Image *)image {
-  [image transitionTo:kProcessing];
-  [self.imageProcessor upload:image.image];
 }
 
 
@@ -444,40 +451,16 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (void)saveCouchImage:(Image *)image {
-  CouchModel *model = [[CouchModel alloc] initWithNewDocumentInDatabase:self.database];
-  [model setValue:image.imageId ofProperty:@"_id"];
-  [model setValue:[NSDate date] ofProperty:@"created_at"];
-  [model setValue:@"snapshot.png" ofProperty:@"image"];
-  [model setValue:@"" ofProperty:@"text_result"];
-  [model createAttachmentWithName:@"snapshot.png" type:@"image/png" body:UIImagePNGRepresentation(image.image)];
-  RESTOperation* op = [model save];
+- (void)addImage:(UIImage *)image {  
+  Image *doc = [[Image alloc] initWithImage:image inDatabase:self.database];
+  RESTOperation* op = [doc save];
   [op onCompletion: ^{
     if (op.error) {
       [self failedWithError:op.error];
     }
-	}];
+    [self.dataSource.query start];
+  }];
   [op start];
-}
-
-
-- (void)addImage:(UIImage *)sampleImage {  
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    Image *image = [[Image alloc] init];
-    image.image = sampleImage;
-    NSData *imageData = UIImagePNGRepresentation(sampleImage);
-    image.imageId = [imageData MD5];
-    [self.images insertObject:image atIndex:0];
-    
-    [self startProcessingImage:image];
-    
-    // we don't want new images to animate into position
-    image.isInTransition = NO;
-    NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [self saveCouchImage:image];
-  });
 }
 
 
@@ -486,7 +469,8 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 		UIView *cell = recognizer.view;
     [cell becomeFirstResponder];
 		Image *image = [self imageForView:cell];
-    UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:image.imageId action:@selector(imageIdMenu:)];
+    NSString *imageId = image.image_id;
+    UIMenuItem *imageIdMenu = [[UIMenuItem alloc] initWithTitle:imageId action:@selector(imageIdMenu:)];
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
 		[menu setMenuItems:[NSArray arrayWithObject:imageIdMenu]];
@@ -497,6 +481,12 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 - (void)imageIdMenu:(id)sender {
 	NSLog(@"Cell was flagged");
+}
+
+
+- (void)failedWithError:(NSError *)error {
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
 }
 
 
@@ -522,37 +512,27 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 - (void)refreshButtonPressed:(id)sender {
   [sender removeTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
   Image *image = [self imageForView:sender];
-  NSLog(@"Refresh started for image: %@", image.imageId);
-  [self startProcessingImage:image];
-  
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
+  NSArray *rows = [NSArray arrayWithObject:[self.dataSource indexPathForDocument:image.document]];
+  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
 }
 
 
-- (void)refreshBalance {
-  [self.imageProcessor refreshBalance];
-}
+#pragma mark - CouchUITableDelegate
 
 
-#pragma mark - UITableViewDataSource
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  Image *image = [self.images objectAtIndex:indexPath.row];
+- (UITableViewCell *)couchTableSource:(CouchUITableSource*)source cellForRowAtIndexPath:(NSIndexPath *)indexPath; {
+  Image *image = [self imageForIndexPath:indexPath];
   
-  ImageCell *cell = (ImageCell *)[tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+  ImageCell *cell = (ImageCell *)[self.tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
   [cell addRecognizerWithTarget:self action:@selector(imageCellGestureRecognizerHandler:)];
   
-  if (image.isInTransition) {
-    [self transitionCell:cell toState:image.state animate:YES];
-    image.isInTransition = NO;
-  } else {
-    [self transitionCell:cell toState:image.state animate:NO];
-  }
+//  if (image.isInTransition) {
+//    [self transitionCell:cell toState:image.state animate:YES];
+//    image.isInTransition = NO;
+//  } else {
+//    [self transitionCell:cell toState:image.state animate:NO];
+//  }
 
   [self configureImageView:(UIImageView *)[cell.contentView viewWithTag:1] withImage:image];
   [self configureTextResultLabel:(UILabel *)[cell.contentView viewWithTag:2] withImage:image];
@@ -564,9 +544,57 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [self.images count];
+- (void)couchTableSource:(CouchUITableSource*)source updateFromQuery:(CouchLiveQuery*)query previousRows:(NSArray *)oldRows
+{
+  BOOL (^isModified)(id, id) = ^ BOOL (id oldObj, id newObj) {
+    return ! [[oldObj documentRevision] isEqualToString:[newObj documentRevision]];
+  };
+  BOOL (^isNewToProcessingStateTransition)(id, id) = ^ BOOL (id oldObj, id newObj) {
+    CouchQueryRow *oldRow = oldObj;
+    CouchQueryRow *newRow = newObj;
+    if ([[oldRow.value objectForKey:@"state"] isEqualToString:kImageStateNew] &&
+        [[newRow.value objectForKey:@"state"] isEqualToString:kImageStateProcessing]) {
+      return YES;
+    } else {
+      return NO;
+    }
+  };
+  
+  NSArray *newRows = query.rows.allObjects;
+  NSArray *addedIndexPaths = [self addedIndexPathsOldRows:oldRows newRows:newRows];
+  NSArray *deletedIndexPaths = [self deletedIndexPathsOldRows:oldRows newRows:newRows];
+  NSArray *modifiedIndexPaths = [self modifiedIndexPathsOldRows:oldRows newRows:newRows usingBlock:^BOOL(id oldObj, id newObj) {
+    if (isModified(oldObj, newObj) &&
+        ! isNewToProcessingStateTransition(oldObj, newObj)) {
+      return YES;
+    } else {
+      return NO;
+    }
+  }];
+  NSArray *newToProcessingStateTransitions = [self modifiedIndexPathsOldRows:oldRows newRows:newRows usingBlock:^BOOL(id oldObj, id newObj) {
+    if (isModified(oldObj, newObj) &&
+        isNewToProcessingStateTransition(oldObj, newObj)) {
+      return YES;
+    } else {
+      return NO;
+    }
+  }];
+  
+  [self.tableView beginUpdates];
+  [self.tableView insertRowsAtIndexPaths:addedIndexPaths withRowAnimation:UITableViewRowAnimationTop];
+  [self.tableView deleteRowsAtIndexPaths:deletedIndexPaths withRowAnimation:UITableViewRowAnimationBottom];
+  [self.tableView reloadRowsAtIndexPaths:modifiedIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+  [self.tableView reloadRowsAtIndexPaths:newToProcessingStateTransitions withRowAnimation:UITableViewRowAnimationNone];
+  [self.tableView endUpdates];
 }
+
+
+- (void)couchTableSource:(CouchUITableSource*)source
+         operationFailed:(RESTOperation*)op
+{
+  [self failedWithError:op.error];
+}
+
 
 
 #pragma mark - UITableViewDelegate
@@ -574,93 +602,6 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   return kRowHeight;
-}
-
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-  Image *image = [self.images objectAtIndex:indexPath.row];
-  if (image.state == kProcessing) {
-    return NO;
-  } else {
-    return YES;
-  }
-}
-
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (editingStyle == UITableViewCellEditingStyleDelete) {
-    [self.images removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-  }
-}
-
-
-# pragma mark - ImageProcessorDelegate
-
-
-- (void)didDecodeImageId:(NSString *)imageId result:(NSString *)result {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    NSString *string = [NSString stringWithFormat:@"Received text '%@' for id: %@", result, imageId];
-    [self addToStatusView:string];
-  });
-
-  // set result for appropriate image object
-  Image *image = [self imageWithId:imageId];
-  image.textResult = result;
-  [image transitionTo:kIdle];
-  
-  [self refreshBalance];
-
-  [self updateCouchImageId:imageId result:result];
-
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-- (void)didTimeoutDecodingImageId:(NSString *)imageId {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    NSString *string = [NSString stringWithFormat:@"Timeout while decoding: %@", imageId];
-    [self addToStatusView:string];
-  });
-
-  Image *image = [self imageWithId:imageId];
-  [image transitionTo:kTimeout];
-    
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-- (void)didRefreshBalance:(NSNumber *)balance rate:(NSNumber *)rate {
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    if (balance != nil && rate != nil && [rate floatValue] != 0.0 ) {
-      NSUInteger remaining = round([balance floatValue]/[rate floatValue]);
-      self.remainingLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d remaining", @"remaining label"), remaining];
-    }
-  });
-}
-
-
-- (void)uploadError:(NSError *)error imageId:(NSString *)imageId
-{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", @"Connection error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
-
-  Image *image = [self imageWithId:imageId];
-  [image transitionTo:kTimeout];
-  
-  dispatch_async(dispatch_get_main_queue(), ^(void) {
-    [self.tableView reloadData];
-  });
-}
-
-
-- (void)failedWithError:(NSError *)error {
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"General error dialog title") message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
 }
 
 
@@ -676,24 +617,21 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
   NSLog(@"syncpoint: %@", syncpoint);
   if (syncpoint.length > 0) {
     newRemoteURL = [NSURL URLWithString:syncpoint];
-    if ([newRemoteURL isEqual: _push.remoteURL]) {
-      return;  // no-op
-    }
   }
   
   [self forgetSync];
-  if (newRemoteURL) {
-    _push = [self.database pushToDatabaseAtURL: newRemoteURL];
-    _push.continuous = YES;
-    
-    [_push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
-  }
+  NSArray* repls = [self.database replicateWithURL: newRemoteURL exclusively: YES];
+  _pull = [repls objectAtIndex: 0];
+  _push = [repls objectAtIndex: 1];
+  [_pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+  [_push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
 }
 
 
 - (void) forgetSync {
+  [_pull removeObserver: self forKeyPath: @"completed"];
+  _pull = nil;
   [_push removeObserver: self forKeyPath: @"completed"];
-  [_push stop];
   _push = nil;
 }
 
@@ -701,9 +639,9 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
                          change:(NSDictionary *)change context:(void *)context
 {
-  if (object == _push) {
-    unsigned completed = _push.completed;
-    unsigned total = _push.total;
+  if (object == _pull || object == _push) {
+    unsigned completed = _pull.completed + _push.completed;
+    unsigned total = _pull.total + _push.total;
     NSLog(@"SYNC progress: %u / %u", completed, total);
     if (total > 0 && completed < total) {
       [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

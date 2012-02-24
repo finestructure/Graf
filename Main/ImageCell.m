@@ -8,18 +8,22 @@
 
 #import "ImageCell.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation ImageCell
 
 @synthesize recognizer = _recognizer;
+@synthesize textResultBackgroundView = _textResultBackgroundView;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+
+- (void)awakeFromNib
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+  self.textResultBackgroundView.backgroundColor = [UIColor clearColor];
+  self.textResultBackgroundView.layer.backgroundColor=[UIColor colorWithWhite:85./255. alpha:0.7].CGColor;
+  self.textResultBackgroundView.layer.cornerRadius = 7;
+  self.textResultBackgroundView.layer.masksToBounds = NO;
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
