@@ -47,7 +47,7 @@ const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
 NSString * const kDatabaseName = @"graf";
 
 
-#define TEST
+//#define TEST
 
 #pragma mark - Initialization
 
