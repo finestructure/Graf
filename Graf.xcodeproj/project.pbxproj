@@ -913,9 +913,13 @@
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-Wl,-no_pie",
+				);
 				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
+				WARNING_LDFLAGS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -932,9 +936,13 @@
 				INFOPLIST_FILE = "Main/Graf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-Wl,-no_pie",
+				);
 				PRODUCT_NAME = Graf;
 				TARGETED_DEVICE_FAMILY = 1;
+				WARNING_LDFLAGS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
