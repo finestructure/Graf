@@ -27,6 +27,7 @@ end
 
 
 def build
+  puts "Building ..."
   cmd = "xcodebuild -target #{PRODUCT_NAME} -configuration Release clean build"
   %x[#{cmd}]
   if $?.exitstatus == 0
@@ -50,6 +51,7 @@ end
 
 
 def codesign
+  puts "Codesigning ..."
   prov_profile = find_provisioning_profile
   cmd = "/usr/bin/xcrun -sdk iphoneos PackageApplication -v #{BUILD_PRODUCT} -o #{ipafile} --sign \"#{DEV_CERTIFICATE}\" --embed \"#{prov_profile}\""
   %x[#{cmd}]
@@ -62,6 +64,7 @@ end
 
 
 def publish
+  puts "Publishing ..."
   ipafiles = Dir.glob("#{RELEASE_DIR}/*.ipa")
   names = []
   manifests = []
@@ -100,10 +103,29 @@ end
 
 
 if __FILE__ == $0
-  
-  build
-  codesign
-  publish
+
+  if ARGV.size == 1
+    command = ARGV[0]
+  else
+    command = 'all'
+  end
+ 
+  if command == 'all'
+    build
+    codesign
+    publish
+  else
+    case command
+    when 'build'
+      build
+    when 'codesign'
+      codesign
+    when 'publish'
+      publish
+    else
+      puts "Unknown command: #{command}"
+    end
+  end
 
   puts "Done."
 end
