@@ -21,7 +21,14 @@ NSString * const kImageAttachmentKey = @"snapshot.png";
 
 @implementation Image
 
-@dynamic image_id, state, created_at, text_result, processing_time, source_device, version;
+@dynamic image_id;
+@dynamic state;
+@dynamic created_at;
+@dynamic text_result;
+@dynamic processing_time;
+@dynamic source_device;
+@dynamic version;
+@dynamic processed;
 
 
 - (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database

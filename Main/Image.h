@@ -27,6 +27,7 @@ extern NSString * const kImageStateTimeout;
 @property (retain) NSNumber *processing_time;
 @property (copy) NSString *source_device;
 @property (copy) NSString *version;
+@property (copy) NSString *processed;
 
 - (id)initWithImage:(UIImage *)image inDatabase:(CouchDatabase *)database;
 

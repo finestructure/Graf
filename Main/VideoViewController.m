@@ -519,8 +519,16 @@ NSString * const kDatabaseName = @"graf";
 - (void)cellRefreshButtonPressed:(id)sender {
   [sender removeTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   Image *image = [self imageForView:sender];
-  NSArray *rows = [NSArray arrayWithObject:[self.dataSource indexPathForDocument:image.document]];
-  [self.tableView reloadRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
+  image.state = kImageStateIdle;
+  image.processed = nil;
+  RESTOperation* op = [image save];
+  [op onCompletion: ^{
+    if (op.error) {
+      [self failedWithError:op.error];
+    }
+    [self.dataSource.query start];
+  }];
+  [op start];
 }
 
 
