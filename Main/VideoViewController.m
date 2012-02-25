@@ -623,7 +623,9 @@ NSString * const kDatabaseName = @"graf";
 
 
 - (void)updateSyncURL {
+  NSLog(@"resetting sync");
   if (!self.database) {
+    NSLog(@"no database!");
     return;
   }
   NSURL* newRemoteURL = nil;
@@ -631,9 +633,9 @@ NSString * const kDatabaseName = @"graf";
   NSLog(@"syncpoint: %@", syncpoint);
   if (syncpoint.length > 0) {
     newRemoteURL = [NSURL URLWithString:syncpoint];
-    if ([newRemoteURL isEqual: _pull.remoteURL]) {
-      return;  // no-op
-    }
+//    if ([newRemoteURL isEqual: _pull.remoteURL]) {
+//      return;  // no-op
+//    }
   }
   
   [self forgetSync];
@@ -665,11 +667,11 @@ NSString * const kDatabaseName = @"graf";
     unsigned completed = _pull.completed + _push.completed;
     unsigned total = _pull.total + _push.total;
     NSLog(@"SYNC progress: %u / %u", completed, total);
-    if (total > 0 && completed < total) {
-      [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    } else {
-      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }
+//    if (total > 0 && completed < total) {
+//      [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//    } else {
+//      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//    }
   }
 }
 
