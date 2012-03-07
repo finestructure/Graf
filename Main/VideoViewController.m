@@ -14,6 +14,7 @@
 
 #import "VideoViewController.h"
 
+#import "ConfigViewController.h"
 #import "Constants.h"
 #import "ImageCell.h"
 #import "NSData+MD5.h"
@@ -513,6 +514,8 @@ NSString * const kDatabaseName = @"graf";
 
 
 - (IBAction)configButtonPressed:(id)sender {
+  ConfigViewController *vc = [[ConfigViewController alloc] initWithNibName:@"ConfigViewController" bundle:nil];
+  [self presentModalViewController:vc animated:YES];
 }
 
 
