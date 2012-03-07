@@ -34,7 +34,17 @@
 }
 
 
-#pragma mark UITableViewDataSource
+#pragma mark - UITableViewDelegate
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  self.selectedIndexPath = indexPath;
+  [self.tableView reloadData];
+}
+
+
+#pragma mark - UITableViewDataSource
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -45,6 +55,11 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
   }
   cell.textLabel.text = [self.servers objectAtIndex:indexPath.row];
+  if ([indexPath isEqual:self.selectedIndexPath]) {
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+  } else {
+    cell.accessoryType = UITableViewCellAccessoryNone;
+  }
   return cell;
 }
 
