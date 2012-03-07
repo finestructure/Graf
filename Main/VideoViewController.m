@@ -511,10 +511,6 @@ NSString * const kDatabaseName = @"graf";
     
 }
 
-- (IBAction)refreshButtonPressed:(id)sender {
-  [self updateSyncURL];
-}
-
 
 - (void)cellRefreshButtonPressed:(id)sender {
   [sender removeTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
