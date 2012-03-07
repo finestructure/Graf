@@ -515,7 +515,7 @@ NSString * const kDatabaseName = @"graf";
 
 - (IBAction)configButtonPressed:(id)sender {
   ConfigViewController *vc = [[ConfigViewController alloc] initWithNibName:@"ConfigViewController" bundle:nil];
-  [self presentModalViewController:vc animated:YES];
+  [self presentViewController:vc animated:YES completion:NULL];
 }
 
 

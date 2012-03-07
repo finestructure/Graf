@@ -10,4 +10,6 @@
 
 @interface ConfigViewController : UIViewController
 
+- (IBAction)donePressed:(id)sender;
+
 @end
