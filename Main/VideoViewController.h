@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
 
 - (IBAction)takePicture:(id)sender;
+- (IBAction)configButtonPressed:(id)sender;
 
 - (void)failedWithError:(NSError *)error;
 

@@ -512,6 +512,10 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
+- (IBAction)configButtonPressed:(id)sender {
+}
+
+
 - (void)cellRefreshButtonPressed:(id)sender {
   [sender removeTarget:self action:@selector(cellRefreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   Image *image = [self imageForView:sender];
