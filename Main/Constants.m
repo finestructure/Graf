@@ -75,5 +75,32 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
 }
 
 
+- (NSArray *)servers {
+  static NSArray *servers = nil;
+  if (servers != nil) {
+    return servers;
+  }
+  @synchronized(self) {
+    if (servers == nil) {
+      servers = [NSArray arrayWithObjects:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Production",
+                  @"name",
+                  @"graf",
+                  @"dbname", 
+                  nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Test",
+                  @"name",
+                  @"graf_test",
+                  @"dbname", 
+                  nil],
+                 nil];
+    }
+  }
+  return servers;
+}
+
+
 @end
 

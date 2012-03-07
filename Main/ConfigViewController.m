@@ -8,15 +8,20 @@
 
 #import "ConfigViewController.h"
 
+#import "Constants.h"
+
+
 @interface ConfigViewController ()
 
 @property (nonatomic, strong) NSArray *servers;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 @end
 
 
 @implementation ConfigViewController
 
+@synthesize selectedIndexPath = _selectedIndexPath;
 @synthesize servers = _servers;
 @synthesize tableView = _tableView;
 
@@ -70,7 +75,11 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    self.servers = [NSArray arrayWithObjects:@"Production (graf)", @"Test (graf_test)", nil];
+    NSMutableArray *s = [NSMutableArray array];
+    for (NSDictionary *server in [[Constants sharedInstance] servers]) {
+      [s addObject:[server objectForKey:@"name"]];
+    }
+    self.servers = s;
   }
   return self;
 }
