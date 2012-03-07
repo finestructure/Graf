@@ -10,10 +10,15 @@
 
 @interface ConfigViewController ()
 
+@property (nonatomic, strong) NSArray *servers;
+
 @end
+
 
 @implementation ConfigViewController
 
+@synthesize servers = _servers;
+@synthesize tableView = _tableView;
 
 #pragma mark - Actions
 
@@ -24,6 +29,40 @@
 }
 
 
+#pragma mark UITableViewDataSource
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  static NSString *kCellIdentifier = @"ConfigCell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+  if (cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
+  }
+  cell.textLabel.text = [self.servers objectAtIndex:indexPath.row];
+  return cell;
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+  return 1;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  return self.servers.count;
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+  NSString *title = NSLocalizedString(@"CouchDB Server", @"Config server list title");
+  return title;
+}
+
+
 #pragma mark - Init
 
 
@@ -31,7 +70,7 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // Custom initialization
+    self.servers = [NSArray arrayWithObjects:@"Production (graf)", @"Test (graf_test)", nil];
   }
   return self;
 }

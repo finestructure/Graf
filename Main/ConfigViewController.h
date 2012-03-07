@@ -10,6 +10,8 @@
 
 @interface ConfigViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 - (IBAction)donePressed:(id)sender;
 
 @end
