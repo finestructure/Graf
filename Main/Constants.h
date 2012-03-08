@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const kUuidDefaultsKey;
+extern NSString * const kConfigurationDefaultsKey;
 
+@class Configuration;
 
 @interface Constants : NSObject
 
@@ -18,6 +20,9 @@ extern NSString * const kUuidDefaultsKey;
 + (Constants *)sharedInstance;
 
 - (NSString *)deviceUuid;
+- (NSArray *)configurations;
+- (Configuration *)defaultConfiguration;
+- (Configuration *)currentConfiguration;
 
 @end
 

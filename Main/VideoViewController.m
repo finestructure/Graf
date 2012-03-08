@@ -14,6 +14,8 @@
 
 #import "VideoViewController.h"
 
+#import "ConfigViewController.h"
+#import "Configuration.h"
 #import "Constants.h"
 #import "ImageCell.h"
 #import "NSData+MD5.h"
@@ -29,22 +31,13 @@
 @synthesize session = _session;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
-@synthesize remainingLabel = _remainingLabel;
+@synthesize configurationLabel = _remainingLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize database = _database;
 
 
-const int kPollingInterval = 5;
-const int kPollingTimeout = 60;
-
 const int kRowHeight = 80;
 
-const CGRect kImageViewFrameIdle         = {{10, 5}, {200, 50}};
-const CGRect kImageViewFrameProcessing   = {{10, 7}, {260, 65}};
-const CGRect kTextResultFrameIdle        = {{10,61}, {245, 18}};
-const CGRect kTextResultFrameProcessing  = {{140,40}, {0, 0}};
-
-NSString * const kDatabaseName = @"graf";
 
 
 //#define TEST
@@ -83,55 +76,54 @@ NSString * const kDatabaseName = @"graf";
   CouchLiveQuery* query = [[[self.database designDocumentWithName: @"default"]
                             queryViewNamed: @"byDate"] asLiveQuery];
   query.descending = YES;
-  self.dataSource.query = query;  
+  self.dataSource.query = query;
+  
+  // table view connections
+  self.dataSource.tableView = self.tableView;
+  self.tableView.dataSource = self.dataSource;
 }
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    gCouchLogLevel = 0;
+- (void)registerDefaults {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  Configuration *defaultConf = [[Constants sharedInstance] defaultConfiguration];
+  NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:defaultConf.name forKey:kConfigurationDefaultsKey];
+  [defaults registerDefaults:appdefaults];
+  [defaults synchronize];
+}
 
-    // register db credentials
+
+- (void)setupTouchdb {
+  Configuration *conf = [[Constants sharedInstance] currentConfiguration];
+  { // register credentials
     NSURLCredential* cred;
-    cred = [NSURLCredential credentialWithUser: @"graf"
-                                      password: @"BaumHinkelstein"
-                                   persistence: NSURLCredentialPersistencePermanent];
+    cred = [NSURLCredential credentialWithUser:conf.username
+                                      password:conf.password
+                                   persistence:NSURLCredentialPersistencePermanent];
     NSURLProtectionSpace* space;
-    space = [[NSURLProtectionSpace alloc] initWithHost: @"graf.abstracture.de"
-                                                   port: 443
-                                               protocol: @"https"
-                                                  realm: @"Graf"
-                                   authenticationMethod: NSURLAuthenticationMethodDefault];
-    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential: cred
-                                                        forProtectionSpace: space];
-    
-    // register user defaults
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-#ifdef TEST
-    NSString *url = @"http://thebe.local:5984/graf";
-#else
-    NSString *url = @"https://graf.abstracture.de/graf";
-#endif
-    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
-    [defaults registerDefaults:appdefaults];
-    [defaults synchronize];
-    
-    // set up touchdb
+    space = [[NSURLProtectionSpace alloc] initWithHost:conf.hostname
+                                                  port:conf.port
+                                              protocol:conf.protocol
+                                                 realm:conf.realm
+                                  authenticationMethod:NSURLAuthenticationMethodDefault];
+    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential:cred
+                                                        forProtectionSpace:space];
+  }
+  { // set up database
     CouchTouchDBServer *server = [CouchTouchDBServer sharedInstance];
     if (server.error) {
       [self failedWithError:server.error];
     }
-    self.database = [server databaseNamed: kDatabaseName];
+    self.database = [server databaseNamed:conf.localDbname];
     NSError *error;
     if (![self.database ensureCreated:&error]) {
       [self failedWithError:error];
     }
-    [self setupDataSource];
   }
-  return self;
+  [self updateSyncURL];
+  [self setupDataSource];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -170,11 +162,18 @@ NSString * const kDatabaseName = @"graf";
 {
   [super viewDidLoad];
   
+  gCouchLogLevel = 0;
+
+  [self registerDefaults];
+  
+  [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:kConfigurationDefaultsKey options:NSKeyValueObservingOptionNew context:nil];
+  
+  [self setupTouchdb];
+
   // register custom table view cell
   [self.tableView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellReuseIdentifier:@"ImageCell"];
   
   // update labels and ui controls
-  
   self.statusTextView.text = @"";
 #ifdef TEST
   NSString *prefix = @"TEST-";
@@ -182,36 +181,26 @@ NSString * const kDatabaseName = @"graf";
   NSString *prefix = @"";
 #endif
   self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, [[Constants sharedInstance] version]];
-  self.remainingLabel.text = @"";
+  self.configurationLabel.text = [[Constants sharedInstance] currentConfiguration].displayName;
   
   // session init
-  
   self.session = [self createSession];
   
   // set up output
-  
   self.imageOutput = [[AVCaptureStillImageOutput alloc] init];
   self.imageOutput.outputSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
   [self.session addOutput:self.imageOutput];
   
   // set up preview
-  
   AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
   CGRect bounds = self.preview.layer.bounds;
   captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
   captureVideoPreviewLayer.bounds = bounds;
   captureVideoPreviewLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-  [self.preview.layer addSublayer:captureVideoPreviewLayer];
-
-  // connect table view and data source
+  [self.preview.layer addSublayer:captureVideoPreviewLayer];  
   
-  self.dataSource.tableView = self.tableView;
-  self.tableView.dataSource = self.dataSource;
-  
-  // other init work
-  
+  // start AV session
   [self.session startRunning];
-  [self updateSyncURL];
 }
 
 
@@ -280,7 +269,7 @@ NSString * const kDatabaseName = @"graf";
   [self setStatusTextView:nil];
   [self setVersionLabel:nil];
   [self setTableView:nil];
-  [self setRemainingLabel:nil];
+  [self setConfigurationLabel:nil];
   [super viewDidUnload];
 }
 
@@ -492,6 +481,17 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
+- (void)configurationChanged {
+  // invalidate the table view data source
+  self.tableView.dataSource = nil;
+  [self.tableView reloadData];
+  
+  [self setupTouchdb];
+  
+  self.configurationLabel.text = [[Constants sharedInstance] currentConfiguration].displayName;
+}
+
+
 #pragma mark - Actions
 
 
@@ -511,8 +511,10 @@ NSString * const kDatabaseName = @"graf";
     
 }
 
-- (IBAction)refreshButtonPressed:(id)sender {
-  [self updateSyncURL];
+
+- (IBAction)configButtonPressed:(id)sender {
+  ConfigViewController *vc = [[ConfigViewController alloc] initWithNibName:@"ConfigViewController" bundle:nil];
+  [self presentViewController:vc animated:YES completion:NULL];
 }
 
 
@@ -628,20 +630,14 @@ NSString * const kDatabaseName = @"graf";
     NSLog(@"no database!");
     return;
   }
-  NSURL* newRemoteURL = nil;
-  NSString *syncpoint = [[NSUserDefaults standardUserDefaults] objectForKey:@"syncpoint"];
-  NSLog(@"syncpoint: %@", syncpoint);
-  if (syncpoint.length > 0) {
-    newRemoteURL = [NSURL URLWithString:syncpoint];
-//    if ([newRemoteURL isEqual: _pull.remoteURL]) {
-//      return;  // no-op
-//    }
-  }
+  Configuration *conf = [[Constants sharedInstance] currentConfiguration];
+  NSLog(@"configuration: %@", conf.displayName);
+  NSURL* newRemoteURL = [NSURL URLWithString:conf.remoteUrl];
   
-  [self forgetSync];
   if (newRemoteURL) {
-    _pull = [self.database pullFromDatabaseAtURL: newRemoteURL];
-    _push = [self.database pushToDatabaseAtURL: newRemoteURL];
+    [self forgetSync];
+    _pull = [self.database pullFromDatabaseAtURL:newRemoteURL];
+    _push = [self.database pushToDatabaseAtURL:newRemoteURL];
     _pull.continuous = _push.continuous = YES;
     
     [_pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
@@ -660,6 +656,9 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
+#pragma mark - KVO
+
+
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
                          change:(NSDictionary *)change context:(void *)context
 {
@@ -672,6 +671,9 @@ NSString * const kDatabaseName = @"graf";
 //    } else {
 //      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 //    }
+  } else if (object == [NSUserDefaults standardUserDefaults]) {
+    NSLog(@"KVO for %@, new conf: %@", keyPath, [[Constants sharedInstance] currentConfiguration].displayName);
+    [self configurationChanged];
   }
 }
 

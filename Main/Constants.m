@@ -8,7 +8,10 @@
 
 #import "Constants.h"
 
-NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
+#import "Configuration.h"
+
+NSString * const kUuidDefaultsKey = @"UUID";
+NSString * const kConfigurationDefaultsKey = @"Configuration";
 
 
 @implementation Constants
@@ -72,6 +75,74 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
   }
   
   return uuid;
+}
+
+
+- (NSArray *)configurations {
+  static NSMutableArray *configurations = nil;
+  if (configurations != nil) {
+    return configurations;
+  }
+  @synchronized(self) {
+    if (configurations == nil) {
+      configurations = [NSMutableArray array];
+      {
+        Configuration *c = [[Configuration alloc] init];
+        c.name = @"PRD";
+        c.displayName = @"Production (abstracture.de)";
+        c.hostname = @"graf.abstracture.de";
+        c.username = @"graf";
+        c.password = @"BaumHinkelstein";
+        c.port = 443;
+        c.protocol = @"https";
+        c.realm = @"Graf";
+        c.dbname = @"graf";
+        c.localDbname = c.dbname;
+        [configurations addObject:c];
+      }
+      {
+        Configuration *c = [[Configuration alloc] init];
+        c.name = @"TEST";
+        c.displayName = @"Test (abstracture.de)";
+        c.hostname = @"graf.abstracture.de";
+        c.username = @"graf";
+        c.password = @"BaumHinkelstein";
+        c.port = 443;
+        c.protocol = @"https";
+        c.realm = @"Graf";
+        c.dbname = @"graf_test";
+        c.localDbname = c.dbname;
+        [configurations addObject:c];
+      }
+    }
+  }
+  return configurations;
+}
+
+
+- (Configuration *)defaultConfiguration {
+  return [[self configurations] objectAtIndex:0];
+}
+
+
+- (Configuration *)configurationWithName:(NSString *)confName {
+  for (Configuration *c in [self configurations]) {
+    if ([c.name isEqualToString:confName]) {
+      return c;
+    }
+  }
+  return nil;
+}
+
+
+- (Configuration *)currentConfiguration {
+  NSString *confName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
+  Configuration *conf = [self configurationWithName:confName];
+  if (conf == nil) {
+    NSLog(@"Warning: configuration '%@' specified in defaults no found in allowed configurations, using default.", confName);
+    conf = [self defaultConfiguration];
+  }
+  return conf;
 }
 
 
