@@ -67,6 +67,7 @@
 		5AED510514CEF85F00D8B6BB /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AED510114CEF85F00D8B6BB /* VideoViewController.xib */; };
 		5AF8DC331507AD800036D62B /* ConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8DC311507AD800036D62B /* ConfigViewController.m */; };
 		5AF8DC341507AD800036D62B /* ConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AF8DC321507AD800036D62B /* ConfigViewController.xib */; };
+		5AFC126F1508B5FC00387C1E /* Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC126E1508B5FC00387C1E /* Configuration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,6 +307,8 @@
 		5AF8DC301507AD800036D62B /* ConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigViewController.h; path = Main/ConfigViewController.h; sourceTree = SOURCE_ROOT; };
 		5AF8DC311507AD800036D62B /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigViewController.m; path = Main/ConfigViewController.m; sourceTree = SOURCE_ROOT; };
 		5AF8DC321507AD800036D62B /* ConfigViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConfigViewController.xib; path = Main/ConfigViewController.xib; sourceTree = SOURCE_ROOT; };
+		5AFC126D1508B5FC00387C1E /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Configuration.h; path = Main/Configuration.h; sourceTree = SOURCE_ROOT; };
+		5AFC126E1508B5FC00387C1E /* Configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Configuration.m; path = Main/Configuration.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,6 +401,8 @@
 			children = (
 				5AED50F314CEF81500D8B6BB /* AppDelegate.h */,
 				5AED50F414CEF81500D8B6BB /* AppDelegate.m */,
+				5AFC126D1508B5FC00387C1E /* Configuration.h */,
+				5AFC126E1508B5FC00387C1E /* Configuration.m */,
 				5AED50F514CEF81500D8B6BB /* Constants.h */,
 				5AED50F614CEF81500D8B6BB /* Constants.m */,
 				5A43CF2314EAC0290002A69C /* Image.h */,
@@ -816,6 +821,7 @@
 				5A43CF2514EAC0290002A69C /* Image.m in Sources */,
 				5A854FCB14F66DFB0055A849 /* VideoViewController+Helpers.m in Sources */,
 				5AF8DC331507AD800036D62B /* ConfigViewController.m in Sources */,
+				5AFC126F1508B5FC00387C1E /* Configuration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
