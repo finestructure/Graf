@@ -1,3 +1,5 @@
+* 2012-03-08: v0.17
+    * [#40](https://github.com/sas71/Graf/issues/40)
 * 2012-02-25: v0.16
     * [#39](https://github.com/sas71/Graf/issues/39)
 * 2012-02-24: v0.15
