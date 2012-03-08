@@ -10,6 +10,7 @@
 
 extern NSString * const kUuidDefaultsKey;
 
+@class Configuration;
 
 @interface Constants : NSObject
 
@@ -19,6 +20,7 @@ extern NSString * const kUuidDefaultsKey;
 
 - (NSString *)deviceUuid;
 - (NSArray *)configurations;
+- (Configuration *)defaultConfiguration;
 
 @end
 

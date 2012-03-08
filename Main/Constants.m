@@ -117,5 +117,10 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
 }
 
 
+- (Configuration *)defaultConfiguration {
+  return [[self configurations] objectAtIndex:0];
+}
+
+
 @end
 
