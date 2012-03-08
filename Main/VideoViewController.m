@@ -46,6 +46,10 @@ const int kRowHeight = 80;
 
 
 - (void)setupDataSource {
+  // invalidate the table view data source in case we change settings while running
+  self.tableView.dataSource = nil;
+  [self.tableView reloadData];
+
   self.dataSource = [[CouchUITableSource alloc] init];
   
   // Create a 'view' containing list items sorted by date:
@@ -76,7 +80,11 @@ const int kRowHeight = 80;
   CouchLiveQuery* query = [[[self.database designDocumentWithName: @"default"]
                             queryViewNamed: @"byDate"] asLiveQuery];
   query.descending = YES;
-  self.dataSource.query = query;  
+  self.dataSource.query = query;
+  
+  // table view connections
+  self.dataSource.tableView = self.tableView;
+  self.tableView.dataSource = self.dataSource;
 }
 
 
@@ -89,7 +97,7 @@ const int kRowHeight = 80;
 }
 
 
-- (void)initializeUsingCurrentConfiguration {
+- (void)setupTouchdb {
   Configuration *conf = [[Constants sharedInstance] currentConfiguration];
   { // register credentials
     NSURLCredential* cred;
@@ -115,20 +123,9 @@ const int kRowHeight = 80;
     if (![self.database ensureCreated:&error]) {
       [self failedWithError:error];
     }
-    [self setupDataSource];
   }
-}
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    gCouchLogLevel = 0;
-    [self registerDefaults]; // this must happen first
-    [self initializeUsingCurrentConfiguration];
-  }
-  return self;
+  [self updateSyncURL];
+  [self setupDataSource];
 }
 
 
@@ -169,11 +166,18 @@ const int kRowHeight = 80;
 {
   [super viewDidLoad];
   
+  gCouchLogLevel = 0;
+
+  [self registerDefaults];
+  
+  [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:kConfigurationDefaultsKey options:NSKeyValueObservingOptionNew context:nil];
+  
+  [self setupTouchdb];
+
   // register custom table view cell
   [self.tableView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellReuseIdentifier:@"ImageCell"];
   
   // update labels and ui controls
-  
   self.statusTextView.text = @"";
 #ifdef TEST
   NSString *prefix = @"TEST-";
@@ -184,33 +188,23 @@ const int kRowHeight = 80;
   self.remainingLabel.text = @"";
   
   // session init
-  
   self.session = [self createSession];
   
   // set up output
-  
   self.imageOutput = [[AVCaptureStillImageOutput alloc] init];
   self.imageOutput.outputSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
   [self.session addOutput:self.imageOutput];
   
   // set up preview
-  
   AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
   CGRect bounds = self.preview.layer.bounds;
   captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
   captureVideoPreviewLayer.bounds = bounds;
   captureVideoPreviewLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-  [self.preview.layer addSublayer:captureVideoPreviewLayer];
-
-  // connect table view and data source
+  [self.preview.layer addSublayer:captureVideoPreviewLayer];  
   
-  self.dataSource.tableView = self.tableView;
-  self.tableView.dataSource = self.dataSource;
-  
-  // other init work
-  
+  // start AV session
   [self.session startRunning];
-  [self updateSyncURL];
 }
 
 
@@ -655,6 +649,9 @@ const int kRowHeight = 80;
 }
 
 
+#pragma mark - KVO
+
+
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
                          change:(NSDictionary *)change context:(void *)context
 {
@@ -667,6 +664,9 @@ const int kRowHeight = 80;
 //    } else {
 //      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 //    }
+  } else if (object == [NSUserDefaults standardUserDefaults]) {
+    NSLog(@"KVO for %@, new conf: %@", keyPath, [[Constants sharedInstance] currentConfiguration].displayName);
+    [self setupTouchdb];
   }
 }
 
