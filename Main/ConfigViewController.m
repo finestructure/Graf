@@ -14,16 +14,11 @@
 
 @interface ConfigViewController ()
 
-@property (nonatomic, strong) NSArray *servers;
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-
 @end
 
 
 @implementation ConfigViewController
 
-@synthesize selectedIndexPath = _selectedIndexPath;
-@synthesize servers = _servers;
 @synthesize tableView = _tableView;
 
 #pragma mark - Actions
@@ -40,7 +35,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  self.selectedIndexPath = indexPath;
+  // update user defaults from selection
+  Configuration *conf = [[[Constants sharedInstance] configurations] objectAtIndex:indexPath.row];
+  [[NSUserDefaults standardUserDefaults] setObject:conf.name forKey:kConfigurationDefaultsKey];
   [self.tableView reloadData];
 }
 
@@ -55,8 +52,12 @@
   if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
   }
-  cell.textLabel.text = [self.servers objectAtIndex:indexPath.row];
-  if ([indexPath isEqual:self.selectedIndexPath]) {
+
+  // set display name and accessory from configurations and current defaults
+  NSString *configuredConfName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
+  Configuration *conf = [[[Constants sharedInstance] configurations] objectAtIndex:indexPath.row];
+  cell.textLabel.text = conf.displayName;
+  if ([conf.name isEqualToString:configuredConfName]) {
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
   } else {
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -73,7 +74,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return self.servers.count;
+  return [[Constants sharedInstance] configurations].count;
 }
 
 
@@ -91,18 +92,6 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // configure config list and set selected one from user defaults
-    NSString *configuredConfName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
-    NSMutableArray *s = [NSMutableArray array];
-    int index = 0;
-    for (Configuration *c in [[Constants sharedInstance] configurations]) {
-      [s addObject:c.displayName];
-      if ([c.name isEqualToString:configuredConfName]) {
-        self.selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
-      }
-      ++index;
-    }
-    self.servers = s;
   }
   return self;
 }
