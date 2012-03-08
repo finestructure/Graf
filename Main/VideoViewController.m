@@ -39,8 +39,6 @@
 const int kRowHeight = 80;
 
 
-NSString * const kDatabaseName = @"graf";
-
 
 //#define TEST
 
@@ -82,47 +80,57 @@ NSString * const kDatabaseName = @"graf";
 }
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    gCouchLogLevel = 0;
+- (void)registerDefaults {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  Configuration *defaultConf = [[Constants sharedInstance] defaultConfiguration];
+  NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:defaultConf.name forKey:kConfigurationDefaultsKey];
+  [defaults registerDefaults:appdefaults];
+  [defaults synchronize];
+}
 
-    // register db credentials
+
+- (void)initializeUsingCurrentConfiguration {
+  Configuration *conf = [[Constants sharedInstance] currentConfiguration];
+  { // register credentials
     NSURLCredential* cred;
-    cred = [NSURLCredential credentialWithUser: @"graf"
-                                      password: @"BaumHinkelstein"
-                                   persistence: NSURLCredentialPersistencePermanent];
+    cred = [NSURLCredential credentialWithUser:conf.username
+                                      password:conf.password
+                                   persistence:NSURLCredentialPersistencePermanent];
     NSURLProtectionSpace* space;
-    space = [[NSURLProtectionSpace alloc] initWithHost: @"graf.abstracture.de"
-                                                   port: 443
-                                               protocol: @"https"
-                                                  realm: @"Graf"
-                                   authenticationMethod: NSURLAuthenticationMethodDefault];
-    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential: cred
-                                                        forProtectionSpace: space];
-    
-    // register user defaults
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    Configuration *defaultConf = [[Constants sharedInstance] defaultConfiguration];
-    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:defaultConf.name forKey:kConfigurationDefaultsKey];
-    [defaults registerDefaults:appdefaults];
-    [defaults synchronize];
-    
-    // set up touchdb
+    space = [[NSURLProtectionSpace alloc] initWithHost:conf.hostname
+                                                  port:conf.port
+                                              protocol:conf.protocol
+                                                 realm:conf.realm
+                                  authenticationMethod:NSURLAuthenticationMethodDefault];
+    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential:cred
+                                                        forProtectionSpace:space];
+  }
+  { // set up database
     CouchTouchDBServer *server = [CouchTouchDBServer sharedInstance];
     if (server.error) {
       [self failedWithError:server.error];
     }
-    self.database = [server databaseNamed: kDatabaseName];
+    self.database = [server databaseNamed:conf.localDbname];
     NSError *error;
     if (![self.database ensureCreated:&error]) {
       [self failedWithError:error];
     }
     [self setupDataSource];
   }
+}
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    gCouchLogLevel = 0;
+    [self registerDefaults]; // this must happen first
+    [self initializeUsingCurrentConfiguration];
+  }
   return self;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
