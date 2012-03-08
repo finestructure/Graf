@@ -30,7 +30,7 @@
 @property(nonatomic, retain) IBOutlet CouchUITableSource* dataSource;
 @property (weak, nonatomic) IBOutlet UITextView *statusTextView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *configurationLabel;
 
 - (IBAction)takePicture:(id)sender;
 - (IBAction)configButtonPressed:(id)sender;

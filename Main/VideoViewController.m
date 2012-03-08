@@ -31,7 +31,7 @@
 @synthesize session = _session;
 @synthesize statusTextView = _statusTextView;
 @synthesize versionLabel = _versionLabel;
-@synthesize remainingLabel = _remainingLabel;
+@synthesize configurationLabel = _remainingLabel;
 @synthesize imageOutput = _imageOutput;
 @synthesize database = _database;
 
@@ -46,10 +46,6 @@ const int kRowHeight = 80;
 
 
 - (void)setupDataSource {
-  // invalidate the table view data source in case we change settings while running
-  self.tableView.dataSource = nil;
-  [self.tableView reloadData];
-
   self.dataSource = [[CouchUITableSource alloc] init];
   
   // Create a 'view' containing list items sorted by date:
@@ -185,7 +181,7 @@ const int kRowHeight = 80;
   NSString *prefix = @"";
 #endif
   self.versionLabel.text = [NSString stringWithFormat:@"%@%@", prefix, [[Constants sharedInstance] version]];
-  self.remainingLabel.text = @"";
+  self.configurationLabel.text = [[Constants sharedInstance] currentConfiguration].displayName;
   
   // session init
   self.session = [self createSession];
@@ -273,7 +269,7 @@ const int kRowHeight = 80;
   [self setStatusTextView:nil];
   [self setVersionLabel:nil];
   [self setTableView:nil];
-  [self setRemainingLabel:nil];
+  [self setConfigurationLabel:nil];
   [super viewDidUnload];
 }
 
@@ -485,6 +481,17 @@ const int kRowHeight = 80;
 }
 
 
+- (void)configurationChanged {
+  // invalidate the table view data source
+  self.tableView.dataSource = nil;
+  [self.tableView reloadData];
+  
+  [self setupTouchdb];
+  
+  self.configurationLabel.text = [[Constants sharedInstance] currentConfiguration].displayName;
+}
+
+
 #pragma mark - Actions
 
 
@@ -666,7 +673,7 @@ const int kRowHeight = 80;
 //    }
   } else if (object == [NSUserDefaults standardUserDefaults]) {
     NSLog(@"KVO for %@, new conf: %@", keyPath, [[Constants sharedInstance] currentConfiguration].displayName);
-    [self setupTouchdb];
+    [self configurationChanged];
   }
 }
 
