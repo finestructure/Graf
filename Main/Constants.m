@@ -124,5 +124,15 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
 }
 
 
+- (Configuration *)configurationWithName:(NSString *)confName {
+  for (Configuration *c in [self configurations]) {
+    if ([c.name isEqualToString:confName]) {
+      return c;
+    }
+  }
+  return nil;
+}
+
+
 @end
 

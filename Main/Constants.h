@@ -21,6 +21,7 @@ extern NSString * const kUuidDefaultsKey;
 - (NSString *)deviceUuid;
 - (NSArray *)configurations;
 - (Configuration *)defaultConfiguration;
+- (Configuration *)configurationWithName:(NSString *)confName;
 
 @end
 
