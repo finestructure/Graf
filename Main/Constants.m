@@ -135,5 +135,16 @@ NSString * const kConfigurationDefaultsKey = @"Configuration";
 }
 
 
+- (Configuration *)currentConfiguration {
+  NSString *confName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
+  Configuration *conf = [self configurationWithName:confName];
+  if (conf == nil) {
+    NSLog(@"Warning: configuration '%@' specified in defaults no found in allowed configurations, using default.", confName);
+    conf = [self defaultConfiguration];
+  }
+  return conf;
+}
+
+
 @end
 

@@ -22,7 +22,7 @@ extern NSString * const kConfigurationDefaultsKey;
 - (NSString *)deviceUuid;
 - (NSArray *)configurations;
 - (Configuration *)defaultConfiguration;
-- (Configuration *)configurationWithName:(NSString *)confName;
+- (Configuration *)currentConfiguration;
 
 @end
 

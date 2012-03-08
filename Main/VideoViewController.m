@@ -628,12 +628,7 @@ NSString * const kDatabaseName = @"graf";
     NSLog(@"no database!");
     return;
   }
-  NSString *confName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
-  Configuration *conf = [[Constants sharedInstance] configurationWithName:confName];
-  if (conf == nil) {
-    NSLog(@"Warning: configuration '%@' specified in defaults no found in allowed configurations. Using default.", confName);
-    conf = [[Constants sharedInstance] defaultConfiguration];
-  }
+  Configuration *conf = [[Constants sharedInstance] currentConfiguration];
   NSLog(@"configuration: %@", conf.displayName);
   NSURL* newRemoteURL = [NSURL URLWithString:conf.remoteUrl];
   
