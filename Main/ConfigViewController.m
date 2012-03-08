@@ -91,9 +91,16 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
+    // configure config list and set selected one from user defaults
+    NSString *configuredConfName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
     NSMutableArray *s = [NSMutableArray array];
+    int index = 0;
     for (Configuration *c in [[Constants sharedInstance] configurations]) {
       [s addObject:c.displayName];
+      if ([c.name isEqualToString:configuredConfName]) {
+        self.selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+      }
+      ++index;
     }
     self.servers = s;
   }
