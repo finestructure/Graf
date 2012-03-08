@@ -39,6 +39,7 @@
   Configuration *conf = [[[Constants sharedInstance] configurations] objectAtIndex:indexPath.row];
   [[NSUserDefaults standardUserDefaults] setObject:conf.name forKey:kConfigurationDefaultsKey];
   [self.tableView reloadData];
+  [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 
