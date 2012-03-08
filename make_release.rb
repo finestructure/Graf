@@ -8,6 +8,7 @@ MANIFEST_TEMPLATE = "Resources/graf_manifest.plist"
 INDEX_HTML_TEMPLATE = "Resources/index.html"
 DEV_CERTIFICATE = "iPhone Developer: Sven Schmidt (L686FULC28)"
 PROV_PROFILES_DIR = "/Users/sas/Library/MobileDevice/Provisioning Profiles"
+PROV_PROFILE = "CB2C9073-B182-4783-B4EF-A6B609B26018.mobileprovision"
 
 # more constants, probably no need to update
 PROJECT_DIR = Dir.pwd
@@ -17,11 +18,9 @@ PUBLISHING_TARGET = "abslogin:/home/sas/public_html/#{PRODUCT_NAME}/"
 
 
 def find_provisioning_profile
-  files = Dir.glob("#{PROV_PROFILES_DIR}/*.mobileprovision")
-  if files.size == 1
-    return files[0]
-  else
-    raise "Need a single provisioning profile in #{PROV_PROFILES_DIR}"
+  fname = "#{PROV_PROFILES_DIR}/#{PROV_PROFILE}"
+  if not File.exist?(fname)
+    raise "Provisioning profile not found: #{PROV_PROFILE}"
   end
 end
 
@@ -46,6 +45,9 @@ end
 
 def ipafile
   base = File.basename(BUILD_PRODUCT, '.app')
+  if not File.exist?(RELEASE_DIR)
+    Dir.mkdir(RELEASE_DIR)
+  end
   return "#{RELEASE_DIR}/#{base}_#{version}.ipa"
 end
 
