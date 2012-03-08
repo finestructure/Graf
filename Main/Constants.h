@@ -18,7 +18,7 @@ extern NSString * const kUuidDefaultsKey;
 + (Constants *)sharedInstance;
 
 - (NSString *)deviceUuid;
-- (NSArray *)servers;
+- (NSArray *)configurations;
 
 @end
 

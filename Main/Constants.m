@@ -8,6 +8,8 @@
 
 #import "Constants.h"
 
+#import "Configuration.h"
+
 NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
 
 
@@ -75,30 +77,43 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
 }
 
 
-- (NSArray *)servers {
-  static NSArray *servers = nil;
-  if (servers != nil) {
-    return servers;
+- (NSArray *)configurations {
+  static NSMutableArray *configurations = nil;
+  if (configurations != nil) {
+    return configurations;
   }
   @synchronized(self) {
-    if (servers == nil) {
-      servers = [NSArray arrayWithObjects:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  @"Production",
-                  @"name",
-                  @"graf",
-                  @"dbname", 
-                  nil],
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  @"Test",
-                  @"name",
-                  @"graf_test",
-                  @"dbname", 
-                  nil],
-                 nil];
+    if (configurations == nil) {
+      configurations = [NSMutableArray array];
+      {
+        Configuration *c = [[Configuration alloc] init];
+        c.name = @"Production";
+        c.hostname = @"graf.abstracture.de";
+        c.username = @"graf";
+        c.password = @"BaumHinkelstein";
+        c.port = 443;
+        c.protocol = @"https";
+        c.realm = @"Graf";
+        c.dbname = @"graf";
+        c.localDbname = c.dbname;
+        [configurations addObject:c];
+      }
+      {
+        Configuration *c = [[Configuration alloc] init];
+        c.name = @"Test";
+        c.hostname = @"graf.abstracture.de";
+        c.username = @"graf";
+        c.password = @"BaumHinkelstein";
+        c.port = 443;
+        c.protocol = @"https";
+        c.realm = @"Graf";
+        c.dbname = @"graf_test";
+        c.localDbname = c.dbname;
+        [configurations addObject:c];
+      }
     }
   }
-  return servers;
+  return configurations;
 }
 
 

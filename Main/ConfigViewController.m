@@ -8,6 +8,7 @@
 
 #import "ConfigViewController.h"
 
+#import "Configuration.h"
 #import "Constants.h"
 
 
@@ -91,8 +92,8 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     NSMutableArray *s = [NSMutableArray array];
-    for (NSDictionary *server in [[Constants sharedInstance] servers]) {
-      [s addObject:[server objectForKey:@"name"]];
+    for (Configuration *c in [[Constants sharedInstance] configurations]) {
+      [s addObject:c.name];
     }
     self.servers = s;
   }
