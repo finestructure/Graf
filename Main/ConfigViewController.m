@@ -93,7 +93,7 @@
   if (self) {
     NSMutableArray *s = [NSMutableArray array];
     for (Configuration *c in [[Constants sharedInstance] configurations]) {
-      [s addObject:c.name];
+      [s addObject:c.displayName];
     }
     self.servers = s;
   }

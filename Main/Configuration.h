@@ -12,6 +12,7 @@
 @interface Configuration : NSObject
 
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *hostname;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *password;

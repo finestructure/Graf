@@ -87,7 +87,8 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
       configurations = [NSMutableArray array];
       {
         Configuration *c = [[Configuration alloc] init];
-        c.name = @"Production";
+        c.name = @"PRD";
+        c.displayName = @"Production (abstracture.de)";
         c.hostname = @"graf.abstracture.de";
         c.username = @"graf";
         c.password = @"BaumHinkelstein";
@@ -100,7 +101,8 @@ NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
       }
       {
         Configuration *c = [[Configuration alloc] init];
-        c.name = @"Test";
+        c.name = @"TEST";
+        c.displayName = @"Test (abstracture.de)";
         c.hostname = @"graf.abstracture.de";
         c.username = @"graf";
         c.password = @"BaumHinkelstein";

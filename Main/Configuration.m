@@ -11,6 +11,7 @@
 @implementation Configuration
 
 @synthesize name = _name;
+@synthesize displayName = _displayName;
 @synthesize hostname = _hostname;
 @synthesize username = _username;
 @synthesize password = _password;
