@@ -15,6 +15,7 @@
 #import "VideoViewController.h"
 
 #import "ConfigViewController.h"
+#import "Configuration.h"
 #import "Constants.h"
 #import "ImageCell.h"
 #import "NSData+MD5.h"
@@ -110,12 +111,8 @@ NSString * const kDatabaseName = @"graf";
     
     // register user defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-#ifdef TEST
-    NSString *url = @"http://thebe.local:5984/graf";
-#else
-    NSString *url = @"https://graf.abstracture.de/graf";
-#endif
-    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:url forKey:@"syncpoint"];
+    Configuration *defaultConf = [[Constants sharedInstance] defaultConfiguration];
+    NSDictionary *appdefaults = [NSDictionary dictionaryWithObject:defaultConf.name forKey:kConfigurationDefaultsKey];
     [defaults registerDefaults:appdefaults];
     [defaults synchronize];
     
@@ -631,20 +628,19 @@ NSString * const kDatabaseName = @"graf";
     NSLog(@"no database!");
     return;
   }
-  NSURL* newRemoteURL = nil;
-  NSString *syncpoint = [[NSUserDefaults standardUserDefaults] objectForKey:@"syncpoint"];
-  NSLog(@"syncpoint: %@", syncpoint);
-  if (syncpoint.length > 0) {
-    newRemoteURL = [NSURL URLWithString:syncpoint];
-//    if ([newRemoteURL isEqual: _pull.remoteURL]) {
-//      return;  // no-op
-//    }
+  NSString *confName = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigurationDefaultsKey];
+  Configuration *conf = [[Constants sharedInstance] configurationWithName:confName];
+  if (conf == nil) {
+    NSLog(@"Warning: configuration '%@' specified in defaults no found in allowed configurations. Using default.", confName);
+    conf = [[Constants sharedInstance] defaultConfiguration];
   }
+  NSLog(@"configuration: %@", conf.displayName);
+  NSURL* newRemoteURL = [NSURL URLWithString:conf.remoteUrl];
   
-  [self forgetSync];
   if (newRemoteURL) {
-    _pull = [self.database pullFromDatabaseAtURL: newRemoteURL];
-    _push = [self.database pushToDatabaseAtURL: newRemoteURL];
+    [self forgetSync];
+    _pull = [self.database pullFromDatabaseAtURL:newRemoteURL];
+    _push = [self.database pushToDatabaseAtURL:newRemoteURL];
     _pull.continuous = _push.continuous = YES;
     
     [_pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];

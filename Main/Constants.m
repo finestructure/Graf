@@ -10,7 +10,8 @@
 
 #import "Configuration.h"
 
-NSString * const kUuidDefaultsKey = @"UuidDefaultsKey";
+NSString * const kUuidDefaultsKey = @"UUID";
+NSString * const kConfigurationDefaultsKey = @"Configuration";
 
 
 @implementation Constants

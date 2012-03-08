@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const kUuidDefaultsKey;
+extern NSString * const kConfigurationDefaultsKey;
 
 @class Configuration;
 
